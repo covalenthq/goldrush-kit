@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,1,0");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --grk-background: 0 0% 100%;
+        --grk-background-dark: 224 71% 4%;
+        --grk-foreground: 0 0% 3.9%;
+        --grk-foreground-dark: 0 0% 98%;
+
+        --grk-surface: 214 32% 91%;
+        --grk-surface-dark: 214 32% 91%;
+
+        --grk-card: 0 0% 100%;
+        --grk-card-foreground: 0 0% 3.9%;
+        --grk-card-dark: 0 0% 3.9%;
+        --grk-card-foreground-dark: 0 0% 98%;
+
+        --grk-popover: 0 0% 100%;
+        --grk-popover-foreground: 0 0% 3.9%;
+        --grk-popover-dark: 0 0% 3.9%;
+        --grk-popover-foreground-dark: 0 0% 98%;
+
+        --grk-primary: 0 0% 9%;
+        --grk-primary-dark: 0 0% 98%;
+        --grk-primary-foreground: 0 0% 98%;
+        --grk-primary-foreground-dark: 0 0% 9%;
+
+        --grk-secondary: 215 20% 65%;
+        --grk-secondary-foreground: 0 0% 9%;
+        --grk-secondary-dark: 214, 32%, 91%;
+        --grk-secondary-foreground-dark: 0 0% 98%;
+
+        --grk-muted: 0 0% 96.1%;
+        --grk-muted-foreground: 0 0% 45.1%;
+        --grk-muted-dark: 0 0% 14.9%;
+        --grk-muted-foreground-dark: 0 0% 63.9%;
+
+        --grk-accent: 215 16% 47%;
+        --grk-accent-foreground: 214 32% 91%;
+        --grk-accent-dark: 217 33% 17%;
+        --grk-accent-foreground-dark: 0 0% 98%;
+
+        --grk-destructive: 0 84.2% 60.2%;
+        --grk-destructive-foreground: 0 0% 98%;
+        --grk-destructive-dark: 0 62.8% 30.6%;
+        --grk-destructive-foreground-dark: 0 0% 98%;
+
+        --grk-success: 147, 50%, 47%;
+
+        --grk-border: 220 13% 91%;
+        --grk-input: 0 0% 60.8%;
+        --grk-ring: 0 0% 3.9%;
+
+        --grk-border-dark: 215 28% 17%;
+        --grk-input-dark: 0 0% 14.9%;
+        --grk-ring-dark: 0 0% 83.1%;
+
+        --grk-radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-white text-foreground;
+    }
+}
+
+.searchResultScrollbar {
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 #32353b;
+}
+
+#mysvg svg path {
+    fill: #ff0000 !important; /* Change to your desired color */
+}
+
+.dark .recharts-responsive-container .recharts-wrapper svg text {
+    @apply !fill-white;
+}
+
+.dark
+    .whitespace-nowrap.truncate.text-tremor-default.text-tremor-content.dark\:text-dark-tremor-content.opacity-100 {
+    @apply !text-white;
+}
+
+.searchResultScrollbar::-webkit-scrollbar-thumb {
+    background-color: #32353b;
+}
+
+.searchResultScrollbar::-webkit-scrollbar-track {
+    background-color: #e2e8f0;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+:root.dark > body {
+    @apply bg-slate-900;
+    @apply !text-white;
+}
+:root.dark > body * {
+    @apply !border-slate-700;
+}
+
+.neo .neo-shadow {
+    box-shadow: 4px 4px 0px 0px #020617;
+}
+
+.neo .neo-shadow-lg {
+    box-shadow: 12px 12px 0px 0px #020617;
+}
+
+.neo .neo-border {
+    border: 2px solid #020617;
+}
+
+.neo .neo-text-white {
+    @apply !text-white;
+}
+
+.neo.dark .neo-text-white-dark {
+    @apply !text-white;
+}
+.neo .neo-text-white-light {
+    @apply !text-white;
+}
+.neo.dark .neo-text-dark {
+    @apply !text-black;
+}
+.neo .neo-accent {
+    @apply !bg-accent;
+}
+.neo.dark .neo-hover-dark {
+    @apply hover:bg-accent;
+}
+.neo .neo-hover-dark {
+    @apply hover:bg-accent;
+}
+.neo.dark .neo-header {
+    @apply bg-accent-foreground;
+}
+.neo .neo-header {
+    @apply bg-accent;
+}
