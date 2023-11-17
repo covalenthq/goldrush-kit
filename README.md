@@ -71,7 +71,7 @@ Here's a full example that you can copy-paste to get started.
         address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
         contract_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
     />
-    <AddressActivityListView address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"/>
+    <AddressActivityListView address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
     <NFTWalletTokenListView
         address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
         chain_name="eth-mainnet"
@@ -87,15 +87,15 @@ Storybook provides developers with a way to quickly prototype and develop compon
 
 ### Environmental Variable
 
-Create and add a `.env` file to the root directory of your project and the following to the file.  
+Create and add a `.env` file to the root directory of your project and the following to the file.
 
 ```
-STORYBOOK_COVALENT_API_KEY = "YOUR_API_KEY"
+STORYBOOK_COVALENT_API_KEY = "<YOUR_API_KEY>"
 ```
 
 ### Start
 
-```
+```bash
 npm run dev
 ```
 

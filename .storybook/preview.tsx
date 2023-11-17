@@ -1,4 +1,4 @@
-import "../src/tailwind-input.css";
+import "../src/tailwind-output.css";
 import { themes } from "@storybook/theming";
 import { GoldRushProvider } from "../src/utils/store/Goldrush";
 // import { useDarkMode } from 'storybook-dark-mode' // uncomment out this one line for dark mode
