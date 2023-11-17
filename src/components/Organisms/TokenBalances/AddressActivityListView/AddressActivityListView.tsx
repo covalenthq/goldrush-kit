@@ -1,7 +1,6 @@
 import { type Option, None, Some } from "@/utils/option";
 import {
     type ChainActivityEvent,
-    CovalentClient,
 } from "@covalenthq/client-sdk";
 import {
     type ColumnDef,
@@ -11,7 +10,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Table,
     TableBody,
@@ -304,10 +303,10 @@ export const AddressActivityListView: React.FC<
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
+                                                header.column.columnDef
+                                                    .header,
+                                                header.getContext()
+                                            )}
                                     </TableHead>
                                 );
                             })}
