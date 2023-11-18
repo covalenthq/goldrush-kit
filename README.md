@@ -37,7 +37,7 @@ import { GoldRushProvider } from "@covalenthq/goldrush-kit";
 import "@covalenthq/goldrush-kit/styles.css";
 ```
 
-5. Add desired components. If you're using `next.js`, make sure you have `use client;` at the top of the file to disable Next's server component modules. Visit GoldRush's [component documentation](https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/) for more information.
+5. Add desired components. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules. Visit GoldRush's [component documentation](https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/) for more information.
 
 ```tsx
 import {
@@ -51,7 +51,7 @@ import {
 
 ## Ready-to-go example
 
-Here's a full example that you can copy-paste to get started. If you're using `next.js`, make sure you have `use client;` at the top of the file to disable Next's server component modules.
+Here's a full example that you can copy-paste to get started. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules.
 
 ```tsx
 // 'use client'; 
