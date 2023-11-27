@@ -1,3 +1,5 @@
+import type {
+    ChainActivityEvent} from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type BlockTransactionWithContractTransfers,
@@ -22,6 +24,7 @@ export interface NFTWalletTokenListViewProps {
 
 export interface AddressActivityListViewProps {
     address: string;
+    onChangeSelect?: (newValue: ChainActivityEvent[]) => void;
 }
 
 export interface TokenTransferMeta {

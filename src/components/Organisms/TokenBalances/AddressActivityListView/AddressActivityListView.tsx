@@ -30,97 +30,19 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldrush } from "@/utils/store/Goldrush";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
 
-const columns: ColumnDef<ChainActivityEvent>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "label",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Name"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            return (
-                <div className="flex items-center gap-x-1 ">
-                    <TokenAvatar
-                        isChainLogo={true}
-                        tokenUrl={row.original.logo_url}
-                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                    />
-                    {row.getValue("label")}
-                </div>
-            );
-        },
-    },
-    {
-        accessorKey: "last_seen_at",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Last Active"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            const t = (row.getValue("last_seen_at") as any).toString();
-
-            return <div>{timestampParser(t, "relative")}</div>;
-        },
-    },
-    {
-        accessorKey: "is_testnet",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="center"
-                header_name={"Mainnet"}
-                column={column}
-            />
-        ),
-
-        cell: ({ row }) => {
-            const t = row.getValue("is_testnet");
-
-            return (
-                <div className="text-center">
-                    {t ? (
-                        ""
-                    ) : (
-                        <IconWrapper iconClassName="playlist_add_check" />
-                    )}
-                </div>
-            );
-        },
-    },
-];
-
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({ address }) => {
+> = ({ address, onChangeSelect }) => {
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState({});
+    const [chainSelection, setChainSelection] = useState<ChainActivityEvent[]>([]);
+
+    useEffect(() => {
+        if(onChangeSelect){
+            onChangeSelect(chainSelection);
+        }
+      }, [chainSelection, onChangeSelect]);
 
     const [maybeResult, setResult] =
         useState<Option<ChainActivityEvent[]>>(None);
@@ -147,6 +69,98 @@ export const AddressActivityListView: React.FC<
             }
         })();
     }, [address]);
+
+    const columns: ColumnDef<ChainActivityEvent>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={table.getIsAllPageRowsSelected()}
+                    onCheckedChange={(value) => {
+                        table.toggleAllPageRowsSelected(!!value);
+                    }}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => {
+                        const t = row.original;
+                        setChainSelection(((prev: ChainActivityEvent[]) => {
+                            return [...prev, t];
+                        }));
+                        row.toggleSelected(!!value);
+                    }}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: "label",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Name"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="flex items-center gap-x-1 ">
+                        <TokenAvatar
+                            isChainLogo={true}
+                            tokenUrl={row.original.logo_url}
+                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                        />
+                        {row.getValue("label")}
+                    </div>
+                );
+            },
+        },
+        {
+            accessorKey: "last_seen_at",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Last Active"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const t = (row.getValue("last_seen_at") as any).toString();
+    
+                return <div>{timestampParser(t, "relative")}</div>;
+            },
+        },
+        {
+            accessorKey: "is_testnet",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="center"
+                    header_name={"Mainnet"}
+                    column={column}
+                />
+            ),
+    
+            cell: ({ row }) => {
+                const t = row.getValue("is_testnet");
+    
+                return (
+                    <div className="text-center">
+                        {t ? (
+                            ""
+                        ) : (
+                            <IconWrapper iconClassName="playlist_add_check" />
+                        )}
+                    </div>
+                );
+            },
+        },
+    ];
 
     const table = useReactTable({
         data: maybeResult.match({
@@ -235,9 +249,9 @@ export const AddressActivityListView: React.FC<
 
     return (
         <div className="space-y-4 ">
-            <div className="flex place-content-between">
+            <div className="flex flex-wrap gap-2 place-content-between">
                 <AccountCardView address={address} />
-                <div className="rounded border p-2">
+                <div className="w-full rounded border p-2 md:w-[15rem] lg:w-[15rem]">
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}
                         <span>Mainnet Chains Active</span>{" "}
