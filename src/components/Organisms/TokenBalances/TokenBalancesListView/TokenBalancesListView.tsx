@@ -51,6 +51,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     address,
     mask_balances,
     hide_small_balances,
+    onTransferClick
 }) => {
     const [sorting, setSorting] = useState<SortingState>([
         {
@@ -322,7 +323,11 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     <IconWrapper iconClassName="expand_more" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
+                            <DropdownMenuContent align="end" onClick={()=>{
+                                if(onTransferClick){
+                                    onTransferClick(row.original.contract_address);
+                                }
+                            }}>
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem>
                                     <IconWrapper
@@ -331,13 +336,13 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     />{" "}
                                     View Transfer History
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                {/* <DropdownMenuItem>
                                     <IconWrapper
                                         iconClassName="swap_calls"
                                         className="mr-2"
                                     />{" "}
                                     Swap {row.original.contract_ticker_symbol}
-                                </DropdownMenuItem>
+                                </DropdownMenuItem> */}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuLabel>
                                     <div className="flex">

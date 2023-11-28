@@ -50,6 +50,7 @@ export interface TokenBalancesListViewProps {
     address: string;
     hide_small_balances?: boolean;
     mask_balances?: boolean;
+    onTransferClick?: Function
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {
