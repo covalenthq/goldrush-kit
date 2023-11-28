@@ -95,7 +95,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                     <div className="flex flex-wrap place-content-between gap-2">
                         <AccountCardView address={address} />
 
-                        <div className="w-full rounded border p-2 md:w-min lg:w-min">
+                        <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                             <h2 className="text-md  text-secondary ">
                                 Total Quote
                             </h2>
