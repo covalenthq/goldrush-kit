@@ -32,7 +32,7 @@ import { type AddressActivityListViewProps } from "@/utils/types/organisms.types
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({ address, onChangeSelect, rowSelectionState }) => {
+> = ({ address, getAllRowSelection, getRowSelectionState, rowSelectionState }) => {
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState(rowSelectionState ? rowSelectionState : {});
@@ -53,13 +53,16 @@ export const AddressActivityListView: React.FC<
                 setChainSelection(chains_selected);
             }
         });
+        if(getRowSelectionState){
+            getRowSelectionState(rowSelection);
+        }
     },[rowSelection]);
 
     useEffect(() => {
-        if(onChangeSelect){
-            onChangeSelect(chainSelection);
+        if(getAllRowSelection){
+            getAllRowSelection(chainSelection);
         }
-      }, [chainSelection, onChangeSelect]);
+      }, [chainSelection, getAllRowSelection]);
 
     useEffect(() => {
         (async () => {
