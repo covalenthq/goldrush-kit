@@ -137,3 +137,6 @@ dist
 # Custom
 src/tailwind-output.css
 vite.config.ts.*
+
+.idea
+storybook-static
