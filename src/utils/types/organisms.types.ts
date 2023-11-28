@@ -25,6 +25,7 @@ export interface NFTWalletTokenListViewProps {
 export interface AddressActivityListViewProps {
     address: string;
     onChangeSelect?: (newValue: ChainActivityEvent[]) => void;
+    rowSelectionState?:  { [key: string]: boolean };
 }
 
 export interface TokenTransferMeta {

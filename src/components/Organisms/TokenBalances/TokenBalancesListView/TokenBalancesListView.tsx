@@ -323,13 +323,13 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     <IconWrapper iconClassName="expand_more" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" onClick={()=>{
-                                if(onTransferClick){
-                                    onTransferClick(row.original.contract_address);
-                                }
-                            }}>
+                            <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem  onClick={()=>{
+                                        if(onTransferClick){
+                                            onTransferClick(row.original.contract_address);
+                                        }
+                                    }}>
                                     <IconWrapper
                                         iconClassName="swap_horiz"
                                         className="mr-2"
@@ -497,20 +497,24 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={()=>{
+                                        if(onTransferClick){
+                                            onTransferClick(row.original.contract_address);
+                                        }
+                                    }}>
                                     <IconWrapper
                                         iconClassName="swap_horiz"
                                         className="mr-2"
                                     />{" "}
                                     View Transfer History
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                {/* <DropdownMenuItem>
                                     <IconWrapper
                                         iconClassName="swap_calls"
                                         className="mr-2"
                                     />{" "}
                                     Swap {row.original.contract_ticker_symbol}
-                                </DropdownMenuItem>
+                                </DropdownMenuItem> */}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuLabel>
                                     <div className="flex">

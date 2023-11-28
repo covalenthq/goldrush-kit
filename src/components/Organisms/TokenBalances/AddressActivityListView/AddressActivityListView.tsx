@@ -32,21 +32,34 @@ import { type AddressActivityListViewProps } from "@/utils/types/organisms.types
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({ address, onChangeSelect }) => {
+> = ({ address, onChangeSelect, rowSelectionState }) => {
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = useState({});
+    const [rowSelection, setRowSelection] = useState(rowSelectionState ? rowSelectionState : {});
     const [chainSelection, setChainSelection] = useState<ChainActivityEvent[]>([]);
+    const [maybeResult, setResult] =
+        useState<Option<ChainActivityEvent[]>>(None);
+    const [error, setError] = useState({ error: false, error_message: "" });
+
+    useEffect(()=>{
+        maybeResult.match({
+            None: () => null,
+            Some: (resp) => {
+                const chains_selected: ChainActivityEvent[] = [];
+                for(const i in rowSelection){
+                    const index: number = parseInt(i);
+                    chains_selected.push(resp[index]);
+                }
+                setChainSelection(chains_selected);
+            }
+        });
+    },[rowSelection]);
 
     useEffect(() => {
         if(onChangeSelect){
             onChangeSelect(chainSelection);
         }
       }, [chainSelection, onChangeSelect]);
-
-    const [maybeResult, setResult] =
-        useState<Option<ChainActivityEvent[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
 
     useEffect(() => {
         (async () => {
@@ -87,10 +100,6 @@ export const AddressActivityListView: React.FC<
                 
                     checked={row.getIsSelected()}
                     onCheckedChange={(value) => {
-                        const t = row.original;
-                        setChainSelection(((prev: ChainActivityEvent[]) => {
-                            return [...prev, t];
-                        }));
                         row.toggleSelected(!!value);
                     }}
                     aria-label="Select row"
