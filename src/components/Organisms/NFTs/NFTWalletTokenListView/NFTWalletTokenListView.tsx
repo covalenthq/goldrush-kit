@@ -1,6 +1,6 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import { prettifyCurrency, type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -11,7 +11,6 @@ import {
 import { flatMap, sum } from "lodash";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { Skeleton } from "@/components/ui/skeleton";
-import { prettyCurrency } from "@/utils/functions";
 import { useGoldrush } from "@/utils/store/Goldrush";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
 
@@ -112,7 +111,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 )
                                             );
                                             return (
-                                                <span>{prettyCurrency(s)}</span>
+                                                <span>{prettifyCurrency(s, 2, "USD", true)}</span>
                                             );
                                         },
                                     })}

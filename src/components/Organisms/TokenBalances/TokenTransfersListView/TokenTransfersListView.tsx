@@ -4,6 +4,7 @@ import {
     type ChainItem,
     type Pagination,
     calculatePrettyBalance,
+    prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
 import { Fragment, useEffect, useState } from "react";
@@ -29,8 +30,7 @@ import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import {
     timestampParser,
     truncate,
-    calculateTimeSeriesGroup,
-    prettyCurrency,
+    calculateTimeSeriesGroup
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
@@ -170,7 +170,7 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             return (
                 <div className="text-right">
-                    {prettyCurrency(row.original.transfers[0].delta_quote)}
+                    {prettifyCurrency(row.original.transfers[0].delta_quote, 2, "USD", true)}
                 </div>
             );
         },
