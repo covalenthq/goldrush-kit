@@ -641,8 +641,8 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex  gap-1  text-sm text-secondary">
-                            <span className="">
+                        <div className="flex  text-sm text-secondary">
+                            <span className="flex">
                                 {" "}
                                 (
                                 {filterResult.match({

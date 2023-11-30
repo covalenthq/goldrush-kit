@@ -36,7 +36,6 @@ export const AddressActivityListView: React.FC<
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState(rowSelectionState ? rowSelectionState : {});
-    const [chainSelection, setChainSelection] = useState<ChainActivityEvent[]>([]);
     const [maybeResult, setResult] =
         useState<Option<ChainActivityEvent[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
@@ -50,19 +49,16 @@ export const AddressActivityListView: React.FC<
                     const index: number = parseInt(i);
                     chains_selected.push(resp[index]);
                 }
-                setChainSelection(chains_selected);
+                if(getAllRowSelection){
+                    getAllRowSelection(chains_selected);
+                }
             }
         });
         if(getRowSelectionState){
             getRowSelectionState(rowSelection);
         }
-    },[rowSelection]);
+    },[maybeResult, rowSelection, rowSelectionState]);
 
-    useEffect(() => {
-        if(getAllRowSelection){
-            getAllRowSelection(chainSelection);
-        }
-      }, [chainSelection, getAllRowSelection]);
 
     useEffect(() => {
         (async () => {
