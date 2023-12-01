@@ -1,8 +1,8 @@
 <div align="center">
   <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/update-README/goldrush-kit-logo.png">
-    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/update-README/goldrush-kit-logo.png" width="280"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png">
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png" width="280"/>
   </picture>
   </a>
 </div>
