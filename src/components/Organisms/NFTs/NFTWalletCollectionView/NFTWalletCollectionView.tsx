@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { sum } from "lodash";
+import sum from "lodash/sum";
 import { useGoldrush } from "@/utils/store/Goldrush";
 
 export const NFTWalletCollectionView: React.FC<

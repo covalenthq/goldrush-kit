@@ -4,7 +4,7 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended"
     ],
-    "plugins": ["react"],
+    "plugins": ["react", "eslint-plugin-prettier"],
     "rules": {
         "semi": "error",
         "no-multiple-empty-lines": "error",
