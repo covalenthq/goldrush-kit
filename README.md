@@ -1,6 +1,35 @@
-# goldrush-kit
+<div align="center">
+  <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/update-README/goldrush-kit-logo.png">
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/update-README/goldrush-kit-logo.png" width="280"/>
+  </picture>
+  </a>
+</div>
 
-Beautifully designed React components for your dApp frontend. 200+ Chains. Open-source. Customizable.
+<br/>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/v/@covalenthq/goldrush-kit" alt="NPM">
+  </a>
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
+  </a>
+  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
+</p>
+
+<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
+
+<div align="center">
+200+ Chains. Open-source. Customizable.
+</div>
+
+  <p align="center">
+    <br />
+    <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
+    <br />
+</p>
 
 ## Setup
 
