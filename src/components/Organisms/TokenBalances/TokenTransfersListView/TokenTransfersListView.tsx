@@ -181,14 +181,14 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             const txHash: string = row.getValue("tx_hash");
             return (
-                <div className="flex items-center gap-x-2">
+                <a className="flex items-center gap-x-2" target="_blank" rel="noopener noreferrer" href={row.original.transfers[0].explorers[0].url}>
                     {truncate(txHash)}
                     <IconWrapper
                         iconClassName="open_in_new"
                         className="h-3 w-3"
                         iconSize="text-sm text-black dark:text-white"
                     />
-                </div>
+                </a>
             );
         },
     },
