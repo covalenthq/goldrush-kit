@@ -620,7 +620,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
                 <div className="w-full rounded border p-2 md:w-min lg:w-min">
-                    <h2 className="text-md  text-secondary ">Total Quote</h2>
+                    <h2 className="text-base font-semibold  text-secondary ">Total Quote</h2>
                     <div className="flex items-end gap-2">
                         <span className="text-xl">
                             {filterResult.match({
