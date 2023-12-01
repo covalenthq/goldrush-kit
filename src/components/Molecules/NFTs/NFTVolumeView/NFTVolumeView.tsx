@@ -2,7 +2,7 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
-import { prettyCurrency, rootColor, timestampParser } from "@/utils/functions";
+import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -13,6 +13,7 @@ import {
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useGoldrush } from "@/utils/store/Goldrush";
 import { type NFTVolumeViewProps } from "@/utils/types/molecules.types";
+import { prettifyCurrency } from "@covalenthq/client-sdk";
 
 export const NFTVolumeView: React.FC<NFTVolumeViewProps> = ({
     chain_name,
@@ -77,7 +78,7 @@ export const NFTVolumeView: React.FC<NFTVolumeViewProps> = ({
                         index="date"
                         valueFormatter={
                             currency === CURRENCY.USD
-                                ? prettyCurrency
+                                ? prettifyCurrency
                                 : undefined
                         }
                         categories={[

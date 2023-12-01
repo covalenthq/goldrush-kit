@@ -3,6 +3,7 @@ import {
     type BalanceItem,
     type ChainItem,
     calculatePrettyBalance,
+    prettifyCurrency
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
@@ -33,7 +34,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
-import { prettyCurrency, timestampParser } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { BalancePriceDelta } from "@/components/Atoms/BalancePriceDelta/BalancePriceDelta";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
@@ -232,7 +233,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 return (
                     <div className="text-right">
                         {" "}
-                        {prettyCurrency(row.getValue("quote_rate"))}{" "}
+                        {prettifyCurrency(row.getValue("quote_rate"), 2, "USD", true)}{" "}
                     </div>
                 );
             },
@@ -628,7 +629,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 ),
                                 Some: (result) => {
                                     const s = sum(result.map((x) => x.quote));
-                                    return <span>{prettyCurrency(s)}</span>;
+                                    return <span>{prettifyCurrency(s, 2, "USD", true)}</span>;
                                 },
                             })}
                         </span>
