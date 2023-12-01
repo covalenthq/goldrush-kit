@@ -112,8 +112,8 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                         <Card className="w-[230px] rounded border">
                                             <CardContent>
                                                 <img
-                                                    className={`block h-[10rem] w-full rounded-t ${it.external_data ? "object-cover" : "p-2"}`}
-                                                    src={it.external_data ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
+                                                    className={`block h-[10rem] w-full rounded-t ${it.external_data?.image_512 ? "object-cover" : "p-2"}`}
+                                                    src={it.external_data?.image_512 ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
                                                     onError={(e) => {
                                                         e.currentTarget.classList.remove("object-cover");
                                                         e.currentTarget.classList.add("p-2");
