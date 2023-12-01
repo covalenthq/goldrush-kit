@@ -19,8 +19,11 @@
   <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
 </p>
 
-<h1 align="center">Beautifully designed React components for your dApp frontend. 200+ Chains. Open-source. Customizable.</h1>
+<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
 
+<div align="center">
+200+ Chains. Open-source. Customizable.
+</div>
 
 ## Setup
 
