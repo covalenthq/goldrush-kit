@@ -3,9 +3,10 @@ import { cn } from "../../utils/functions";
 
 interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
     size: GRK_SIZES;
+    isNFT?: boolean;
 }
 
-function Skeleton({ size }: SkeletonProps) {
+function Skeleton({ size, isNFT = false }: SkeletonProps) {
     const sizeClass = (() => {
         switch (size) {
             case "lg":
@@ -27,7 +28,7 @@ function Skeleton({ size }: SkeletonProps) {
         <div
             className={cn(
                 "animate-pulse rounded bg-accent-foreground",
-                sizeClass
+                isNFT ? "w-[230px] h-[280px]" : sizeClass
             )}
         />
     );
