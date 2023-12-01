@@ -25,6 +25,12 @@
 200+ Chains. Open-source. Customizable.
 </div>
 
+  <p align="center">
+    <br />
+    <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
+    <br />
+</p>
+
 ## Setup
 
 Install `goldrush-kit` using `npm`:
