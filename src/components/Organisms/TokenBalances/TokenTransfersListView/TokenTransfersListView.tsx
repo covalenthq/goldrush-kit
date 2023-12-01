@@ -180,7 +180,6 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         header: "Transaction",
         cell: ({ row }) => {
             const txHash: string = row.getValue("tx_hash");
-            console.log(row.original)
             return (
                 <div className="flex items-center gap-x-2">
                     {truncate(txHash)}
