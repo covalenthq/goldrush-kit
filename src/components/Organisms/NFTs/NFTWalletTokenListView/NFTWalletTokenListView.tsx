@@ -83,8 +83,12 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                         />
                                     ),
                                     Some: (result) => {
+                                        let nft_length = 0;
+                                        for(const i of result){
+                                            nft_length += i.nft_data.length;
+                                        }
                                         return (
-                                            <span>{result.length}</span>
+                                            <span>{nft_length}</span>
                                         );
                                     },
                                 })}{" "}
