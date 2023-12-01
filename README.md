@@ -9,10 +9,18 @@
 
 <br/>
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/v/@covalenthq/goldrush-kit" alt="NPM">
+  </a>
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
+  </a>
+  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
+</p>
 
-# goldrush-kit
+<h1 align="center">Beautifully designed React components for your dApp frontend. 200+ Chains. Open-source. Customizable.</h1>
 
-Beautifully designed React components for your dApp frontend. 200+ Chains. Open-source. Customizable.
 
 ## Setup
 
