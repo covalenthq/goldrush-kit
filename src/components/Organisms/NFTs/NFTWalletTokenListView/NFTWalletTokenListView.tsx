@@ -80,7 +80,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                         <small className="text-muted-foreground">
                                             Est. Value
                                         </small>
-                                        <p> {items.pretty_floor_price_quote}</p>
+                                        <p> {items.pretty_floor_price_quote ? items.pretty_floor_price_quote : <span>-</span>}</p>
                                     </div>
                                 </div>
                             </Card>
