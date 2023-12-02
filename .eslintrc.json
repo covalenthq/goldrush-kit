@@ -1,5 +1,10 @@
 {
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+    ],
+    "plugins": ["react"],
     "rules": {
         "semi": "error",
         "no-multiple-empty-lines": "error",
@@ -21,6 +26,13 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/consistent-type-imports": "error",
-        "@typescript-eslint/no-explicit-any": "warn"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

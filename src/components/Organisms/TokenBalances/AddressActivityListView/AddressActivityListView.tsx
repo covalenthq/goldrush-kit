@@ -1,7 +1,5 @@
 import { type Option, None, Some } from "@/utils/option";
-import {
-    type ChainActivityEvent,
-} from "@covalenthq/client-sdk";
+import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import {
     type ColumnDef,
     type SortingState,
@@ -65,8 +63,8 @@ const columns: ColumnDef<ChainActivityEvent>[] = [
             return (
                 <div className="flex items-center gap-x-1 ">
                     <TokenAvatar
-                        isChainLogo={true}
-                        tokenUrl={row.original.logo_url}
+                        is_chain_logo={true}
+                        token_url={row.original.logo_url}
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                     />
                     {row.getValue("label")}
@@ -107,7 +105,7 @@ const columns: ColumnDef<ChainActivityEvent>[] = [
                     {t ? (
                         ""
                     ) : (
-                        <IconWrapper iconClassName="playlist_add_check" />
+                        <IconWrapper icon_class_name="playlist_add_check" />
                     )}
                 </div>
             );
@@ -303,10 +301,10 @@ export const AddressActivityListView: React.FC<
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                header.column.columnDef
-                                                    .header,
-                                                header.getContext()
-                                            )}
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
                                     </TableHead>
                                 );
                             })}
