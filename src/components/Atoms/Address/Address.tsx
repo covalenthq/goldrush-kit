@@ -11,9 +11,9 @@ export const Address: React.FC<AddressProps> = ({ address }) => {
                 onClick={() => copyToClipboard(address)}
             >
                 <IconWrapper
-                    iconClassName="content_copy"
-                    iconSize="text-sm"
-                    className="text-secondary dark:text-secondary"
+                    icon_class_name="content_copy"
+                    icon_size="text-sm"
+                    class_name="text-secondary dark:text-secondary"
                 />
             </button>
         </div>
