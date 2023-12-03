@@ -114,6 +114,15 @@ Be sure to secure your key to prevent unauthorized use in the Covalent platform 
 </GoldRushProvider>
 ```
 
+## GoldRush Templates
+
+|Template|Description|Link|
+|---|---|---|
+|Wallet & Portfolio UI|Display your tokens and NFTs across multiple chains.|https://github.com/covalenthq/goldrush-wallet-portfolio-ui|
+|NFT Collection Gallery & Analytics UI|Coming soon!||
+|Uniswap-like Analytics UI|Coming soon!||
+
+
 ## Build and customize with Storybook
 
 The components used above are built React, Tailwind, and TypeScript. You can preview and customize the components using Storybook.
@@ -145,3 +154,19 @@ npm run build:library
 ```bash
 npm run build:storybook
 ```
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+Feel free to check <a href="https://github.com/covalenthq/goldrush-kit/issues">issues</a> page.
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+
+
+## 📝 License
+
+This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">Apache 2.0</a> licensed.
+
