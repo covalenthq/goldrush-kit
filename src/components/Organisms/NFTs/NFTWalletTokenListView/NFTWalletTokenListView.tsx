@@ -98,7 +98,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
             <div className="flex flex-wrap gap-8">
                 {maybeResult.match({
                     None: () => [1,2,3,4,5,6,7,8].map((o,i) => {
-                        return <Skeleton key={i} isNFT size={GRK_SIZES.EXTRA_EXTRA_SMALL} />;
+                        return <Skeleton key={i} is_nft size={GRK_SIZES.EXTRA_EXTRA_SMALL} />;
                     }),
                     Some: (result: any) => {
                         if (error.error) {
