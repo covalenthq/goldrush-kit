@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { updateTheme } from "../functions";
 import { CovalentClient } from "@covalenthq/client-sdk";
+import { Toaster } from "@/components/ui/toaster";
 
 interface GoldrushContextType {
     covalentClient: CovalentClient;
@@ -149,6 +150,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     return (
         <GoldRushContext.Provider value={{ covalentClient: covalentClient }}>
             {children}
+            <Toaster />
         </GoldRushContext.Provider>
     );
 };
