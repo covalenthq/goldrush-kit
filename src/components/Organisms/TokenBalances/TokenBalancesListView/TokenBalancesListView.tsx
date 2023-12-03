@@ -52,7 +52,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     address,
     mask_balances,
     hide_small_balances,
-    onTransferClick
+    on_transfer_click
 }) => {
     const [sorting, setSorting] = useState<SortingState>([
         {
@@ -331,11 +331,11 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem  onClick={()=>{
-                                        if(onTransferClick){
-                                            onTransferClick(row.original.contract_address);
-                                        }
-                                    }}>
+                                <DropdownMenuItem onClick={() => {
+                                    if (on_transfer_click) {
+                                        on_transfer_click(row.original.contract_address);
+                                    }
+                                }}>
                                     <IconWrapper
                                         icon_class_name="swap_horiz"
                                         class_name="mr-2"
@@ -358,9 +358,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                         />
                                         {row.original.last_transferred_at
                                             ? `Last transfered ${timestampParser(
-                                                  row.original.last_transferred_at.toDateString(),
-                                                  "relative"
-                                              )} `
+                                                row.original.last_transferred_at.toDateString(),
+                                                "relative"
+                                            )} `
                                             : "FIX ME"}
                                     </div>{" "}
                                 </DropdownMenuLabel>
@@ -503,11 +503,11 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem onClick={()=>{
-                                        if(onTransferClick){
-                                            onTransferClick(row.original.contract_address);
-                                        }
-                                    }}>
+                                <DropdownMenuItem onClick={() => {
+                                    if (on_transfer_click) {
+                                        on_transfer_click(row.original.contract_address);
+                                    }
+                                }}>
                                     <IconWrapper
                                         icon_class_name="swap_horiz"
                                         class_name="mr-2"
@@ -530,9 +530,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                         />
                                         {row.original.last_transferred_at
                                             ? `Last transfered ${timestampParser(
-                                                  row.original.last_transferred_at.toDateString(),
-                                                  "relative"
-                                              )} `
+                                                row.original.last_transferred_at.toDateString(),
+                                                "relative"
+                                            )} `
                                             : "FIX ME"}
                                     </div>{" "}
                                 </DropdownMenuLabel>
@@ -687,10 +687,10 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
+                                                header.column.columnDef
+                                                    .header,
+                                                header.getContext()
+                                            )}
                                     </TableHead>
                                 );
                             })}

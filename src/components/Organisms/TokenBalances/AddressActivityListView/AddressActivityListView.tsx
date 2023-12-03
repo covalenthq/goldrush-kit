@@ -30,32 +30,32 @@ import { type AddressActivityListViewProps } from "@/utils/types/organisms.types
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({ address, getAllRowSelection, getRowSelectionState, rowSelectionState }) => {
+> = ({ address, get_all_row_selection, get_row_selection_state, row_selection_state }) => {
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = useState(rowSelectionState ? rowSelectionState : {});
+    const [rowSelection, setRowSelection] = useState(row_selection_state ? row_selection_state : {});
     const [maybeResult, setResult] =
         useState<Option<ChainActivityEvent[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
 
-    useEffect(()=>{
+    useEffect(() => {
         maybeResult.match({
             None: () => null,
             Some: (resp) => {
                 const chains_selected: ChainActivityEvent[] = [];
-                for(const i in rowSelection){
+                for (const i in rowSelection) {
                     const index: number = parseInt(i);
                     chains_selected.push(resp[index]);
                 }
-                if(getAllRowSelection){
-                    getAllRowSelection(chains_selected);
+                if (get_all_row_selection) {
+                    get_all_row_selection(chains_selected);
                 }
             }
         });
-        if(getRowSelectionState){
-            getRowSelectionState(rowSelection);
+        if (get_row_selection_state) {
+            get_row_selection_state(rowSelection);
         }
-    },[maybeResult, rowSelection, rowSelectionState]);
+    }, [maybeResult, rowSelection, row_selection_state]);
 
 
     useEffect(() => {
@@ -94,7 +94,7 @@ export const AddressActivityListView: React.FC<
             ),
             cell: ({ row }) => (
                 <Checkbox
-                
+
                     checked={row.getIsSelected()}
                     onCheckedChange={(value) => {
                         row.toggleSelected(!!value);
@@ -138,7 +138,7 @@ export const AddressActivityListView: React.FC<
             ),
             cell: ({ row }) => {
                 const t = (row.getValue("last_seen_at") as any).toString();
-    
+
                 return <div>{timestampParser(t, "relative")}</div>;
             },
         },
@@ -151,10 +151,10 @@ export const AddressActivityListView: React.FC<
                     column={column}
                 />
             ),
-    
+
             cell: ({ row }) => {
                 const t = row.getValue("is_testnet");
-    
+
                 return (
                     <div className="text-center">
                         {t ? (
@@ -323,10 +323,10 @@ export const AddressActivityListView: React.FC<
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
+                                                header.column.columnDef
+                                                    .header,
+                                                header.getContext()
+                                            )}
                                     </TableHead>
                                 );
                             })}
