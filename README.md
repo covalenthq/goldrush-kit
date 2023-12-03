@@ -145,3 +145,19 @@ npm run build:library
 ```bash
 npm run build:storybook
 ```
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+Feel free to check <a href="https://github.com/covalenthq/goldrush-kit/issues">issues</a> page.
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+
+
+## 📝 License
+
+This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">MIT</a> licensed.
+
