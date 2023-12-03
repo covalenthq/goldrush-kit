@@ -159,5 +159,5 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">MIT</a> licensed.
+This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">Apache 2.0</a> licensed.
 
