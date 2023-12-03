@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
 import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
-import { calculatePrettyBalance, prettifyCurrency } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CURRENCY,

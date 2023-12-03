@@ -1,6 +1,9 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { prettifyCurrency, type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -58,11 +61,23 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                             <Card className="w-[230px] rounded border">
                                 <CardContent>
                                     <img
-                                        className={`block h-[10rem] w-full rounded-t ${it.external_data ? "object-cover" : "p-2"}`}
-                                        src={it.external_data ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
+                                        className={`block h-[10rem] w-full rounded-t ${
+                                            it.external_data
+                                                ? "object-cover"
+                                                : "p-2"
+                                        }`}
+                                        src={
+                                            it.external_data
+                                                ? it.external_data.image_512
+                                                : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                        }
                                         onError={(e) => {
-                                            e.currentTarget.classList.remove("object-cover");
-                                            e.currentTarget.classList.add("p-2");
+                                            e.currentTarget.classList.remove(
+                                                "object-cover"
+                                            );
+                                            e.currentTarget.classList.add(
+                                                "p-2"
+                                            );
                                             e.currentTarget.src =
                                                 "https://www.datocms-assets.com/86369/1685489960-nft.svg";
                                         }}
@@ -111,7 +126,14 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 )
                                             );
                                             return (
-                                                <span>{prettifyCurrency(s, 2, "USD", true)}</span>
+                                                <span>
+                                                    {prettifyCurrency(
+                                                        s,
+                                                        2,
+                                                        "USD",
+                                                        true
+                                                    )}
+                                                </span>
                                             );
                                         },
                                     })}

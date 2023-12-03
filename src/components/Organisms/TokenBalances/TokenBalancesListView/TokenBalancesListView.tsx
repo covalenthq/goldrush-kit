@@ -3,7 +3,7 @@ import {
     type BalanceItem,
     type ChainItem,
     calculatePrettyBalance,
-    prettifyCurrency
+    prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
@@ -199,9 +199,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <div className="flex items-center gap-3 ">
                                 <TokenAvatar
                                     size={GRK_SIZES.EXTRA_SMALL}
-                                    chainColor={chainColor}
-                                    subUrl={protocol_url}
-                                    tokenUrl={row.original.logo_url}
+                                    chain_color={chainColor}
+                                    sub_url={protocol_url}
+                                    token_url={row.original.logo_url}
                                 />
                                 <div className="flex flex-col">
                                     <div style={{ color: chainColor }}>
@@ -233,7 +233,12 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 return (
                     <div className="text-right">
                         {" "}
-                        {prettifyCurrency(row.getValue("quote_rate"), 2, "USD", true)}{" "}
+                        {prettifyCurrency(
+                            row.getValue("quote_rate"),
+                            2,
+                            "USD",
+                            true
+                        )}{" "}
                     </div>
                 );
             },
@@ -320,22 +325,22 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="ml-auto  ">
                                     <span className="sr-only">Open menu</span>
-                                    <IconWrapper iconClassName="expand_more" />
+                                    <IconWrapper icon_class_name="expand_more" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem>
                                     <IconWrapper
-                                        iconClassName="swap_horiz"
-                                        className="mr-2"
+                                        icon_class_name="swap_horiz"
+                                        class_name="mr-2"
                                     />{" "}
                                     View Transfer History
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <IconWrapper
-                                        iconClassName="swap_calls"
-                                        className="mr-2"
+                                        icon_class_name="swap_calls"
+                                        class_name="mr-2"
                                     />{" "}
                                     Swap {row.original.contract_ticker_symbol}
                                 </DropdownMenuItem>
@@ -343,8 +348,8 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 <DropdownMenuLabel>
                                     <div className="flex">
                                         <IconWrapper
-                                            iconClassName="history"
-                                            className="mr-2"
+                                            icon_class_name="history"
+                                            class_name="mr-2"
                                         />
                                         {row.original.last_transferred_at
                                             ? `Last transfered ${timestampParser(
@@ -427,9 +432,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <div className="flex items-center gap-3">
                                 <TokenAvatar
                                     size={GRK_SIZES.EXTRA_SMALL}
-                                    chainColor={chainColor}
-                                    subUrl={protocol_url}
-                                    tokenUrl={row.original.logo_url}
+                                    chain_color={chainColor}
+                                    sub_url={protocol_url}
+                                    token_url={row.original.logo_url}
                                 />
                                 <div className="flex flex-col gap-1">
                                     <div style={{ color: chainColor }}>
@@ -488,22 +493,22 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="ml-auto  ">
                                     <span className="sr-only">Open menu</span>
-                                    <IconWrapper iconClassName="expand_more" />
+                                    <IconWrapper icon_class_name="expand_more" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem>
                                     <IconWrapper
-                                        iconClassName="swap_horiz"
-                                        className="mr-2"
+                                        icon_class_name="swap_horiz"
+                                        class_name="mr-2"
                                     />{" "}
                                     View Transfer History
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <IconWrapper
-                                        iconClassName="swap_calls"
-                                        className="mr-2"
+                                        icon_class_name="swap_calls"
+                                        class_name="mr-2"
                                     />{" "}
                                     Swap {row.original.contract_ticker_symbol}
                                 </DropdownMenuItem>
@@ -511,8 +516,8 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 <DropdownMenuLabel>
                                     <div className="flex">
                                         <IconWrapper
-                                            iconClassName="history"
-                                            className="mr-2"
+                                            icon_class_name="history"
+                                            class_name="mr-2"
                                         />
                                         {row.original.last_transferred_at
                                             ? `Last transfered ${timestampParser(
@@ -620,7 +625,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
                 <div className="w-full rounded border p-2 md:w-min lg:w-min">
-                    <h2 className="text-base font-semibold  text-secondary ">Total Quote</h2>
+                    <h2 className="text-base font-semibold  text-secondary ">
+                        Total Quote
+                    </h2>
                     <div className="flex items-end gap-2">
                         <span className="text-xl">
                             {filterResult.match({
@@ -629,7 +636,16 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 ),
                                 Some: (result) => {
                                     const s = sum(result.map((x) => x.quote));
-                                    return <span>{prettifyCurrency(s, 2, "USD", true)}</span>;
+                                    return (
+                                        <span>
+                                            {prettifyCurrency(
+                                                s,
+                                                2,
+                                                "USD",
+                                                true
+                                            )}
+                                        </span>
+                                    );
                                 },
                             })}
                         </span>
