@@ -3,11 +3,11 @@ import { type TokenAvatarProps } from "@/utils/types/atoms.types";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
 export const TokenAvatar: React.FC<TokenAvatarProps> = ({
-    tokenUrl,
-    subUrl,
+    token_url,
+    sub_url,
     size,
-    isChainLogo = false,
-    chainColor,
+    is_chain_logo = false,
+    chain_color,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -46,10 +46,10 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
     }, [size]);
 
     useEffect(() => {
-        if (isChainLogo) {
+        if (is_chain_logo) {
             (async () => {
                 const response = await fetch(
-                    tokenUrl ?? "https://goldrush.vercel.app/icons/token.svg"
+                    token_url ?? "https://goldrush.vercel.app/icons/token.svg"
                 );
                 const data = await response.text();
 
@@ -78,17 +78,17 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                 }
             })();
         }
-    }, [tokenUrl, SIZE_CLASS]);
+    }, [token_url, SIZE_CLASS]);
 
-    return isChainLogo ? (
+    return is_chain_logo ? (
         <div ref={ref} className={SIZE_CLASS} />
     ) : (
         <div
             className={`${SIZE_CLASS} relative rounded-[100%]`}
-            style={{ background: chainColor ?? "", padding: "2px" }}
+            style={{ background: chain_color ?? "", padding: "2px" }}
         >
             <img
-                src={tokenUrl ?? "https://goldrush.vercel.app/icons/token.svg"}
+                src={token_url ?? "https://goldrush.vercel.app/icons/token.svg"}
                 alt="Token Image"
                 style={{ background: "#fff" }}
                 className={`h-full w-full rounded-[100%] p-0.5`}
@@ -97,12 +97,12 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                         "https://goldrush.vercel.app/icons/token.svg";
                 }}
             />
-            {subUrl && (
+            {sub_url && (
                 <img
-                    src={subUrl}
+                    src={sub_url}
                     alt="Token Image"
                     style={{
-                        background: chainColor ? chainColor : "grey",
+                        background: chain_color ? chain_color : "grey",
                         padding: "1px",
                     }}
                     className={`${SUB_SIZE} absolute -bottom-2 -left-3 rounded-[100%] p-0.5`}

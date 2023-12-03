@@ -1,6 +1,35 @@
-# goldrush-kit
+<div align="center">
+  <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png">
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png" width="280"/>
+  </picture>
+  </a>
+</div>
 
-Beautifully designed React components for your dApp frontend. 200+ Chains. Open-source. Customizable.
+<br/>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/v/@covalenthq/goldrush-kit" alt="NPM">
+  </a>
+  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
+    <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
+  </a>
+  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
+</p>
+
+<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
+
+<div align="center">
+200+ Chains. Open-source. Customizable.
+</div>
+
+  <p align="center">
+    <br />
+    <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
+    <br />
+</p>
 
 ## Setup
 
@@ -49,14 +78,18 @@ import {
 } from "@covalenthq/goldrush-kit";
 ```
 
-## Ready-to-go example
+## Ready-to-go React Component example
 
-Here's a full example that you can copy-paste to get started. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules.
+Here's a full example to get you started. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules.
+
+**Note:** You should always keep your API key private, never put it directly into your code, especially front end code. Instead, use an environment variable to inject the key into your code.
+
+Be sure to secure your key to prevent unauthorized use in the Covalent platform by restricting usage to specific URLs.
 
 ```tsx
 // 'use client'; 
-// If using Next.js
-<GoldRushProvider apikey="<YOUR_API_KEY>" mode="dark" color="emerald">
+// If using Next.js, put your API key in a .env.local file
+<GoldRushProvider apikey={process.env.NEXT_PUBLIC_API_KEY} mode="dark" color="emerald">
     <TokenBalancesListView
         chain_names={[
             "eth-mainnet",
@@ -83,11 +116,11 @@ Here's a full example that you can copy-paste to get started. If you're using `n
 
 ## Build and customize with Storybook
 
-The components used above are built using Storybook, React, Tailwind, and TypeScript.
+The components used above are built React, Tailwind, and TypeScript. You can preview and customize the components using Storybook.
 
 Storybook provides developers with a way to quickly prototype and develop components in isolation, while React provides the tools to quickly build out a web application. Tailwind provides a library of pre-built UI components and utility classes, while TypeScript adds type safety and autocompletion to the development process. Together, these tools provide developers with the tools they need to quickly and easily build complex, modern web applications.
 
-### Environmental Variable
+### Storybook Environmental Variable
 
 Create and add a `.env` file to the root directory of your project and the following to the file.
 

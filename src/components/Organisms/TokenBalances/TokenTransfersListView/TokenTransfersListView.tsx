@@ -4,6 +4,7 @@ import {
     type ChainItem,
     type Pagination,
     calculatePrettyBalance,
+    prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
 import { Fragment, useEffect, useState } from "react";
@@ -30,7 +31,6 @@ import {
     timestampParser,
     truncate,
     calculateTimeSeriesGroup,
-    prettyCurrency,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
@@ -170,7 +170,12 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             return (
                 <div className="text-right">
-                    {prettyCurrency(row.original.transfers[0].delta_quote)}
+                    {prettifyCurrency(
+                        row.original.transfers[0].delta_quote,
+                        2,
+                        "USD",
+                        true
+                    )}
                 </div>
             );
         },
@@ -181,14 +186,14 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             const txHash: string = row.getValue("tx_hash");
             return (
-                <div className="flex items-center gap-x-2">
+                <a className="flex items-center gap-x-2" target="_blank" rel="noopener noreferrer" href={row.original.transfers[0].explorers[0].url}>
                     {truncate(txHash)}
                     <IconWrapper
-                        iconClassName="open_in_new"
-                        className="h-3 w-3"
-                        iconSize="text-sm text-black dark:text-white"
+                        icon_class_name="open_in_new"
+                        class_name="h-3 w-3"
+                        icon_size="text-sm text-black dark:text-white"
                     />
-                </div>
+                </a>
             );
         },
     },
@@ -481,8 +486,8 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                 return (
                                                     <>
                                                         <TokenAvatar
-                                                            isChainLogo
-                                                            tokenUrl={
+                                                            is_chain_logo
+                                                            token_url={
                                                                 chain?.logo_url
                                                             }
                                                             size={
@@ -518,7 +523,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                         return (
                                             <>
                                                 <TokenAvatar
-                                                    tokenUrl={result.logo_url}
+                                                    token_url={result.logo_url}
                                                     size={
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                     }

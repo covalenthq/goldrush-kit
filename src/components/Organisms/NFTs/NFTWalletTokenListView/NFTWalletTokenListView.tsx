@@ -1,6 +1,9 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -11,7 +14,6 @@ import {
 import { flatMap, sum } from "lodash";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { Skeleton } from "@/components/ui/skeleton";
-import { prettyCurrency } from "@/utils/functions";
 import { useGoldrush } from "@/utils/store/Goldrush";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
 
@@ -59,11 +61,15 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                             <Card className="w-[230px] rounded border">
                                 <CardContent>
                                     <img
-                                        className={`block h-[10rem] w-full rounded-t ${it.external_data ? "object-cover" : "p-2"}`}
-                                        src={it.external_data ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
+                                        className={`block h-[10rem] w-full rounded-t ${it.external_data?.image_512 ? "object-cover" : "p-2"}`}
+                                        src={it.external_data?.image_512 ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
                                         onError={(e) => {
-                                            e.currentTarget.classList.remove("object-cover");
-                                            e.currentTarget.classList.add("p-2");
+                                            e.currentTarget.classList.remove(
+                                                "object-cover"
+                                            );
+                                            e.currentTarget.classList.add(
+                                                "p-2"
+                                            );
                                             e.currentTarget.src =
                                                 "https://www.datocms-assets.com/86369/1685489960-nft.svg";
                                         }}
@@ -81,7 +87,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                         <small className="text-muted-foreground">
                                             Est. Value
                                         </small>
-                                        <p> {items.pretty_floor_price_quote}</p>
+                                        <p> {items.pretty_floor_price_quote ? items.pretty_floor_price_quote : <span>-</span>}</p>
                                     </div>
                                 </div>
                             </Card>
@@ -112,7 +118,14 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 )
                                             );
                                             return (
-                                                <span>{prettyCurrency(s)}</span>
+                                                <span>
+                                                    {prettifyCurrency(
+                                                        s,
+                                                        2,
+                                                        "USD",
+                                                        true
+                                                    )}
+                                                </span>
                                             );
                                         },
                                     })}
@@ -130,8 +143,12 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 />
                                             ),
                                             Some: (result) => {
+                                                let nft_length = 0;
+                                                for (const i of result) {
+                                                    nft_length += i.nft_data.length;
+                                                }
                                                 return (
-                                                    <span>{result.length}</span>
+                                                    <span>{nft_length}</span>
                                                 );
                                             },
                                         })}{" "}

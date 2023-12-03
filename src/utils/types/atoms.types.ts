@@ -10,20 +10,7 @@ export interface AddressAvatarProps {
     size: GRK_SIZES;
     rounded?: boolean;
     fallback?: string;
-    className?: string;
-}
-
-export interface AvatarGroupProps {
-    groupClassName?: string;
-    iconClassName?: string;
-    titleClassName?: string;
-    title?: string;
-    chainText?: string;
-    show?: number;
-    isCountShown?: boolean;
-    iconList?: Array<{ url: string; bgColor: string }>;
-    fallbackTitle?: Array<string>;
-    rounded?: boolean;
+    class_name?: string;
 }
 
 export interface BalancePriceDeltaProps {
@@ -36,30 +23,11 @@ export interface CopyImageProps {
 }
 
 export interface IconWrapperPropsType {
-    //   icon: string;
-    //   alt: string;
-    className?: string;
-    iconClassName?: string;
-    onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
-    iconSize?: string;
-    iconType?: string;
-}
-
-export interface MultiSelectDropDownProps {
-    className?: string;
-    label?: React.ReactNode;
-    search?: React.ReactNode;
-    childrenClassName?: string;
-    arrowClassName?: string;
-    menuClassName?: string;
-    isOpen?: boolean;
-    handleOpen?: (val: boolean) => void;
-    showBalance?: boolean;
-    chainsList?: any;
-    chainsBalances?: any;
-    searchPlaceholder?: string;
-    address?: string;
-    position?: "left" | "right";
+    class_name?: string;
+    icon_class_name?: string;
+    on_click?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+    icon_size?: string;
+    icon_type?: string;
 }
 
 export interface NetPriceDeltaProps {
@@ -67,27 +35,10 @@ export interface NetPriceDeltaProps {
     denominator: number;
 }
 
-export interface SelectDropDownProps {
-    className?: string;
-    label?: React.ReactNode;
-    search?: React.ReactNode;
-    childrenClassName?: string;
-    arrowClassName?: string;
-    menuClassName?: string;
-    isOpen?: boolean;
-    handleOpen?: (val: boolean) => void;
-    showBalance?: boolean;
-    chainsList?: any;
-    chainsBalances?: any;
-    searchPlaceholder?: string;
-    address?: string;
-    position?: "left" | "right";
-}
-
 export interface TokenAvatarProps {
-    tokenUrl?: string | null;
-    subUrl?: string | null;
+    token_url?: string | null;
+    sub_url?: string | null;
     size: GRK_SIZES;
-    isChainLogo?: boolean;
-    chainColor?: string | null;
+    is_chain_logo?: boolean;
+    chain_color?: string | null;
 }

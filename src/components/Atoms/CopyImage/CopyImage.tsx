@@ -8,15 +8,15 @@ export const CopyImage: React.FC<CopyImageProps> = ({ url }) => {
 
     return copied ? (
         <IconWrapper
-            iconClassName="done"
-            iconSize="text-sm text-secondary dark:text-secondary"
+            icon_class_name="done"
+            icon_size="text-sm text-secondary dark:text-secondary"
         />
     ) : (
         <IconWrapper
-            iconClassName="content_copy"
-            iconSize="text-sm text-text-color-900 dark:text-text-color-50"
-            className="cursor-pointer"
-            onClick={() => {
+            icon_class_name="content_copy"
+            icon_size="text-sm text-text-color-900 dark:text-text-color-50"
+            class_name="cursor-pointer"
+            on_click={() => {
                 showCopied(true);
                 setTimeout(() => {
                     showCopied(false);

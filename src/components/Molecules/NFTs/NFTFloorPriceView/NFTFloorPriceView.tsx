@@ -2,9 +2,12 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
-import { prettyCurrency, rootColor, timestampParser } from "@/utils/functions";
+import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
-import { calculatePrettyBalance } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CURRENCY,
@@ -84,7 +87,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
                         index="date"
                         valueFormatter={
                             currency === CURRENCY.USD
-                                ? prettyCurrency
+                                ? prettifyCurrency
                                 : undefined
                         }
                         categories={[

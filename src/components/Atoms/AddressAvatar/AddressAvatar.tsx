@@ -12,7 +12,7 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     size,
     fallback,
     rounded = false,
-    className,
+    class_name,
 }) => {
     const SRC = useMemo<string>(() => {
         switch (type) {
@@ -57,7 +57,7 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     return (
         <Avatar
             className={`${SIZE_CLASS} ${rounded ? "rounded-full" : "rounded"} ${
-                className || ""
+                class_name || ""
             }`}
         >
             <AvatarImage style={BG_COLOR} src={SRC} />

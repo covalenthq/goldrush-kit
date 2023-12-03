@@ -1,6 +1,9 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -14,7 +17,6 @@ import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountC
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sum } from "lodash";
-import { prettyCurrency } from "@/utils/functions";
 import { useGoldrush } from "@/utils/store/Goldrush";
 
 export const NFTWalletCollectionView: React.FC<
@@ -63,11 +65,24 @@ export const NFTWalletCollectionView: React.FC<
                                     >
                                         <CardContent>
                                             <img
-                                                className={`block h-[10rem] w-full rounded-t ${it.external_data ? "object-cover" : "p-2"}`}
-                                                src={it.external_data ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
+                                                className={`block h-[10rem] w-full rounded-t ${
+                                                    it.external_data
+                                                        ? "object-cover"
+                                                        : "p-2"
+                                                }`}
+                                                src={
+                                                    it.external_data
+                                                        ? it.external_data
+                                                              .image_512
+                                                        : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                                }
                                                 onError={(e) => {
-                                                    e.currentTarget.classList.remove("object-cover");
-                                                    e.currentTarget.classList.add("p-2");
+                                                    e.currentTarget.classList.remove(
+                                                        "object-cover"
+                                                    );
+                                                    e.currentTarget.classList.add(
+                                                        "p-2"
+                                                    );
                                                     e.currentTarget.src =
                                                         "https://www.datocms-assets.com/86369/1685489960-nft.svg";
                                                 }}
@@ -107,7 +122,7 @@ export const NFTWalletCollectionView: React.FC<
                         <AccountCardView address={address} />
 
                         <div className="w-full rounded border p-2 md:w-min lg:w-min">
-                            <h2 className="text-md  text-secondary ">
+                            <h2 className="text-base font-semibold  text-secondary ">
                                 Total Quote
                             </h2>
                             <div className="flex items-end gap-2">
@@ -123,7 +138,14 @@ export const NFTWalletCollectionView: React.FC<
                                                 )
                                             );
                                             return (
-                                                <span>{prettyCurrency(s)}</span>
+                                                <span>
+                                                    {prettifyCurrency(
+                                                        s,
+                                                        2,
+                                                        "USD",
+                                                        true
+                                                    )}
+                                                </span>
                                             );
                                         },
                                     })}
