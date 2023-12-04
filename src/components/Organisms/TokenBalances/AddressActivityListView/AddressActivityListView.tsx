@@ -165,7 +165,7 @@ export const AddressActivityListView: React.FC<
                         {t ? (
                             ""
                         ) : (
-                            <IconWrapper iconClassName="playlist_add_check" />
+                            <IconWrapper icon_class_name="playlist_add_check" />
                         )}
                     </div>
                 );
