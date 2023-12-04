@@ -186,7 +186,12 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             const txHash: string = row.getValue("tx_hash");
             return (
-                <a className="flex items-center gap-x-2" target="_blank" rel="noopener noreferrer" href={row.original.transfers[0].explorers[0].url}>
+                <a
+                    className="flex items-center gap-x-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={row.original.transfers[0].explorers[0].url}
+                >
                     {truncate(txHash)}
                     <IconWrapper
                         icon_class_name="open_in_new"
@@ -460,9 +465,9 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
 
     return (
         <div className="space-y-4">
-            <div className="flex  flex-wrap gap-2 place-content-between">
+            <div className="flex  flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]]">
+                <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
                     <div className="xflex items-center space-x-1">
                         {" "}
                         <span>Network</span>
