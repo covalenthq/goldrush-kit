@@ -11,7 +11,7 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store";
 import { type NFTVolumeViewProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
 
@@ -24,7 +24,7 @@ export const NFTVolumeView: React.FC<NFTVolumeViewProps> = ({
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
     const [chartColor, setColor] = useState<any>("");
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
 
     useEffect(() => {
         (async () => {

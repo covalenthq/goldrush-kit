@@ -52,7 +52,7 @@ import {
     type BlockTransactionWithContractTransfersWithDelta,
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useChains, useCovalent } from "@/utils/store";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
     {
@@ -209,7 +209,9 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     address,
     contract_address,
 }) => {
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
+    const { chains } = useChains();
+
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState({});
     const [paginator, setPaginator] = useState({
@@ -222,16 +224,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
             None
         );
     const [error, setError] = useState({ error: false, error_message: "" });
-    const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
     const [maybeMeta, setMeta] = useState<Option<TokenTransferMeta>>(None);
-
-    useEffect(() => {
-        (async () => {
-            const allChainsResp =
-                await covalentClient.BaseService.getAllChains();
-            setAllChains(new Some(allChainsResp.data.items));
-        })();
-    }, []);
 
     useEffect(() => {
         setResult(None);
@@ -465,13 +458,12 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
 
     return (
         <div className="space-y-4">
-            <div className="flex  flex-wrap place-content-between gap-2">
+            <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
                 <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
-                    <div className="xflex items-center space-x-1">
-                        {" "}
+                    <div className="flex items-center space-x-1">
                         <span>Network</span>
-                        <div className="float-right ">
+                        <div className="float-right">
                             <div className="flex">
                                 {maybeMeta.match({
                                     None: () => (
@@ -480,43 +472,33 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                         />
                                     ),
                                     Some: (result) => {
-                                        return allChains.match({
-                                            None: () => null,
-                                            Some: (chains) => {
-                                                const chain = chains.filter(
-                                                    (o) =>
-                                                        o.name ===
-                                                        result.chain_name
-                                                )[0];
-                                                return (
-                                                    <>
-                                                        <TokenAvatar
-                                                            is_chain_logo
-                                                            token_url={
-                                                                chain?.logo_url
-                                                            }
-                                                            size={
-                                                                GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                            }
-                                                        />
-                                                        <span className=" text-secondary ">
-                                                            {
-                                                                chain?.category_label
-                                                            }
-                                                        </span>
-                                                    </>
-                                                );
-                                            },
-                                        });
+                                        const chain: ChainItem | null =
+                                            chains?.find(
+                                                (o) =>
+                                                    o.name === result.chain_name
+                                            ) ?? null;
+                                        return (
+                                            <>
+                                                <TokenAvatar
+                                                    is_chain_logo
+                                                    token_url={chain?.logo_url}
+                                                    size={
+                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                    }
+                                                />
+                                                <span className=" text-secondary ">
+                                                    {chain?.category_label}
+                                                </span>
+                                            </>
+                                        );
                                     },
                                 })}
                             </div>
                         </div>
                     </div>
-                    <div className=" items-center space-x-1">
-                        {" "}
+                    <div className="items-center space-x-1">
                         <span>Token</span>
-                        <div className="float-right ">
+                        <div className="float-right">
                             <div className="flex">
                                 {maybeMeta.match({
                                     None: () => (
