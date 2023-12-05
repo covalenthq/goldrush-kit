@@ -622,7 +622,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <h2 className="text-md text-secondary">Total Quote</h2>
                     <div className="flex items-end gap-2">
-                        <span className="text-xl">
+                        <span className="text-base">
                             {filterResult.match({
                                 None: () => (
                                     <Skeleton size={GRK_SIZES.MEDIUM} />

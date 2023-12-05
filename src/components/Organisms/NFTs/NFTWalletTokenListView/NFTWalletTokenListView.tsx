@@ -188,7 +188,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 Total Quote
                             </h2>
                             <div className="flex items-end gap-2">
-                                <span className="text-xl">
+                                <span className="text-base">
                                     {maybeResult.match({
                                         None: () => (
                                             <Skeleton size={GRK_SIZES.MEDIUM} />
