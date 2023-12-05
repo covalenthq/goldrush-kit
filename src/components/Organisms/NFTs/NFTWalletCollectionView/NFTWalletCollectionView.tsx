@@ -43,7 +43,7 @@ export const NFTWalletCollectionView: React.FC<
         Some: (result) => {
             const body = result.map((items, i) => {
                 return (
-                    <div key={i}>
+                    <div className="" key={i}>
                         <div className="mb-2">
                             <TypographyH3>
                                 <div className="flex items-center gap-x-2">
@@ -56,7 +56,7 @@ export const NFTWalletCollectionView: React.FC<
                             </TypographyH3>
                         </div>
 
-                        <div className="flex flex-wrap gap-8">
+                        <div className="flex flex-wrap gap-4">
                             {items.nft_data.map((it, j) => {
                                 return (
                                     <Card
@@ -65,15 +65,14 @@ export const NFTWalletCollectionView: React.FC<
                                     >
                                         <CardContent>
                                             <img
-                                                className={`block h-[10rem] w-full rounded-t ${
-                                                    it.external_data
+                                                className={`block h-[10rem] w-full rounded-t ${it.external_data
                                                         ? "object-cover"
                                                         : "p-2"
-                                                }`}
+                                                    }`}
                                                 src={
                                                     it.external_data
                                                         ? it.external_data
-                                                              .image_512
+                                                            .image_512
                                                         : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
                                                 }
                                                 onError={(e) => {
@@ -174,7 +173,7 @@ export const NFTWalletCollectionView: React.FC<
                             </div>
                         </div>
                     </div>
-                    <div>{body}</div>
+                    <div className="flex gap-8 flex-col">{body}</div>
                 </div>
             );
         },
