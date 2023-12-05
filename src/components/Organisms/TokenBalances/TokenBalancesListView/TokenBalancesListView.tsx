@@ -642,23 +642,18 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex  text-sm text-secondary">
-                            <span className="flex">
-                                {" "}
-                                (
-                                {filterResult.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        return <span>{result.length}</span>;
-                                    },
-                                })}{" "}
-                            </span>
-                            Tokens)
-                        </div>
+                        <span className="flex text-sm text-secondary">
+                            {filterResult.match({
+                                None: () => (
+                                    <Skeleton
+                                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                    />
+                                ),
+                                Some: (result) => {
+                                    return <span>{result.length} Tokens</span>;
+                                },
+                            })}
+                        </span>
                     </div>
                 </div>
             </div>
