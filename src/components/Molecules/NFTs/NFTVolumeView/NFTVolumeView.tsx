@@ -11,7 +11,7 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTVolumeViewProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
 

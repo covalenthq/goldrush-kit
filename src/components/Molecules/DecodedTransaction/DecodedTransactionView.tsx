@@ -11,7 +11,7 @@ import {
     TypographyH2,
     TypographyH4,
 } from "@/components/ui/typography";
-import { useCovalentChains } from "@/utils/store";
+import { useChains } from "@/utils/store/Chains";
 import { type ChainItem } from "@covalenthq/client-sdk";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -25,7 +25,7 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
     chain_name,
     tx_hash,
 }) => {
-    const { chains } = useCovalentChains();
+    const { chains } = useChains();
 
     const [maybeResult, setResult] = useState<Option<DecodedEventType[]>>(None);
 

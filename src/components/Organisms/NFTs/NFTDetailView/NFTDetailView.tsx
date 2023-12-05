@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
-import { useCovalent } from "@/utils/store";
+import { useCovalent } from "@/utils/store/Covalent";
 import { NFTSalesCountView } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
 import { NFTFloorPriceView } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
 import { type Option, Some, None } from "@/utils/option";

@@ -7,7 +7,7 @@ import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTSalesCountViewProps } from "@/utils/types/molecules.types";
 
 export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
