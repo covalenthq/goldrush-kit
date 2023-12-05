@@ -30,10 +30,17 @@ import { type AddressActivityListViewProps } from "@/utils/types/organisms.types
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({ address, get_all_row_selection, get_row_selection_state, row_selection_state }) => {
+> = ({
+    address,
+    get_all_row_selection,
+    get_row_selection_state,
+    row_selection_state,
+}) => {
     const { covalentClient } = useGoldrush();
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = useState(row_selection_state ? row_selection_state : {});
+    const [rowSelection, setRowSelection] = useState(
+        row_selection_state ? row_selection_state : {}
+    );
     const [maybeResult, setResult] =
         useState<Option<ChainActivityEvent[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
@@ -50,13 +57,12 @@ export const AddressActivityListView: React.FC<
                 if (get_all_row_selection) {
                     get_all_row_selection(chains_selected);
                 }
-            }
+            },
         });
         if (get_row_selection_state) {
             get_row_selection_state(rowSelection);
         }
     }, [maybeResult, rowSelection, row_selection_state]);
-
 
     useEffect(() => {
         (async () => {
@@ -94,7 +100,6 @@ export const AddressActivityListView: React.FC<
             ),
             cell: ({ row }) => (
                 <Checkbox
-
                     checked={row.getIsSelected()}
                     onCheckedChange={(value) => {
                         row.toggleSelected(!!value);
@@ -160,7 +165,7 @@ export const AddressActivityListView: React.FC<
                         {t ? (
                             ""
                         ) : (
-                            <IconWrapper iconClassName="playlist_add_check" />
+                            <IconWrapper icon_class_name="playlist_add_check" />
                         )}
                     </div>
                 );
@@ -255,7 +260,7 @@ export const AddressActivityListView: React.FC<
 
     return (
         <div className="space-y-4 ">
-            <div className="flex flex-wrap gap-2 place-content-between">
+            <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <div className="flex place-content-between items-center space-x-1">
@@ -323,10 +328,10 @@ export const AddressActivityListView: React.FC<
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                header.column.columnDef
-                                                    .header,
-                                                header.getContext()
-                                            )}
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
                                     </TableHead>
                                 );
                             })}

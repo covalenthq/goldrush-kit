@@ -25,7 +25,11 @@
             "@goldrushconfig": ["./goldrush.config.ts"],
             "react-component-library": ["src/index.ts"]
         },
-        "typeRoots": ["./dist/index.d.ts", "node_modules/@types", "./node_modules"],
+        "typeRoots": [
+            "./dist/index.d.ts",
+            "node_modules/@types",
+            "./node_modules"
+        ]
     },
     "include": ["src", "./index.ts"],
     "references": [

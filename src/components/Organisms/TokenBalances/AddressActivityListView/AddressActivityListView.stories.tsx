@@ -12,6 +12,6 @@ export default meta;
 
 export const AddressActivityList: Story = {
     args: {
-        address: "ganeshswami.eth"
+        address: "ganeshswami.eth",
     },
 };

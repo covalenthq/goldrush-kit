@@ -4,7 +4,7 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended"
     ],
-    "plugins": ["react"],
+    "plugins": ["react", "prettier"],
     "rules": {
         "semi": "error",
         "no-multiple-empty-lines": "error",
@@ -27,6 +27,7 @@
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/consistent-type-imports": "error",
         "@typescript-eslint/no-explicit-any": "warn",
+        "prettier/prettier": "error",
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off"
     },

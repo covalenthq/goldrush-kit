@@ -51,13 +51,15 @@ import React from "react";
 import { Preview } from "@storybook/react";
 
 const preview: Preview = {
-  decorators: [
-    (Story) => (
-      <GoldRushProvider apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}>
-        <Story />
-      </GoldRushProvider>
-    ),
-  ],
+    decorators: [
+        (Story) => (
+            <GoldRushProvider
+                apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
+            >
+                <Story />
+            </GoldRushProvider>
+        ),
+    ],
 };
 
 export default preview;
