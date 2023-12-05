@@ -1,7 +1,6 @@
 import "../src/tailwind-output.css";
 import { themes } from "@storybook/theming";
 import { CovalentProvider } from "../src/utils/store/Covalent";
-import { ChainsProvider } from "../src/utils/store/Chains";
 // import { useDarkMode } from 'storybook-dark-mode' // uncomment out this one line for dark mode
 
 export const parameters = {
