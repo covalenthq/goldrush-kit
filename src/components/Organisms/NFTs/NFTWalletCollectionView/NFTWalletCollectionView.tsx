@@ -65,14 +65,15 @@ export const NFTWalletCollectionView: React.FC<
                                     >
                                         <CardContent>
                                             <img
-                                                className={`block h-[10rem] w-full rounded-t ${it.external_data
+                                                className={`block h-[10rem] w-full rounded-t ${
+                                                    it.external_data
                                                         ? "object-cover"
                                                         : "p-2"
-                                                    }`}
+                                                }`}
                                                 src={
                                                     it.external_data
                                                         ? it.external_data
-                                                            .image_512
+                                                              .image_512
                                                         : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
                                                 }
                                                 onError={(e) => {
