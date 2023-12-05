@@ -26,7 +26,7 @@ export interface CovalentProviderProps {
     apikey: string;
 }
 
-export interface IconWrapperPropsType {
+export interface IconWrapperProps {
     class_name?: string;
     icon_class_name?: string;
     on_click?: (e?: React.MouseEvent<HTMLDivElement>) => void;
