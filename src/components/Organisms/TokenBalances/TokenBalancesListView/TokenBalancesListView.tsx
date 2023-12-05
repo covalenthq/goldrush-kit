@@ -41,7 +41,6 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { sum } from "lodash";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useChains } from "@/utils/store/Chains";
 import { useCovalent } from "@/utils/store/Covalent";
 import {
     type CrossChainBalanceItem,
@@ -55,8 +54,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     hide_small_balances,
     on_transfer_click,
 }) => {
-    const { covalentClient } = useCovalent();
-    const { chains } = useChains();
+    const { covalentClient, chains } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
