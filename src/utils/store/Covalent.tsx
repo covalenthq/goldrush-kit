@@ -1,9 +1,10 @@
-import { createContext, useContext, useMemo } from "react";
-import { CovalentClient } from "@covalenthq/client-sdk";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { ChainItem, CovalentClient } from "@covalenthq/client-sdk";
 import { Toaster } from "@/components/ui/toaster";
 
 interface CovalentContextType {
     covalentClient: CovalentClient;
+    chains: ChainItem[] | null;
 }
 
 interface CovalentProviderProps {
@@ -23,9 +24,22 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
         () => new CovalentClient(apikey),
         [apikey]
     );
+    const [chains, setChains] = useState<ChainItem[] | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const allChainsResp =
+                    await covalentClient.BaseService.getAllChains();
+                setChains(allChainsResp.data.items);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+    }, []);
 
     return (
-        <CovalentContext.Provider value={{ covalentClient: covalentClient }}>
+        <CovalentContext.Provider value={{ covalentClient: covalentClient, chains: chains  }}>
             {children}
             <Toaster />
         </CovalentContext.Provider>
@@ -33,3 +47,4 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
 };
 
 export const useCovalent = () => useContext(CovalentContext);
+

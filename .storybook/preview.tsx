@@ -57,9 +57,7 @@ const preview: Preview = {
             <CovalentProvider
                 apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
             >
-                <ChainsProvider>
-                    <Story />
-                </ChainsProvider>
+                <Story />
             </CovalentProvider>
         ),
     ],
