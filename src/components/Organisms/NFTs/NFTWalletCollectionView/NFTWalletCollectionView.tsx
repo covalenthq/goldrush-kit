@@ -173,7 +173,7 @@ export const NFTWalletCollectionView: React.FC<
                             </div>
                         </div>
                     </div>
-                    <div className="flex gap-8 flex-col">{body}</div>
+                    <div className="flex flex-col gap-8">{body}</div>
                 </div>
             );
         },
