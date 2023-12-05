@@ -12,9 +12,7 @@ export default meta;
 
 export const NFTWalletTokenList: Story = {
     args: {
-        chain_names: [
-            "eth-mainnet",
-        ],
+        chain_names: ["eth-mainnet"],
         address: "0x1ae705a28f1cca0363b5d709159220aa2fe551de",
     },
 };
@@ -29,6 +27,5 @@ export const MultiChainNFTWalletTokenList: Story = {
             "optimism-mainnet",
         ],
         address: "0x1ae705a28f1cca0363b5d709159220aa2fe551de",
-    }
+    },
 };
-

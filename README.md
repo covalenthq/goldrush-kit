@@ -113,13 +113,13 @@ Be sure to secure your key to prevent unauthorized use in the Covalent platform 
     <AddressActivityListView address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
     <NFTWalletTokenListView
         address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-          chain_names={[
-              "eth-mainnet",
-              "matic-mainnet",
-              "bsc-mainnet",
-              "avalanche-mainnet",
-              "optimism-mainnet",
-          ]}
+        chain_names={[
+            "eth-mainnet",
+            "matic-mainnet",
+            "bsc-mainnet",
+            "avalanche-mainnet",
+            "optimism-mainnet",
+        ]}
     />
 </GoldRushProvider>
 ```
