@@ -4,10 +4,6 @@ import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
 import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
-import {
-    calculatePrettyBalance,
-    prettifyCurrency,
-} from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CURRENCY,
@@ -16,9 +12,10 @@ import {
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type NFTFloorPriceViewProps } from "@/utils/types/molecules.types";
+import { type NFTVolumeProps } from "@/utils/types/molecules.types";
+import { prettifyCurrency } from "@covalenthq/client-sdk";
 
-export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
+export const NFTVolume: React.FC<NFTVolumeProps> = ({
     chain_name,
     collection_address,
 }) => {
@@ -32,34 +29,28 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
     useEffect(() => {
         (async () => {
             setResult(None);
-
-            const response =
-                await covalentClient.NftService.getNftMarketFloorPrice(
-                    chain_name,
-                    collection_address,
-                    { days: period }
-                );
-
+            const response = await covalentClient.NftService.getNftMarketVolume(
+                chain_name,
+                collection_address,
+                { days: period }
+            );
             setColor(rootColor());
+
             setResult(
                 new Some(
                     response.data.items.map((x: any) => {
                         const dt = timestampParser(x.date, "DD MMM YY");
                         return {
                             date: dt,
-                            [`Floor price (${x.native_ticker_symbol})`]:
-                                calculatePrettyBalance(
-                                    Number(x.floor_price_native_quote) *
-                                        Math.pow(10, 18)
-                                ),
-                            "Floor price (USD)": x.floor_price_quote,
-                            pretty_floor_price_quote:
-                                x.pretty_floor_price_quote,
+                            [`Volume (${x.native_ticker_symbol})`]: Number(
+                                x.volume_native_quote.toFixed(4)
+                            ),
+                            "Volume (USD)": x.volume_quote,
+                            pretty_volume_quote: x.pretty_volume_quote,
                         };
                     })
                 )
             );
-
             setNativeCurrency(
                 new Some(response.data.items[0].native_ticker_symbol)
             );
@@ -76,7 +67,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
         },
         Some: (result) => {
             const floor_price_native =
-                "Floor price (" +
+                "Volume (" +
                 nativeCurrency.match({ None: () => "", Some: (n) => n }) +
                 ")";
             return (
@@ -92,11 +83,10 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
                         }
                         categories={[
                             currency === CURRENCY.USD
-                                ? "Floor price (USD)"
+                                ? "Volume (USD)"
                                 : floor_price_native,
                         ]}
                         colors={chartColor ? [chartColor] : CHART_COLORS}
-                        yAxisWidth={80}
                     />
                 </div>
             );
@@ -106,7 +96,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
     return (
         <div className="rounded border p-4">
             <div className="pb-4">
-                <TypographyH4>Floor Price</TypographyH4>
+                <TypographyH4>Volume</TypographyH4>
             </div>
 
             <div className="flex justify-between">
@@ -123,8 +113,8 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
                     {maybeResult.match({
                         None: () => (
                             <Button
-                                variant={"outline"}
                                 disabled={!maybeResult.isDefined}
+                                variant={"outline"}
                             >
                                 ETH
                             </Button>
@@ -149,28 +139,28 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
                 </div>
                 <div className="flex gap-2">
                     <Button
+                        disabled={!maybeResult.isDefined}
                         variant={
                             period === PERIOD.DAYS_7 ? "accent" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_7)}
-                        disabled={!maybeResult.isDefined}
                     >
                         7 days
                     </Button>
                     <Button
+                        disabled={!maybeResult.isDefined}
                         variant={
                             period === PERIOD.DAYS_30 ? "accent" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_30)}
-                        disabled={!maybeResult.isDefined}
                     >
                         30 days
                     </Button>
                     <Button
+                        disabled={!maybeResult.isDefined}
                         variant={
                             period === PERIOD.DAYS_90 ? "accent" : "outline"
                         }
-                        disabled={!maybeResult.isDefined}
                         onClick={() => setPeriod(PERIOD.DAYS_90)}
                     >
                         90 days

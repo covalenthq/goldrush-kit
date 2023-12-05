@@ -1,16 +1,16 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { AddressAvatarView } from "./AddressAvatarView";
+import { AddressAvatar as AddressAvatarComponent } from "./AddressAvatar";
 import { type AddressAvatarProps } from "@/utils/types/atoms.types";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
-const meta: Meta<typeof AddressAvatarView> = {
+const meta: Meta<typeof AddressAvatarComponent> = {
     title: "Atoms/Address Avatar",
-    component: AddressAvatarView,
+    component: AddressAvatarComponent,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof AddressAvatarView>;
+type Story = StoryObj<typeof AddressAvatarComponent>;
 
 export const AddressAvatar: Story = {
     args: {
@@ -22,7 +22,7 @@ export const AddressAvatar: Story = {
         return (
             <>
                 <div className="m-1">
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={size}
                         type={type}
@@ -31,27 +31,27 @@ export const AddressAvatar: Story = {
                 </div>
 
                 <div className="m-1 mt-20 flex gap-1">
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={GRK_SIZES.LARGE}
                         type={"effigy"}
                     />
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={GRK_SIZES.MEDIUM}
                         type={"wallet"}
                     />
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={GRK_SIZES.SMALL}
                         type={"effigy"}
                     />
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={GRK_SIZES.EXTRA_SMALL}
                         type={"fingerprint"}
                     />
-                    <AddressAvatarView
+                    <AddressAvatarComponent
                         address={address}
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                         type={"wallet"}

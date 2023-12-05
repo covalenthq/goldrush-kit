@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
-import { NFTSalesCountView } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
-import { NFTFloorPriceView } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
+import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCount/NFTSalesCount";
+import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPrice/NFTFloorPrice";
 import { type Option, Some, None } from "@/utils/option";
 import { type NFTDetailsViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
@@ -74,14 +74,14 @@ export const NFTDetailsView: React.FC<NFTDetailsViewProps> = ({
 
                     <div className="mt-4 flex place-content-between space-x-4">
                         <div className=" w-[50%]">
-                            <NFTSalesCountView
+                            <NFTSalesCount
                                 chain_name={chain_name}
                                 collection_address={collection_address}
                                 token_id={token_id}
                             />
                         </div>
                         <div className=" w-[50%]">
-                            <NFTFloorPriceView
+                            <NFTFloorPrice
                                 chain_name={chain_name}
                                 collection_address={collection_address}
                                 token_id={token_id}

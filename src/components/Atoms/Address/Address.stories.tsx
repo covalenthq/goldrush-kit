@@ -1,14 +1,14 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { AddressView } from "./AddressView";
+import { Address as AddressComponent } from "./Address";
 
-const meta: Meta<typeof AddressView> = {
+const meta: Meta<typeof AddressComponent> = {
     title: "Atoms/Address",
-    component: AddressView,
+    component: AddressComponent,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof AddressView>;
+type Story = StoryObj<typeof AddressComponent>;
 
 export const Address: Story = {
     args: {

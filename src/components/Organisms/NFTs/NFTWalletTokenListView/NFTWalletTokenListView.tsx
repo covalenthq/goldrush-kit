@@ -14,11 +14,11 @@ import {
 } from "@/components/ui/card";
 import flatMap from "lodash/flatMap";
 import sum from "lodash/sum";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
-import { TokenAvatarView } from "@/components/Atoms/TokenAvatar/TokenAvatarView";
+import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 
 export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     chain_names,
@@ -140,7 +140,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                     borderColor: `${chainColor}`,
                                                 }}
                                             >
-                                                <TokenAvatarView
+                                                <TokenAvatar
                                                     is_chain_logo
                                                     size={GRK_SIZES.EXTRA_SMALL}
                                                     chain_color={chainColor}
@@ -181,7 +181,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
             return (
                 <div className="space-y-4 ">
                     <div className="flex flex-wrap place-content-between gap-2 ">
-                        <AccountCardView address={address} />
+                        <AccountCard address={address} />
 
                         <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                             <h2 className="text-md  text-secondary ">
