@@ -462,7 +462,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCardView address={address} />
                 <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
-                    <div className="flex items-center space-x-1">
+                    <div className="items-center space-x-1">
                         <span>Network</span>
                         <div className="float-right">
                             <div className="flex">
