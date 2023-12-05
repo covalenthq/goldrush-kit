@@ -6,7 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { type AddressAvatarProps } from "@/utils/types/atoms.types";
 import { useMemo } from "react";
 
-export const AddressAvatar: React.FC<AddressAvatarProps> = ({
+export const AddressAvatarView: React.FC<AddressAvatarProps> = ({
     address,
     type,
     size,

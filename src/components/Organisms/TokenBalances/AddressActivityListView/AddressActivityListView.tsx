@@ -21,9 +21,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatarView } from "@/components/Atoms/TokenAvatar/TokenAvatarView";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
@@ -122,7 +122,7 @@ export const AddressActivityListView: React.FC<
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-x-1 ">
-                        <TokenAvatar
+                        <TokenAvatarView
                             is_chain_logo={true}
                             token_url={row.original.logo_url}
                             size={GRK_SIZES.EXTRA_EXTRA_SMALL}

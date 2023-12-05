@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { type TokenAvatarProps } from "@/utils/types/atoms.types";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
-export const TokenAvatar: React.FC<TokenAvatarProps> = ({
+export const TokenAvatarView: React.FC<TokenAvatarProps> = ({
     token_url,
     sub_url,
     size,

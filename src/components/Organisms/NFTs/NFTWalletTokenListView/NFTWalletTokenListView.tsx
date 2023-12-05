@@ -18,7 +18,7 @@ import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountC
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatarView } from "@/components/Atoms/TokenAvatar/TokenAvatarView";
 
 export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     chain_names,
@@ -140,7 +140,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                     borderColor: `${chainColor}`,
                                                 }}
                                             >
-                                                <TokenAvatar
+                                                <TokenAvatarView
                                                     is_chain_logo
                                                     size={GRK_SIZES.EXTRA_SMALL}
                                                     chain_color={chainColor}

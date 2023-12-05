@@ -1,8 +1,8 @@
 import { copyToClipboard, truncate } from "@/utils/functions";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { type AddressProps } from "@/utils/types/atoms.types";
 
-export const Address: React.FC<AddressProps> = ({ address }) => {
+export const AddressView: React.FC<AddressProps> = ({ address }) => {
     return (
         <div className="flex items-center gap-x-2">
             <p>{truncate(address)}</p>

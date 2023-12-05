@@ -4,11 +4,11 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { NFTSalesCountView } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
 import { NFTFloorPriceView } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
 import { type Option, Some, None } from "@/utils/option";
-import { type NFTDetailViewProps } from "@/utils/types/organisms.types";
+import { type NFTDetailsViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
-export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
+export const NFTDetailsView: React.FC<NFTDetailsViewProps> = ({
     chain_name,
     collection_address,
     token_id,

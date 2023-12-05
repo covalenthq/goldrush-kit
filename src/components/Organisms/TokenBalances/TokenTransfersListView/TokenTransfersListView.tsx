@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatarView } from "../../../Atoms/TokenAvatar/TokenAvatarView";
 import {
     timestampParser,
     truncate,
@@ -44,8 +44,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { AddressAvatarView } from "@/components/Atoms/AddressAvatar/AddressAvatarView";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {
     type TokenTransfersListViewProps,
@@ -99,7 +99,7 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-x-1">
-                    <AddressAvatar
+                    <AddressAvatarView
                         size={GRK_SIZES.EXTRA_SMALL}
                         type="fingerprint"
                         address={row.getValue("from_address")}
@@ -115,7 +115,7 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-x-1">
-                    <AddressAvatar
+                    <AddressAvatarView
                         size={GRK_SIZES.EXTRA_SMALL}
                         type="fingerprint"
                         address={row.getValue("to_address")}
@@ -480,7 +480,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                             ) ?? null;
                                         return (
                                             <>
-                                                <TokenAvatar
+                                                <TokenAvatarView
                                                     is_chain_logo
                                                     token_url={chain?.logo_url}
                                                     size={
@@ -510,7 +510,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                     Some: (result) => {
                                         return (
                                             <>
-                                                <TokenAvatar
+                                                <TokenAvatarView
                                                     token_url={result.logo_url}
                                                     size={
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
