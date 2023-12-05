@@ -7,7 +7,7 @@ import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTSalesCountViewProps } from "@/utils/types/molecules.types";
 
 export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
@@ -17,7 +17,7 @@ export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
     const [maybeResult, setResult] = useState<Option<any[]>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [chartColor, setColor] = useState<any>("");
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
 
     useEffect(() => {
         (async () => {
