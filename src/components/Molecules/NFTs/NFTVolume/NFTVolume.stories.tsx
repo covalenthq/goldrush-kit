@@ -1,17 +1,17 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { NFTFloorPriceView } from "./NFTFloorPriceView";
+import { NFTVolume as NFTVolumeView } from "./NFTVolume";
 import { NFT_COLLECTIONS } from "@/utils/constants/shared.constants";
 
-type Story = StoryObj<typeof NFTFloorPriceView>;
+type Story = StoryObj<typeof NFTVolumeView>;
 
-const meta: Meta<typeof NFTFloorPriceView> = {
+const meta: Meta<typeof NFTVolumeView> = {
     title: "Molecules/NFTs",
-    component: NFTFloorPriceView,
+    component: NFTVolumeView,
 };
 
 export default meta;
 
-export const NFTFloorPrice: Story = {
+export const NFTVolume: Story = {
     args: {
         chain_name: "eth-mainnet",
         collection_address: NFT_COLLECTIONS["BAYC"],

@@ -8,9 +8,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type NFTSalesCountViewProps } from "@/utils/types/molecules.types";
+import { type NFTSalesCountProps } from "@/utils/types/molecules.types";
 
-export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
+export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
     chain_name,
     collection_address,
 }) => {

@@ -1,12 +1,12 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { NFTSalesCountView } from "./NFTSalesCountView";
+import { NFTSalesCount as NFTSalesCountComponent } from "./NFTSalesCount";
 import { NFT_COLLECTIONS } from "@/utils/constants/shared.constants";
 
-type Story = StoryObj<typeof NFTSalesCountView>;
+type Story = StoryObj<typeof NFTSalesCountComponent>;
 
-const meta: Meta<typeof NFTSalesCountView> = {
+const meta: Meta<typeof NFTSalesCountComponent> = {
     title: "Molecules/NFTs",
-    component: NFTSalesCountView,
+    component: NFTSalesCountComponent,
 };
 
 export default meta;

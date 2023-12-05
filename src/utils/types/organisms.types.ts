@@ -5,7 +5,7 @@ import {
     type Chain,
 } from "@covalenthq/client-sdk";
 
-export interface NFTDetailViewProps {
+export interface NFTDetailsViewProps {
     chain_name: Chain;
     collection_address: string;
     token_id: string;

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { TypographyH3 } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sum } from "lodash";
@@ -119,7 +119,7 @@ export const NFTWalletCollectionView: React.FC<
             return (
                 <div className="space-y-4 ">
                     <div className="flex flex-wrap place-content-between gap-2">
-                        <AccountCardView address={address} />
+                        <AccountCard address={address} />
 
                         <div className="w-full rounded border p-2 md:w-min lg:w-min">
                             <h2 className="text-base font-semibold  text-secondary ">
