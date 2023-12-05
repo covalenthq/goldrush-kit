@@ -1,4 +1,3 @@
-import { type AddressAvatarProps } from "@/utils/types/atoms.types";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,7 +6,7 @@ import { COLORS, GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useTheme } from "@/utils/store";
 import { Button } from "../ui/button";
 
-export const ThemeConfigView: React.FC<AddressAvatarProps> = ({}) => {
+export const ThemeConfigView: React.FC = () => {
     const { changeAccent, changeMode, changeStyle } = useTheme();
 
     const ACCENTS_500 = useMemo<string[][]>(() => {
