@@ -650,7 +650,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     />
                                 ),
                                 Some: (result) => {
-                                    return <span>{result.length} Tokens</span>;
+                                    return (
+                                        <span>({result.length} Tokens)</span>
+                                    );
                                 },
                             })}
                         </span>
