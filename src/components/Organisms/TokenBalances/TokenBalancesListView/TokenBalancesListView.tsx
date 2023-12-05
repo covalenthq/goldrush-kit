@@ -41,7 +41,8 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { sum } from "lodash";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useChains } from "@/utils/store/Chains";
+import { useCovalent } from "@/utils/store/Covalent";
 import {
     type CrossChainBalanceItem,
     type TokenBalancesListViewProps,
@@ -54,6 +55,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     hide_small_balances,
     on_transfer_click,
 }) => {
+    const { covalentClient } = useCovalent();
+    const { chains } = useChains();
+
     const [sorting, setSorting] = useState<SortingState>([
         {
             id: "pretty_quote",
@@ -63,17 +67,10 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] =
         useState<Option<CrossChainBalanceItem[]>>(None);
-    const { covalentClient } = useGoldrush();
     const [error, setError] = useState({ error: false, error_message: "" });
-    const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
     const [filterResult, setFilterResult] =
         useState<Option<CrossChainBalanceItem[]>>(None);
-    const [windowWidth, setWindowWidth] = useState(0);
-
-    const handleAllChains = async () => {
-        const allChainsResp = await covalentClient.BaseService.getAllChains();
-        setAllChains(new Some(allChainsResp.data.items));
-    };
+    const [windowWidth, setWindowWidth] = useState<number>(0);
 
     const handleTokenBalances = async (_address: string) => {
         const promises = chain_names.map(async (chain) => {
@@ -104,8 +101,6 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     };
 
     useEffect(() => {
-        handleAllChains();
-
         setWindowWidth(window.innerWidth);
 
         const handleResize = () => {
@@ -182,41 +177,34 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 />
             ),
             cell: ({ row }) => {
-                return allChains.match({
-                    None: () => <></>,
-                    Some: (chains) => {
-                        const chain: ChainItem = chains.filter(
-                            (o) => o.name === row.original.chain
-                        )[0];
-                        const chainColor = chain.color_theme.hex;
-                        const chain_label = (
-                            chain?.label ? chain.label : "FIXME"
-                        ).replace(" Mainnet", "");
-                        const protocol_url =
-                            row.original.logo_urls.protocol_logo_url;
+                const chain: ChainItem | null =
+                    chains?.find((o) => o.name === row.original.chain) ?? null;
+                const chainColor = chain?.color_theme.hex;
+                const chain_label = (
+                    chain?.label ? chain.label : "FIXME"
+                ).replace(" Mainnet", "");
+                const protocol_url = row.original.logo_urls.protocol_logo_url;
 
-                        return (
-                            <div className="flex items-center gap-3 ">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    chain_color={chainColor}
-                                    sub_url={protocol_url}
-                                    token_url={row.original.logo_url}
-                                />
-                                <div className="flex flex-col">
-                                    <div style={{ color: chainColor }}>
-                                        {chain_label}
-                                    </div>
-                                    <label className="text-base">
-                                        {row.original.contract_display_name
-                                            ? row.original.contract_display_name
-                                            : "FIXME"}
-                                    </label>
-                                </div>
+                return (
+                    <div className="flex items-center gap-3">
+                        <TokenAvatar
+                            size={GRK_SIZES.EXTRA_SMALL}
+                            chain_color={chainColor}
+                            sub_url={protocol_url}
+                            token_url={row.original.logo_url}
+                        />
+                        <div className="flex flex-col">
+                            <div style={{ color: chainColor }}>
+                                {chain_label}
                             </div>
-                        );
-                    },
-                });
+                            <label className="text-base">
+                                {row.original.contract_display_name
+                                    ? row.original.contract_display_name
+                                    : "FIXME"}
+                            </label>
+                        </div>
+                    </div>
+                );
             },
         },
         {
@@ -423,45 +411,36 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                     maximumFractionDigits: 4,
                 });
 
-                return allChains.match({
-                    None: () => <></>,
-                    Some: (chains) => {
-                        const chain: ChainItem = chains.filter(
-                            (o) => o.name === row.original.chain
-                        )[0];
-                        const chainColor = chain.color_theme.hex;
-                        const chain_label = (
-                            chain?.label ? chain.label : "FIXME"
-                        ).replace(" Mainnet", "");
-                        const protocol_url =
-                            row.original.logo_urls.protocol_logo_url;
+                const chain: ChainItem | null =
+                    chains?.find((o) => o.name === row.original.chain) ?? null;
+                const chainColor = chain?.color_theme.hex;
+                const chain_label = (
+                    chain?.label ? chain.label : "FIXME"
+                ).replace(" Mainnet", "");
+                const protocol_url = row.original.logo_urls.protocol_logo_url;
 
-                        return (
-                            <div className="flex items-center gap-3">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    chain_color={chainColor}
-                                    sub_url={protocol_url}
-                                    token_url={row.original.logo_url}
-                                />
-                                <div className="flex flex-col gap-1">
-                                    <div style={{ color: chainColor }}>
-                                        {chain_label}
-                                    </div>
-                                    <label className="text-base">
-                                        {row.getValue("contract_display_name")}
-                                    </label>
-                                    <div className="text-secondary">
-                                        {!mask_balances
-                                            ? formattedNumber
-                                            : "*****"}{" "}
-                                        {row.original.contract_ticker_symbol}
-                                    </div>
-                                </div>
+                return (
+                    <div className="flex items-center gap-3">
+                        <TokenAvatar
+                            size={GRK_SIZES.EXTRA_SMALL}
+                            chain_color={chainColor}
+                            sub_url={protocol_url}
+                            token_url={row.original.logo_url}
+                        />
+                        <div className="flex flex-col gap-1">
+                            <div style={{ color: chainColor }}>
+                                {chain_label}
                             </div>
-                        );
-                    },
-                });
+                            <label className="text-base">
+                                {row.getValue("contract_display_name")}
+                            </label>
+                            <div className="text-secondary">
+                                {!mask_balances ? formattedNumber : "*****"}{" "}
+                                {row.original.contract_ticker_symbol}
+                            </div>
+                        </div>
+                    </div>
+                );
             },
         },
         {
@@ -663,23 +642,20 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex  text-sm text-secondary">
-                            <span className="flex">
-                                {" "}
-                                (
-                                {filterResult.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        return <span>{result.length}</span>;
-                                    },
-                                })}{" "}
-                            </span>
-                            Tokens)
-                        </div>
+                        <span className="flex text-sm text-secondary">
+                            {filterResult.match({
+                                None: () => (
+                                    <Skeleton
+                                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                    />
+                                ),
+                                Some: (result) => {
+                                    return (
+                                        <span>({result.length} Tokens)</span>
+                                    );
+                                },
+                            })}
+                        </span>
                     </div>
                 </div>
             </div>

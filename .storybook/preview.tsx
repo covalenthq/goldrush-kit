@@ -1,6 +1,7 @@
 import "../src/tailwind-output.css";
 import { themes } from "@storybook/theming";
-import { GoldRushProvider } from "../src/utils/store/Goldrush";
+import { CovalentProvider } from "../src/utils/store/Covalent";
+import { ChainsProvider } from "../src/utils/store/Chains";
 // import { useDarkMode } from 'storybook-dark-mode' // uncomment out this one line for dark mode
 
 export const parameters = {
@@ -53,11 +54,13 @@ import { Preview } from "@storybook/react";
 const preview: Preview = {
     decorators: [
         (Story) => (
-            <GoldRushProvider
+            <CovalentProvider
                 apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
             >
-                <Story />
-            </GoldRushProvider>
+                <ChainsProvider>
+                    <Story />
+                </ChainsProvider>
+            </CovalentProvider>
         ),
     ],
 };

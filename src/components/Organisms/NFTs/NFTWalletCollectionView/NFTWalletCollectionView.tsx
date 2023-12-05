@@ -16,15 +16,15 @@ import { Badge } from "@/components/ui/badge";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
-import sum from "lodash/sum";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { sum } from "lodash";
+import { useCovalent } from "@/utils/store/Covalent";
 
 export const NFTWalletCollectionView: React.FC<
     NFTWalletCollectionViewProps
 > = ({ chain_name, address }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
 
     useEffect(() => {
         async function getData() {
