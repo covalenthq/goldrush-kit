@@ -1,10 +1,15 @@
+import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCovalent } from "./Covalent";
 import { type ChainItem } from "@covalenthq/client-sdk";
-import {
-    type ChainsProviderProps,
-    type ChainsType,
-} from "../types/shared.types";
+
+interface ChainsType {
+    chains: ChainItem[] | null;
+}
+
+interface ChainsProviderProps {
+    children: ReactNode;
+}
 
 const ChainsContext = createContext<ChainsType>({} as ChainsType);
 

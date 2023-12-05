@@ -1,10 +1,15 @@
 import { createContext, useContext, useMemo } from "react";
 import { CovalentClient } from "@covalenthq/client-sdk";
 import { Toaster } from "@/components/ui/toaster";
-import {
-    type CovalentContextType,
-    type CovalentProviderProps,
-} from "../types/shared.types";
+
+interface CovalentContextType {
+    covalentClient: CovalentClient;
+}
+
+interface CovalentProviderProps {
+    children: React.ReactNode;
+    apikey: string;
+}
 
 const CovalentContext = createContext<CovalentContextType>(
     {} as CovalentContextType

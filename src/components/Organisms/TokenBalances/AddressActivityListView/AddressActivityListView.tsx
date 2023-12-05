@@ -25,7 +25,7 @@ import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
 
 export const AddressActivityListView: React.FC<

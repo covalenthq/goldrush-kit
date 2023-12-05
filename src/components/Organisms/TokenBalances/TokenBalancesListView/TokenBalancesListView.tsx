@@ -41,8 +41,8 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { sum } from "lodash";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useChains, useCovalent } from "@/utils/store";
-
+import { useChains } from "@/utils/store/Chains";
+import { useCovalent } from "@/utils/store/Covalent";
 import {
     type CrossChainBalanceItem,
     type TokenBalancesListViewProps,

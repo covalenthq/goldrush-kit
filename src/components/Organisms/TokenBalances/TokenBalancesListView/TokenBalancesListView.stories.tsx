@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from "@storybook/react";
 import { TokenBalancesListView } from "./TokenBalancesListView";
 import { useEffect, useState } from "react";
 import { type Option, None, Some } from "@/utils/option";
-import { useCovalent } from "@/utils/store";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type TokenBalancesListViewProps } from "@/utils/types/organisms.types";
 
 type Story = StoryObj<typeof TokenBalancesListView>;
