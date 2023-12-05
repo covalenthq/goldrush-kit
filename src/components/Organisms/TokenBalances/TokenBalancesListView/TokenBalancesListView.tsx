@@ -66,7 +66,6 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     const { covalentClient } = useGoldrush();
     const [error, setError] = useState({ error: false, error_message: "" });
     const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
-
     const [filterResult, setFilterResult] =
         useState<Option<CrossChainBalanceItem[]>>(None);
     const [windowWidth, setWindowWidth] = useState(0);

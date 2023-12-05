@@ -109,7 +109,7 @@
     @apply bg-slate-900;
     @apply !text-white;
 }
-:root.dark > body * {
+:root.dark > body *:not(.tokenAvatar) {
     @apply !border-slate-700;
 }
 
