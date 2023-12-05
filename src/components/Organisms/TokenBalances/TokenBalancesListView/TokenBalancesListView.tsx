@@ -186,7 +186,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 const protocol_url = row.original.logo_urls.protocol_logo_url;
 
                 return (
-                    <div className="flex items-center gap-3 ">
+                    <div className="flex items-center gap-3">
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
