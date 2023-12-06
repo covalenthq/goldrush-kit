@@ -1,5 +1,5 @@
 import { type Column } from "@tanstack/react-table";
-import { IconWrapper } from "../Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "../Shared";
 
 export interface TableHeaderSortingProps {
     header_name: string;

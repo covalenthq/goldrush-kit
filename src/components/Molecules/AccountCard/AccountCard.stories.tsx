@@ -1,11 +1,11 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { AccountCardView } from "./AccountCardView";
+import { AccountCard as AccountCardComponent } from "./AccountCard";
 
-type Story = StoryObj<typeof AccountCardView>;
+type Story = StoryObj<typeof AccountCardComponent>;
 
-const meta: Meta<typeof AccountCardView> = {
+const meta: Meta<typeof AccountCardComponent> = {
     title: "Molecules",
-    component: AccountCardView,
+    component: AccountCardComponent,
 };
 
 export default meta;

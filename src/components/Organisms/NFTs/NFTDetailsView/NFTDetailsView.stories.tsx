@@ -1,16 +1,16 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { NFTDetailView } from "./NFTDetailView";
+import { NFTDetailsView } from "./NFTDetailsView";
 
-type Story = StoryObj<typeof NFTDetailView>;
+type Story = StoryObj<typeof NFTDetailsView>;
 
-const meta: Meta<typeof NFTDetailView> = {
+const meta: Meta<typeof NFTDetailsView> = {
     title: "Organisms/NFTs",
-    component: NFTDetailView,
+    component: NFTDetailsView,
 };
 
 export default meta;
 
-export const NFTDetail: Story = {
+export const NFTDetails: Story = {
     args: {
         chain_name: "eth-mainnet",
         collection_address: "0xe785e82358879f061bc3dcac6f0444462d4b5330",

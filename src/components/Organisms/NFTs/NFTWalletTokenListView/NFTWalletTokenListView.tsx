@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import flatMap from "lodash/flatMap";
 import sum from "lodash/sum";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
@@ -78,7 +78,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     return (
         <div className="space-y-4 ">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                <AccountCard address={address} />
 
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <h2 className="text-base font-semibold  text-secondary ">
@@ -107,7 +107,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex  gap-1  text-sm text-secondary ">
+                        <div className="flex gap-1 text-sm text-secondary">
                             <span className="flex">
                                 {" "}
                                 (
