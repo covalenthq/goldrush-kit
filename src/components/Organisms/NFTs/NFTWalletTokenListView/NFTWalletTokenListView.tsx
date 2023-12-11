@@ -36,6 +36,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     };
 
     const handleNftsToken = async () => {
+        setResult(None);
         const promises = chain_names.map(async (chain) => {
             const allowedCacheChains = [
                 "bsc-mainnet",
