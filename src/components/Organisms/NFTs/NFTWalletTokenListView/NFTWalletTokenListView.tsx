@@ -98,12 +98,17 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 ),
                                 Some: (result) => {
                                     const s = sum(
-                                        result.map(
-                                            (x) => x.floor_price_quote
-                                        )
+                                        result.map((x) => x.floor_price_quote)
                                     );
                                     return (
-                                        <span>{prettifyCurrency(s, 2, "USD", true)}</span>
+                                        <span>
+                                            {prettifyCurrency(
+                                                s,
+                                                2,
+                                                "USD",
+                                                true
+                                            )}
+                                        </span>
                                     );
                                 },
                             })}
@@ -115,15 +120,11 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 {maybeResult.match({
                                     None: () => (
                                         <Skeleton
-                                            size={
-                                                GRK_SIZES.EXTRA_EXTRA_SMALL
-                                            }
+                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                                         />
                                     ),
                                     Some: (result) => {
-                                        return (
-                                            <span>{result.length}</span>
-                                        );
+                                        return <span>{result.length}</span>;
                                     },
                                 })}{" "}
                             </span>
@@ -135,9 +136,16 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
 
             <div className="flex flex-wrap gap-8">
                 {maybeResult.match({
-                    None: () => [1,2,3,4,5,6,7,8].map((o,i) => {
-                        return <Skeleton key={i} isNFT size={GRK_SIZES.EXTRA_EXTRA_SMALL} />;
-                    }),
+                    None: () =>
+                        [1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {
+                            return (
+                                <Skeleton
+                                    key={i}
+                                    isNFT
+                                    size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                />
+                            );
+                        }),
                     Some: (result: any) => {
                         if (error.error) {
                             return <>{error.error_message}</>;
@@ -149,10 +157,13 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                     return allChains.match({
                                         None: () => <></>,
                                         Some: (chains) => {
-                                            const chain: ChainItem = chains.filter(
-                                                (o) => o.name === items.chain
-                                            )[0];
-                                            const chainColor = chain.color_theme.hex;
+                                            const chain: ChainItem =
+                                                chains.filter(
+                                                    (o) =>
+                                                        o.name === items.chain
+                                                )[0];
+                                            const chainColor =
+                                                chain.color_theme.hex;
                                             const isDarkMode =
                                                 document.documentElement.classList.contains(
                                                     "dark"
@@ -162,13 +173,16 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                     <CardContent className="relative rounded bg-slate-100">
                                                         <img
                                                             className={`block h-[10rem] w-full rounded-t ${
-                                                                it.external_data?.image_512
+                                                                it.external_data
+                                                                    ?.image_512
                                                                     ? "object-cover"
                                                                     : "p-2"
                                                             }`}
                                                             src={
-                                                                it.external_data?.image_512
-                                                                    ? it.external_data
+                                                                it.external_data
+                                                                    ?.image_512
+                                                                    ? it
+                                                                          .external_data
                                                                           .image_512
                                                                     : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
                                                             }
@@ -196,19 +210,28 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                         >
                                                             <TokenAvatar
                                                                 is_chain_logo
-                                                                size={GRK_SIZES.EXTRA_SMALL}
-                                                                chain_color={chainColor}
-                                                                token_url={chain.logo_url}
+                                                                size={
+                                                                    GRK_SIZES.EXTRA_SMALL
+                                                                }
+                                                                chain_color={
+                                                                    chainColor
+                                                                }
+                                                                token_url={
+                                                                    chain.logo_url
+                                                                }
                                                             />
                                                         </div>
                                                     </CardContent>
                                                     <div className="p-4">
                                                         <CardDescription>
                                                             {" "}
-                                                            {items.contract_name}
+                                                            {
+                                                                items.contract_name
+                                                            }
                                                         </CardDescription>
                                                         <CardTitle className="truncate">
-                                                            #{it.token_id?.toString()}
+                                                            #
+                                                            {it.token_id?.toString()}
                                                         </CardTitle>
                                                         <div className="mt-2">
                                                             <small className="text-muted-foreground">
@@ -219,7 +242,9 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                                 {items.pretty_floor_price_quote ? (
                                                                     items.pretty_floor_price_quote
                                                                 ) : (
-                                                                    <span>-</span>
+                                                                    <span>
+                                                                        -
+                                                                    </span>
                                                                 )}
                                                             </p>
                                                         </div>
@@ -231,9 +256,8 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 });
                             });
                         }
-                    }
+                    },
                 })}
-                
             </div>
         </div>
     );
