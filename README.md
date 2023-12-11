@@ -1,8 +1,8 @@
 <div align="center">
   <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png">
-    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/goldrush-kit-logo.png" width="280"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/goldrush-kit-logo.png">
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/goldrush-kit-logo.png" width="280"/>
   </picture>
   </a>
 </div>
@@ -87,9 +87,13 @@ Here's a full example to get you started. If you're using `next.js` versions `^1
 Be sure to secure your key to prevent unauthorized use in the Covalent platform by restricting usage to specific URLs.
 
 ```tsx
-// 'use client'; 
+// 'use client';
 // If using Next.js, put your API key in a .env.local file
-<GoldRushProvider apikey={process.env.NEXT_PUBLIC_API_KEY} mode="dark" color="emerald">
+<GoldRushProvider
+    apikey={process.env.NEXT_PUBLIC_API_KEY}
+    mode="dark"
+    color="emerald"
+>
     <TokenBalancesListView
         chain_names={[
             "eth-mainnet",
@@ -109,10 +113,24 @@ Be sure to secure your key to prevent unauthorized use in the Covalent platform 
     <AddressActivityListView address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
     <NFTWalletTokenListView
         address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-        chain_name="eth-mainnet"
+        chain_names={[
+            "eth-mainnet",
+            "matic-mainnet",
+            "bsc-mainnet",
+            "avalanche-mainnet",
+            "optimism-mainnet",
+        ]}
     />
 </GoldRushProvider>
 ```
+
+## GoldRush Templates
+
+| Template                              | Description                                          | Link                                                       |
+| ------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
+| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains. | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
+| NFT Collection Gallery & Analytics UI | Coming soon!                                         |                                                            |
+| Uniswap-like Analytics UI             | Coming soon!                                         |                                                            |
 
 ## Build and customize with Storybook
 
@@ -145,3 +163,16 @@ npm run build:library
 ```bash
 npm run build:storybook
 ```
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+Feel free to check <a href="https://github.com/covalenthq/goldrush-kit/issues">issues</a> page.
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">Apache 2.0</a> licensed.

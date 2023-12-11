@@ -33,7 +33,7 @@ export const AccountCardView: React.FC<AccountCardViewProps> = ({
 
     return (
         <>
-            <div className="flex w-full items-center gap-x-4 rounded border p-2 md:w-min lg:w-min">
+            <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                 <AddressAvatar
                     type={type}
                     address={address}
@@ -54,16 +54,16 @@ export const AccountCardView: React.FC<AccountCardViewProps> = ({
                         >
                             {showCopy ? (
                                 <IconWrapper
-                                    iconClassName="done"
-                                    iconSize="text-sm"
-                                    className="text-secondary dark:text-secondary"
+                                    icon_class_name="done"
+                                    icon_size="text-sm"
+                                    class_name="text-secondary dark:text-secondary"
                                 />
                             ) : (
                                 <IconWrapper
-                                    iconClassName="content_copy"
-                                    iconSize="text-sm"
-                                    className="text-secondary dark:text-secondary"
-                                    onClick={() => handleCopyClick()}
+                                    icon_class_name="content_copy"
+                                    icon_size="text-sm"
+                                    class_name="text-secondary dark:text-secondary"
+                                    on_click={() => handleCopyClick()}
                                 />
                             )}
                         </div>
@@ -72,9 +72,9 @@ export const AccountCardView: React.FC<AccountCardViewProps> = ({
                                 <DialogTrigger>
                                     <div className="h-5 w-5 items-center justify-center rounded-full">
                                         <IconWrapper
-                                            iconClassName="qr_code_2"
-                                            iconSize="text-sm pt-1"
-                                            className="text-secondary dark:text-secondary"
+                                            icon_class_name="qr_code_2"
+                                            icon_size="text-sm pt-1"
+                                            class_name="text-secondary dark:text-secondary"
                                         />
                                     </div>
                                 </DialogTrigger>

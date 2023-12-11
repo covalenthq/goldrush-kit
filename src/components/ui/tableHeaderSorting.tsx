@@ -31,9 +31,9 @@ export const TableHeaderSorting = ({
         >
             {header_name}
             <IconWrapper
-                iconSize={sortedIcon === "sort" ? "text-base" : ""}
-                className="transition-all "
-                iconClassName={sortedIcon}
+                icon_size={sortedIcon === "sort" ? "text-base" : ""}
+                class_name="transition-all "
+                icon_class_name={sortedIcon}
             />
         </div>
     );

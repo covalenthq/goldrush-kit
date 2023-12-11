@@ -1,14 +1,16 @@
-import type { ReactNode } from "react";
-import { createContext, useContext, useMemo } from "react";
-import { updateTheme } from "../functions";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { CovalentClient } from "@covalenthq/client-sdk";
+import { type ChainItem } from "@covalenthq/client-sdk";
+import { Toaster } from "@/components/ui/toaster";
+import { updateTheme } from "../functions";
 
-interface GoldrushContextType {
+interface CovalentContextType {
     covalentClient: CovalentClient;
+    chains: ChainItem[] | null;
 }
 
-interface GoldRushProviderProps {
-    children: ReactNode;
+interface CovalentProviderProps {
+    children: React.ReactNode;
     apikey: string;
     mode?: "dark" | "light";
     theme?: "classic" | "neo";
@@ -34,11 +36,11 @@ interface GoldRushProviderProps {
         | "rose";
 }
 
-const GoldRushContext = createContext<GoldrushContextType>(
-    {} as GoldrushContextType
+const CovalentContext = createContext<CovalentContextType>(
+    {} as CovalentContextType
 );
 
-export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
+export const CovalentProvider: React.FC<CovalentProviderProps> = ({
     children,
     apikey,
     mode = "light",
@@ -50,6 +52,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         () => new CovalentClient(apikey),
         [apikey]
     );
+    const [chains, setChains] = useState<ChainItem[] | null>(null);
 
     function changeOnlyColor(accentcolor: string, border_radius: string) {
         if (typeof document !== "undefined") {
@@ -146,11 +149,26 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         }
     }
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const allChainsResp =
+                    await covalentClient.BaseService.getAllChains();
+                setChains(allChainsResp.data.items);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+    }, []);
+
     return (
-        <GoldRushContext.Provider value={{ covalentClient: covalentClient }}>
+        <CovalentContext.Provider
+            value={{ covalentClient: covalentClient, chains: chains }}
+        >
             {children}
-        </GoldRushContext.Provider>
+            <Toaster />
+        </CovalentContext.Provider>
     );
 };
 
-export const useGoldrush = () => useContext(GoldRushContext);
+export const useCovalent = () => useContext(CovalentContext);

@@ -1,3 +1,4 @@
+import type { ChainActivityEvent } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type BlockTransactionWithContractTransfers,
@@ -16,12 +17,17 @@ export interface NFTWalletCollectionViewProps {
 }
 
 export interface NFTWalletTokenListViewProps {
-    chain_name: Chain;
+    chain_names: Chain[];
     address: string;
 }
 
 export interface AddressActivityListViewProps {
     address: string;
+    get_all_row_selection?: (newValue: ChainActivityEvent[]) => void;
+    get_row_selection_state?: (selectionState: {
+        [key: string]: boolean;
+    }) => void;
+    row_selection_state?: { [key: string]: boolean };
 }
 
 export interface TokenTransferMeta {
@@ -47,6 +53,7 @@ export interface TokenBalancesListViewProps {
     address: string;
     hide_small_balances?: boolean;
     mask_balances?: boolean;
+    on_transfer_click?: Function;
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {

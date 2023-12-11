@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from "@storybook/react";
 import { TokenBalancesListView } from "./TokenBalancesListView";
 import { useEffect, useState } from "react";
 import { type Option, None, Some } from "@/utils/option";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type TokenBalancesListViewProps } from "@/utils/types/organisms.types";
 
 type Story = StoryObj<typeof TokenBalancesListView>;
@@ -43,7 +43,7 @@ export const MultiChainTokenBalancesList: Story = {
         hide_small_balances,
     }: TokenBalancesListViewProps) => {
         const [resolvedAddress, setAddress] = useState<Option<string>>(None);
-        const { covalentClient } = useGoldrush();
+        const { covalentClient } = useCovalent();
 
         useEffect(() => {
             (async () => {

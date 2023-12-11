@@ -1,6 +1,10 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { prettifyCurrency, type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import type { ChainItem } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -8,40 +12,74 @@ import {
     CardDescription,
     CardTitle,
 } from "@/components/ui/card";
-import { flatMap, sum } from "lodash";
+import flatMap from "lodash/flatMap";
+import sum from "lodash/sum";
 import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
+import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 
 export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
-    chain_name,
+    chain_names,
     address,
 }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
     const [error, setError] = useState({ error: false, error_message: "" });
+    const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
 
-    useEffect(() => {
-        (async () => {
+    const handleAllChains = async () => {
+        const allChainsResp = await covalentClient.BaseService.getAllChains();
+        setAllChains(new Some(allChainsResp.data.items));
+    };
+
+    const handleNftsToken = async () => {
+        const promises = chain_names.map(async (chain) => {
+            const allowedCacheChains = [
+                "bsc-mainnet",
+                "eth-mainnet",
+                "bsc-testnet",
+                "eth-sepolia",
+                "gnosis-mainnet",
+                "gnosis-testnet",
+                "matic-mainnet",
+                "matic-mumbai",
+            ];
+            const cache = !allowedCacheChains.includes(chain);
             let response;
             try {
                 response = await covalentClient.NftService.getNftsForAddress(
-                    chain_name,
-                    address.trim()
+                    chain,
+                    address.trim(),
+                    {
+                        withUncached: cache,
+                    }
                 );
+
                 setError({ error: false, error_message: "" });
-                setResult(new Some(response.data.items));
-            } catch (exception) {
-                setResult(new Some([]));
+                return response.data.items.map((o) => {
+                    return { ...o, chain };
+                });
+            } catch (error) {
+                console.error(`Error fetching balances for ${chain}:`, error);
                 setError({
                     error: response ? response.error : false,
                     error_message: response ? response.error_message : "",
                 });
+                return [];
             }
-        })();
-    }, [chain_name, address]);
+        });
+
+        const results = await Promise.all(promises);
+        setResult(new Some(results.flat()));
+    };
+
+    useEffect(() => {
+        handleAllChains();
+        handleNftsToken();
+    }, [chain_names, address]);
 
     return (
         <div className="space-y-4 ">

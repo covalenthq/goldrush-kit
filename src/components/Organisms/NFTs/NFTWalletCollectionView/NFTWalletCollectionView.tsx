@@ -1,6 +1,9 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { prettifyCurrency, type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -14,14 +17,14 @@ import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountC
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sum } from "lodash";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store/Covalent";
 
 export const NFTWalletCollectionView: React.FC<
     NFTWalletCollectionViewProps
 > = ({ chain_name, address }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
 
     useEffect(() => {
         async function getData() {
@@ -40,7 +43,7 @@ export const NFTWalletCollectionView: React.FC<
         Some: (result) => {
             const body = result.map((items, i) => {
                 return (
-                    <div key={i}>
+                    <div className="" key={i}>
                         <div className="mb-2">
                             <TypographyH3>
                                 <div className="flex items-center gap-x-2">
@@ -53,7 +56,7 @@ export const NFTWalletCollectionView: React.FC<
                             </TypographyH3>
                         </div>
 
-                        <div className="flex flex-wrap gap-8">
+                        <div className="flex flex-wrap gap-4">
                             {items.nft_data.map((it, j) => {
                                 return (
                                     <Card
@@ -62,11 +65,24 @@ export const NFTWalletCollectionView: React.FC<
                                     >
                                         <CardContent>
                                             <img
-                                                className={`block h-[10rem] w-full rounded-t ${it.external_data ? "object-cover" : "p-2"}`}
-                                                src={it.external_data ? it.external_data.image_512 : "https://www.datocms-assets.com/86369/1685489960-nft.svg"}
+                                                className={`block h-[10rem] w-full rounded-t ${
+                                                    it.external_data
+                                                        ? "object-cover"
+                                                        : "p-2"
+                                                }`}
+                                                src={
+                                                    it.external_data
+                                                        ? it.external_data
+                                                              .image_512
+                                                        : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                                }
                                                 onError={(e) => {
-                                                    e.currentTarget.classList.remove("object-cover");
-                                                    e.currentTarget.classList.add("p-2");
+                                                    e.currentTarget.classList.remove(
+                                                        "object-cover"
+                                                    );
+                                                    e.currentTarget.classList.add(
+                                                        "p-2"
+                                                    );
                                                     e.currentTarget.src =
                                                         "https://www.datocms-assets.com/86369/1685489960-nft.svg";
                                                 }}
@@ -110,7 +126,7 @@ export const NFTWalletCollectionView: React.FC<
                                 Total Quote
                             </h2>
                             <div className="flex items-end gap-2">
-                                <span className="text-xl">
+                                <span className="text-base">
                                     {maybeResult.match({
                                         None: () => (
                                             <Skeleton size={GRK_SIZES.MEDIUM} />
@@ -122,7 +138,14 @@ export const NFTWalletCollectionView: React.FC<
                                                 )
                                             );
                                             return (
-                                                <span>{prettifyCurrency(s, 2, "USD", true)}</span>
+                                                <span>
+                                                    {prettifyCurrency(
+                                                        s,
+                                                        2,
+                                                        "USD",
+                                                        true
+                                                    )}
+                                                </span>
                                             );
                                         },
                                     })}
@@ -151,7 +174,7 @@ export const NFTWalletCollectionView: React.FC<
                             </div>
                         </div>
                     </div>
-                    <div>{body}</div>
+                    <div className="flex flex-col gap-8">{body}</div>
                 </div>
             );
         },

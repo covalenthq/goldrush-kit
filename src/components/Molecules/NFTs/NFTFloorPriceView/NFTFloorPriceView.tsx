@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
 import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
-import { calculatePrettyBalance, prettifyCurrency } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CURRENCY,
@@ -12,7 +15,7 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useGoldrush } from "@/utils/store/Goldrush";
+import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTFloorPriceViewProps } from "@/utils/types/molecules.types";
 
 export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
@@ -24,7 +27,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
     const [chartColor, setColor] = useState<any>("");
-    const { covalentClient } = useGoldrush();
+    const { covalentClient } = useCovalent();
 
     useEffect(() => {
         (async () => {
