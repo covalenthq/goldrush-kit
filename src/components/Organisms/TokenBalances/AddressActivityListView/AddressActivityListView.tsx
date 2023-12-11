@@ -66,6 +66,7 @@ export const AddressActivityListView: React.FC<
 
     useEffect(() => {
         (async () => {
+            setResult(None);
             let response;
             try {
                 response = await covalentClient.BaseService.getAddressActivity(

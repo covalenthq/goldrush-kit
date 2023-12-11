@@ -71,6 +71,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     const [windowWidth, setWindowWidth] = useState<number>(0);
 
     const handleTokenBalances = async (_address: string) => {
+        setResult(None);
         const promises = chain_names.map(async (chain) => {
             let response;
             try {
@@ -113,7 +114,6 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     }, []);
 
     useEffect(() => {
-        setResult(None);
         handleTokenBalances(address);
     }, [chain_names, address]);
 
