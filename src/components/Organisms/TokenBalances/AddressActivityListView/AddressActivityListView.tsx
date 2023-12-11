@@ -65,7 +65,9 @@ export const AddressActivityListView: React.FC<
     }, [maybeResult, rowSelection, row_selection_state]);
 
     useEffect(() => {
+
         (async () => {
+            setResult(None)
             let response;
             try {
                 response = await covalentClient.BaseService.getAddressActivity(
