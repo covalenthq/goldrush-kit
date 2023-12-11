@@ -189,7 +189,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
                             sub_url={protocol_url}
-                            token_url={row.original.logo_url}
+                            token_url={row.original.logo_urls.token_logo_url}
                         />
                         <div className="flex flex-col">
                             <div style={{ color: chainColor }}>
@@ -423,7 +423,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
                             sub_url={protocol_url}
-                            token_url={row.original.logo_url}
+                            token_url={row.original.logo_urls.token_logo_url}
                         />
                         <div className="flex flex-col gap-1">
                             <div style={{ color: chainColor }}>
