@@ -13,6 +13,6 @@ export default meta;
 export const CollectionCard: Story = {
     args: {
         collection_address: "0xe785e82358879f061bc3dcac6f0444462d4b5330",
-        chain_name: "eth-mainnet"
+        chain_name: "eth-mainnet",
     },
 };

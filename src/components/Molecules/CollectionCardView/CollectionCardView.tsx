@@ -13,19 +13,17 @@ import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type CollectionCardViewProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
-import { NftTokenContract } from "@covalenthq/client-sdk";
+import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
 
-
 export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
-    chain_name, collection_address,
+    chain_name,
+    collection_address,
 }) => {
     const [showCopy, setShowCopy] = useState(false);
     const { toast } = useToast();
-    const [maybeResult, setResult] =
-    useState<Option<NftTokenContract[]>>(None);
-    const { covalentClient, chains } = useCovalent();
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [maybeResult, setResult] = useState<Option<NftTokenContract[]>>(None);
+    const { covalentClient } = useCovalent();
 
     const handleCopyClick = () => {
         toast({
@@ -41,14 +39,15 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
         setResult(None);
         let response;
         try {
-            response = await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(chain_name, collection_address);
-
-            setError({ error: false, error_message: "" });
+            response =
+                await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
+                    chain_name,
+                    collection_address
+                );
             setResult(new Some(response.data.items));
         } catch (error) {
-            console.error(`Error fetching balances for ${chain_name}:`, error);
+            console.error(`Error fetching nfts for ${chain_name}:`, error);
         }
-
     };
 
     useEffect(() => {
@@ -77,7 +76,9 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                                 </p>
                                 <div
                                     className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
-                                    onClick={() => copyToClipboard(collection_address)}
+                                    onClick={() =>
+                                        copyToClipboard(collection_address)
+                                    }
                                 >
                                     {showCopy ? (
                                         <IconWrapper
@@ -105,7 +106,7 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                                                 />
                                             </div>
                                         </DialogTrigger>
-        
+
                                         <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background text-text-color-900 dark:bg-background-dark/80 dark:text-text-color-50">
                                             <DialogHeader>
                                                 <p className="pb-4 text-center text-lg font-semibold text-text-color-900 dark:text-text-color-50">
@@ -130,8 +131,6 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                     </div>
                 </>
             );
-        }
-    })
-
-
+        },
+    });
 };
