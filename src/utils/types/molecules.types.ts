@@ -6,6 +6,11 @@ export interface AccountCardViewProps {
     type?: "fingerprint" | "effigy" | "wallet";
 }
 
+export interface CollectionCardViewProps {
+    chain_name: Chain;
+    collection_address: string;
+}
+
 export interface NFTFloorPriceViewProps {
     chain_name: Chain;
     collection_address: string;

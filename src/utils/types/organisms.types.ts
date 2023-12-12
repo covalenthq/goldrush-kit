@@ -17,8 +17,8 @@ export interface NFTWalletCollectionViewProps {
 }
 
 export interface NFTWalletTokenListViewProps {
-    chain_names: Chain[];
-    address: string;
+    chain_name: Chain;
+    collection_address: string;
 }
 
 export interface AddressActivityListViewProps {
