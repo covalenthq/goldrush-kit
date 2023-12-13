@@ -59,19 +59,19 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
         Some: (nfts) => {
             return (
                 <>
-                    <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[25rem] lg:max-w-[25rem]">
+                    <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                         <AddressAvatar
                             type={"nft"}
                             address={nfts[0].nft_data.external_data.image_512}
                             rounded
-                            size={GRK_SIZES.LARGE}
+                            size={GRK_SIZES.MEDIUM}
                         />
                         <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-2xl font-semibold text-muted-foreground">
+                            <h2 className="text-base font-semibold text-muted-foreground">
                                 {nfts[0].contract_name}
                             </h2>
                             <div className="flex items-center gap-x-2  ">
-                                <p className="neo-text-white-dark text-lg">
+                                <p className="neo-text-white-dark text-base">
                                     {truncate(collection_address)}
                                 </p>
                                 <div
@@ -83,13 +83,13 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                                     {showCopy ? (
                                         <IconWrapper
                                             icon_class_name="done"
-                                            icon_size="text-xl -mt-0.5"
+                                            icon_size="text-sm"
                                             class_name="text-secondary dark:text-secondary"
                                         />
                                     ) : (
                                         <IconWrapper
                                             icon_class_name="content_copy"
-                                            icon_size="text-xl -mt-0.5"
+                                            icon_size="text-sm"
                                             class_name="text-secondary dark:text-secondary"
                                             on_click={() => handleCopyClick()}
                                         />
@@ -101,7 +101,7 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                                             <div className="h-5 w-5 items-center justify-center rounded-full">
                                                 <IconWrapper
                                                     icon_class_name="qr_code_2"
-                                                    icon_size="text-xl pt-1.5"
+                                                    icon_size="text-sm pt-1"
                                                     class_name="text-secondary dark:text-secondary"
                                                 />
                                             </div>

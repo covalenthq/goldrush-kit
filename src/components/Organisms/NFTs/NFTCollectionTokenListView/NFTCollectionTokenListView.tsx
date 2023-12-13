@@ -107,7 +107,7 @@ export const NFTCollectionTokenListView: React.FC<
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />
-                <div className="flex w-full flex-col  gap-4 rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
+                <div className="flex w-full items-center justify-around gap-4 rounded border p-2 lg:max-w-[20rem]">
                     <div>
                         <h2 className="text-base font-semibold  text-secondary ">
                             Market volume
