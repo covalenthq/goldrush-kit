@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
 import { NFTSalesCountView } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
@@ -40,7 +39,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                     </TypographyH1>
 
                     <div className="mt-4 flex gap-4">
-                        <div className="rounded border max-w-[30rem] ">
+                        <div className="max-w-[30rem] rounded border ">
                             <img
                                 className="rounded-t"
                                 src={result.nft_data.external_data.image_512}
@@ -68,7 +67,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                                 </div>
                             </div>
                         </div>
-                        <div className=" flex flex-col w-full gap-4">
+                        <div className=" flex w-full flex-col gap-4">
                             <div className="">
                                 <NFTSalesCountView
                                     chain_name={chain_name}
@@ -85,7 +84,6 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                             </div>
                         </div>
                     </div>
-
                 </div>
             );
         },
