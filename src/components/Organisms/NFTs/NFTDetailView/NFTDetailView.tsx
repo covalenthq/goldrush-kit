@@ -32,7 +32,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
         None: () => <div>Loading...</div>,
         Some: (result) => {
             return (
-                <div className="">
+                <div className="w-full">
                     <TypographyH1>
                         {result.contract_name} #
                         {result.nft_data.token_id?.toString()}{" "}

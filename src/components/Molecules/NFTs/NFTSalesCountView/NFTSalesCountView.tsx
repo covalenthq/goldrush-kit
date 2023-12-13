@@ -56,7 +56,7 @@ export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
             return (
                 <div>
                     <BarChart
-                        className="mt-2 h-72 p-2"
+                        className="mt-2 flex-grow p-2"
                         data={result}
                         index="date"
                         categories={["Sale Count"]}

@@ -82,7 +82,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
             return (
                 <div>
                     <LineChart
-                        className="mt-2 h-72 p-2"
+                        className="mt-2 p-2"
                         data={result}
                         index="date"
                         valueFormatter={

@@ -15,6 +15,7 @@ import { type CollectionCardViewProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
     chain_name,
@@ -55,7 +56,7 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
     }, [chain_name, collection_address]);
 
     return maybeResult.match({
-        None: () => <>Loading</>,
+        None: () => <Skeleton size={GRK_SIZES.LARGE} />,
         Some: (nfts) => {
             return (
                 <>
@@ -63,7 +64,6 @@ export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
                         <AddressAvatar
                             type={"nft"}
                             address={nfts[0].nft_data.external_data.image_512}
-                            rounded
                             size={GRK_SIZES.MEDIUM}
                         />
                         <div className="flex h-full flex-col justify-center">
