@@ -104,7 +104,7 @@ export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
     });
 
     return (
-        <div className="rounded border p-4">
+        <div className="rounded border p-4 min-h-[25rem] w-full">
             <div className="pb-4">
                 <TypographyH4>Floor Price</TypographyH4>
             </div>
