@@ -68,7 +68,7 @@ export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
     });
 
     return (
-        <div className="rounded border p-4 min-h-[20rem] w-full">
+        <div className="min-h-[20rem] w-full rounded border p-4">
             <div className="pb-4">
                 <TypographyH4>Sales History</TypographyH4>
             </div>
