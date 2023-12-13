@@ -1,6 +1,6 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import type { ChainItem, NftTokenContract } from "@covalenthq/client-sdk";
+import type { ChainItem, MarketFloorPriceItem, MarketVolumeItem, NftTokenContract } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -11,13 +11,15 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { CollectionCardView } from "@/components/Molecules/CollectionCardView/CollectionCardView";
 
 export const NFTCollectionTokenListView: React.FC<
     NFTCollectionTokenListViewProps
 > = ({ chain_name, collection_address, on_nft_click }) => {
     const [maybeResult, setResult] = useState<Option<NftTokenContract[]>>(None);
+    const [maybeVolume, setVolume] = useState<Option<MarketVolumeItem[]>>(None);
+    const [maybeFloor, setFloor] = useState<Option<MarketFloorPriceItem[]>>(None);
+
     const { covalentClient, chains } = useCovalent();
     const [error, setError] = useState({ error: false, error_message: "" });
 
@@ -28,7 +30,10 @@ export const NFTCollectionTokenListView: React.FC<
             response =
                 await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
                     chain_name,
-                    collection_address
+                    collection_address,
+                    {
+                        pageNumber: 0
+                    }
                 );
 
             setError({ error: false, error_message: "" });
@@ -46,8 +51,35 @@ export const NFTCollectionTokenListView: React.FC<
         }
     };
 
+    const handleVolume = async() => {
+        setVolume(None);
+        const response = await covalentClient.NftService.getNftMarketVolume(
+            chain_name,
+            collection_address
+        );
+        console.log(response)
+
+        setVolume(new Some(response.data.items));
+        // setNativeCurrency(
+        //     new Some(response.data.items[0].native_ticker_symbol)
+        // );
+    }
+
+    const handleFloor = async() => {
+        setFloor(None);
+        const response =
+        await covalentClient.NftService.getNftMarketFloorPrice(
+            chain_name,
+            collection_address
+        );
+
+        setFloor(new Some(response.data.items));
+    }
+
     useEffect(() => {
         handleNftsToken();
+        handleVolume();
+        handleFloor();
     }, [chain_name, collection_address]);
 
     return (
@@ -57,6 +89,39 @@ export const NFTCollectionTokenListView: React.FC<
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />
+                <div className="flex flex-col gap-4  w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
+                    <div>
+                        <h2 className="text-base font-semibold  text-secondary ">
+                            Market volume
+                        </h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                            {maybeVolume.match({
+                                    None:() =>  <Skeleton size={GRK_SIZES.LARGE} />,
+                                    Some: (data: any) => {
+                                        return <>{data[data.length - 1].pretty_volume_quote}</>
+                                    }
+                            })}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="text-base font-semibold  text-secondary ">
+                            Floor price
+                        </h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                            {maybeFloor.match({
+                                    None:() =>  <Skeleton size={GRK_SIZES.LARGE} />,
+                                    Some: (data: any) => {
+                                        return <>{data[data.length - 1].pretty_floor_price_quote}</>
+                                    }
+                            })}
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div className="flex flex-wrap gap-8">
@@ -80,19 +145,11 @@ export const NFTCollectionTokenListView: React.FC<
                             } else if (result.length > 0) {
                                 return result.map((it: NftTokenContract) => {
                                     const nft = it.nft_data;
-                                    const chain: ChainItem | null =
-                                        chains?.find(
-                                            (o) => o.name === chain_name
-                                        ) ?? null;
-                                    const chainColor = chain?.color_theme.hex;
-                                    const isDarkMode =
-                                        document.documentElement.classList.contains(
-                                            "dark"
-                                        );
+                                            
                                     return (
                                         <Card
                                             key={it.nft_data.token_id}
-                                            className="w-[230px] rounded border"
+                                            className="w-[230px] rounded border cursor-pointer"
                                             onClick={() => {
                                                 if (on_nft_click) {
                                                     on_nft_click(it);
@@ -125,28 +182,6 @@ export const NFTCollectionTokenListView: React.FC<
                                                             "https://www.datocms-assets.com/86369/1685489960-nft.svg";
                                                     }}
                                                 />
-                                                <div
-                                                    className={`absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] p-1 ${
-                                                        !isDarkMode
-                                                            ? "bg-white"
-                                                            : "bg-black"
-                                                    } tokenAvatar`}
-                                                    style={{
-                                                        border: `2px solid `,
-                                                        borderColor: `${chainColor}`,
-                                                    }}
-                                                >
-                                                    <TokenAvatar
-                                                        is_chain_logo
-                                                        size={
-                                                            GRK_SIZES.EXTRA_SMALL
-                                                        }
-                                                        chain_color={chainColor}
-                                                        token_url={
-                                                            chain?.logo_url
-                                                        }
-                                                    />
-                                                </div>
                                             </CardContent>
                                             <div className="p-4">
                                                 <CardDescription>

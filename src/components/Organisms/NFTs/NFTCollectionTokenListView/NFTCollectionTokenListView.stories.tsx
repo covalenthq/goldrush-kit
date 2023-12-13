@@ -13,6 +13,6 @@ export default meta;
 export const NFTCollectionTokenList: Story = {
     args: {
         chain_name: "eth-mainnet",
-        collection_address: "0xe785e82358879f061bc3dcac6f0444462d4b5330",
+        collection_address: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
     },
 };
