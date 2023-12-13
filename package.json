@@ -1,7 +1,7 @@
 {
     "_id": "goldrush-kit@0.0.1",
     "name": "@covalenthq/goldrush-kit",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "types": "dist/index.d.ts",
     "exports": {
         ".": {
