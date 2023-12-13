@@ -15,20 +15,37 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
     token_id,
 }) => {
     const [maybeResult, setResult] = useState<Option<NftTokenContract>>(None);
+    const [error, setError] = useState({ error: false, error_message: "" });
     const { covalentClient } = useCovalent();
 
     useEffect(() => {
+        let response;
         (async () => {
-            const response =
-                await covalentClient.NftService.getNftMetadataForGivenTokenIdForContract(
-                    chain_name,
-                    collection_address,
-                    token_id
-                );
+            try {
+                response =
+                    await covalentClient.NftService.getNftMetadataForGivenTokenIdForContract(
+                        chain_name,
+                        collection_address,
+                        token_id
+                    );
 
-            setResult(new Some(response.data.items[0]));
+                setResult(new Some(response.data.items[0]));
+            } catch (error) {
+                console.error(
+                    `Error fetching nft for ${collection_address}:`,
+                    error
+                );
+                setError({
+                    error: response ? response.error : false,
+                    error_message: response ? response.error_message : "",
+                });
+            }
         })();
     }, [chain_name, collection_address, token_id]);
+
+    if (error.error) {
+        return <>{error.error_message}</>;
+    }
 
     return (
         <div className="w-full">

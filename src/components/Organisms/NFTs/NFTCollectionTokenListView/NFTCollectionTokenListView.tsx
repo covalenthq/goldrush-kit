@@ -68,7 +68,7 @@ export const NFTCollectionTokenListView: React.FC<
                 error: response ? response.error : false,
                 error_message: response ? response.error_message : "",
             });
-            return [];
+            setResult(new Some([]));
         }
     };
 
@@ -242,7 +242,7 @@ export const NFTCollectionTokenListView: React.FC<
                     })}
             </div>
             {maybePagination.match({
-                None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                None: () => <Skeleton size={GRK_SIZES.LARGE} />,
                 Some: (data) => {
                     return (
                         <div className="flex items-center justify-between  gap-2">
