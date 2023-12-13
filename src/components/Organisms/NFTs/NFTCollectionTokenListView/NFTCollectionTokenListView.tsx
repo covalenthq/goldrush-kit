@@ -1,6 +1,11 @@
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import type { ChainItem, MarketFloorPriceItem, MarketVolumeItem, NftTokenContract } from "@covalenthq/client-sdk";
+import type {
+    MarketFloorPriceItem,
+    MarketVolumeItem,
+    NftTokenContract,
+    Pagination,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -12,14 +17,29 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
 import { CollectionCardView } from "@/components/Molecules/CollectionCardView/CollectionCardView";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 
 export const NFTCollectionTokenListView: React.FC<
     NFTCollectionTokenListViewProps
 > = ({ chain_name, collection_address, on_nft_click }) => {
     const [maybeResult, setResult] = useState<Option<NftTokenContract[]>>(None);
     const [maybeVolume, setVolume] = useState<Option<MarketVolumeItem[]>>(None);
-    const [maybeFloor, setFloor] = useState<Option<MarketFloorPriceItem[]>>(None);
-
+    const [maybeFloor, setFloor] =
+        useState<Option<MarketFloorPriceItem[]>>(None);
+    const [maybePagination, setPagination] = useState<Option<Pagination>>(None);
+    const [paginator, setPaginator] = useState({
+        pageNumber: 0,
+        pageSize: 20,
+    });
     const { covalentClient, chains } = useCovalent();
     const [error, setError] = useState({ error: false, error_message: "" });
 
@@ -32,12 +52,13 @@ export const NFTCollectionTokenListView: React.FC<
                     chain_name,
                     collection_address,
                     {
-                        pageNumber: 0
+                        pageNumber: paginator.pageNumber,
+                        pageSize: paginator.pageSize,
                     }
                 );
-
             setError({ error: false, error_message: "" });
             setResult(new Some(response.data.items));
+            setPagination(new Some(response.data.pagination));
         } catch (error) {
             console.error(
                 `Error fetching nfts for ${collection_address}:`,
@@ -51,36 +72,33 @@ export const NFTCollectionTokenListView: React.FC<
         }
     };
 
-    const handleVolume = async() => {
+    const handleVolume = async () => {
         setVolume(None);
         const response = await covalentClient.NftService.getNftMarketVolume(
             chain_name,
             collection_address
         );
-        console.log(response)
-
         setVolume(new Some(response.data.items));
-        // setNativeCurrency(
-        //     new Some(response.data.items[0].native_ticker_symbol)
-        // );
-    }
+    };
 
-    const handleFloor = async() => {
+    const handleFloor = async () => {
         setFloor(None);
-        const response =
-        await covalentClient.NftService.getNftMarketFloorPrice(
+        const response = await covalentClient.NftService.getNftMarketFloorPrice(
             chain_name,
             collection_address
         );
-
         setFloor(new Some(response.data.items));
-    }
+    };
 
     useEffect(() => {
         handleNftsToken();
         handleVolume();
         handleFloor();
     }, [chain_name, collection_address]);
+
+    useEffect(() => {
+        handleNftsToken();
+    }, [paginator]);
 
     return (
         <div className="space-y-4 ">
@@ -89,19 +107,28 @@ export const NFTCollectionTokenListView: React.FC<
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />
-                <div className="flex flex-col gap-4  w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
+                <div className="flex w-full flex-col  gap-4 rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <div>
                         <h2 className="text-base font-semibold  text-secondary ">
                             Market volume
                         </h2>
                         <div className="flex items-end gap-2">
                             <span className="text-xl">
-                            {maybeVolume.match({
-                                    None:() =>  <Skeleton size={GRK_SIZES.LARGE} />,
+                                {maybeVolume.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.LARGE} />
+                                    ),
                                     Some: (data: any) => {
-                                        return <>{data[data.length - 1].pretty_volume_quote}</>
-                                    }
-                            })}
+                                        return (
+                                            <>
+                                                {
+                                                    data[data.length - 1]
+                                                        .pretty_volume_quote
+                                                }
+                                            </>
+                                        );
+                                    },
+                                })}
                             </span>
                         </div>
                     </div>
@@ -111,20 +138,28 @@ export const NFTCollectionTokenListView: React.FC<
                         </h2>
                         <div className="flex items-end gap-2">
                             <span className="text-xl">
-                            {maybeFloor.match({
-                                    None:() =>  <Skeleton size={GRK_SIZES.LARGE} />,
+                                {maybeFloor.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.LARGE} />
+                                    ),
                                     Some: (data: any) => {
-                                        return <>{data[data.length - 1].pretty_floor_price_quote}</>
-                                    }
-                            })}
+                                        return (
+                                            <>
+                                                {
+                                                    data[data.length - 1]
+                                                        .pretty_floor_price_quote
+                                                }
+                                            </>
+                                        );
+                                    },
+                                })}
                             </span>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-8">
+            <div className="flex flex-wrap gap-3">
                 {chains &&
                     maybeResult.match({
                         None: () =>
@@ -145,20 +180,27 @@ export const NFTCollectionTokenListView: React.FC<
                             } else if (result.length > 0) {
                                 return result.map((it: NftTokenContract) => {
                                     const nft = it.nft_data;
-                                            
+
                                     return (
                                         <Card
                                             key={it.nft_data.token_id}
-                                            className="w-[230px] rounded border cursor-pointer"
+                                            className="group w-[230px] cursor-pointer rounded border"
                                             onClick={() => {
                                                 if (on_nft_click) {
                                                     on_nft_click(it);
                                                 }
                                             }}
                                         >
-                                            <CardContent className="relative rounded bg-slate-100">
+                                            <CardContent className="relative rounded bg-slate-100 transition-all">
+                                                <div className="absolute h-full w-full rounded-t bg-black  bg-opacity-0  transition-all  group-hover:bg-opacity-30">
+                                                    <IconWrapper
+                                                        icon_class_name="open_in_new"
+                                                        icon_size="text-xl pt-1"
+                                                        class_name="text-white dark:text-secondary opacity-0  group-hover:opacity-100 right-2 top-0 absolute"
+                                                    />
+                                                </div>
                                                 <img
-                                                    className={`block h-[10rem] w-full rounded-t ${
+                                                    className={`block h-[13rem] w-full rounded-t ${
                                                         nft.external_data
                                                             ?.image_512
                                                             ? "object-cover"
@@ -199,6 +241,77 @@ export const NFTCollectionTokenListView: React.FC<
                         },
                     })}
             </div>
+            {maybePagination.match({
+                None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                Some: (data) => {
+                    return (
+                        <div className="flex items-center justify-between  gap-2">
+                            <div className="flex items-center  gap-2">
+                                <Button
+                                    variant={"outline"}
+                                    disabled={data.page_number === 0}
+                                    onClick={() => {
+                                        setPaginator((prev) => {
+                                            return {
+                                                ...prev,
+                                                pageNumber: prev.pageNumber - 1,
+                                            };
+                                        });
+                                    }}
+                                >
+                                    Previous
+                                </Button>
+                                Page {data.page_number + 1}
+                                <Button
+                                    variant={"outline"}
+                                    disabled={!data.has_more}
+                                    onClick={() => {
+                                        setPaginator((prev) => {
+                                            return {
+                                                ...prev,
+                                                pageNumber: prev.pageNumber + 1,
+                                            };
+                                        });
+                                    }}
+                                >
+                                    Next
+                                </Button>
+                            </div>
+                            <div className="flex  gap-2">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline">
+                                            Rows per page: {data.page_size}
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuLabel>
+                                            Choose rows per page
+                                        </DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        {[5, 10, 15, 20].map((pageSize) => (
+                                            <DropdownMenuItem
+                                                key={pageSize}
+                                                onClick={() => {
+                                                    setPaginator((prev) => {
+                                                        return {
+                                                            ...prev,
+                                                            pageSize: pageSize,
+                                                        };
+                                                    });
+                                                }}
+                                            >
+                                                <span>{pageSize}</span>
+                                            </DropdownMenuItem>
+                                        ))}
+                                        <DropdownMenuSeparator />
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        </div>
+                    );
+                },
+            })}
         </div>
     );
 };
