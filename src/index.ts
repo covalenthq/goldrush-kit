@@ -3,6 +3,8 @@ export { TokenBalancesListView } from "./components/Organisms/TokenBalances/Toke
 export { TokenTransfersListView } from "./components/Organisms/TokenBalances/TokenTransfersListView/TokenTransfersListView";
 export { NFTWalletTokenListView } from "./components/Organisms/NFTs/NFTWalletTokenListView/NFTWalletTokenListView";
 export { NFTCollectionTokenListView } from "./components/Organisms/NFTs/NFTCollectionTokenListView/NFTCollectionTokenListView";
+export { NFTDetailView } from "./components/Organisms/NFTs/NFTDetailView/NFTDetailView";
+export { type NFTDetailViewProps } from "./utils/types/organisms.types";
 export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
 export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
 export { type TokenTransfersListViewProps } from "./utils/types/organisms.types";

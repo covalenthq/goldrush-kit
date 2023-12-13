@@ -33,14 +33,14 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
         None: () => <div>Loading...</div>,
         Some: (result) => {
             return (
-                <div>
+                <div className="">
                     <TypographyH1>
                         {result.contract_name} #
                         {result.nft_data.token_id?.toString()}{" "}
                     </TypographyH1>
 
-                    <div className="mt-4   flex  w-[500px] ">
-                        <div className="rounded border">
+                    <div className="mt-4 flex gap-4">
+                        <div className="rounded border max-w-[30rem] ">
                             <img
                                 className="rounded-t"
                                 src={result.nft_data.external_data.image_512}
@@ -68,26 +68,24 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <Separator className="mt-4" />
-
-                    <div className="mt-4 flex place-content-between space-x-4">
-                        <div className=" w-[50%]">
-                            <NFTSalesCountView
-                                chain_name={chain_name}
-                                collection_address={collection_address}
-                                token_id={token_id}
-                            />
-                        </div>
-                        <div className=" w-[50%]">
-                            <NFTFloorPriceView
-                                chain_name={chain_name}
-                                collection_address={collection_address}
-                                token_id={token_id}
-                            />
+                        <div className=" flex flex-col w-full gap-4">
+                            <div className="">
+                                <NFTSalesCountView
+                                    chain_name={chain_name}
+                                    collection_address={collection_address}
+                                    token_id={token_id}
+                                />
+                            </div>
+                            <div className="">
+                                <NFTFloorPriceView
+                                    chain_name={chain_name}
+                                    collection_address={collection_address}
+                                    token_id={token_id}
+                                />
+                            </div>
                         </div>
                     </div>
+
                 </div>
             );
         },
