@@ -6,7 +6,7 @@ export interface AddressProps {
 
 export interface AddressAvatarProps {
     address: string;
-    type: "fingerprint" | "effigy" | "wallet";
+    type: "fingerprint" | "effigy" | "wallet" | "nft";
     size: GRK_SIZES;
     rounded?: boolean;
     fallback?: string;

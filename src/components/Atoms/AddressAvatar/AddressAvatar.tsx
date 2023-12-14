@@ -19,6 +19,9 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
             case "effigy":
                 return `https://effigy.im/a/${address}.png`;
 
+            case "nft":
+                return address;
+
             case "fingerprint":
                 return Fingerprint;
 

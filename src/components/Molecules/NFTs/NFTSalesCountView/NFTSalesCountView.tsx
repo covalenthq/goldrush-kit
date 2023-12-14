@@ -56,7 +56,7 @@ export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
             return (
                 <div>
                     <BarChart
-                        className="mt-2 h-72 p-2"
+                        className="mt-2 p-2"
                         data={result}
                         index="date"
                         categories={["Sale Count"]}
@@ -68,7 +68,7 @@ export const NFTSalesCountView: React.FC<NFTSalesCountViewProps> = ({
     });
 
     return (
-        <div className="rounded border p-4">
+        <div className="min-h-[20rem] w-full rounded border p-4">
             <div className="pb-4">
                 <TypographyH4>Sales History</TypographyH4>
             </div>

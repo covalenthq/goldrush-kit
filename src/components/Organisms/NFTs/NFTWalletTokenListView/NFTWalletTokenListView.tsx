@@ -135,7 +135,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-8">
+            <div className="flex flex-wrap gap-3">
                 {maybeResult.match({
                     None: () =>
                         [1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {

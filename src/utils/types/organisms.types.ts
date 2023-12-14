@@ -21,6 +21,12 @@ export interface NFTWalletTokenListViewProps {
     address: string;
 }
 
+export interface NFTCollectionTokenListViewProps {
+    chain_name: Chain;
+    collection_address: string;
+    on_nft_click: Function;
+}
+
 export interface AddressActivityListViewProps {
     address: string;
     get_all_row_selection?: (newValue: ChainActivityEvent[]) => void;
