@@ -1,8 +1,8 @@
 <div align="center">
   <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/goldrush-kit-logo.png">
-    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/goldrush-kit-logo.png" width="280"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-banner.png">
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-banner.png" width="680"/>
   </picture>
   </a>
 </div>
@@ -129,7 +129,7 @@ Be sure to secure your key to prevent unauthorized use in the Covalent platform 
 | Template                              | Description                                          | Link                                                       |
 | ------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
 | Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains. | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
-| NFT Collection Gallery & Analytics UI | Coming soon!                                         |                                                            |
+| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.     | https://github.com/covalenthq/goldrush-nft-gallery-ui      |
 | Uniswap-like Analytics UI             | Coming soon!                                         |                                                            |
 
 ## Build and customize with Storybook
