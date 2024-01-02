@@ -9,7 +9,7 @@ import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
 import { useToast } from "../../../utils/hooks/use-toast";
 import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type CollectionCardViewProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";

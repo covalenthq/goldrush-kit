@@ -16,9 +16,9 @@ import {
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type NFTFloorPriceViewProps } from "@/utils/types/molecules.types";
+import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
 
-export const NFTFloorPriceView: React.FC<NFTFloorPriceViewProps> = ({
+export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     chain_name,
     collection_address,
 }) => {

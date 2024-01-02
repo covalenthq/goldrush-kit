@@ -12,10 +12,10 @@ import {
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type NFTVolumeViewProps } from "@/utils/types/molecules.types";
+import { type NFTVolumeProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
 
-export const NFTVolumeView: React.FC<NFTVolumeViewProps> = ({
+export const NFTVolume: React.FC<NFTVolumeProps> = ({
     chain_name,
     collection_address,
 }) => {
