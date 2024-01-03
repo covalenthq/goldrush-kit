@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IconWrapper } from "../IconWrapper/IconWrapper";
-import { type CopyImageProps } from "@/utils/types/atoms.types";
+import { IconWrapper } from ".";
+import { type CopyImageProps } from "@/utils/types/shared.types";
 import { copyToClipboard } from "@/utils/functions";
 
-export const CopyImage: React.FC<CopyImageProps> = ({ url }) => {
+const CopyImage: React.FC<CopyImageProps> = ({ url }) => {
     const [copied, showCopied] = useState<boolean>(false);
 
     return copied ? (
@@ -26,3 +26,5 @@ export const CopyImage: React.FC<CopyImageProps> = ({ url }) => {
         />
     );
 };
+
+export default CopyImage;
