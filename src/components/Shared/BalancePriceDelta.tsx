@@ -1,7 +1,7 @@
-import { type BalancePriceDeltaProps } from "@/utils/types/atoms.types";
+import { type BalancePriceDeltaProps } from "@/utils/types/shared.types";
 import { useMemo } from "react";
 
-export const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
+const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
     numerator,
     denominator,
 }) => {
@@ -26,3 +26,5 @@ export const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
 
     return <span>-</span>;
 };
+
+export default BalancePriceDelta;
