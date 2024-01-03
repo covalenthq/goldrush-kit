@@ -62,6 +62,14 @@ export interface TokenBalancesListViewProps {
     on_transfer_click?: Function;
 }
 
+export interface XYKTokenListViewProps {
+    chain_names: Chain[];
+    address: string;
+    hide_small_balances?: boolean;
+    mask_balances?: boolean;
+    on_transfer_click?: Function;
+}
+
 export interface CrossChainBalanceItem extends BalanceItem {
     chain: Chain;
 }
