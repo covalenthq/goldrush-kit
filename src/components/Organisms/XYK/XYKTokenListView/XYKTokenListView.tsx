@@ -34,85 +34,48 @@ import { sum } from "lodash";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import {
-    type CrossChainBalanceItem,
-    type XYKTokenListViewProps,
-} from "@/utils/types/organisms.types";
+import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
-    chain_names,
-    address,
-    hide_small_balances,
-    on_transfer_click,
+    chain,
+    dex_name,
+    on_token_click,
 }) => {
     const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
-            id: "pretty_quote",
+            id: "quote_rate",
             desc: true,
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [maybeResult, setResult] =
-        useState<Option<CrossChainBalanceItem[]>>(None);
+    const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
-    const [filterResult, setFilterResult] =
-        useState<Option<CrossChainBalanceItem[]>>(None);
     const [windowWidth, setWindowWidth] = useState<number>(0);
-    const [maybeTokens, setTokens] = useState<any>(None);
-
-    const handleTokenBalances = async (_address: string) => {
-        setResult(None);
-        const promises = chain_names.map(async (chain) => {
-            let response;
-            try {
-                response =
-                    await covalentClient.BalanceService.getTokenBalancesForWalletAddress(
-                        chain,
-                        _address.trim()
-                    );
-
-                setError({ error: false, error_message: "" });
-                return response.data.items.map((o) => {
-                    return { ...o, chain };
-                });
-            } catch (error) {
-                console.error(`Error fetching balances for ${chain}:`, error);
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
-                return [];
-            }
-        });
-
-        const results = await Promise.all(promises);
-        setResult(new Some(results.flat()));
-    };
 
     useEffect(() => {
         (async () => {
-            setTokens(None);
+            setResult(None);
             let response;
             try {
                 response =
                     await covalentClient.XykService.getNetworkExchangeTokens(
-                        "eth-mainnet",
-                        "uniswap_v2"
+                        chain,
+                        dex_name
                     );
                 setError({ error: false, error_message: "" });
                 console.log(response);
-                setTokens(new Some(response.data.items));
+                setResult(new Some(response.data.items));
             } catch (exception) {
-                setTokens(new Some([]));
+                setResult(new Some([]));
                 setError({
                     error: response ? response.error : false,
                     error_message: response ? response.error_message : "",
                 });
             }
         })();
-    }, [address]);
+    }, [chain, dex_name]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -127,32 +90,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
-    useEffect(() => {
-        handleTokenBalances(address);
-    }, [chain_names, address]);
-
-    useEffect(() => {
-        maybeResult.match({
-            None: () => [],
-            Some: (result) => {
-                if (hide_small_balances) {
-                    setFilterResult(
-                        new Some(
-                            result.filter(
-                                (o) =>
-                                    o.quote !== null &&
-                                    o.quote > 0 &&
-                                    o.type !== "dust"
-                            )
-                        )
-                    );
-                    return result;
-                }
-                setFilterResult(new Some(result));
-            },
-        });
-    }, [maybeResult, hide_small_balances]);
 
     const columns: ColumnDef<TokenV2Volume>[] = [
         {
@@ -300,8 +237,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
                                     onClick={() => {
-                                        if (on_transfer_click) {
-                                            on_transfer_click(
+                                        if (on_token_click) {
+                                            on_token_click(
                                                 row.original.contract_address
                                             );
                                         }
@@ -425,8 +362,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
                                     onClick={() => {
-                                        if (on_transfer_click) {
-                                            on_transfer_click(
+                                        if (on_token_click) {
+                                            on_token_click(
                                                 row.original.contract_address
                                             );
                                         }
@@ -447,7 +384,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     ];
 
     const table = useReactTable({
-        data: maybeTokens.match({
+        data: maybeResult.match({
             None: () => [],
             Some: (result) => result,
         }),
@@ -462,7 +399,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
         },
     });
 
-    const body = filterResult.match({
+    const body = maybeResult.match({
         None: () => (
             <TableRow>
                 <TableCell className="h-12 text-center"></TableCell>
@@ -534,12 +471,12 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                {/* <AccountCardView address={address} /> */}
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <h2 className="text-md text-secondary">Total Quote</h2>
                     <div className="flex items-end gap-2">
                         <span className="text-base">
-                            {filterResult.match({
+                            {maybeResult.match({
                                 None: () => (
                                     <Skeleton size={GRK_SIZES.MEDIUM} />
                                 ),
@@ -559,7 +496,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             })}
                         </span>
                         <span className="flex text-sm text-secondary">
-                            {filterResult.match({
+                            {maybeResult.match({
                                 None: () => (
                                     <Skeleton
                                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
