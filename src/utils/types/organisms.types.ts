@@ -65,3 +65,9 @@ export interface TokenBalancesListViewProps {
 export interface CrossChainBalanceItem extends BalanceItem {
     chain: Chain;
 }
+
+export interface XYKPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    on_exchange_click?: Function;
+}
