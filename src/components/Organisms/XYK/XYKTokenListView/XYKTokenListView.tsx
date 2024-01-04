@@ -28,9 +28,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { sum } from "lodash";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
@@ -470,49 +468,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-wrap place-content-between gap-2">
-                {/* <AccountCardView address={address} /> */}
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
-                    <h2 className="text-md text-secondary">Total Quote</h2>
-                    <div className="flex items-end gap-2">
-                        <span className="text-base">
-                            {maybeResult.match({
-                                None: () => (
-                                    <Skeleton size={GRK_SIZES.MEDIUM} />
-                                ),
-                                Some: (result) => {
-                                    const s = sum(result.map((x) => x.quote));
-                                    return (
-                                        <span>
-                                            {prettifyCurrency(
-                                                s,
-                                                2,
-                                                "USD",
-                                                true
-                                            )}
-                                        </span>
-                                    );
-                                },
-                            })}
-                        </span>
-                        <span className="flex text-sm text-secondary">
-                            {maybeResult.match({
-                                None: () => (
-                                    <Skeleton
-                                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                    />
-                                ),
-                                Some: (result) => {
-                                    return (
-                                        <span>({result.length} Tokens)</span>
-                                    );
-                                },
-                            })}
-                        </span>
-                    </div>
-                </div>
-            </div>
-
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
