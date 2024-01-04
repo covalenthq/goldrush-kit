@@ -63,7 +63,7 @@ export interface TokenBalancesListViewProps {
 }
 
 export interface XYKTokenListViewProps {
-    chain: Chain;
+    chain_name: Chain;
     dex_name: string;
     on_token_click: Function;
 }

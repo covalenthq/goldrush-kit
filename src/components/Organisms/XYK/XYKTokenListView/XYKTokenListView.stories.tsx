@@ -12,7 +12,7 @@ export default meta;
 
 export const XYKTokenList: Story = {
     args: {
-        chain: "eth-mainnet",
+        chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
     },
 };
