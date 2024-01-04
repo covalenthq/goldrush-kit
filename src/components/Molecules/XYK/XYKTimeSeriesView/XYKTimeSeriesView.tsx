@@ -10,6 +10,7 @@ import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTimeSeriesViewProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
+import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
 export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
     chain_name,
@@ -23,28 +24,11 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
     const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useCovalent();
 
-    useEffect(() => {
-        (async () => {
-            setResult(None);
-            const response = await covalentClient.XykService.getPoolByAddress(
-                chain_name,
-                dex_name,
-                address
-            );
-            console.log(response);
-            setColor(rootColor());
-
-            setResult(new Some(response.data.items[0]));
-        })();
-    }, [chain_name, dex_name]);
-
     const handleChartData = () => {
         maybeResult.match({
             None: () => null,
             Some: (response) => {
                 const chart_key = `${timeSeries}_timeseries_${period}d`;
-                console.log(chart_key);
-
                 const value_key =
                     timeSeries === "price"
                         ? "price_of_token0_in_token1"
@@ -54,14 +38,27 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
                     const dt = timestampParser(x.dt, "DD MMM YY");
                     return {
                         date: dt,
-                        [`${timeSeries} (USD)`]: x[value_key],
+                        [`${capitalizeFirstLetter(timeSeries)} (USD)`]:
+                            x[value_key],
                     };
                 });
                 setChartData(new Some(result));
-                console.log(result);
             },
         });
     };
+
+    useEffect(() => {
+        (async () => {
+            setResult(None);
+            const response = await covalentClient.XykService.getPoolByAddress(
+                chain_name,
+                dex_name,
+                address
+            );
+            setColor(rootColor());
+            setResult(new Some(response.data.items[0]));
+        })();
+    }, [chain_name, dex_name]);
 
     useEffect(() => {
         handleChartData();
@@ -83,7 +80,9 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
                         data={result}
                         index="date"
                         valueFormatter={prettifyCurrency}
-                        categories={[`${timeSeries} (USD)`]}
+                        categories={[
+                            `${capitalizeFirstLetter(timeSeries)} (USD)`,
+                        ]}
                         colors={chartColor ? [chartColor] : CHART_COLORS}
                     />
                 </div>
@@ -94,7 +93,9 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
     return (
         <div className="min-h-[20rem] w-full rounded border p-4">
             <div className="pb-4">
-                <TypographyH4>{timeSeries}</TypographyH4>
+                <TypographyH4>{`${capitalizeFirstLetter(
+                    timeSeries
+                )} (USD)`}</TypographyH4>
             </div>
 
             <div className="flex justify-between">
