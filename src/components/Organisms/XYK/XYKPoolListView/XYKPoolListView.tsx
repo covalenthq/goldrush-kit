@@ -37,7 +37,7 @@ import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
 export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
     dex_name,
-    on_exchange_click,
+    on_pool_click,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -152,24 +152,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             },
         },
         {
-            id: "contract_ticker_symbol",
-            accessorKey: "contract_ticker_symbol",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Symbol"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        {row.original.contract_ticker_symbol}
-                    </div>
-                );
-            },
-        },
-        {
             id: "total_liquidity_quote",
             accessorKey: "total_liquidity_quote",
             header: ({ column }) => (
@@ -245,8 +227,8 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
                                     onClick={() => {
-                                        if (on_exchange_click) {
-                                            on_exchange_click(
+                                        if (on_pool_click) {
+                                            on_pool_click(
                                                 row.original.exchange
                                             );
                                         }
@@ -256,7 +238,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                         icon_class_name="swap_horiz"
                                         class_name="mr-2"
                                     />{" "}
-                                    View Token
+                                    View Pool
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -301,17 +283,28 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 />
             ),
             cell: ({ row }) => {
+                const token_0 = row.original.token_0;
+                const token_1 = row.original.token_1;
+                const pool = `${token_0.contract_ticker_symbol}/${token_1.contract_ticker_symbol}`;
+
                 return (
                     <div className="flex items-center gap-3">
-                        <TokenAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            token_url={row.original.logo_url}
-                        />
+                        <div className="relative mr-2 flex">
+                            <TokenAvatar
+                                size={GRK_SIZES.EXTRA_SMALL}
+                                token_url={token_0.logo_url}
+                            />
+                            <div className="absolute left-4">
+                                <TokenAvatar
+                                    size={GRK_SIZES.EXTRA_SMALL}
+                                    token_url={token_1.logo_url}
+                                />
+                            </div>
+                        </div>
+
                         <div className="flex flex-col">
                             <label className="text-base">
-                                {row.original.contract_name
-                                    ? row.original.contract_name
-                                    : "FIXME"}
+                                {pool ? pool : "FIXME"}
                             </label>
                         </div>
                     </div>
@@ -348,7 +341,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             ),
             cell: ({ row }) => {
                 const valueFormatted = prettifyCurrency(
-                    row.original.total_volume_24h_quote
+                    row.original.volume_24h_quote
                 );
 
                 return <div className="text-right">{valueFormatted}</div>;
@@ -370,9 +363,9 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
                                     onClick={() => {
-                                        if (on_exchange_click) {
-                                            on_exchange_click(
-                                                row.original.contract_address
+                                        if (on_pool_click) {
+                                            on_pool_click(
+                                                row.original.exchange
                                             );
                                         }
                                     }}
@@ -381,7 +374,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                         icon_class_name="swap_horiz"
                                         class_name="mr-2"
                                     />{" "}
-                                    View Token
+                                    View Pool
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
