@@ -23,7 +23,7 @@ export interface NFTSalesCountViewProps {
     token_id?: string;
 }
 
-export interface XYKTimeSeriesViewProps {
+export interface XYKPoolTimeSeriesViewProps {
     chain_name: Chain;
     dex_name: string;
     address: string;

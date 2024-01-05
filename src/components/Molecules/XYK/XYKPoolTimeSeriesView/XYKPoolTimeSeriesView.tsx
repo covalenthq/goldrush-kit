@@ -8,11 +8,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKTimeSeriesViewProps } from "@/utils/types/molecules.types";
+import { type XYKPoolTimeSeriesViewProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
+export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     chain_name,
     dex_name,
     address,
@@ -20,7 +20,7 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
     const [maybeResult, setResult] = useState<Option<any>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const [timeSeries, setTimeSerious] = useState<string>("volume");
+    const [timeSeries, setTimeSerious] = useState<string>("liquidity");
     const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useCovalent();
 
@@ -102,19 +102,19 @@ export const XYKTimeSeriesView: React.FC<XYKTimeSeriesViewProps> = ({
                 <div className="flex gap-2">
                     <Button
                         disabled={!maybeResult.isDefined}
-                        variant={timeSeries === "volume" ? "accent" : "outline"}
-                        onClick={() => setTimeSerious("volume")}
-                    >
-                        Volume
-                    </Button>
-                    <Button
-                        disabled={!maybeResult.isDefined}
                         variant={
                             timeSeries === "liquidity" ? "accent" : "outline"
                         }
                         onClick={() => setTimeSerious("liquidity")}
                     >
                         Liquidity
+                    </Button>
+                    <Button
+                        disabled={!maybeResult.isDefined}
+                        variant={timeSeries === "volume" ? "accent" : "outline"}
+                        onClick={() => setTimeSerious("volume")}
+                    >
+                        Volume
                     </Button>
                     <Button
                         disabled={!maybeResult.isDefined}
