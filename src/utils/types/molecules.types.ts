@@ -11,7 +11,7 @@ export interface CollectionCardViewProps {
     collection_address: string;
 }
 
-export interface BlockDetailsViewProps {
+export interface BlockCardViewProps {
     chain_name: Chain;
     block_id: number;
 }
