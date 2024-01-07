@@ -5,7 +5,6 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { useToast } from "../../../utils/hooks/use-toast";
 import { type Transaction } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
-import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
@@ -65,6 +64,7 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
             <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                 <TokenAvatar
                     is_chain_logo={true}
+                    // https://github.com/Pymmdrza/Cryptocurrency_Logos/tree/mainx/SVG
                     token_url={
                         "https://raw.githubusercontent.com/Pymmdrza/Cryptocurrency_Logos/mainx/SVG/eth.svg"
                     }
@@ -84,7 +84,11 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
                                     return (
                                         <>
                                             <div className="flex items-center gap-x-2  ">
-                                                Hash:{" "}
+                                                <IconWrapper
+                                                    icon_class_name="tag"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                />
                                                 {truncate(data[0].block_hash)}
                                                 <div
                                                     className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
@@ -113,10 +117,21 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-x-2  ">
-                                                {data[0].block_signed_at.toDateString()}
+                                                <IconWrapper
+                                                    icon_class_name="calendar_month"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                />
+                                                {data[0].block_signed_at
+                                                    .toISOString()
+                                                    .slice(0, 10)}
                                             </div>
                                             <div className="flex items-center gap-x-2  ">
-                                                Miner:{" "}
+                                                <IconWrapper
+                                                    icon_class_name="accessibility"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                />
                                                 {truncate(
                                                     data[0].miner_address
                                                 )}
@@ -148,7 +163,12 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-x-2  ">
-                                                Txs: {data.length}
+                                                <IconWrapper
+                                                    icon_class_name="123"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                />
+                                                {data.length}
                                             </div>
                                         </>
                                     );
