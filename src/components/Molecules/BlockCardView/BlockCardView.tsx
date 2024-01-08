@@ -8,10 +8,12 @@ import { type Option, Some, None } from "@/utils/option";
 import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const BlockCardView: React.FC<BlockCardViewProps> = ({
     chain_name,
     block_id,
+    icon_url
 }) => {
     const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
     const { covalentClient } = useCovalent();
@@ -64,10 +66,7 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
             <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                 <TokenAvatar
                     is_chain_logo={true}
-                    // https://github.com/Pymmdrza/Cryptocurrency_Logos/tree/mainx/SVG
-                    token_url={
-                        "https://raw.githubusercontent.com/Pymmdrza/Cryptocurrency_Logos/mainx/SVG/eth.svg"
-                    }
+                    token_url={icon_url}
                     size={GRK_SIZES.MEDIUM}
                 />
                 <div className="flex h-full flex-col justify-center">
@@ -77,7 +76,7 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
                     <div className="flex h-full flex-col justify-center">
                         {maybeResult.match({
                             None: () => {
-                                return <>Nothing</>;
+                                return <Skeleton size={GRK_SIZES.MEDIUM} />;
                             },
                             Some: (data) => {
                                 if (data[0]) {

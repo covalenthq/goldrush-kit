@@ -14,6 +14,7 @@ export interface CollectionCardViewProps {
 export interface BlockCardViewProps {
     chain_name: Chain;
     block_id: number;
+    icon_url: string;
 }
 
 export interface NFTFloorPriceViewProps {
