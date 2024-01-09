@@ -1,4 +1,7 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import type { ChainItem } from "@covalenthq/client-sdk";
 import {
@@ -38,16 +41,6 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     const handleNftsToken = async () => {
         setResult(None);
         const promises = chain_names.map(async (chain) => {
-            const allowedCacheChains = [
-                "bsc-mainnet",
-                "eth-mainnet",
-                "bsc-testnet",
-                "eth-sepolia",
-                "gnosis-mainnet",
-                "gnosis-testnet",
-                "matic-mainnet",
-                "matic-mumbai",
-            ];
             const cache = !allowedCacheChains.includes(chain);
             let response;
             try {

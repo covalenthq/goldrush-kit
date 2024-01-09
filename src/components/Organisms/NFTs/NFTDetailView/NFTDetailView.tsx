@@ -7,7 +7,10 @@ import { type NFTDetailViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 
 export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
     chain_name,
@@ -20,16 +23,6 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
 
     useEffect(() => {
         let response;
-        const allowedCacheChains = [
-            "bsc-mainnet",
-            "eth-mainnet",
-            "bsc-testnet",
-            "eth-sepolia",
-            "gnosis-mainnet",
-            "gnosis-testnet",
-            "matic-mainnet",
-            "matic-mumbai",
-        ];
         const cache = !allowedCacheChains.includes(chain_name);
         (async () => {
             try {

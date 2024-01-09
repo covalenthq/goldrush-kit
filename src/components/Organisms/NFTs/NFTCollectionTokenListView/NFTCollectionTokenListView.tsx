@@ -1,4 +1,7 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import type {
     MarketFloorPriceItem,
@@ -46,16 +49,7 @@ export const NFTCollectionTokenListView: React.FC<
     const handleNftsToken = async () => {
         setResult(None);
         let response;
-        const allowedCacheChains = [
-            "bsc-mainnet",
-            "eth-mainnet",
-            "bsc-testnet",
-            "eth-sepolia",
-            "gnosis-mainnet",
-            "gnosis-testnet",
-            "matic-mainnet",
-            "matic-mumbai",
-        ];
+
         const cache = !allowedCacheChains.includes(chain_name);
         try {
             response =
