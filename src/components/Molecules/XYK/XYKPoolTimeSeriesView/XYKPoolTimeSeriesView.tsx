@@ -80,6 +80,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                         data={result}
                         index="date"
                         valueFormatter={prettifyCurrency}
+                        yAxisWidth={100}
                         categories={[
                             `${capitalizeFirstLetter(timeSeries)} (USD)`,
                         ]}

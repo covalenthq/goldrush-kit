@@ -28,7 +28,6 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                     dex_name,
                     address
                 );
-                console.log(response);
                 setResult(new Some(response.data.items[0]));
             } catch (error) {
                 setError({
@@ -47,7 +46,12 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
         <div className="w-full">
             <div className="flex items-center gap-4">
                 {maybeResult.match({
-                    None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                    None: () => (
+                        <div className="relative mr-2 flex">
+                            <div className="h-20 w-20 animate-pulse rounded-[100%] bg-slate-600" />
+                            <div className="absolute left-12 h-20 w-20 animate-pulse rounded-[100%] bg-slate-200" />
+                        </div>
+                    ),
                     Some: (result) => (
                         <div className="relative mr-2 flex">
                             <TokenAvatar
@@ -63,23 +67,28 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                         </div>
                     ),
                 })}{" "}
-                <TypographyH1>
-                    {maybeResult.match({
-                        None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
-                        Some: (result) => (
+                {maybeResult.match({
+                    None: () => (
+                        <div className="ml-8 flex items-center gap-4">
+                            <Skeleton size={GRK_SIZES.LARGE} /> -
+                            <Skeleton size={GRK_SIZES.LARGE} />
+                        </div>
+                    ),
+                    Some: (result) => (
+                        <TypographyH1>
                             <span className="ml-8">
                                 {" "}
                                 {result.token_0.contract_ticker_symbol}-
                                 {result.token_1.contract_ticker_symbol}{" "}
                             </span>
-                        ),
-                    })}{" "}
-                    Pair
-                </TypographyH1>
+                            Pair
+                        </TypographyH1>
+                    ),
+                })}{" "}
             </div>
 
-            <div className="mt-4 flex gap-4">
-                <div className="flex min-w-[20rem] max-w-[70rem] flex-col gap-2 rounded ">
+            <div className="mt-4 flex flex-col gap-4 md:flex-row">
+                <div className="flex min-w-[20rem] max-w-[70rem] flex-col gap-2 rounded">
                     <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
                         <h2 className="text-md text-secondary">
                             Total Liquidity
@@ -93,7 +102,9 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                                     Some: (result) => {
                                         return (
                                             <span>
-                                                {result.total_liquidity_quote}
+                                                {
+                                                    result.pretty_total_liquidity_quote
+                                                }
                                             </span>
                                         );
                                     },
@@ -114,7 +125,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                                     Some: (result) => {
                                         return (
                                             <span>
-                                                {result.volume_24h_quote}
+                                                {result.pretty_volume_24h_quote}
                                             </span>
                                         );
                                     },
@@ -132,7 +143,9 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                                     ),
                                     Some: (result) => {
                                         return (
-                                            <span>{result.fee_24h_quote}</span>
+                                            <span>
+                                                {result.pretty_fee_24h_quote}
+                                            </span>
                                         );
                                     },
                                 })}
