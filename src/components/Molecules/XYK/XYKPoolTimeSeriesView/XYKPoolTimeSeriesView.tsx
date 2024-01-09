@@ -116,13 +116,13 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                     >
                         Volume
                     </Button>
-                    <Button
+                    {/* <Button
                         disabled={!maybeResult.isDefined}
                         variant={timeSeries === "price" ? "accent" : "outline"}
                         onClick={() => setTimeSerious("price")}
                     >
                         Price
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="flex gap-2">
                     <Button
