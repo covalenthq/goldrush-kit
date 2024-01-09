@@ -46,6 +46,17 @@ export const NFTCollectionTokenListView: React.FC<
     const handleNftsToken = async () => {
         setResult(None);
         let response;
+        const allowedCacheChains = [
+            "bsc-mainnet",
+            "eth-mainnet",
+            "bsc-testnet",
+            "eth-sepolia",
+            "gnosis-mainnet",
+            "gnosis-testnet",
+            "matic-mainnet",
+            "matic-mumbai",
+        ];
+        const cache = !allowedCacheChains.includes(chain_name);
         try {
             response =
                 await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
@@ -54,6 +65,7 @@ export const NFTCollectionTokenListView: React.FC<
                     {
                         pageNumber: paginator.pageNumber,
                         pageSize: paginator.pageSize,
+                        withUncached: cache,
                     }
                 );
             setError({ error: false, error_message: "" });

@@ -20,15 +20,28 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
 
     useEffect(() => {
         let response;
+        const allowedCacheChains = [
+            "bsc-mainnet",
+            "eth-mainnet",
+            "bsc-testnet",
+            "eth-sepolia",
+            "gnosis-mainnet",
+            "gnosis-testnet",
+            "matic-mainnet",
+            "matic-mumbai",
+        ];
+        const cache = !allowedCacheChains.includes(chain_name);
         (async () => {
             try {
                 response =
                     await covalentClient.NftService.getNftMetadataForGivenTokenIdForContract(
                         chain_name,
                         collection_address,
-                        token_id
+                        token_id,
+                        {
+                            withUncached: cache,
+                        }
                     );
-
                 setResult(new Some(response.data.items[0]));
             } catch (error) {
                 console.error(
