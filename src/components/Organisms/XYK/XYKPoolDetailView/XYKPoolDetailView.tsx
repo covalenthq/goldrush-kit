@@ -1,4 +1,4 @@
-import { TypographyH4 } from "@/components/ui/typography";
+import { TypographyH1 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type Option, Some, None } from "@/utils/option";
 import { type XYKPoolDetailViewProps } from "@/utils/types/organisms.types";
@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { XYKPoolTimeSeriesView } from "@/components/Molecules/XYK/XYKPoolTimeSeriesView/XYKPoolTimeSeriesView";
+import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { prettyToken } from "@/utils/functions/pretty-token";
 
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     chain_name,
@@ -43,135 +45,156 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
 
     return (
         <div className="w-full">
-            <div className="mt-4 flex gap-4">
+            <div className="flex items-center gap-4">
                 {maybeResult.match({
-                    None: () => (
-                        <div className="rounded">
-                            <div className="h-[30rem] w-[30rem] animate-pulse rounded bg-accent-foreground" />
-
-                            <div className="mt-2 p-4">
-                                <TypographyH4>Attributes</TypographyH4>
-
-                                <div className="mt-2 flex flex-wrap gap-4">
-                                    {[1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {
-                                        return (
-                                            <Skeleton
-                                                key={i}
-                                                size={GRK_SIZES.LARGE}
-                                            />
-                                        );
-                                    })}
-                                </div>
+                    None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                    Some: (result) => (
+                        <div className="relative mr-2 flex">
+                            <TokenAvatar
+                                size={GRK_SIZES.MEDIUM}
+                                token_url={result.token_0.logo_url}
+                            />
+                            <div className="absolute left-12">
+                                <TokenAvatar
+                                    size={GRK_SIZES.MEDIUM}
+                                    token_url={result.token_1.logo_url}
+                                />
                             </div>
                         </div>
                     ),
-                    Some: () => {
-                        return (
-                            <div className="flex min-w-[25rem] max-w-[70rem] flex-col gap-2 rounded ">
-                                <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                                    <h2 className="text-md text-secondary">
-                                        Total Liquidity
-                                    </h2>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-2xl">
-                                            {maybeResult.match({
-                                                None: () => (
-                                                    <Skeleton
-                                                        size={GRK_SIZES.MEDIUM}
+                })}{" "}
+                <TypographyH1>
+                    {maybeResult.match({
+                        None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                        Some: (result) => (
+                            <span className="ml-8">
+                                {" "}
+                                {result.token_0.contract_ticker_symbol}-
+                                {result.token_1.contract_ticker_symbol}{" "}
+                            </span>
+                        ),
+                    })}{" "}
+                    Pair
+                </TypographyH1>
+            </div>
+
+            <div className="mt-4 flex gap-4">
+                <div className="flex min-w-[20rem] max-w-[70rem] flex-col gap-2 rounded ">
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
+                        <h2 className="text-md text-secondary">
+                            Total Liquidity
+                        </h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                                {maybeResult.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.MEDIUM} />
+                                    ),
+                                    Some: (result) => {
+                                        return (
+                                            <span>
+                                                {result.total_liquidity_quote}
+                                            </span>
+                                        );
+                                    },
+                                })}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
+                        <h2 className="text-md text-secondary">
+                            Volume (24hrs)
+                        </h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                                {maybeResult.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.MEDIUM} />
+                                    ),
+                                    Some: (result) => {
+                                        return (
+                                            <span>
+                                                {result.volume_24h_quote}
+                                            </span>
+                                        );
+                                    },
+                                })}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
+                        <h2 className="text-md text-secondary">Fee (24hrs)</h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                                {maybeResult.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.MEDIUM} />
+                                    ),
+                                    Some: (result) => {
+                                        return (
+                                            <span>{result.fee_24h_quote}</span>
+                                        );
+                                    },
+                                })}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
+                        <h2 className="text-md text-secondary">
+                            Pooled Tokens
+                        </h2>
+                        <div className="flex items-end gap-2">
+                            <span className="text-xl">
+                                {maybeResult.match({
+                                    None: () => (
+                                        <Skeleton size={GRK_SIZES.MEDIUM} />
+                                    ),
+                                    Some: (result) => {
+                                        const token_0 = result.token_0;
+                                        const token_1 = result.token_1;
+
+                                        return (
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center gap-2">
+                                                    <TokenAvatar
+                                                        size={
+                                                            GRK_SIZES.EXTRA_SMALL
+                                                        }
+                                                        token_url={
+                                                            token_0.logo_url
+                                                        }
                                                     />
-                                                ),
-                                                Some: (result) => {
-                                                    return (
-                                                        <span>
-                                                            {
-                                                                result.total_liquidity_quote
-                                                            }
-                                                        </span>
-                                                    );
-                                                },
-                                            })}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                                    <h2 className="text-md text-secondary">
-                                        Volume 24h
-                                    </h2>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-2xl">
-                                            {maybeResult.match({
-                                                None: () => (
-                                                    <Skeleton
-                                                        size={GRK_SIZES.MEDIUM}
+                                                    {`${prettyToken(
+                                                        token_0.reserve,
+                                                        token_0.contract_decimals
+                                                    )} ${
+                                                        token_0.contract_ticker_symbol
+                                                    }`}
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <TokenAvatar
+                                                        size={
+                                                            GRK_SIZES.EXTRA_SMALL
+                                                        }
+                                                        token_url={
+                                                            token_1.logo_url
+                                                        }
                                                     />
-                                                ),
-                                                Some: (result) => {
-                                                    return (
-                                                        <span>
-                                                            {
-                                                                result.volume_24h_quote
-                                                            }
-                                                        </span>
-                                                    );
-                                                },
-                                            })}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                                    <h2 className="text-md text-secondary">
-                                        Fee 24h
-                                    </h2>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-2xl">
-                                            {maybeResult.match({
-                                                None: () => (
-                                                    <Skeleton
-                                                        size={GRK_SIZES.MEDIUM}
-                                                    />
-                                                ),
-                                                Some: (result) => {
-                                                    return (
-                                                        <span>
-                                                            {
-                                                                result.fee_24h_quote
-                                                            }
-                                                        </span>
-                                                    );
-                                                },
-                                            })}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                                    <h2 className="text-md text-secondary">
-                                        Total Liquidity
-                                    </h2>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-2xl">
-                                            {maybeResult.match({
-                                                None: () => (
-                                                    <Skeleton
-                                                        size={GRK_SIZES.MEDIUM}
-                                                    />
-                                                ),
-                                                Some: (result) => {
-                                                    return (
-                                                        <span>
-                                                            {
-                                                                result.total_liquidity_quote
-                                                            }
-                                                        </span>
-                                                    );
-                                                },
-                                            })}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    },
-                })}
+                                                    {`${prettyToken(
+                                                        token_1.reserve,
+                                                        token_1.contract_decimals
+                                                    )} ${
+                                                        token_1.contract_ticker_symbol
+                                                    }`}
+                                                </div>
+                                            </div>
+                                        );
+                                    },
+                                })}
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
                         <XYKPoolTimeSeriesView
