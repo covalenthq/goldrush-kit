@@ -6,7 +6,10 @@ import {
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
-import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
+import {
+    POOL_TRANSACTION_MAP,
+    type TIME_SERIES_GROUP,
+} from "@/utils/constants/shared.constants";
 import { Fragment, useEffect, useState } from "react";
 import {
     type ColumnDef,
@@ -104,7 +107,9 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
 
             return (
                 <div>
-                    <Badge className="mr-2">{row.original.act}</Badge>{" "}
+                    <Badge className="mr-2">
+                        {POOL_TRANSACTION_MAP[row.original.act]}
+                    </Badge>{" "}
                     {token_0.contract_ticker_symbol} for{" "}
                     {token_1.contract_ticker_symbol}
                 </div>
@@ -126,8 +131,8 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
         },
     },
     {
-        id: "amount0",
-        accessorKey: "amount0",
+        id: "amount_0",
+        accessorKey: "amount_0",
         header: ({ column }) => (
             <TableHeaderSorting
                 align="left"
@@ -136,12 +141,17 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
             />
         ),
         cell: ({ row }) => {
-            return <>{row.original.amount0}</>;
+            return (
+                <span>
+                    {row.original.amount_0}{" "}
+                    {row.original.token_0.contract_ticker_symbol}
+                </span>
+            );
         },
     },
     {
-        id: "amount1",
-        accessorKey: "amount1",
+        id: "amount_1",
+        accessorKey: "amount_1",
         header: ({ column }) => (
             <TableHeaderSorting
                 align="left"
@@ -150,7 +160,12 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
             />
         ),
         cell: ({ row }) => {
-            return <>{row.original.amount1}</>;
+            return (
+                <span>
+                    {row.original.amount_1}{" "}
+                    {row.original.token_1.contract_ticker_symbol}
+                </span>
+            );
         },
     },
 ];
