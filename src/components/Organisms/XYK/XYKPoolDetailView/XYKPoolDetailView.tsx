@@ -211,6 +211,10 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
                         <XYKPoolTimeSeriesView
+                            pool_data={maybeResult.match({
+                                None: () => null,
+                                Some: (pool_data) => pool_data,
+                            })}
                             chain_name={chain_name}
                             dex_name={dex_name}
                             address={address}

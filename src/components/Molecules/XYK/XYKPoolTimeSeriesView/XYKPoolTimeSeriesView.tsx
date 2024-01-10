@@ -9,15 +9,19 @@ import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKPoolTimeSeriesViewProps } from "@/utils/types/molecules.types";
-import { prettifyCurrency } from "@covalenthq/client-sdk";
+import {
+    prettifyCurrency,
+    type PoolWithTimeseries,
+} from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
 export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     chain_name,
     dex_name,
     address,
+    pool_data,
 }) => {
-    const [maybeResult, setResult] = useState<Option<any>>(None);
+    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [timeSeries, setTimeSerious] = useState<string>("liquidity");
@@ -27,7 +31,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     const handleChartData = () => {
         maybeResult.match({
             None: () => null,
-            Some: (response) => {
+            Some: (response: any) => {
                 const chart_key = `${timeSeries}_timeseries_${period}d`;
                 const value_key =
                     timeSeries === "price"
@@ -48,6 +52,11 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     };
 
     useEffect(() => {
+        setColor(rootColor());
+        if (pool_data) {
+            setResult(new Some(pool_data));
+            return;
+        }
         (async () => {
             setResult(None);
             const response = await covalentClient.XykService.getPoolByAddress(
@@ -55,10 +64,9 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                 dex_name,
                 address
             );
-            setColor(rootColor());
             setResult(new Some(response.data.items[0]));
         })();
-    }, [chain_name, dex_name]);
+    }, [pool_data]);
 
     useEffect(() => {
         handleChartData();
