@@ -1,6 +1,6 @@
 import { type Option, None, Some } from "@/utils/option";
 import {
-    type BlockTransactionWithContractTransfers,
+    type ExchangeTransaction,
     type ChainItem,
     type Pagination,
     calculatePrettyBalance,
@@ -33,7 +33,6 @@ import {
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,13 +47,12 @@ import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {
-    type TokenTransfersListViewProps,
-    type BlockTransactionWithContractTransfersWithDelta,
+    type XYKTransfersListViewProps,
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
 
-const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
+const columns: ColumnDef<ExchangeTransaction>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -76,7 +74,6 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-
     {
         accessorKey: "block_signed_at",
         header: ({ column }) => (
@@ -93,125 +90,84 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         },
     },
     {
-        accessorKey: "from_address",
-        header: "From",
-        cell: ({ row }) => {
-            return (
-                <div className="flex items-center gap-x-1">
-                    <AddressAvatar
-                        size={GRK_SIZES.EXTRA_SMALL}
-                        type="fingerprint"
-                        address={row.getValue("from_address")}
-                    />
-                    {truncate(row.getValue("from_address"))}
-                </div>
-            );
-        },
-    },
-    {
-        accessorKey: "to_address",
-        header: "To",
-        cell: ({ row }) => {
-            return (
-                <div className="flex items-center gap-x-1">
-                    <AddressAvatar
-                        size={GRK_SIZES.EXTRA_SMALL}
-                        type="fingerprint"
-                        address={row.getValue("to_address")}
-                    />
-                    {truncate(row.getValue("to_address"))}
-                </div>
-            );
-        },
-    },
-    {
-        accessorKey: "transfer_type",
-        header: "In/Out",
-        cell: ({ row }) => {
-            return <Badge>{row.original.transfers[0].transfer_type}</Badge>;
-        },
-    },
-    {
-        id: "tokenAmount",
-        accessorKey: "delta",
+        accessorKey: "act",
         header: ({ column }) => (
             <TableHeaderSorting
-                align="right"
+                align="left"
+                header_name={"Transaction type"}
+                column={column}
+            />
+        ),
+        cell: ({ row }) => {
+            const token_0 = row.original.token_0;
+            const token_1 = row.original.token_1;
+
+            return (
+                <div>
+                    <Badge className="mr-2">{row.original.act}</Badge>{" "}
+                    {token_0.contract_ticker_symbol} for{" "}
+                    {token_1.contract_ticker_symbol}
+                </div>
+            );
+        },
+    },
+    {
+        id: "total_quote",
+        accessorKey: "total_quote",
+        header: ({ column }) => (
+            <TableHeaderSorting
+                align="left"
+                header_name={"Total value"}
+                column={column}
+            />
+        ),
+        cell: ({ row }) => {
+            return <>{row.original.pretty_total_quote}</>;
+        },
+    },
+    {
+        id: "amount0",
+        accessorKey: "amount0",
+        header: ({ column }) => (
+            <TableHeaderSorting
+                align="left"
                 header_name={"Token Amount"}
                 column={column}
             />
         ),
         cell: ({ row }) => {
-            const transfer = row.original.transfers[0];
-            if (transfer) {
-                return (
-                    <div className="text-right">
-                        {calculatePrettyBalance(
-                            transfer?.delta ?? 0,
-                            transfer?.contract_decimals
-                        )}{" "}
-                        {transfer?.contract_ticker_symbol}
-                    </div>
-                );
-            }
-            return null;
+            return <>{row.original.amount0}</>;
         },
     },
     {
-        id: "value",
-        accessorKey: "delta_quote",
+        id: "amount1",
+        accessorKey: "amount1",
         header: ({ column }) => (
             <TableHeaderSorting
-                align="right"
-                header_name={"Quote"}
+                align="left"
+                header_name={"Token Amount"}
                 column={column}
             />
         ),
         cell: ({ row }) => {
-            return (
-                <div className="text-right">
-                    {prettifyCurrency(
-                        row.original.transfers[0].delta_quote,
-                        2,
-                        "USD",
-                        true
-                    )}
-                </div>
-            );
-        },
-    },
-    {
-        accessorKey: "tx_hash",
-        header: "Transaction",
-        cell: ({ row }) => {
-            const txHash: string = row.getValue("tx_hash");
-            return (
-                <a
-                    className="flex items-center gap-x-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={row.original.transfers[0].explorers[0].url}
-                >
-                    {truncate(txHash)}
-                    <IconWrapper
-                        icon_class_name="open_in_new"
-                        class_name="h-3 w-3"
-                        icon_size="text-sm text-black dark:text-white"
-                    />
-                </a>
-            );
+            return <>{row.original.amount1}</>;
         },
     },
 ];
 
-export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
+export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
     chain_name,
-    address,
-    contract_address,
+    dex_name,
+    pool_address,
 }) => {
     const { covalentClient, chains } = useCovalent();
 
-    const [sorting, setSorting] = useState<SortingState>([]);
+    const [sorting, setSorting] = useState<SortingState>([
+        {
+            id: "block_signed_at",
+            desc: true,
+        },
+    ]);
     const [rowSelection, setRowSelection] = useState({});
     const [paginator, setPaginator] = useState({
         pageNumber: 0,
@@ -219,9 +175,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     });
     const [maybePagination, setPagination] = useState<Option<Pagination>>(None);
     const [maybeResult, setResult] =
-        useState<Option<BlockTransactionWithContractTransfersWithDelta[]>>(
-            None
-        );
+        useState<Option<ExchangeTransaction[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [maybeMeta, setMeta] = useState<Option<TokenTransferMeta>>(None);
 
@@ -231,73 +185,16 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
             let response;
             try {
                 response =
-                    await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
+                    await covalentClient.XykService.getTransactionsForExchange(
                         chain_name,
-                        address.trim(),
-                        {
-                            contractAddress: contract_address.trim(),
-                            pageNumber:
-                                paginator.pageNumber >= 0
-                                    ? paginator.pageNumber
-                                    : 0,
-                            pageSize: paginator.pageSize,
-                        }
+                        dex_name,
+                        pool_address.trim()
                     );
+                console.log(response);
+                setResult(new Some(response.data.items));
 
-                if (response.data.items.length > 0) {
-                    setMeta(
-                        new Some({
-                            chain_name: response.data.chain_name,
-                            contract_ticker_symbol:
-                                response.data.items[0].transfers[0]
-                                    .contract_ticker_symbol,
-                            logo_url:
-                                response.data.items[0].transfers[0].logo_url,
-                        })
-                    );
-                    setResult(
-                        new Some(
-                            response.data.items.map((o) => {
-                                const _item: BlockTransactionWithContractTransfersWithDelta =
-                                    {
-                                        ...o,
-                                        ["delta_quote"]:
-                                            o.transfers[0].delta_quote,
-                                        ["delta"]: o.transfers[0].delta,
-                                    };
-
-                                return _item;
-                            })
-                        )
-                    );
-                } else {
-                    setMeta(
-                        new Some({
-                            chain_name: "",
-                            contract_ticker_symbol: "",
-                            logo_url: "",
-                        })
-                    );
-                    setResult(new Some([]));
-                }
-                setPagination(new Some(response.data.pagination));
                 setError({ error: false, error_message: "" });
-            } catch (exception) {
-                setMeta(
-                    new Some({
-                        chain_name: "",
-                        contract_ticker_symbol: "",
-                        logo_url: "",
-                    })
-                );
-                setPagination(
-                    new Some({
-                        has_more: false,
-                        page_number: 0,
-                        page_size: 100,
-                        total_count: 0,
-                    })
-                );
+            } catch (error) {
                 setResult(new Some([]));
                 setError({
                     error: response ? response.error : false,
@@ -305,7 +202,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                 });
             }
         })();
-    }, [address, contract_address, chain_name, paginator]);
+    }, [pool_address, dex_name, chain_name, paginator]);
 
     const table = useReactTable({
         data: maybeResult.match({
@@ -359,9 +256,6 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
             </TableRow>
         ),
         Some: () => {
-            let lastGroup: TIME_SERIES_GROUP | null = null;
-            const now = new Date();
-
             return error.error ? (
                 <TableRow>
                     <TableCell
@@ -373,30 +267,8 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                 </TableRow>
             ) : !error.error && table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => {
-                    const currentGroup = calculateTimeSeriesGroup(
-                        now,
-                        row.original.block_signed_at
-                    );
-
                     return (
                         <Fragment key={row.id}>
-                            {(() => {
-                                if (lastGroup !== currentGroup) {
-                                    lastGroup = currentGroup;
-                                    return (
-                                        <TableRow className="bg-accent bg-opacity-10 text-xs uppercase text-muted-foreground">
-                                            <TableCell
-                                                colSpan={
-                                                    row.getVisibleCells().length
-                                                }
-                                            >
-                                                {currentGroup}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                }
-                            })()}
-
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
@@ -449,7 +321,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                {/* <AccountCardView address={address} /> */}
                 <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
                     <div className="items-center space-x-1">
                         <span>Network</span>

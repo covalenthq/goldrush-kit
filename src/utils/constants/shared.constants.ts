@@ -335,6 +335,12 @@ export enum PERIOD {
     DAYS_90 = 90,
 }
 
+export enum POOL_TRANSACTION_TYPES {
+    SWAP = "SWAP",
+    REMOVE_LIQUIDITY = "REMOVE",
+    ADD_LIQUIDITY = "ADD",
+}
+
 export enum CURRENCY {
     USD,
     NATIVE,
