@@ -54,7 +54,7 @@ export interface TokenTransfersListViewProps {
     contract_address: string;
 }
 
-export interface XYKTransactionsListViewProps {
+export interface XYKPoolTransactionsListViewProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;

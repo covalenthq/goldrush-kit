@@ -24,7 +24,7 @@ import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type XYKTransactionsListViewProps } from "@/utils/types/organisms.types";
+import { type XYKPoolTransactionsListViewProps } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
@@ -214,8 +214,8 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
     },
 ];
 
-export const XYKTransactionsListView: React.FC<
-    XYKTransactionsListViewProps
+export const XYKPoolTransactionsListView: React.FC<
+    XYKPoolTransactionsListViewProps
 > = ({ chain_name, dex_name, pool_address }) => {
     const { covalentClient } = useCovalent();
 
