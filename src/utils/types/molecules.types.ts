@@ -5,6 +5,10 @@ import {
     type TokenV2VolumeWithChartData,
     type ExchangeTransaction,
 } from "@covalenthq/client-sdk";
+import {
+    type DECODED_ACTION,
+    type DECODED_EVENT_CATEGORY,
+} from "../constants/shared.constants";
 
 export interface AccountCardProps {
     name?: string;
@@ -77,4 +81,43 @@ export interface XYKWalletInformationProps {
     chain_name: Chain;
     dex_name: string;
     wallet_data?: ExchangeTransaction[];
+}
+
+export interface DecodedTransactionProps {
+    chain_name: Chain;
+    tx_hash: string;
+}
+
+export interface DecodedEventType {
+    category: DECODED_EVENT_CATEGORY;
+    action: DECODED_ACTION;
+    name: string;
+    protocol?: {
+        name: string;
+        logo: string;
+    };
+    tokens?: {
+        heading: string;
+        value: string;
+        decimals: number;
+        ticker_symbol: string | null;
+        ticker_logo: string | null;
+        pretty: string;
+    }[];
+    nfts?: {
+        heading: string;
+        collection_name: string | null;
+        token_identifier: string | null;
+        collection_address: string;
+        images: {
+            default: string | null;
+            256: string | null;
+            512: string | null;
+            1024: string | null;
+        };
+    }[];
+    details?: {
+        title: string;
+        value: string;
+    }[];
 }
