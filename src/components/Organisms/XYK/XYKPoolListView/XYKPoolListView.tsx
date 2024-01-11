@@ -62,7 +62,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                     dex_name
                 );
                 setError({ error: false, error_message: "" });
-                console.log(response);
                 setResult(new Some(response.data.items));
             } catch (exception) {
                 setResult(new Some([]));
