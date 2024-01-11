@@ -24,7 +24,7 @@ import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type XYKTransfersListViewProps } from "@/utils/types/organisms.types";
+import { type XYKTokenTransactionsListViewProps } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
@@ -214,11 +214,9 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
     },
 ];
 
-export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
-    chain_name,
-    dex_name,
-    pool_address,
-}) => {
+export const XYKTokenTransactionsListView: React.FC<
+    XYKTokenTransactionsListViewProps
+> = ({ chain_name, dex_name, token_address }) => {
     const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
@@ -238,10 +236,10 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
             let response;
             try {
                 response =
-                    await covalentClient.XykService.getTransactionsForExchange(
+                    await covalentClient.XykService.getTransactionsForTokenAddress(
                         chain_name,
                         dex_name,
-                        pool_address.trim()
+                        token_address.trim()
                     );
                 console.log(response);
                 setResult(new Some(response.data.items));
@@ -255,7 +253,7 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
                 });
             }
         })();
-    }, [pool_address, dex_name, chain_name]);
+    }, [token_address, dex_name, chain_name]);
 
     const table = useReactTable({
         data: maybeResult.match({
