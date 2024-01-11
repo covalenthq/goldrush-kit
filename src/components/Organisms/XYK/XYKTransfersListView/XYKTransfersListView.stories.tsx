@@ -14,6 +14,6 @@ export const XYKTransfersList: Story = {
     args: {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
-        pool_address: "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
+        pool_address: "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e",
     },
 };
