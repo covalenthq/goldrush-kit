@@ -43,7 +43,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
 
     const [sorting, setSorting] = useState<SortingState>([
         {
-            id: "quote_rate",
+            id: "total_liquidity_quote",
             desc: true,
         },
     ]);
@@ -125,7 +125,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             cell: ({ row }) => {
                 const token_0 = row.original.token_0;
                 const token_1 = row.original.token_1;
-                const pool = `${token_0.contract_ticker_symbol}/${token_1.contract_ticker_symbol}`;
+                const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
 
                 return (
                     <div className="flex items-center gap-3">
@@ -170,8 +170,8 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             },
         },
         {
-            id: "total_volume_24h_quote",
-            accessorKey: "total_volume_24h_quote",
+            id: "volume_24h_quote",
+            accessorKey: "volume_24h_quote",
             header: ({ column }) => (
                 <TableHeaderSorting
                     align="right"
@@ -182,6 +182,24 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             cell: ({ row }) => {
                 const valueFormatted = prettifyCurrency(
                     row.original.volume_24h_quote
+                );
+
+                return <div className="text-right">{valueFormatted}</div>;
+            },
+        },
+        {
+            id: "volume_7d_quote",
+            accessorKey: "volume_7d_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Volume (7d)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const valueFormatted = prettifyCurrency(
+                    row.original.volume_7d_quote
                 );
 
                 return <div className="text-right">{valueFormatted}</div>;
@@ -209,6 +227,24 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                         )}{" "}
                     </div>
                 );
+            },
+        },
+        {
+            id: "fee_24h_quote",
+            accessorKey: "fee_24h_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Fees (24hrs)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const valueFormatted = prettifyCurrency(
+                    row.original.fee_24h_quote
+                );
+
+                return <div className="text-right">{valueFormatted}</div>;
             },
         },
         {
@@ -406,6 +442,11 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 <TableCell className="h-12 text-center"></TableCell>
                 <TableCell className="h-12 text-right">
                     <div className="float-left">
+                        <Skeleton size={GRK_SIZES.LARGE} />
+                    </div>
+                </TableCell>
+                <TableCell className="h-12 text-right">
+                    <div className="float-right">
                         <Skeleton size={GRK_SIZES.LARGE} />
                     </div>
                 </TableCell>
