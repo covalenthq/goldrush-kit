@@ -35,7 +35,7 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
-    chain,
+    chain_name,
     dex_name,
     on_token_click,
 }) => {
@@ -59,11 +59,10 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             try {
                 response =
                     await covalentClient.XykService.getNetworkExchangeTokens(
-                        chain,
+                        chain_name,
                         dex_name
                     );
                 setError({ error: false, error_message: "" });
-                console.log(response);
                 setResult(new Some(response.data.items));
             } catch (exception) {
                 setResult(new Some([]));
@@ -73,7 +72,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                 });
             }
         })();
-    }, [chain, dex_name]);
+    }, [chain_name, dex_name]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);

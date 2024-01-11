@@ -4,7 +4,7 @@ import { XYKTokenListView } from "./XYKTokenListView";
 type Story = StoryObj<typeof XYKTokenListView>;
 
 const meta: Meta<typeof XYKTokenListView> = {
-    title: "Organisms/XYK",
+    title: "Organisms/XYK/Token",
     component: XYKTokenListView,
 };
 
@@ -12,7 +12,7 @@ export default meta;
 
 export const XYKTokenList: Story = {
     args: {
-        chain: "eth-mainnet",
+        chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
     },
 };
