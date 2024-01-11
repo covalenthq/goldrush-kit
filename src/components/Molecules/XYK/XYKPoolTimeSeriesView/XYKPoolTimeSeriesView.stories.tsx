@@ -14,6 +14,6 @@ export const XYKPoolTimeSeries: Story = {
     args: {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
-        address: "0x02af166a28393809f55bb5befbcc27ec15908241",
+        pool_address: "0x02af166a28393809f55bb5befbcc27ec15908241",
     },
 };
