@@ -12,7 +12,7 @@ import { prettyToken } from "@/utils/functions/pretty-token";
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     chain_name,
     dex_name,
-    address,
+    pool_address,
 }) => {
     const [maybeResult, setResult] = useState<Option<any>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
@@ -26,7 +26,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                 response = await covalentClient.XykService.getPoolByAddress(
                     chain_name,
                     dex_name,
-                    address
+                    pool_address
                 );
                 setResult(new Some(response.data.items[0]));
             } catch (error) {
@@ -217,7 +217,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                             })}
                             chain_name={chain_name}
                             dex_name={dex_name}
-                            address={address}
+                            pool_address={pool_address}
                         />
                     </div>
                 </div>

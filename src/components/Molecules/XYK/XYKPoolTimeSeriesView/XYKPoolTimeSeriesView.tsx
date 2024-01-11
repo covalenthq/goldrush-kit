@@ -18,7 +18,7 @@ import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     chain_name,
     dex_name,
-    address,
+    pool_address,
     pool_data,
 }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
@@ -62,7 +62,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
             const response = await covalentClient.XykService.getPoolByAddress(
                 chain_name,
                 dex_name,
-                address
+                pool_address
             );
             setResult(new Some(response.data.items[0]));
         })();
