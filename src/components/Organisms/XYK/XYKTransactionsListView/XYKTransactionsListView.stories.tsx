@@ -1,16 +1,16 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { XYKTransfersListView } from "./XYKTransfersListView";
+import { XYKTransactionsListView } from "./XYKTransactionsListView";
 
-type Story = StoryObj<typeof XYKTransfersListView>;
+type Story = StoryObj<typeof XYKTransactionsListView>;
 
-const meta: Meta<typeof XYKTransfersListView> = {
+const meta: Meta<typeof XYKTransactionsListView> = {
     title: "Organisms/XYK",
-    component: XYKTransfersListView,
+    component: XYKTransactionsListView,
 };
 
 export default meta;
 
-export const XYKTransfersList: Story = {
+export const XYKTransactionsList: Story = {
     args: {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
