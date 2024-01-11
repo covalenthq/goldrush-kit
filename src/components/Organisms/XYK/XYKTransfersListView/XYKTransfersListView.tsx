@@ -1,15 +1,6 @@
 import { type Option, None, Some } from "@/utils/option";
-import {
-    type ExchangeTransaction,
-    type ChainItem,
-    type Pagination,
-    calculatePrettyBalance,
-    prettifyCurrency,
-} from "@covalenthq/client-sdk";
-import {
-    POOL_TRANSACTION_MAP,
-    type TIME_SERIES_GROUP,
-} from "@/utils/constants/shared.constants";
+import { type ExchangeTransaction } from "@covalenthq/client-sdk";
+import { POOL_TRANSACTION_MAP } from "@/utils/constants/shared.constants";
 import { Fragment, useEffect, useState } from "react";
 import {
     type ColumnDef,
@@ -29,31 +20,14 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
-import {
-    timestampParser,
-    truncate,
-    calculateTimeSeriesGroup,
-} from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import {
-    type XYKTransfersListViewProps,
-    type TokenTransferMeta,
-} from "@/utils/types/organisms.types";
+import { type XYKTransfersListViewProps } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
+import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
+import { handleExchangeType } from "@/utils/functions/exchange-type";
 
 const columns: ColumnDef<ExchangeTransaction>[] = [
     {
@@ -105,13 +79,42 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
             const token_0 = row.original.token_0;
             const token_1 = row.original.token_1;
 
+            if (row.original.act !== "SWAP") {
+                return (
+                    <div>
+                        <Badge
+                            className="mr-2"
+                            variant={
+                                POOL_TRANSACTION_MAP[row.original.act].color
+                            }
+                        >
+                            {POOL_TRANSACTION_MAP[row.original.act].name}
+                        </Badge>{" "}
+                        {token_0.contract_ticker_symbol}{" "}
+                        {row.original.act === "SWAP" ? "for" : "and"}{" "}
+                        {token_1.contract_ticker_symbol}
+                    </div>
+                );
+            }
+            const token_in =
+                handleExchangeType(row.original, 0) === "in"
+                    ? token_0
+                    : token_1;
+            const token_out =
+                handleExchangeType(row.original, 0) === "out"
+                    ? token_0
+                    : token_1;
             return (
                 <div>
-                    <Badge className="mr-2">
-                        {POOL_TRANSACTION_MAP[row.original.act]}
+                    <Badge
+                        className="mr-2"
+                        variant={POOL_TRANSACTION_MAP[row.original.act].color}
+                    >
+                        {POOL_TRANSACTION_MAP[row.original.act].name}
                     </Badge>{" "}
-                    {token_0.contract_ticker_symbol} for{" "}
-                    {token_1.contract_ticker_symbol}
+                    {token_in.contract_ticker_symbol}{" "}
+                    {row.original.act === "SWAP" ? "for" : "and"}{" "}
+                    {token_out.contract_ticker_symbol}
                 </div>
             );
         },
@@ -141,10 +144,30 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
             />
         ),
         cell: ({ row }) => {
+            if (row.original.act !== "SWAP") {
+                return (
+                    <span>
+                        {handleTokenTransactions(
+                            row.original.act,
+                            "0",
+                            row.original,
+                            row.original.token_0.contract_decimals
+                        )}{" "}
+                        {row.original.token_0.contract_ticker_symbol}
+                    </span>
+                );
+            }
+            const token_in =
+                handleExchangeType(row.original, 0) === "in" ? "0" : "1";
             return (
                 <span>
-                    {row.original.amount_0}{" "}
-                    {row.original.token_0.contract_ticker_symbol}
+                    {handleTokenTransactions(
+                        row.original.act,
+                        token_in,
+                        row.original,
+                        row.original[`token_${token_in}`].contract_decimals
+                    )}{" "}
+                    {row.original[`token_${token_in}`].contract_ticker_symbol}
                 </span>
             );
         },
@@ -160,10 +183,31 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
             />
         ),
         cell: ({ row }) => {
+            if (row.original.act !== "SWAP") {
+                return (
+                    <span>
+                        {handleTokenTransactions(
+                            row.original.act,
+                            "1",
+                            row.original,
+                            row.original.token_1.contract_decimals
+                        )}{" "}
+                        {row.original.token_1.contract_ticker_symbol}
+                    </span>
+                );
+            }
+            const token_in =
+                handleExchangeType(row.original, 0) === "out" ? "0" : "1";
+            const token_amount = handleTokenTransactions(
+                row.original.act,
+                token_in,
+                row.original,
+                row.original[`token_${token_in}`].contract_decimals
+            );
             return (
                 <span>
-                    {row.original.amount_1}{" "}
-                    {row.original.token_1.contract_ticker_symbol}
+                    {token_amount}{" "}
+                    {row.original[`token_${token_in}`].contract_ticker_symbol}
                 </span>
             );
         },
@@ -175,7 +219,7 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
     dex_name,
     pool_address,
 }) => {
-    const { covalentClient, chains } = useCovalent();
+    const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
@@ -184,15 +228,9 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [paginator, setPaginator] = useState({
-        pageNumber: 0,
-        pageSize: 10,
-    });
-    const [maybePagination, setPagination] = useState<Option<Pagination>>(None);
     const [maybeResult, setResult] =
         useState<Option<ExchangeTransaction[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
-    const [maybeMeta, setMeta] = useState<Option<TokenTransferMeta>>(None);
 
     useEffect(() => {
         setResult(None);
@@ -217,7 +255,7 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
                 });
             }
         })();
-    }, [pool_address, dex_name, chain_name, paginator]);
+    }, [pool_address, dex_name, chain_name]);
 
     const table = useReactTable({
         data: maybeResult.match({
@@ -238,32 +276,20 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
     const body = maybeResult.match({
         None: () => (
             <TableRow>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-center"
-                >
+                <TableCell className="h-12 text-center">
                     <Skeleton size={GRK_SIZES.MEDIUM} />
                 </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-right"
-                >
+                <TableCell className="h-12 text-right">
                     <div className="float-right">
                         <Skeleton size={GRK_SIZES.MEDIUM} />
                     </div>
                 </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-right"
-                >
+                <TableCell className="h-12 text-right">
                     <div className="float-right">
                         <Skeleton size={GRK_SIZES.MEDIUM} />
                     </div>
                 </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12  "
-                >
+                <TableCell className="h-12  ">
                     <div className="float-right">
                         <Skeleton size={GRK_SIZES.MEDIUM} />
                     </div>
@@ -313,100 +339,8 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
         },
     });
 
-    const handlePagination = (action: "next" | "previous") => {
-        setPaginator((prev) => {
-            const flip =
-                action === "next" ? prev.pageNumber + 1 : prev.pageNumber - 1;
-            return {
-                ...prev,
-                pageNumber: flip,
-            };
-        });
-    };
-
-    const handlePageSize = (size: number) => {
-        setPaginator((prev) => {
-            return {
-                ...prev,
-                pageSize: size,
-            };
-        });
-    };
-
     return (
         <div className="space-y-4">
-            <div className="flex flex-wrap place-content-between gap-2">
-                {/* <AccountCardView address={address} /> */}
-                <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
-                    <div className="items-center space-x-1">
-                        <span>Network</span>
-                        <div className="float-right">
-                            <div className="flex">
-                                {maybeMeta.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        const chain: ChainItem | null =
-                                            chains?.find(
-                                                (o) =>
-                                                    o.name === result.chain_name
-                                            ) ?? null;
-                                        return (
-                                            <>
-                                                <TokenAvatar
-                                                    is_chain_logo
-                                                    token_url={chain?.logo_url}
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                />
-                                                <span className=" text-secondary ">
-                                                    {chain?.category_label}
-                                                </span>
-                                            </>
-                                        );
-                                    },
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="items-center space-x-1">
-                        <span>Token</span>
-                        <div className="float-right">
-                            <div className="flex">
-                                {maybeMeta.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        return (
-                                            <>
-                                                <TokenAvatar
-                                                    token_url={result.logo_url}
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                />
-                                                <span className=" text-secondary ">
-                                                    {
-                                                        result.contract_ticker_symbol
-                                                    }
-                                                </span>
-                                            </>
-                                        );
-                                    },
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -429,77 +363,6 @@ export const XYKTransfersListView: React.FC<XYKTransfersListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
-
-            {maybePagination.match({
-                None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
-                Some: (data) => {
-                    return (
-                        <div className="flex items-center justify-between  gap-2">
-                            <div className="flex items-center  gap-2">
-                                <Button
-                                    variant={"outline"}
-                                    disabled={data.page_number === 0}
-                                    onClick={() => {
-                                        handlePagination("previous");
-                                    }}
-                                >
-                                    Previous
-                                </Button>
-                                Page {data.page_number + 1}
-                                <Button
-                                    variant={"outline"}
-                                    disabled={!data.has_more}
-                                    onClick={() => {
-                                        handlePagination("next");
-                                    }}
-                                >
-                                    Next
-                                </Button>
-                            </div>
-                            <div className="flex  gap-2">
-                                {/* <div className="flex gap-2 items-center text-accent">
-                                    Skip to page:
-                                    <input
-                                        type="number"
-                                        defaultValue={1}
-                                        onChange={(e) => {
-                                            const page = e.target.value
-                                                ? Number(e.target.value)
-                                                : 0;
-                                            handleSkipPagination(page);
-                                        }}
-                                        className="p-1 rounded w-16 border text-accent dark:text-text-color-50  bg-transparent shadow-sm hover:bg-accent border-accent-foreground hover:bg-accent-foreground"
-                                    />
-                                </div> */}
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="outline">
-                                            Rows per page: {data.page_size}
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuLabel>
-                                            Choose rows per page
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        {[5, 10, 15, 20].map((pageSize) => (
-                                            <DropdownMenuItem
-                                                key={pageSize}
-                                                onClick={() => {
-                                                    handlePageSize(pageSize);
-                                                }}
-                                            >
-                                                <span>{pageSize}</span>
-                                            </DropdownMenuItem>
-                                        ))}
-                                        <DropdownMenuSeparator />
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
-                        </div>
-                    );
-                },
-            })}
         </div>
     );
 };

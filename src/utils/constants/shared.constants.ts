@@ -335,10 +335,19 @@ export enum PERIOD {
     DAYS_90 = 90,
 }
 
-export const POOL_TRANSACTION_MAP = {
-    SWAP: "SWAP",
-    REMOVE_LIQUIDITY: "REMOVE",
-    ADD_LIQUIDITY: "ADD",
+export const POOL_TRANSACTION_MAP: any = {
+    SWAP: {
+        name: "SWAP",
+        color: "secondary",
+    },
+    REMOVE_LIQUIDITY: {
+        name: "REMOVE",
+        color: "destructive",
+    },
+    ADD_LIQUIDITY: {
+        name: "ADD",
+        color: "default",
+    },
 };
 
 export enum CURRENCY {
