@@ -437,15 +437,6 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
         });
     };
 
-    // const handleSkipPagination = (page: number) => {
-    //     setPaginator((prev) => {
-    //         return {
-    //             ...prev,
-    //             pageNumber: page - 1,
-    //         };
-    //     });
-    // };
-
     const handlePageSize = (size: number) => {
         setPaginator((prev) => {
             return {
