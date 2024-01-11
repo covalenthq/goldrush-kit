@@ -63,7 +63,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         dex_name
                     );
                 setError({ error: false, error_message: "" });
-                console.log(response);
                 setResult(new Some(response.data.items));
             } catch (exception) {
                 setResult(new Some([]));
