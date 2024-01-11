@@ -26,7 +26,7 @@ export interface NFTSalesCountViewProps {
 export interface XYKPoolTimeSeriesViewProps {
     chain_name: Chain;
     dex_name: string;
-    address: string;
+    pool_address: string;
 }
 
 export interface NFTVolumeViewProps {
