@@ -1,4 +1,7 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import type {
     MarketFloorPriceItem,
@@ -46,6 +49,8 @@ export const NFTCollectionTokenListView: React.FC<
     const handleNftsToken = async () => {
         setResult(None);
         let response;
+
+        const cache = !allowedCacheChains.includes(chain_name);
         try {
             response =
                 await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
@@ -54,6 +59,7 @@ export const NFTCollectionTokenListView: React.FC<
                     {
                         pageNumber: paginator.pageNumber,
                         pageSize: paginator.pageSize,
+                        withUncached: cache,
                     }
                 );
             setError({ error: false, error_message: "" });
