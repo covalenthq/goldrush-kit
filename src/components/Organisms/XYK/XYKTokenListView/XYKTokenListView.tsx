@@ -43,7 +43,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
 
     const [sorting, setSorting] = useState<SortingState>([
         {
-            id: "quote_rate",
+            id: "total_volume_24h_quote",
             desc: true,
         },
     ]);
