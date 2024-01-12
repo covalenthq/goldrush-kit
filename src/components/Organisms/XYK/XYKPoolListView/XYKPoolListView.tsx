@@ -33,6 +33,7 @@ import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
+import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
 
 export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
@@ -244,6 +245,33 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 );
 
                 return <div className="text-right">{valueFormatted}</div>;
+            },
+        },
+        {
+            id: "annualized_fee",
+            accessorKey: "annualized_fee",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"1y Fees / Liquidity"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const valueFormatted = calculateFeePercentage(
+                    row.original.annualized_fee
+                );
+
+                return (
+                    <div
+                        className={`text-right ${
+                            parseFloat(row.original.annualized_fee) > 0 &&
+                            "text-green-600"
+                        }`}
+                    >
+                        {valueFormatted}
+                    </div>
+                );
             },
         },
         {
