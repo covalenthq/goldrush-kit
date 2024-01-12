@@ -33,6 +33,7 @@ import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
+import { BalancePriceDelta } from "@/components/Atoms/BalancePriceDelta/BalancePriceDelta";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
@@ -214,6 +215,27 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             "USD",
                             true
                         )}{" "}
+                    </div>
+                );
+            },
+        },
+        {
+            id: "quote_rate_24h",
+            accessorKey: "quote_rate_24h",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Price Change (24hrs)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        <BalancePriceDelta
+                            numerator={row.original.quote_rate_24h}
+                            denominator={row.original.quote_rate}
+                        />{" "}
                     </div>
                 );
             },
