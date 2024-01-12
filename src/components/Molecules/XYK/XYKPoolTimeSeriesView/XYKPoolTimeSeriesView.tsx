@@ -16,6 +16,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     chain_name,
     dex_name,
     pool_address,
+    pool_data,
 }) => {
     const [maybeResult, setResult] = useState<Option<any>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
@@ -58,7 +59,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
             setColor(rootColor());
             setResult(new Some(response.data.items[0]));
         })();
-    }, [chain_name, dex_name]);
+    }, [pool_data, dex_name, chain_name]);
 
     useEffect(() => {
         handleChartData();

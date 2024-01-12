@@ -1,4 +1,4 @@
-import { type Chain } from "@covalenthq/client-sdk";
+import { type Chain, type PoolWithTimeseries } from "@covalenthq/client-sdk";
 
 export interface AccountCardViewProps {
     name?: string;
@@ -27,6 +27,7 @@ export interface XYKPoolTimeSeriesViewProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
+    pool_data?: PoolWithTimeseries;
 }
 
 export interface NFTVolumeViewProps {
