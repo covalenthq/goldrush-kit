@@ -339,3 +339,14 @@ export enum CURRENCY {
     USD,
     NATIVE,
 }
+
+export const allowedCacheChains = [
+    "bsc-mainnet",
+    "eth-mainnet",
+    "bsc-testnet",
+    "eth-sepolia",
+    "gnosis-mainnet",
+    "gnosis-testnet",
+    "matic-mainnet",
+    "matic-mumbai",
+];

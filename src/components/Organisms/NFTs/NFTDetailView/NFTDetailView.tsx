@@ -7,7 +7,10 @@ import { type NFTDetailViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 
 export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
     chain_name,
@@ -20,15 +23,18 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
 
     useEffect(() => {
         let response;
+        const cache = !allowedCacheChains.includes(chain_name);
         (async () => {
             try {
                 response =
                     await covalentClient.NftService.getNftMetadataForGivenTokenIdForContract(
                         chain_name,
                         collection_address,
-                        token_id
+                        token_id,
+                        {
+                            withUncached: cache,
+                        }
                     );
-
                 setResult(new Some(response.data.items[0]));
             } catch (error) {
                 console.error(
