@@ -28,3 +28,9 @@ export interface NFTVolumeViewProps {
     collection_address: string;
     token_id?: string;
 }
+
+export interface XYKPoolInformationViewProps {
+    pool_address: string;
+    chain_name: Chain;
+    dex_name: string;
+}
