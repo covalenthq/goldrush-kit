@@ -15,6 +15,7 @@ export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
     pool_address,
     chain_name,
     dex_name,
+    pool_data,
 }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
     const { toast } = useToast();
@@ -81,8 +82,12 @@ export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
     };
 
     useEffect(() => {
+        if (pool_data) {
+            setResult(new Some(pool_data));
+            return;
+        }
         handlePoolInformation();
-    }, [dex_name, pool_address]);
+    }, [dex_name, pool_address, chain_name]);
 
     return (
         <>
