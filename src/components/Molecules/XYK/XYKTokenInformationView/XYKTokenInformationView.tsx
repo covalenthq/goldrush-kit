@@ -6,17 +6,14 @@ import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { useToast } from "../../../../utils/hooks/use-toast";
 import { IconWrapper } from "../../../Atoms/IconWrapper/IconWrapper";
-import { type XYKPoolInformationViewProps } from "@/utils/types/molecules.types";
+import { type XYKTokenInformationViewProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 
-export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
-    pool_address,
-    chain_name,
-    dex_name,
-    pool_data,
-}) => {
+export const XYKTokenInformationView: React.FC<
+    XYKTokenInformationViewProps
+> = ({ pool_address, chain_name, dex_name, pool_data }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
     const { toast } = useToast();
     const { covalentClient } = useCovalent();

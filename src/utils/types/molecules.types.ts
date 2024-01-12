@@ -35,3 +35,10 @@ export interface XYKPoolInformationViewProps {
     dex_name: string;
     pool_data?: PoolWithTimeseries;
 }
+
+export interface XYKTokenInformationViewProps {
+    pool_address: string;
+    chain_name: Chain;
+    dex_name: string;
+    pool_data?: PoolWithTimeseries;
+}
