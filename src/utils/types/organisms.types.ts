@@ -54,6 +54,18 @@ export interface TokenTransfersListViewProps {
     contract_address: string;
 }
 
+export interface XYKPoolTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+}
+
+export interface XYKTokenTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+}
+
 export interface TokenBalancesListViewProps {
     chain_names: Chain[];
     address: string;
