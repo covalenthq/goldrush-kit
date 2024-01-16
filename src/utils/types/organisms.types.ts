@@ -11,6 +11,12 @@ export interface NFTDetailViewProps {
     token_id: string;
 }
 
+export interface XYKPoolDetailViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+}
+
 export interface NFTWalletCollectionViewProps {
     chain_name: Chain;
     address: string;
