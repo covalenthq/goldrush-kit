@@ -23,6 +23,13 @@ export interface NFTSalesCountViewProps {
     token_id?: string;
 }
 
+export interface XYKPoolTimeSeriesViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+    pool_data?: PoolWithTimeseries;
+}
+
 export interface NFTVolumeViewProps {
     chain_name: Chain;
     collection_address: string;

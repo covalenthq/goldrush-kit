@@ -11,6 +11,12 @@ export interface NFTDetailViewProps {
     token_id: string;
 }
 
+export interface XYKPoolDetailViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+}
+
 export interface NFTWalletCollectionViewProps {
     chain_name: Chain;
     address: string;
@@ -54,6 +60,18 @@ export interface TokenTransfersListViewProps {
     contract_address: string;
 }
 
+export interface XYKPoolTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+}
+
+export interface XYKTokenTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+}
+
 export interface TokenBalancesListViewProps {
     chain_names: Chain[];
     address: string;
@@ -62,6 +80,18 @@ export interface TokenBalancesListViewProps {
     on_transfer_click?: Function;
 }
 
+export interface XYKTokenListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    on_token_click: Function;
+}
+
 export interface CrossChainBalanceItem extends BalanceItem {
     chain: Chain;
+}
+
+export interface XYKPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    on_pool_click?: Function;
 }
