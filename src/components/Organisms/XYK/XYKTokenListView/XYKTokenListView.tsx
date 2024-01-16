@@ -1,5 +1,5 @@
 import { type Option, None, Some } from "@/utils/option";
-import { type Pool, prettifyCurrency } from "@covalenthq/client-sdk";
+import { type TokenV2Volume, prettifyCurrency } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     DropdownMenu,
@@ -32,24 +32,24 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
-import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
+import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
+import { BalancePriceDelta } from "@/components/Atoms/BalancePriceDelta/BalancePriceDelta";
 
-export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
+export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
     dex_name,
-    on_pool_click,
+    on_token_click,
 }) => {
     const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
-            id: "total_liquidity_quote",
+            id: "total_volume_24h_quote",
             desc: true,
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [maybeResult, setResult] = useState<Option<Pool[]>>(None);
+    const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -58,10 +58,11 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             setResult(None);
             let response;
             try {
-                response = await covalentClient.XykService.getPools(
-                    chain_name,
-                    dex_name
-                );
+                response =
+                    await covalentClient.XykService.getNetworkExchangeTokens(
+                        chain_name,
+                        dex_name
+                    );
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
@@ -88,230 +89,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
         };
     }, []);
 
-    const columns: ColumnDef<Pool>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
-        {
-            id: "contract_name",
-            accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Pool"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const token_0 = row.original.token_0;
-                const token_1 = row.original.token_1;
-                const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
-
-                return (
-                    <div className="flex items-center gap-3">
-                        <div className="relative mr-2 flex">
-                            <TokenAvatar
-                                size={GRK_SIZES.EXTRA_SMALL}
-                                token_url={token_0.logo_url}
-                            />
-                            <div className="absolute left-4">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    token_url={token_1.logo_url}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-base">
-                                {pool ? pool : "FIXME"}
-                            </label>
-                        </div>
-                    </div>
-                );
-            },
-        },
-        {
-            id: "total_liquidity_quote",
-            accessorKey: "total_liquidity_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_liquidity_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "volume_24h_quote",
-            accessorKey: "volume_24h_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Volume (24hrs)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.volume_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "volume_7d_quote",
-            accessorKey: "volume_7d_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Volume (7d)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.volume_7d_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "quote_rate",
-            accessorKey: "quote_rate",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Quote Rate"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        {" "}
-                        {prettifyCurrency(
-                            row.getValue("quote_rate"),
-                            2,
-                            "USD",
-                            true
-                        )}{" "}
-                    </div>
-                );
-            },
-        },
-        {
-            id: "fee_24h_quote",
-            accessorKey: "fee_24h_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Fees (24hrs)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.fee_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "annualized_fee",
-            accessorKey: "annualized_fee",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"1y Fees / Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = calculateFeePercentage(
-                    row.original.annualized_fee
-                );
-
-                return (
-                    <div
-                        className={`text-right ${
-                            parseFloat(row.original.annualized_fee) > 0 &&
-                            "text-green-600"
-                        }`}
-                    >
-                        {valueFormatted}
-                    </div>
-                );
-            },
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Pool
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
-        },
-    ];
-
-    const mobile_columns: ColumnDef<Pool>[] = [
+    const columns: ColumnDef<TokenV2Volume>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -346,28 +124,205 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 />
             ),
             cell: ({ row }) => {
-                const token_0 = row.original.token_0;
-                const token_1 = row.original.token_1;
-                const pool = `${token_0.contract_ticker_symbol}/${token_1.contract_ticker_symbol}`;
-
                 return (
                     <div className="flex items-center gap-3">
-                        <div className="relative mr-2 flex">
-                            <TokenAvatar
-                                size={GRK_SIZES.EXTRA_SMALL}
-                                token_url={token_0.logo_url}
-                            />
-                            <div className="absolute left-4">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    token_url={token_1.logo_url}
-                                />
-                            </div>
-                        </div>
-
+                        <TokenAvatar
+                            size={GRK_SIZES.EXTRA_SMALL}
+                            token_url={row.original.logo_url}
+                        />
                         <div className="flex flex-col">
                             <label className="text-base">
-                                {pool ? pool : "FIXME"}
+                                {row.original.contract_name
+                                    ? row.original.contract_name
+                                    : "FIXME"}
+                            </label>
+                        </div>
+                    </div>
+                );
+            },
+        },
+        {
+            id: "contract_ticker_symbol",
+            accessorKey: "contract_ticker_symbol",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Symbol"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        {row.original.contract_ticker_symbol}
+                    </div>
+                );
+            },
+        },
+        {
+            id: "total_liquidity_quote",
+            accessorKey: "total_liquidity_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Liquidity"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const valueFormatted = prettifyCurrency(
+                    row.original.total_liquidity_quote
+                );
+
+                return <div className="text-right">{valueFormatted}</div>;
+            },
+        },
+        {
+            id: "total_volume_24h_quote",
+            accessorKey: "total_volume_24h_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Volume (24hrs)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const valueFormatted = prettifyCurrency(
+                    row.original.total_volume_24h_quote
+                );
+
+                return <div className="text-right">{valueFormatted}</div>;
+            },
+        },
+        {
+            id: "quote_rate",
+            accessorKey: "quote_rate",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Quote Rate"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        {" "}
+                        {prettifyCurrency(
+                            row.getValue("quote_rate"),
+                            2,
+                            "USD",
+                            true
+                        )}{" "}
+                    </div>
+                );
+            },
+        },
+        {
+            id: "quote_rate_24h",
+            accessorKey: "quote_rate_24h",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Price Change (24hrs)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        <BalancePriceDelta
+                            numerator={row.original.quote_rate_24h}
+                            denominator={row.original.quote_rate}
+                        />{" "}
+                    </div>
+                );
+            },
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="ml-auto  ">
+                                    <span className="sr-only">Open menu</span>
+                                    <IconWrapper icon_class_name="expand_more" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        if (on_token_click) {
+                                            on_token_click(
+                                                row.original.contract_address
+                                            );
+                                        }
+                                    }}
+                                >
+                                    <IconWrapper
+                                        icon_class_name="swap_horiz"
+                                        class_name="mr-2"
+                                    />{" "}
+                                    View Token
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                );
+            },
+        },
+    ];
+
+    const mobile_columns: ColumnDef<TokenV2Volume>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    className="mx-1"
+                    checked={table.getIsAllPageRowsSelected()}
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    className="mx-1"
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            id: "contract_name",
+            accessorKey: "contract_name",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Token"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return (
+                    <div className="flex items-center gap-3">
+                        <TokenAvatar
+                            size={GRK_SIZES.EXTRA_SMALL}
+                            token_url={row.original.logo_url}
+                        />
+                        <div className="flex flex-col">
+                            <label className="text-base">
+                                {row.original.contract_name
+                                    ? row.original.contract_name
+                                    : "FIXME"}
                             </label>
                         </div>
                     </div>
@@ -404,7 +359,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             ),
             cell: ({ row }) => {
                 const valueFormatted = prettifyCurrency(
-                    row.original.volume_24h_quote
+                    row.original.total_volume_24h_quote
                 );
 
                 return <div className="text-right">{valueFormatted}</div>;
@@ -426,9 +381,9 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuItem
                                     onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
+                                        if (on_token_click) {
+                                            on_token_click(
+                                                row.original.contract_address
                                             );
                                         }
                                     }}
@@ -437,7 +392,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                         icon_class_name="swap_horiz"
                                         class_name="mr-2"
                                     />{" "}
-                                    View Pool
+                                    View Token
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -469,11 +424,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 <TableCell className="h-12 text-center"></TableCell>
                 <TableCell className="h-12 text-right">
                     <div className="float-left">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
                         <Skeleton size={GRK_SIZES.LARGE} />
                     </div>
                 </TableCell>

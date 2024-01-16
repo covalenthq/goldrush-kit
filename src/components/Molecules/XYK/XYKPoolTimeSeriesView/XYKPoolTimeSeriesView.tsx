@@ -66,7 +66,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
             );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [pool_data]);
+    }, [pool_data, dex_name, pool_address, chain_name]);
 
     useEffect(() => {
         handleChartData();
