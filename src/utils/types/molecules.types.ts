@@ -30,6 +30,13 @@ export interface XYKPoolTimeSeriesViewProps {
     pool_data?: PoolWithTimeseries;
 }
 
+export interface XYKTokenTimeSeriesViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+    token_data?: PoolWithTimeseries;
+}
+
 export interface NFTVolumeViewProps {
     chain_name: Chain;
     collection_address: string;
