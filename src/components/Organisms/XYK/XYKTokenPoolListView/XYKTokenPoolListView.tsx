@@ -257,33 +257,33 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
                 return <div className="text-right">{valueFormatted}</div>;
             },
         },
-        {
-            id: "annualized_fee",
-            accessorKey: "annualized_fee",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"1y Fees / Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = calculateFeePercentage(
-                    row.original.annualized_fee
-                );
+        // {
+        //     id: "annualized_fee",
+        //     accessorKey: "annualized_fee",
+        //     header: ({ column }) => (
+        //         <TableHeaderSorting
+        //             align="right"
+        //             header_name={"1y Fees / Liquidity"}
+        //             column={column}
+        //         />
+        //     ),
+        //     cell: ({ row }) => {
+        //         const valueFormatted = calculateFeePercentage(
+        //             row.original.annualized_fee
+        //         );
 
-                return (
-                    <div
-                        className={`text-right ${
-                            parseFloat(row.original.annualized_fee) > 0 &&
-                            "text-green-600"
-                        }`}
-                    >
-                        {valueFormatted}
-                    </div>
-                );
-            },
-        },
+        //         return (
+        //             <div
+        //                 className={`text-right ${
+        //                     parseFloat(row.original.annualized_fee) > 0 &&
+        //                     "text-green-600"
+        //                 }`}
+        //             >
+        //                 {valueFormatted}
+        //             </div>
+        //         );
+        //     },
+        // },
         {
             id: "actions",
             cell: ({ row }) => {
