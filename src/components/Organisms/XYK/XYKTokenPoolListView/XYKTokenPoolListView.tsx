@@ -36,13 +36,12 @@ import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTokenPoolListViewProps } from "@/utils/types/organisms.types";
-import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
 
 export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
     chain_name,
     dex_name,
     on_pool_click,
-    token_address
+    token_address,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -71,7 +70,6 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
                             dexName: dex_name,
                         }
                     );
-                console.log(response)
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
