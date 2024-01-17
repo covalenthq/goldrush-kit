@@ -95,3 +95,10 @@ export interface XYKPoolListViewProps {
     dex_name: string;
     on_pool_click?: Function;
 }
+
+export interface XYKTokenPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+    on_pool_click?: Function;
+}
