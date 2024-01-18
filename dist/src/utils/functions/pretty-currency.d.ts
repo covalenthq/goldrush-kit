@@ -1,0 +1,2 @@
+export declare const prettyCurrency: (val: any, decimals?: number, currency?: string, ignoreSmallVal?: boolean, ignoreMinus?: boolean, ignoreZero?: boolean) => string;
+//# sourceMappingURL=pretty-currency.d.ts.map
