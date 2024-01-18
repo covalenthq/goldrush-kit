@@ -11,6 +11,11 @@ export interface CollectionCardViewProps {
     collection_address: string;
 }
 
+export interface BlockCardViewProps {
+    chain_name: Chain;
+    block_height: number;  
+}
+
 export interface NFTFloorPriceViewProps {
     chain_name: Chain;
     collection_address: string;
