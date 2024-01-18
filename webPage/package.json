@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@covalenthq/goldrush-kit": "https://github.com/Calebux/goldrush-kit",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@covalenthq/goldrush-kit": "https://github.com/Calebux/goldrush-kit"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
