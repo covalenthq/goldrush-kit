@@ -70,8 +70,8 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                 });
 
                 const [width, height] = SIZE_CLASS.split(" ");
-                svg.setAttribute("width", width);
-                svg.setAttribute("height", height);
+                svg.setAttribute("width", "80px");
+                svg.setAttribute("height", "80px");
 
                 if (ref.current) {
                     ref.current.innerHTML = svg.outerHTML;

@@ -54,7 +54,7 @@ const preview: Preview = {
     decorators: [
         (Story) => (
             <CovalentProvider
-                apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
+                apikey={"cqt_rQf8HpRQKFy6XPKDBvRcX9tjqvTr"}
             >
                 <Story />
             </CovalentProvider>

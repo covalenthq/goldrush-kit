@@ -154,7 +154,7 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
             try {
                 const allChainsResp =
                     await covalentClient.BaseService.getAllChains();
-                setChains(allChainsResp.data.items);
+                setChains(allChainsResp.data?.items);
             } catch (error) {
                 console.error(error);
             }
