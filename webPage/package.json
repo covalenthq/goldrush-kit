@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@covalenthq/goldrush-kit": "https://github.com/Calebux/goldrush-kit"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
