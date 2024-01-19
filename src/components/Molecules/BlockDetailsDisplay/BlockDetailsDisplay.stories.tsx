@@ -15,4 +15,5 @@ export const BlockDetailCard: Story = {
         block_id: 12345678,
         chain_name: "eth-mainnet",
     },
+    
 };

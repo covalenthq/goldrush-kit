@@ -115,6 +115,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
 
     useEffect(() => {
         handleTokenBalances(address);
+        // console.log(filterResult)
     }, [chain_names, address]);
 
     useEffect(() => {
@@ -135,6 +136,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                     return result;
                 }
                 setFilterResult(new Some(result));
+                // console.log(filterResult)
             },
         });
     }, [maybeResult, hide_small_balances]);

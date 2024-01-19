@@ -49,7 +49,7 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
         if (is_chain_logo) {
             (async () => {
                 const response = await fetch(
-                    token_url ?? "https://goldrush.vercel.app/icons/token.svg"
+                    token_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRol6De0DZK5RCgwid4R58X2eky_Cks-RTzSioFb_PQZw&s"
                 );
                 const data = await response.text();
 
@@ -88,13 +88,13 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
             style={{ background: chain_color ?? "", padding: "2px" }}
         >
             <img
-                src={token_url ?? "https://goldrush.vercel.app/icons/token.svg"}
+                src={token_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRol6De0DZK5RCgwid4R58X2eky_Cks-RTzSioFb_PQZw&s"}
                 alt="Token Image"
                 style={{ background: "#fff" }}
                 className={`h-full w-full rounded-[100%] p-0.5`}
                 onError={(e) => {
                     e.currentTarget.src =
-                        "https://goldrush.vercel.app/icons/token.svg";
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRol6De0DZK5RCgwid4R58X2eky_Cks-RTzSioFb_PQZw&s";
                 }}
             />
             {sub_url && (
