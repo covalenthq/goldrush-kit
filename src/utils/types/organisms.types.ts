@@ -72,6 +72,12 @@ export interface XYKTokenTransactionsListViewProps {
     token_address: string;
 }
 
+export interface XYKWalletTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
 export interface TokenBalancesListViewProps {
     chain_names: Chain[];
     address: string;
