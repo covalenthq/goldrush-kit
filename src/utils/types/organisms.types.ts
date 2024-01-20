@@ -72,6 +72,12 @@ export interface XYKTokenTransactionsListViewProps {
     token_address: string;
 }
 
+export interface XYKWalletTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
 export interface TokenBalancesListViewProps {
     chain_names: Chain[];
     address: string;
@@ -100,5 +106,11 @@ export interface XYKTokenPoolListViewProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
+}
+
+export interface XYKWalletPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
     on_pool_click?: Function;
 }
