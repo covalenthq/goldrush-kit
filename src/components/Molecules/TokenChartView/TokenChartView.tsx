@@ -21,14 +21,14 @@ export const TokenChartView: React.FC<TokenChartViewProps> = ({
                         address,
                         { noNftFetch: false, noSpam: true }
                     );
-                transformData(response.data.items);
+                formatData(response.data.items);
             } catch (error) {
                 console.log(error);
             }
         })();
     }, []);
 
-    const transformData = (data: BalanceItem[]) => {
+    const formatData = (data: BalanceItem[]) => {
         if (data.length <= 5) {
             setResult(
                 data.map((item) => {
@@ -40,10 +40,10 @@ export const TokenChartView: React.FC<TokenChartViewProps> = ({
             );
         }
         const remainingValue = data
-            .slice(5)
+            .slice(7)
             .reduce((acc, cur) => acc + cur.quote, 0);
         setResult([
-            ...data.slice(0, 5).map((item) => {
+            ...data.slice(0, 7).map((item) => {
                 return { name: item.contract_display_name, value: item.quote };
             }),
             { name: "Others", value: remainingValue },
