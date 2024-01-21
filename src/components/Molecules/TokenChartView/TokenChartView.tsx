@@ -1,150 +1,91 @@
-import { copyToClipboard, truncate } from "@/utils/functions";
-import { Card, DonutChart, Title } from "@tremor/react";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import QRCode from "react-qr-code";
-import { useEffect, useState } from "react";
-import { useToast } from "../../../utils/hooks/use-toast";
-import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { Card, DonutChart, Title, BarList, Grid } from "@tremor/react";
 import { type TokenChartViewProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type Chain, type NftTokenContract } from "@covalenthq/client-sdk";
-import { type Option, Some, None } from "@/utils/option";
-import { Skeleton } from "@/components/ui/skeleton";
-import { type CrossChainBalanceItem } from "@/utils/types/organisms.types";
-import { rest } from "lodash";
+import { useEffect, useState } from "react";
+import { type BalanceItem } from "@covalenthq/client-sdk";
 
-export const TokenChartView: React.FC<TokenChartViewProps> = ({ address }) => {
-    const hide_small_balances = false;
-    const [maybeResult, setResult] =
-        useState<Option<CrossChainBalanceItem[]>>(None);
-        const [filterResult, setFilterResult] =
-        useState<Option<CrossChainBalanceItem[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
-    const { covalentClient, chains } = useCovalent();
-    const [chartDataa, setChartDataa] = useState<any[]>([])
+export const TokenChartView: React.FC<TokenChartViewProps> = ({
+    chain_name,
+    address,
+}) => {
+    const { covalentClient } = useCovalent();
+    const [result, setResult] = useState<{ name: string; value: number }[]>([]);
 
-
-    const chain_names: Chain[] = [
-        "eth-mainnet",
-        "matic-mainnet",
-        "bsc-mainnet",
-        "avalanche-mainnet",
-        "optimism-mainnet",
-    ];
-
-
-    function getChainData(){
-        let data = filterResult.value?.map(res => res);
-        let chartData = []
-        // let ethData = 
-
-        // console.log(filterResult.value[1].chain)
-        let eth = data?.filter(c => c.chain === 'eth-mainnet').reduce((acc,curr)=>acc+parseInt(curr.balance),0)
-        // console.log(data?.at(1));
-        chartData.push({name: 'eth-mainnet', balance: eth})
-
-        let matic = data?.filter(c => c.chain === 'matic-mainnet').reduce((acc,curr)=>acc+parseInt(curr.balance),0)
-        // console.log(data?.at(1));
-        chartData.push({name: 'matic-mainnet', balance: matic})
-
-        let bsc = data?.filter(c => c.chain === 'bsc-mainnet').reduce((acc,curr)=>acc+parseInt(curr.balance),0)
-        // console.log(data?.at(1));
-        chartData.push({name: 'bsc-mainnet', balance: bsc})
-
-        let avalance = data?.filter(c => c.chain === 'bsc-mainnet').reduce((acc,curr)=>acc+parseInt(curr.balance),0)
-        // console.log(data?.at(1));
-        chartData.push({name: 'avalanche-mainnet', balance: avalance})
-
-        let opt = data?.filter(c => c.chain === 'optimism-mainnet').reduce((acc,curr)=>acc+parseInt(curr.balance),0)
-        console.log(data?.filter(c => c.chain === 'eth-mainnet'));
-        chartData.push({name: 'optimism-mainnet', balance: opt})
-
-
-        setChartDataa(chartData)
-
-        console.log(chartData)
-
-    }
-
-    const handleTokenBalances = async (_address: string) => {
-        setResult(None);
-        const promises = chain_names.map(async (chain) => {
-            let response;
+    // Run on first render.
+    useEffect(() => {
+        (async () => {
             try {
-                response =
+                const response =
                     await covalentClient.BalanceService.getTokenBalancesForWalletAddress(
-                        chain,
-                        _address.trim()
+                        chain_name,
+                        address,
+                        { noNftFetch: false, noSpam: true }
                     );
-
-                setError({ error: false, error_message: "" });
-                return response.data.items.map((o) => {
-                    return { ...o, chain };
-                });
+                transformData(response.data.items);
             } catch (error) {
-                console.error(`Error fetching balances for ${chain}:`, error);
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
-                return [];
+                console.log(error);
             }
-        });
+        })();
+    }, []);
 
-        const results = await Promise.all(promises);
-        setResult(new Some(results.flat()));
+    const transformData = (data: BalanceItem[]) => {
+        if (data.length <= 5) {
+            setResult(
+                data.map((item) => {
+                    return {
+                        name: item.contract_display_name,
+                        value: item.quote,
+                    };
+                })
+            );
+        }
+        const remainingValue = data
+            .slice(5)
+            .reduce((acc, cur) => acc + cur.quote, 0);
+        setResult([
+            ...data.slice(0, 5).map((item) => {
+                return { name: item.contract_display_name, value: item.quote };
+            }),
+            { name: "Others", value: remainingValue },
+        ]);
     };
 
-    useEffect(() => {
-        handleTokenBalances(address);
-        // console.log(filterResult.value)
-        // console.log(filterResult.value);
-        getChainData()
-    }, [chain_names, address]);
+    const valueFormatter = (number: number) =>
+        `$ ${new Intl.NumberFormat("us").format(number).toString()}`;
 
-    useEffect(() => {
-        maybeResult.match({
-            None: () => [],
-            Some: (result) => {
-                if (hide_small_balances) {
-                    setFilterResult(
-                        new Some(
-                            result.filter(
-                                (o) =>
-                                    o.quote !== null &&
-                                    o.quote > 0 &&
-                                    o.type !== "dust"
-                            )
-                        )
-                    );
-                    return result;
-                }
-                setFilterResult(new Some(result));
-            },
-        });
-        // console.log(filterResult.value.filter(res => res.chain === 'eth_mainnet'))
-    }, [maybeResult, hide_small_balances]);
-
-    const valueFormatter = (number) => `$ ${new Intl.NumberFormat("us").format(number).toString()}`;
-
-    return  <Card className="max-w-lg">
-    <Title>Assets Chart</Title>
-    <DonutChart
-      className="mt-6"
-      data={chartDataa}
-      category="balance"
-      index="name"
-      valueFormatter={valueFormatter}
-      colors={["slate", "violet", "indigo", "rose", "cyan"]}
-    />
-  </Card>;
+    return (
+        <Card>
+            <Title>Token Chart view</Title>
+            <Grid
+                numItems={1}
+                numItemsSm={1}
+                numItemsLg={2}
+                className="items-center justify-center gap-2"
+            >
+                <DonutChart
+                    className="mt-4"
+                    data={result}
+                    variant="donut"
+                    category="value"
+                    valueFormatter={valueFormatter}
+                    index="name"
+                    colors={[
+                        "rose",
+                        "yellow",
+                        "orange",
+                        "indigo",
+                        "blue",
+                        "emerald",
+                    ]}
+                />
+                <BarList
+                    data={result}
+                    className="mt-2"
+                    valueFormatter={valueFormatter}
+                />
+            </Grid>
+        </Card>
+    );
 };
 
 export default TokenChartView;

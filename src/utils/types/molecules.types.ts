@@ -17,6 +17,13 @@ export interface NFTFloorPriceViewProps {
     token_id?: string;
 }
 
+
+export interface BlockDetailsDisplayProps {
+    chain_name: Chain;
+    icon_url: string;
+    block_id: number;
+}
+
 export interface NFTSalesCountViewProps {
     chain_name: Chain;
     collection_address: string;
@@ -38,4 +45,5 @@ export interface NFTVolumeViewProps {
 
 export interface TokenChartViewProps {
     address: string;
+    chain_name: Chain;
 }
