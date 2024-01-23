@@ -32,6 +32,7 @@ export interface XYKPoolTimeSeriesViewProps {
     dex_name: string;
     pool_address: string;
     pool_data?: PoolWithTimeseries;
+    displayMetrics?: "both" | "liquidity" | "volume";
 }
 
 export interface NFTVolumeViewProps {
@@ -45,4 +46,5 @@ export interface XYKOverviewLiquidityViewProps {
     dex_name: string;
     pool_address: string;
     pool_data?: UniswapLikeEcosystemCharts;
+    displayMetrics?: "both" | "liquidity" | "volume";
 }

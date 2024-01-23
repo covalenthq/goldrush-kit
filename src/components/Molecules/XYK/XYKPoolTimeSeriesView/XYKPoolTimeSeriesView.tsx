@@ -1,7 +1,7 @@
 import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { BarChart } from "@tremor/react";
+import { AreaChart, BarChart } from "@tremor/react";
 import { rootColor, timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,11 +20,14 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
     dex_name,
     pool_address,
     pool_data,
+    displayMetrics = "both",
 }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const [timeSeries, setTimeSerious] = useState<string>("liquidity");
+    const [timeSeries, setTimeSeries] = useState<string>(
+        displayMetrics !== "both" ? displayMetrics : "liquidity"
+    );
     const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useCovalent();
 
@@ -66,11 +69,11 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
             );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [pool_data, dex_name, pool_address, chain_name]);
+    }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
 
     useEffect(() => {
         handleChartData();
-    }, [maybeResult, period, timeSeries]);
+    }, [maybeResult, period, timeSeries, displayMetrics]);
 
     const body = chartData.match({
         None: () => {
@@ -81,6 +84,21 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
             );
         },
         Some: (result) => {
+            if (timeSeries === "liquidity") {
+                return (
+                    <AreaChart
+                        className="mt-2 p-2"
+                        data={result}
+                        index="date"
+                        valueFormatter={prettifyCurrency}
+                        yAxisWidth={100}
+                        categories={[
+                            `${capitalizeFirstLetter(timeSeries)} (USD)`,
+                        ]}
+                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                    />
+                );
+            }
             return (
                 <div>
                     <BarChart
@@ -106,54 +124,59 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                     timeSeries
                 )} (USD)`}</TypographyH4>
             </div>
-
-            <div className="flex justify-between">
-                <div className="flex gap-2">
-                    <Button
-                        disabled={!maybeResult.isDefined}
-                        variant={
-                            timeSeries === "liquidity" ? "accent" : "outline"
-                        }
-                        onClick={() => setTimeSerious("liquidity")}
-                    >
-                        Liquidity
-                    </Button>
-                    <Button
-                        disabled={!maybeResult.isDefined}
-                        variant={timeSeries === "volume" ? "accent" : "outline"}
-                        onClick={() => setTimeSerious("volume")}
-                    >
-                        Volume
-                    </Button>
-                    {/* <Button
-                        disabled={!maybeResult.isDefined}
-                        variant={timeSeries === "price" ? "accent" : "outline"}
-                        onClick={() => setTimeSerious("price")}
-                    >
-                        Price
-                    </Button> */}
+            {displayMetrics === "both" && (
+                <div className="flex justify-between">
+                    <div className="flex gap-2">
+                        <Button
+                            disabled={!maybeResult.isDefined}
+                            variant={
+                                timeSeries === "liquidity"
+                                    ? "accent"
+                                    : "outline"
+                            }
+                            onClick={() => setTimeSeries("liquidity")}
+                        >
+                            Liquidity
+                        </Button>
+                        <Button
+                            disabled={!maybeResult.isDefined}
+                            variant={
+                                timeSeries === "volume" ? "accent" : "outline"
+                            }
+                            onClick={() => setTimeSeries("volume")}
+                        >
+                            Volume
+                        </Button>
+                        {/* <Button
+                                disabled={!maybeResult.isDefined}
+                                variant={timeSeries === "price" ? "accent" : "outline"}
+                                onClick={() => setTimeSeries("price")}
+                            >
+                                Price
+                            </Button> */}
+                    </div>
+                    <div className="flex gap-2">
+                        <Button
+                            disabled={!maybeResult.isDefined}
+                            variant={
+                                period === PERIOD.DAYS_7 ? "accent" : "outline"
+                            }
+                            onClick={() => setPeriod(PERIOD.DAYS_7)}
+                        >
+                            7 days
+                        </Button>
+                        <Button
+                            disabled={!maybeResult.isDefined}
+                            variant={
+                                period === PERIOD.DAYS_30 ? "accent" : "outline"
+                            }
+                            onClick={() => setPeriod(PERIOD.DAYS_30)}
+                        >
+                            30 days
+                        </Button>
+                    </div>
                 </div>
-                <div className="flex gap-2">
-                    <Button
-                        disabled={!maybeResult.isDefined}
-                        variant={
-                            period === PERIOD.DAYS_7 ? "accent" : "outline"
-                        }
-                        onClick={() => setPeriod(PERIOD.DAYS_7)}
-                    >
-                        7 days
-                    </Button>
-                    <Button
-                        disabled={!maybeResult.isDefined}
-                        variant={
-                            period === PERIOD.DAYS_30 ? "accent" : "outline"
-                        }
-                        onClick={() => setPeriod(PERIOD.DAYS_30)}
-                    >
-                        30 days
-                    </Button>
-                </div>
-            </div>
+            )}
 
             {body}
         </div>
