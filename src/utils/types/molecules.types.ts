@@ -1,4 +1,8 @@
-import { type Chain, type PoolWithTimeseries } from "@covalenthq/client-sdk";
+import {
+    type Chain,
+    type PoolWithTimeseries,
+    type UniswapLikeEcosystemCharts,
+} from "@covalenthq/client-sdk";
 
 export interface AccountCardViewProps {
     name?: string;
@@ -34,4 +38,11 @@ export interface NFTVolumeViewProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
+}
+
+export interface XYKOverviewLiquidityViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+    pool_data?: UniswapLikeEcosystemCharts;
 }
