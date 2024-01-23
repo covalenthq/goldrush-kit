@@ -35,3 +35,8 @@ export interface NFTVolumeViewProps {
     collection_address: string;
     token_id?: string;
 }
+
+export interface BlockDetailViewProps {
+    chain_name: Chain;
+    block_height?: string;
+}
