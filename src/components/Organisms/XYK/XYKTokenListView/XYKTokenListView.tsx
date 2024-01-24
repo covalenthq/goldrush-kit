@@ -29,11 +29,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
-import { BalancePriceDelta } from "@/components/Atoms/BalancePriceDelta/BalancePriceDelta";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
