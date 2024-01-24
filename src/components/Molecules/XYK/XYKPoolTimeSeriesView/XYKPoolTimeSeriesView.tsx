@@ -75,6 +75,11 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
         handleChartData();
     }, [maybeResult, period, timeSeries, displayMetrics]);
 
+    useEffect(() => {
+        if (displayMetrics === "both") return;
+        setTimeSeries(displayMetrics);
+    }, [displayMetrics]);
+
     const body = chartData.match({
         None: () => {
             return (
@@ -124,8 +129,9 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                     timeSeries
                 )} (USD)`}</TypographyH4>
             </div>
-            {displayMetrics === "both" && (
-                <div className="flex justify-between">
+
+            <div className="flex justify-between">
+                {displayMetrics === "both" && (
                     <div className="flex gap-2">
                         <Button
                             disabled={!maybeResult.isDefined}
@@ -147,36 +153,29 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
                         >
                             Volume
                         </Button>
-                        {/* <Button
-                                disabled={!maybeResult.isDefined}
-                                variant={timeSeries === "price" ? "accent" : "outline"}
-                                onClick={() => setTimeSeries("price")}
-                            >
-                                Price
-                            </Button> */}
                     </div>
-                    <div className="flex gap-2">
-                        <Button
-                            disabled={!maybeResult.isDefined}
-                            variant={
-                                period === PERIOD.DAYS_7 ? "accent" : "outline"
-                            }
-                            onClick={() => setPeriod(PERIOD.DAYS_7)}
-                        >
-                            7 days
-                        </Button>
-                        <Button
-                            disabled={!maybeResult.isDefined}
-                            variant={
-                                period === PERIOD.DAYS_30 ? "accent" : "outline"
-                            }
-                            onClick={() => setPeriod(PERIOD.DAYS_30)}
-                        >
-                            30 days
-                        </Button>
-                    </div>
+                )}
+                <div className="flex gap-2">
+                    <Button
+                        disabled={!maybeResult.isDefined}
+                        variant={
+                            period === PERIOD.DAYS_7 ? "accent" : "outline"
+                        }
+                        onClick={() => setPeriod(PERIOD.DAYS_7)}
+                    >
+                        7 days
+                    </Button>
+                    <Button
+                        disabled={!maybeResult.isDefined}
+                        variant={
+                            period === PERIOD.DAYS_30 ? "accent" : "outline"
+                        }
+                        onClick={() => setPeriod(PERIOD.DAYS_30)}
+                    >
+                        30 days
+                    </Button>
                 </div>
-            )}
+            </div>
 
             {body}
         </div>
