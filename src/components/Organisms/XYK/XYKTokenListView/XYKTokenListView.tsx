@@ -39,6 +39,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
     dex_name,
     on_token_click,
+    limit,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -64,6 +65,9 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         dex_name
                     );
                 setError({ error: false, error_message: "" });
+                if (limit) {
+                    response.data.items.splice(limit);
+                }
                 setResult(new Some(response.data.items));
             } catch (exception) {
                 setResult(new Some([]));

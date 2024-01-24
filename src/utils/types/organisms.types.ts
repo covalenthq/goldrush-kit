@@ -90,6 +90,7 @@ export interface XYKTokenListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_token_click: Function;
+    limit?: number;
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {
@@ -100,6 +101,7 @@ export interface XYKPoolListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_pool_click?: Function;
+    limit?: number;
 }
 
 export interface XYKTokenPoolListViewProps {

@@ -39,6 +39,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
     dex_name,
     on_pool_click,
+    limit,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -63,6 +64,9 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                     dex_name
                 );
                 setError({ error: false, error_message: "" });
+                if (limit) {
+                    response.data.items.splice(limit);
+                }
                 setResult(new Some(response.data.items));
             } catch (exception) {
                 setResult(new Some([]));
@@ -72,7 +76,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 });
             }
         })();
-    }, [chain_name, dex_name]);
+    }, [chain_name, dex_name, limit]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
