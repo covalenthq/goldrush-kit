@@ -44,7 +44,6 @@ export interface NFTVolumeViewProps {
 export interface XYKOverviewLiquidityViewProps {
     chain_name: Chain;
     dex_name: string;
-    pool_address: string;
-    pool_data?: UniswapLikeEcosystemCharts;
+    overview_data?: UniswapLikeEcosystemCharts;
     displayMetrics?: "both" | "liquidity" | "volume";
 }

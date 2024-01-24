@@ -17,13 +17,7 @@ import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
 export const XYKOverviewLiquidityView: React.FC<
     XYKOverviewLiquidityViewProps
-> = ({
-    chain_name,
-    dex_name,
-    pool_address,
-    pool_data,
-    displayMetrics = "both",
-}) => {
+> = ({ chain_name, dex_name, overview_data, displayMetrics = "both" }) => {
     const [maybeResult, setResult] =
         useState<Option<UniswapLikeEcosystemCharts>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
@@ -38,7 +32,7 @@ export const XYKOverviewLiquidityView: React.FC<
         maybeResult.match({
             None: () => null,
             Some: (response: any) => {
-                const chart_key = `${timeSeries}_timeseries_${period}d`;
+                const chart_key = `${timeSeries}_chart_${period}d`;
                 const value_key =
                     timeSeries === "price"
                         ? "price_of_token0_in_token1"
@@ -59,8 +53,8 @@ export const XYKOverviewLiquidityView: React.FC<
 
     useEffect(() => {
         setColor(rootColor());
-        if (pool_data) {
-            setResult(new Some(pool_data));
+        if (overview_data) {
+            setResult(new Some(overview_data));
             return;
         }
         (async () => {
@@ -72,7 +66,7 @@ export const XYKOverviewLiquidityView: React.FC<
                 );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
+    }, [overview_data, dex_name, chain_name, displayMetrics]);
 
     useEffect(() => {
         handleChartData();
