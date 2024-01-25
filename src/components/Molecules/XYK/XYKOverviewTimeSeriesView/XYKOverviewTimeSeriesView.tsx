@@ -8,15 +8,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKOverviewLiquidityViewProps } from "@/utils/types/molecules.types";
+import { type XYKOverviewTimeSeriesViewProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
     type UniswapLikeEcosystemCharts,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKOverviewLiquidityView: React.FC<
-    XYKOverviewLiquidityViewProps
+export const XYKOverviewTimeSeriesView: React.FC<
+    XYKOverviewTimeSeriesViewProps
 > = ({ chain_name, dex_name, overview_data, displayMetrics = "both" }) => {
     const [maybeResult, setResult] =
         useState<Option<UniswapLikeEcosystemCharts>>(None);

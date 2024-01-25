@@ -41,7 +41,7 @@ export interface NFTVolumeViewProps {
     token_id?: string;
 }
 
-export interface XYKOverviewLiquidityViewProps {
+export interface XYKOverviewTimeSeriesViewProps {
     chain_name: Chain;
     dex_name: string;
     overview_data?: UniswapLikeEcosystemCharts;
