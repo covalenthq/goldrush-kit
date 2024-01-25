@@ -35,3 +35,10 @@ export interface NFTVolumeViewProps {
     collection_address: string;
     token_id?: string;
 }
+
+export interface MultiChainAssetViewProps {
+    chain_names: Chain[];
+    wallet_address: string;
+    variant?: "donut" | "pie";
+    has_legend?: boolean;
+}
