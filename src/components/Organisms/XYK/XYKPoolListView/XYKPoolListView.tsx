@@ -34,6 +34,15 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
@@ -62,6 +71,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                     chain_name,
                     dex_name
                 );
+                response.data.items.splice(10);
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
@@ -537,6 +547,22 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             ),
     });
 
+    const [pagination, setPagination] = useState({
+        has_more: true,
+        page_number: 1,
+        page_size: 100,
+        total_count: 9121,
+    });
+
+    const handlePagination = (page_number: any) => {
+        setPagination((prev) => {
+            return {
+                ...prev,
+                page_number,
+            };
+        });
+    };
+
     return (
         <div className="space-y-4">
             <Table>
@@ -561,6 +587,53 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
+            <Pagination>
+                <PaginationContent>
+                    <PaginationItem
+                        disabled={pagination.page_number === 1}
+                        onClick={() => {
+                            handlePagination(pagination.page_number - 1);
+                        }}
+                    >
+                        <PaginationPrevious />
+                    </PaginationItem>
+                    {pagination.page_number > 1 && (
+                        <PaginationItem
+                            onClick={() => {
+                                handlePagination(pagination.page_number - 1);
+                            }}
+                        >
+                            <PaginationLink>
+                                {pagination.page_number - 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+                    <PaginationItem>
+                        <PaginationLink isActive>
+                            {pagination.page_number}
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem
+                        onClick={() => {
+                            handlePagination(pagination.page_number + 1);
+                        }}
+                    >
+                        <PaginationLink>
+                            {pagination.page_number + 1}
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem
+                        onClick={() => {
+                            handlePagination(pagination.page_number + 1);
+                        }}
+                    >
+                        <PaginationNext />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </div>
     );
 };
