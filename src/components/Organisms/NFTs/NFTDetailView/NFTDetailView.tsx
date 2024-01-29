@@ -1,7 +1,7 @@
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
-import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
-import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
+import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCount/NFTSalesCount";
+import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPrice/NFTFloorPrice";
 import { type Option, Some, None } from "@/utils/option";
 import { type NFTDetailViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
