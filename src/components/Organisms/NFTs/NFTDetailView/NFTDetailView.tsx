@@ -1,7 +1,7 @@
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
-import { NFTSalesCountView } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
-import { NFTFloorPriceView } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
+import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCountView/NFTSalesCountView";
+import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPriceView/NFTFloorPriceView";
 import { type Option, Some, None } from "@/utils/option";
 import { type NFTDetailViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
@@ -131,14 +131,14 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                 })}
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
-                        <NFTSalesCountView
+                        <NFTSalesCount
                             chain_name={chain_name}
                             collection_address={collection_address}
                             token_id={token_id}
                         />
                     </div>
                     <div className="">
-                        <NFTFloorPriceView
+                        <NFTFloorPrice
                             chain_name={chain_name}
                             collection_address={collection_address}
                             token_id={token_id}
