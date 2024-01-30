@@ -1,11 +1,11 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { XYKTokenTimeSeriesView } from "./XYKTokenTimeSeriesView";
+import { XYKTokenTimeSeries as XYKTokenTimeSeriesComponent } from "./XYKTokenTimeSeries";
 
-type Story = StoryObj<typeof XYKTokenTimeSeriesView>;
+type Story = StoryObj<typeof XYKTokenTimeSeriesComponent>;
 
-const meta: Meta<typeof XYKTokenTimeSeriesView> = {
-    title: "Molecules/XYK",
-    component: XYKTokenTimeSeriesView,
+const meta: Meta<typeof XYKTokenTimeSeriesComponent> = {
+    title: "Molecules/XYK/Token",
+    component: XYKTokenTimeSeriesComponent,
 };
 
 export default meta;

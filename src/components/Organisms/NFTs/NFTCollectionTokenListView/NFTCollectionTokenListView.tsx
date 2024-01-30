@@ -19,7 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
-import { CollectionCardView } from "@/components/Molecules/CollectionCardView/CollectionCardView";
+import { CollectionCard } from "@/components/Molecules/CollectionCard/CollectionCard";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -109,7 +109,7 @@ export const NFTCollectionTokenListView: React.FC<
     return (
         <div className="space-y-4 ">
             <div className="flex flex-wrap place-content-between gap-2">
-                <CollectionCardView
+                <CollectionCard
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />

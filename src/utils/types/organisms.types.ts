@@ -123,3 +123,8 @@ export interface XYKTokenDetailViewProps {
     dex_name: string;
     token_address: string;
 }
+
+export interface XYKOverviewTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+}

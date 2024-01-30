@@ -11,13 +11,13 @@ import { useToast } from "../../../utils/hooks/use-toast";
 import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type CollectionCardViewProps } from "@/utils/types/molecules.types";
+import { type CollectionCardProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const CollectionCardView: React.FC<CollectionCardViewProps> = ({
+export const CollectionCard: React.FC<CollectionCardProps> = ({
     chain_name,
     collection_address,
 }) => {

@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
-import { XYKTokenTimeSeriesView } from "@/components/Molecules/XYK/XYKTokenTimeSeriesView/XYKTokenTimeSeriesView";
+import { XYKTokenInformation } from "@/components/Molecules/XYK/XYKTokenInformation/XYKTokenInformation";
+import { XYKTokenTimeSeries } from "@/components/Molecules/XYK/XYKTokenTimeSeries/XYKTokenTimeSeries";
 
 export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
     chain_name,
@@ -42,7 +43,7 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
     }
 
     return (
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-4">
             <div className="flex items-center gap-4">
                 {maybeResult.match({
                     None: () => (
@@ -149,7 +150,7 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                 </div>
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
-                        <XYKTokenTimeSeriesView
+                        <XYKTokenTimeSeries
                             token_data={maybeResult.match({
                                 None: () => null,
                                 Some: (pool_data) => pool_data,
@@ -161,6 +162,15 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                     </div>
                 </div>
             </div>
+            <XYKTokenInformation
+                token_data={maybeResult.match({
+                    None: () => null,
+                    Some: (pool_data) => pool_data,
+                })}
+                chain_name={chain_name}
+                dex_name={dex_name}
+                token_address={token_address}
+            />
         </div>
     );
 };
