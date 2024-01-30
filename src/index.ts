@@ -8,11 +8,17 @@ export { NFTDetailView } from "./components/Organisms/NFTs/NFTDetailView/NFTDeta
 export { XYKPoolDetailView } from "./components/Organisms/XYK/XYKPoolDetailView/XYKPoolDetailView";
 export { XYKPoolListView } from "./components/Organisms/XYK/XYKPoolListView/XYKPoolListView";
 export { XYKPoolTransactionsListView } from "./components/Organisms/XYK/XYKPoolTransactionsListView/XYKPoolTransactionsListView";
+
+export { XYKTokenDetailView } from "./components/Organisms/XYK/XYKTokenDetailView/XYKTokenDetailView";
 export { XYKTokenListView } from "./components/Organisms/XYK/XYKTokenListView/XYKTokenListView";
 export { XYKTokenPoolListView } from "./components/Organisms/XYK/XYKTokenPoolListView/XYKTokenPoolListView";
 export { XYKTokenTransactionsListView } from "./components/Organisms/XYK/XYKTokenTransactionsListView/XYKTokenTransactionsListView";
+
 export { XYKWalletPoolListView } from "./components/Organisms/XYK/XYKWalletPoolListView/XYKWalletPoolListView";
 export { XYKWalletTransactionsListView } from "./components/Organisms/XYK/XYKWalletTransactionsListView/XYKWalletTransactionsListView";
+export { XYKWalletInformation } from "./components/Molecules/XYK/XYKWalletInformation/XYKWalletInformation";
+
+export { XYKOverviewTransactionsListView } from "./components/Organisms/XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
 
 export { type NFTDetailViewProps } from "./utils/types/organisms.types";
 export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
