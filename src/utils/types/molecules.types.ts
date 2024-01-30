@@ -42,14 +42,14 @@ export interface NFTVolumeProps {
     token_id?: string;
 }
 
-export interface XYKOverviewTimeSeriesViewProps {
+export interface XYKOverviewTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     overview_data?: UniswapLikeEcosystemCharts;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface XYKTokenTimeSeriesViewProps {
+export interface XYKTokenTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
