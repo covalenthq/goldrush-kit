@@ -5,13 +5,13 @@ import {
     type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 
-export interface AccountCardViewProps {
+export interface AccountCardProps {
     name?: string;
     address: string;
     type?: "fingerprint" | "effigy" | "wallet";
 }
 
-export interface CollectionCardViewProps {
+export interface CollectionCardProps {
     chain_name: Chain;
     collection_address: string;
 }

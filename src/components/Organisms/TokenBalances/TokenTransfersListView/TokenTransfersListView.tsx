@@ -33,7 +33,7 @@ import {
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { Button } from "@/components/ui/button";
 import {
@@ -417,7 +417,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                <AccountCard address={address} />
                 <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
                     <div className="items-center space-x-1">
                         <span>Network</span>

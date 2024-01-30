@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { COLORS, GRK_SIZES } from "@/utils/constants/shared.constants";
 
 const meta: Meta<typeof Button> = {
-    title: "ThemeConfig",
+    title: "Theme Config",
     component: Button,
     argTypes: {
         default_color: {
@@ -239,7 +239,7 @@ const renderNeoBrutalism = ({ changeToNeo, changeToClassic }: any) => {
     );
 };
 
-export const ChangeColor: Story = {
+export const ThemeConfig: Story = {
     render: ({ default_color, border_radius }) => {
         function changeColor(accentcolor: string, border_radius: string) {
             const theme = {

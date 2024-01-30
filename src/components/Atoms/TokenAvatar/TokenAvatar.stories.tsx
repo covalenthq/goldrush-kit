@@ -1,17 +1,17 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { TokenAvatar } from "./TokenAvatar";
+import { TokenAvatar as TokenAvatarComponent } from "./TokenAvatar";
 
-const meta: Meta<typeof TokenAvatar> = {
-    title: "Atoms/TokenAvatar",
-    component: TokenAvatar,
+const meta: Meta<typeof TokenAvatarComponent> = {
+    title: "Atoms/Token Avatar",
+    component: TokenAvatarComponent,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof TokenAvatar>;
+type Story = StoryObj<typeof TokenAvatarComponent>;
 
-export const TokenAvatarDisplay: Story = {
+export const TokenAvatar: Story = {
     args: {
         size: GRK_SIZES.SMALL,
     },
@@ -19,36 +19,36 @@ export const TokenAvatarDisplay: Story = {
         return (
             <>
                 <div className="m-1">
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.MEDIUM}
                     />
                 </div>
                 <div className="m-1 mt-20 flex gap-1">
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                     />
 
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.EXTRA_SMALL}
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.SMALL}
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.MEDIUM}
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.LARGE}
                     />
                 </div>
                 <div className="m-1 mt-20 flex gap-3">
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.EXTRA_SMALL}
                         chain_color={"grey"}
@@ -56,7 +56,7 @@ export const TokenAvatarDisplay: Story = {
                             "https://www.datocms-assets.com/86369/1699425239-uniswap.jpg"
                         }
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.SMALL}
                         chain_color={"grey"}
@@ -64,7 +64,7 @@ export const TokenAvatarDisplay: Story = {
                             "https://www.datocms-assets.com/86369/1699425239-uniswap.jpg"
                         }
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.MEDIUM}
                         chain_color={"grey"}
@@ -72,7 +72,7 @@ export const TokenAvatarDisplay: Story = {
                             "https://www.datocms-assets.com/86369/1699425239-uniswap.jpg"
                         }
                     />
-                    <TokenAvatar
+                    <TokenAvatarComponent
                         token_url="https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
                         size={GRK_SIZES.LARGE}
                         chain_color={"grey"}
