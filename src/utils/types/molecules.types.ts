@@ -2,6 +2,7 @@ import {
     type Chain,
     type PoolWithTimeseries,
     type UniswapLikeEcosystemCharts,
+    type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 
 export interface AccountCardViewProps {
@@ -45,5 +46,13 @@ export interface XYKOverviewTimeSeriesViewProps {
     chain_name: Chain;
     dex_name: string;
     overview_data?: UniswapLikeEcosystemCharts;
+    displayMetrics?: "both" | "liquidity" | "volume";
+}
+
+export interface XYKTokenTimeSeriesViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+    token_data?: TokenV2VolumeWithChartData;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
