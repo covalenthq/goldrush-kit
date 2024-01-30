@@ -16,19 +16,19 @@ export interface CollectionCardProps {
     collection_address: string;
 }
 
-export interface NFTFloorPriceViewProps {
+export interface NFTFloorPriceProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
 }
 
-export interface NFTSalesCountViewProps {
+export interface NFTSalesCountProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
 }
 
-export interface XYKPoolTimeSeriesViewProps {
+export interface XYKPoolTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
@@ -36,7 +36,7 @@ export interface XYKPoolTimeSeriesViewProps {
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface NFTVolumeViewProps {
+export interface NFTVolumeProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
@@ -56,14 +56,14 @@ export interface XYKTokenInformationViewProps {
     token_data?: TokenV2VolumeWithChartData;
 }
 
-export interface XYKOverviewTimeSeriesViewProps {
+export interface XYKOverviewTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     overview_data?: UniswapLikeEcosystemCharts;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface XYKTokenTimeSeriesViewProps {
+export interface XYKTokenTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
