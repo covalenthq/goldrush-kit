@@ -8,21 +8,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKPoolTimeSeriesViewProps } from "@/utils/types/molecules.types";
+import { type XYKOverviewTimeSeriesViewProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
-    type PoolWithTimeseries,
+    type UniswapLikeEcosystemCharts,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
-    chain_name,
-    dex_name,
-    pool_address,
-    pool_data,
-    displayMetrics = "both",
-}) => {
-    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
+export const XYKOverviewTimeSeriesView: React.FC<
+    XYKOverviewTimeSeriesViewProps
+> = ({ chain_name, dex_name, overview_data, displayMetrics = "both" }) => {
+    const [maybeResult, setResult] =
+        useState<Option<UniswapLikeEcosystemCharts>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [timeSeries, setTimeSeries] = useState<string>(
@@ -35,7 +32,7 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
         maybeResult.match({
             None: () => null,
             Some: (response: any) => {
-                const chart_key = `${timeSeries}_timeseries_${period}d`;
+                const chart_key = `${timeSeries}_chart_${period}d`;
                 const value_key =
                     timeSeries === "price"
                         ? "price_of_token0_in_token1"
@@ -56,20 +53,20 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
 
     useEffect(() => {
         setColor(rootColor());
-        if (pool_data) {
-            setResult(new Some(pool_data));
+        if (overview_data) {
+            setResult(new Some(overview_data));
             return;
         }
         (async () => {
             setResult(None);
-            const response = await covalentClient.XykService.getPoolByAddress(
-                chain_name,
-                dex_name,
-                pool_address
-            );
+            const response =
+                await covalentClient.XykService.getEcosystemChartData(
+                    chain_name,
+                    dex_name
+                );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
+    }, [overview_data, dex_name, chain_name, displayMetrics]);
 
     useEffect(() => {
         handleChartData();
