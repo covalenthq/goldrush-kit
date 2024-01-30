@@ -16,6 +16,9 @@ export { XYKTokenTransactionsListView } from "./components/Organisms/XYK/XYKToke
 
 export { XYKWalletPoolListView } from "./components/Organisms/XYK/XYKWalletPoolListView/XYKWalletPoolListView";
 export { XYKWalletTransactionsListView } from "./components/Organisms/XYK/XYKWalletTransactionsListView/XYKWalletTransactionsListView";
+export { XYKWalletInformation } from "./components/Molecules/XYK/XYKWalletInformation/XYKWalletInformation";
+
+export { XYKOverviewTransactionsListView } from "./components/Organisms/XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
 
 export { type NFTDetailViewProps } from "./utils/types/organisms.types";
 export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
