@@ -8,14 +8,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKTokenTimeSeriesViewProps } from "@/utils/types/molecules.types";
+import { type XYKTokenTimeSeriesProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
     type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKTokenTimeSeriesView: React.FC<XYKTokenTimeSeriesViewProps> = ({
+export const XYKTokenTimeSeries: React.FC<XYKTokenTimeSeriesProps> = ({
     chain_name,
     dex_name,
     token_address,

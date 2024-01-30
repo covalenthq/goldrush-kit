@@ -5,7 +5,7 @@ import { type XYKPoolDetailViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { XYKPoolTimeSeriesView } from "@/components/Molecules/XYK/XYKPoolTimeSeriesView/XYKPoolTimeSeriesView";
+import { XYKPoolTimeSeries } from "@/components/Molecules/XYK/XYKPoolTimeSeries/XYKPoolTimeSeries";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { prettyToken } from "@/utils/functions/pretty-token";
 
@@ -210,7 +210,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                 </div>
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
-                        <XYKPoolTimeSeriesView
+                        <XYKPoolTimeSeries
                             pool_data={maybeResult.match({
                                 None: () => null,
                                 Some: (pool_data) => pool_data,

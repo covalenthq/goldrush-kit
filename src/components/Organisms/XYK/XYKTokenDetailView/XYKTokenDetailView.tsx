@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
-import { XYKTokenTimeSeriesView } from "@/components/Molecules/XYK/XYKTokenTimeSeriesView/XYKTokenTimeSeriesView";
+import { XYKTokenTimeSeries } from "@/components/Molecules/XYK/XYKTokenTimeSeries/XYKTokenTimeSeries";
 
 export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
     chain_name,
@@ -149,7 +149,7 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                 </div>
                 <div className=" flex w-full flex-col gap-4">
                     <div className="">
-                        <XYKTokenTimeSeriesView
+                        <XYKTokenTimeSeries
                             token_data={maybeResult.match({
                                 None: () => null,
                                 Some: (pool_data) => pool_data,
