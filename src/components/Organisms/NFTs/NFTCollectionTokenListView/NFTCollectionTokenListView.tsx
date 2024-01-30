@@ -29,7 +29,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 
 export const NFTCollectionTokenListView: React.FC<
     NFTCollectionTokenListViewProps

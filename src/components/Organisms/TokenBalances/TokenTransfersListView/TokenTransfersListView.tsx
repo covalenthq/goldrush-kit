@@ -45,7 +45,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {
     type TokenTransfersListViewProps,

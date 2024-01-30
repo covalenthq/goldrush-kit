@@ -23,7 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";

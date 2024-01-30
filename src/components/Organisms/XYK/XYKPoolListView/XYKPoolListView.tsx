@@ -28,7 +28,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
