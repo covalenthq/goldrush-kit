@@ -14,6 +14,6 @@ export const XYKWalletTransactionsList: Story = {
     args: {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
-        wallet_address: "0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de",
+        wallet_address: "0xfC43f5F9dd45258b3AFf31Bdbe6561D97e8B71de",
     },
 };
