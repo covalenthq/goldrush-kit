@@ -8,7 +8,7 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { XYKPoolTimeSeries } from "@/components/Molecules/XYK/XYKPoolTimeSeries/XYKPoolTimeSeries";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { prettyToken } from "@/utils/functions/pretty-token";
-import { XYKPoolInformationView } from "@/components/Molecules/XYK/XYKPoolInformationView/XYKPoolInformationView";
+import { XYKPoolInformation } from "@/components/Molecules/XYK/XYKPoolInformation/XYKPoolInformation";
 
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     chain_name,
@@ -223,7 +223,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                     </div>
                 </div>
             </div>
-            <XYKPoolInformationView
+            <XYKPoolInformation
                 pool_address={pool_address}
                 chain_name={chain_name}
                 dex_name={dex_name}

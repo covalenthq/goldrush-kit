@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
-import { XYKTokenInformationView } from "@/components/Molecules/XYK/XYKTokenInformationView/XYKTokenInformationView";
+import { XYKTokenInformation } from "@/components/Molecules/XYK/XYKTokenInformation/XYKTokenInformation";
 import { XYKTokenTimeSeries } from "@/components/Molecules/XYK/XYKTokenTimeSeries/XYKTokenTimeSeries";
 
 export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
@@ -162,7 +162,7 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                     </div>
                 </div>
             </div>
-            <XYKTokenInformationView
+            <XYKTokenInformation
                 token_data={maybeResult.match({
                     None: () => null,
                     Some: (pool_data) => pool_data,

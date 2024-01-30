@@ -42,14 +42,14 @@ export interface NFTVolumeProps {
     token_id?: string;
 }
 
-export interface XYKPoolInformationViewProps {
+export interface XYKPoolInformationProps {
     pool_address: string;
     chain_name: Chain;
     dex_name: string;
     pool_data?: PoolWithTimeseries;
 }
 
-export interface XYKTokenInformationViewProps {
+export interface XYKTokenInformationProps {
     token_address: string;
     chain_name: Chain;
     dex_name: string;

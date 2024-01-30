@@ -6,12 +6,12 @@ import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { useToast } from "../../../../utils/hooks/use-toast";
 import { IconWrapper } from "@/components/Shared";
-import { type XYKPoolInformationViewProps } from "@/utils/types/molecules.types";
+import { type XYKPoolInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 
-export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
+export const XYKPoolInformation: React.FC<XYKPoolInformationProps> = ({
     pool_address,
     chain_name,
     dex_name,
@@ -99,7 +99,7 @@ export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
                                     return (
                                         <Skeleton
                                             key={i}
-                                            size={GRK_SIZES.MEDIUM}
+                                            size={GRK_SIZES.LARGE}
                                         />
                                     );
                                 })}
@@ -135,13 +135,14 @@ export const XYKPoolInformationView: React.FC<XYKPoolInformationViewProps> = ({
                         );
                     },
                 })}
-
-                <a
-                    target="_blank"
-                    href={`https://etherscan.io/address/${pool_address}`}
-                >
-                    <Button>View on Etherscan</Button>
-                </a>
+                {maybeResult.match({
+                    None: () => <Skeleton size={GRK_SIZES.LARGE} />,
+                    Some: (result) => (
+                        <a target="_blank" href={result.explorers[0].url}>
+                            <Button>View on Explorer</Button>
+                        </a>
+                    ),
+                })}
             </div>
         </>
     );

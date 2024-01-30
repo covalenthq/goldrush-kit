@@ -1,11 +1,11 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { XYKTokenInformationView } from "./XYKTokenInformationView";
+import { XYKTokenInformation as XYKTokenInformationComponent } from "./XYKTokenInformation";
 
-type Story = StoryObj<typeof XYKTokenInformationView>;
+type Story = StoryObj<typeof XYKTokenInformationComponent>;
 
-const meta: Meta<typeof XYKTokenInformationView> = {
+const meta: Meta<typeof XYKTokenInformationComponent> = {
     title: "Molecules/XYK/Token",
-    component: XYKTokenInformationView,
+    component: XYKTokenInformationComponent,
 };
 
 export default meta;

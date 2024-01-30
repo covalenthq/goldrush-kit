@@ -6,14 +6,17 @@ import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { useToast } from "../../../../utils/hooks/use-toast";
 import { IconWrapper } from "@/components/Shared";
-import { type XYKTokenInformationViewProps } from "@/utils/types/molecules.types";
+import { type XYKTokenInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 
-export const XYKTokenInformationView: React.FC<
-    XYKTokenInformationViewProps
-> = ({ token_address, chain_name, dex_name, token_data }) => {
+export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
+    token_address,
+    chain_name,
+    dex_name,
+    token_data,
+}) => {
     const [maybeResult, setResult] =
         useState<Option<TokenV2VolumeWithChartData>>(None);
     const { toast } = useToast();
@@ -97,7 +100,7 @@ export const XYKTokenInformationView: React.FC<
                                     return (
                                         <Skeleton
                                             key={i}
-                                            size={GRK_SIZES.MEDIUM}
+                                            size={GRK_SIZES.LARGE}
                                         />
                                     );
                                 })}
@@ -105,8 +108,6 @@ export const XYKTokenInformationView: React.FC<
                         );
                     },
                     Some: (result) => {
-                        console.log(result);
-
                         return (
                             <div className="flex flex-grow flex-wrap items-center gap-8">
                                 <InformationContainer
@@ -128,12 +129,14 @@ export const XYKTokenInformationView: React.FC<
                     },
                 })}
 
-                <a
-                    target="_blank"
-                    href={`https://etherscan.io/address/${token_address}`}
-                >
-                    <Button>View on Etherscan</Button>
-                </a>
+                {maybeResult.match({
+                    None: () => <Skeleton size={GRK_SIZES.LARGE} />,
+                    Some: (result) => (
+                        <a target="_blank" href={result.explorers[0].url}>
+                            <Button>View on Explorer</Button>
+                        </a>
+                    ),
+                })}
             </div>
         </>
     );
