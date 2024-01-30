@@ -8,6 +8,7 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { XYKPoolTimeSeriesView } from "@/components/Molecules/XYK/XYKPoolTimeSeriesView/XYKPoolTimeSeriesView";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { prettyToken } from "@/utils/functions/pretty-token";
+import { XYKPoolInformationView } from "@/components/Molecules/XYK/XYKPoolInformationView/XYKPoolInformationView";
 
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     chain_name,
@@ -43,7 +44,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     }
 
     return (
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-4">
             <div className="flex items-center gap-4">
                 {maybeResult.match({
                     None: () => (
@@ -222,6 +223,15 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                     </div>
                 </div>
             </div>
+            <XYKPoolInformationView
+                pool_address={pool_address}
+                chain_name={chain_name}
+                dex_name={dex_name}
+                pool_data={maybeResult.match({
+                    None: () => null,
+                    Some: (pool_data) => pool_data,
+                })}
+            />
         </div>
     );
 };
