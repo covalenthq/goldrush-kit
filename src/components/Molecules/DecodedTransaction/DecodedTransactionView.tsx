@@ -34,6 +34,10 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
     }, [chains, chain_name]);
 
     useEffect(() => {
+        setResult(None);
+    }, [chain_name, tx_hash]);
+
+    useEffect(() => {
         (async () => {
             try {
                 const response = await fetch(
@@ -52,10 +56,15 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
                         method: "POST",
                     }
                 );
-                const { events } = (await response.json()) as {
-                    events: DecodedEventType[];
+                const data = (await response.json()) as {
+                    success: boolean;
+                    message?: string;
+                    events?: DecodedEventType[];
                 };
-                setResult(new Some(events));
+                if (!data.success) {
+                    throw Error(data.message);
+                }
+                setResult(new Some(data.events!));
             } catch (exception) {
                 console.error(exception);
                 setResult(new Some([]));
