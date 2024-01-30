@@ -1,16 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+    type DecodedTransactionMetadata,
     type DecodedEventType,
     type DecodedTransactionProps,
 } from "@/utils/types/molecules.types";
 import { type Option, None, Some } from "@/utils/option";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import {
-    TypographyH1,
-    TypographyH2,
-    TypographyH4,
-} from "@/components/ui/typography";
+import { TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type ChainItem } from "@covalenthq/client-sdk";
 import { Badge } from "@/components/ui/badge";
@@ -21,9 +18,10 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
+export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,
     tx_hash,
+    setMetadata,
 }) => {
     const { chains } = useCovalent();
 
@@ -60,11 +58,15 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
                     success: boolean;
                     message?: string;
                     events?: DecodedEventType[];
+                    metadata: DecodedTransactionMetadata;
                 };
                 if (!data.success) {
                     throw Error(data.message);
                 }
                 setResult(new Some(data.events!));
+                if (setMetadata) {
+                    setMetadata(new Some(data.metadata));
+                }
             } catch (exception) {
                 console.error(exception);
                 setResult(new Some([]));
@@ -78,8 +80,6 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
                 None: () => <p>Loading...</p>,
                 Some: (events) => (
                     <div>
-                        <TypographyH1>Decoded Transaction</TypographyH1>
-
                         {!events.length ? (
                             <TypographyH4>No decoded Events.</TypographyH4>
                         ) : (
@@ -95,17 +95,31 @@ export const DecodedTransactionView: React.FC<DecodedTransactionProps> = ({
                                 }) => (
                                     <article
                                         key={name}
-                                        className="flex w-full flex-col gap-y-8"
+                                        className="flex w-full flex-col gap-y-6"
                                     >
-                                        <TypographyH2>
-                                            <div className="mt-4 flex items-center gap-x-8">
-                                                {protocol?.name}
+                                        <TypographyH4>
+                                            <div className="mt-8 flex items-center gap-x-8">
+                                                <div className="flex items-center gap-x-4">
+                                                    {protocol?.name} Protocol
+                                                    <TokenAvatar
+                                                        size={
+                                                            GRK_SIZES.EXTRA_SMALL
+                                                        }
+                                                        chain_color={
+                                                            CHAIN?.color_theme
+                                                                .hex
+                                                        }
+                                                        token_url={
+                                                            protocol?.logo
+                                                        }
+                                                    />
+                                                </div>
                                                 <div className="flex items-center justify-between gap-x-4">
                                                     <Badge>{action}</Badge>
                                                     <Badge>{category}</Badge>
                                                 </div>
                                             </div>
-                                        </TypographyH2>
+                                        </TypographyH4>
 
                                         {tokens?.length && (
                                             <div>
