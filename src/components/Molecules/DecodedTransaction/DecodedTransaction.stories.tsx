@@ -1,11 +1,23 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { DecodedTransactionView } from "./DecodedTransactionView";
+import { DecodedTransaction } from "./DecodedTransaction";
+import { TypographyH1 } from "@/components/ui/typography";
 
-type Story = StoryObj<typeof DecodedTransactionView>;
+type Story = StoryObj<typeof DecodedTransaction>;
 
-const meta: Meta<typeof DecodedTransactionView> = {
+const meta: Meta<typeof DecodedTransaction> = {
     title: "Molecules/DecodedTransactions",
-    component: DecodedTransactionView,
+    component: DecodedTransaction,
+    render: ({ chain_name, tx_hash, setMetadata }) => (
+        <section>
+            <TypographyH1>Decoded Transaction</TypographyH1>
+
+            <DecodedTransaction
+                chain_name={chain_name}
+                tx_hash={tx_hash}
+                setMetadata={setMetadata}
+            />
+        </section>
+    ),
 };
 
 export default meta;

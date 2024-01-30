@@ -4,11 +4,13 @@ import {
     type UniswapLikeEcosystemCharts,
     type TokenV2VolumeWithChartData,
     type ExchangeTransaction,
+    type Transaction,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
+import { type Option } from "@/utils/option";
 
 export interface AccountCardProps {
     name?: string;
@@ -86,6 +88,9 @@ export interface XYKWalletInformationProps {
 export interface DecodedTransactionProps {
     chain_name: Chain;
     tx_hash: string;
+    setMetadata?: React.Dispatch<
+        React.SetStateAction<Option<DecodedTransactionMetadata>>
+    >;
 }
 
 export interface DecodedEventType {
@@ -121,3 +126,12 @@ export interface DecodedEventType {
         value: string;
     }[];
 }
+
+export type DecodedTransactionMetadata = Omit<
+    Transaction,
+    | "log_events"
+    | "dex_details"
+    | "nft_sale_details"
+    | "lending_details"
+    | "safe_details"
+>;

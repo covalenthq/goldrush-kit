@@ -1,4 +1,4 @@
-import type { ChainActivityEvent } from "@covalenthq/client-sdk";
+import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type BlockTransactionWithContractTransfers,
@@ -134,4 +134,9 @@ export interface XYKTokenDetailViewProps {
 export interface XYKOverviewTransactionsListViewProps {
     chain_name: Chain;
     dex_name: string;
+}
+
+export interface TransactionReceiptViewProps {
+    chain_name: Chain;
+    tx_hash: string;
 }
