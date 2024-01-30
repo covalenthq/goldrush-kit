@@ -25,7 +25,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
@@ -33,11 +32,22 @@ import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
+import { SkeletonTable } from "@/components/ui/skeletonTable";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
     dex_name,
     on_token_click,
+    page_size = 10,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -51,6 +61,19 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [pagination, setPagination] = useState({
+        page_number: 1,
+    });
+    const [hasMore, setHasMore] = useState<boolean>();
+
+    const handlePagination = (page_number: any) => {
+        setPagination((prev) => {
+            return {
+                ...prev,
+                page_number,
+            };
+        });
+    };
 
     useEffect(() => {
         (async () => {
@@ -60,8 +83,13 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                 response =
                     await covalentClient.XykService.getNetworkExchangeTokens(
                         chain_name,
-                        dex_name
+                        dex_name,
+                        {
+                            pageNumber: pagination.page_number - 1,
+                            pageSize: page_size,
+                        }
                     );
+                setHasMore(response.data.pagination.has_more);
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
@@ -72,7 +100,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                 });
             }
         })();
-    }, [chain_name, dex_name]);
+    }, [chain_name, dex_name, pagination]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -418,36 +446,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => (
-            <TableRow>
-                <TableCell className="h-12 text-center"></TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-left">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        ),
+        None: () => <SkeletonTable cols={5} float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -510,6 +509,56 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
+            <Pagination className="select-none">
+                <PaginationContent>
+                    <PaginationItem
+                        disabled={pagination.page_number === 1}
+                        onClick={() => {
+                            handlePagination(pagination.page_number - 1);
+                        }}
+                    >
+                        <PaginationPrevious />
+                    </PaginationItem>
+                    {pagination.page_number > 1 && (
+                        <PaginationItem
+                            onClick={() => {
+                                handlePagination(pagination.page_number - 1);
+                            }}
+                        >
+                            <PaginationLink>
+                                {pagination.page_number - 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+                    <PaginationItem>
+                        <PaginationLink isActive>
+                            {pagination.page_number}
+                        </PaginationLink>
+                    </PaginationItem>
+                    {hasMore && (
+                        <PaginationItem
+                            onClick={() => {
+                                handlePagination(pagination.page_number + 1);
+                            }}
+                        >
+                            <PaginationLink>
+                                {pagination.page_number + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+                    <PaginationItem>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem
+                        disabled={!hasMore}
+                        onClick={() => {
+                            handlePagination(pagination.page_number + 1);
+                        }}
+                    >
+                        <PaginationNext />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </div>
     );
 };
