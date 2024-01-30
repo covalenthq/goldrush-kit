@@ -492,7 +492,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable />,
+        None: () => <SkeletonTable float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>

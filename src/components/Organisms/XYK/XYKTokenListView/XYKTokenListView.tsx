@@ -447,7 +447,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={5} />,
+        None: () => <SkeletonTable cols={5} float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>
