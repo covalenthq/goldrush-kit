@@ -8,21 +8,22 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKPoolTimeSeriesViewProps } from "@/utils/types/molecules.types";
+import { type XYKTokenTimeSeriesViewProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
-    type PoolWithTimeseries,
+    type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
+export const XYKTokenTimeSeriesView: React.FC<XYKTokenTimeSeriesViewProps> = ({
     chain_name,
     dex_name,
-    pool_address,
-    pool_data,
+    token_address,
+    token_data,
     displayMetrics = "both",
 }) => {
-    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
+    const [maybeResult, setResult] =
+        useState<Option<TokenV2VolumeWithChartData>>(None);
     const [chartData, setChartData] = useState<Option<any>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [timeSeries, setTimeSeries] = useState<string>(
@@ -56,20 +57,20 @@ export const XYKPoolTimeSeriesView: React.FC<XYKPoolTimeSeriesViewProps> = ({
 
     useEffect(() => {
         setColor(rootColor());
-        if (pool_data) {
-            setResult(new Some(pool_data));
+        if (token_data) {
+            setResult(new Some(token_data));
             return;
         }
         (async () => {
             setResult(None);
-            const response = await covalentClient.XykService.getPoolByAddress(
+            const response = await covalentClient.XykService.getLpTokenView(
                 chain_name,
                 dex_name,
-                pool_address
+                token_address
             );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
+    }, [token_data, dex_name, token_address, chain_name, displayMetrics]);
 
     useEffect(() => {
         handleChartData();
