@@ -12,7 +12,7 @@ export default meta;
 
 export const XYKTokenInformation: Story = {
     args: {
-        pool_address: "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e",
+        token_address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
         dex_name: "uniswap_v2",
         chain_name: "eth-mainnet",
     },

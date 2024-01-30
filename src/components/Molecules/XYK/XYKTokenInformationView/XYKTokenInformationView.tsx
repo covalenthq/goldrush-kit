@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
 import { useCovalent } from "@/utils/store/Covalent";
 import { copyToClipboard, truncate } from "@/utils/functions";
-import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
+import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { useToast } from "../../../../utils/hooks/use-toast";
-import { IconWrapper } from "../../../Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { type XYKTokenInformationViewProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
@@ -13,8 +13,9 @@ import { Button } from "@/components/ui/button";
 
 export const XYKTokenInformationView: React.FC<
     XYKTokenInformationViewProps
-> = ({ pool_address, chain_name, dex_name, pool_data }) => {
-    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
+> = ({ token_address, chain_name, dex_name, token_data }) => {
+    const [maybeResult, setResult] =
+        useState<Option<TokenV2VolumeWithChartData>>(None);
     const { toast } = useToast();
     const { covalentClient } = useCovalent();
 
@@ -22,14 +23,14 @@ export const XYKTokenInformationView: React.FC<
         setResult(None);
         let response;
         try {
-            response = await covalentClient.XykService.getPoolByAddress(
+            response = await covalentClient.XykService.getLpTokenView(
                 chain_name,
                 dex_name,
-                pool_address
+                token_address
             );
             setResult(new Some(response.data.items[0]));
         } catch (error) {
-            console.error(`Error fetching pool for ${chain_name}:`, error);
+            console.error(`Error fetching token for ${chain_name}:`, error);
         }
     };
 
@@ -78,12 +79,12 @@ export const XYKTokenInformationView: React.FC<
     };
 
     useEffect(() => {
-        if (pool_data) {
-            setResult(new Some(pool_data));
+        if (token_data) {
+            setResult(new Some(token_data));
             return;
         }
         handlePoolInformation();
-    }, [dex_name, pool_address, chain_name]);
+    }, [dex_name, token_address, chain_name]);
 
     return (
         <>
@@ -104,28 +105,22 @@ export const XYKTokenInformationView: React.FC<
                         );
                     },
                     Some: (result) => {
-                        const token_0 = result.token_0;
-                        const token_1 = result.token_1;
+                        console.log(result);
 
                         return (
                             <div className="flex flex-grow flex-wrap items-center gap-8">
                                 <InformationContainer
-                                    label="Pair Name"
-                                    text={`${token_0.contract_ticker_symbol}-${result.token_1.contract_ticker_symbol}`}
+                                    label="Symbol"
+                                    text={`${result.contract_ticker_symbol}`}
                                 />
                                 <InformationContainer
-                                    label="Pair Address"
-                                    text={pool_address}
+                                    label={"Name"}
+                                    text={`${result.contract_name}`}
                                     copy
                                 />
                                 <InformationContainer
-                                    label={`${token_0.contract_ticker_symbol} Address`}
-                                    text={token_0.contract_address}
-                                    copy
-                                />
-                                <InformationContainer
-                                    label={`${token_1.contract_ticker_symbol} Address`}
-                                    text={token_1.contract_address}
+                                    label="Address"
+                                    text={token_address}
                                     copy
                                 />
                             </div>
@@ -135,7 +130,7 @@ export const XYKTokenInformationView: React.FC<
 
                 <a
                     target="_blank"
-                    href={`https://etherscan.io/address/${pool_address}`}
+                    href={`https://etherscan.io/address/${token_address}`}
                 >
                     <Button>View on Etherscan</Button>
                 </a>

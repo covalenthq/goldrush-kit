@@ -50,10 +50,10 @@ export interface XYKPoolInformationViewProps {
 }
 
 export interface XYKTokenInformationViewProps {
-    pool_address: string;
+    token_address: string;
     chain_name: Chain;
     dex_name: string;
-    pool_data?: PoolWithTimeseries;
+    token_data?: TokenV2VolumeWithChartData;
 }
 
 export interface XYKOverviewTimeSeriesViewProps {

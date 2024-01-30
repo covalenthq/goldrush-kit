@@ -5,7 +5,7 @@ import { copyToClipboard, truncate } from "@/utils/functions";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { useToast } from "../../../../utils/hooks/use-toast";
-import { IconWrapper } from "../../../Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { type XYKPoolInformationViewProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
