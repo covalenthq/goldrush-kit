@@ -99,7 +99,7 @@ export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
                     None: () => {
                         return (
                             <div className="flex flex-grow items-center gap-x-8">
-                                {[1, 2, 3, 4].map((o, i) => {
+                                {[1, 2].map((o, i) => {
                                     return (
                                         <Skeleton
                                             key={i}
@@ -111,17 +111,10 @@ export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
                         );
                     },
                     Some: (result) => {
-                        console.log(result);
                         const sumOfValueQuotes = result
                             .filter((o) => o.act === "SWAP")
                             .reduce((acc, obj) => {
                                 const valueQuote = obj.total_quote;
-                                return acc + valueQuote;
-                            }, 0);
-                        const sumOfFeesPaid = result
-                            .filter((o) => o.act === "SWAP")
-                            .reduce((acc, obj) => {
-                                const valueQuote = obj.gas_quote;
                                 return acc + valueQuote;
                             }, 0);
                         return (
@@ -129,10 +122,6 @@ export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
                                 <InformationContainer
                                     label="Total Value Swapped"
                                     text={prettifyCurrency(sumOfValueQuotes)}
-                                />
-                                <InformationContainer
-                                    label={"Total Fees Paid"}
-                                    text={prettifyCurrency(sumOfFeesPaid)}
                                 />
                                 <InformationContainer
                                     label="Total Transactions"

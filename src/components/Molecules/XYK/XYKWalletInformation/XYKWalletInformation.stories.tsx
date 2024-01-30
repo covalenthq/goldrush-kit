@@ -4,7 +4,7 @@ import { XYKWalletInformation as XYKWalletInformationComponent } from "./XYKWall
 type Story = StoryObj<typeof XYKWalletInformationComponent>;
 
 const meta: Meta<typeof XYKWalletInformationComponent> = {
-    title: "Molecules/XYK/Wallet",
+    title: "Molecules/XYK",
     component: XYKWalletInformationComponent,
 };
 
