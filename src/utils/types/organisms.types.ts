@@ -90,6 +90,7 @@ export interface XYKTokenListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_token_click: Function;
+    page_size?: number;
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {

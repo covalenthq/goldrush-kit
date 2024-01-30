@@ -555,7 +555,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
-            <Pagination>
+            <Pagination className="select-none">
                 <PaginationContent>
                     <PaginationItem
                         disabled={pagination.page_number === 1}
