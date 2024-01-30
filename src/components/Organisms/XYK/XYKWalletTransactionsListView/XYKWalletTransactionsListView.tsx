@@ -19,15 +19,14 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type XYKWalletTransactionsListViewProps } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
+import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<ExchangeTransaction>[] = [
     {
@@ -241,9 +240,7 @@ export const XYKWalletTransactionsListView: React.FC<
                         dex_name,
                         wallet_address.trim()
                     );
-                console.log(response);
                 setResult(new Some(response.data.items));
-
                 setError({ error: false, error_message: "" });
             } catch (error) {
                 setResult(new Some([]));
@@ -272,28 +269,7 @@ export const XYKWalletTransactionsListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => (
-            <TableRow>
-                <TableCell className="h-12 text-center">
-                    <Skeleton size={GRK_SIZES.MEDIUM} />
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12  ">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        ),
+        None: () => <SkeletonTable cols={4} />,
         Some: () => {
             return error.error ? (
                 <TableRow>
