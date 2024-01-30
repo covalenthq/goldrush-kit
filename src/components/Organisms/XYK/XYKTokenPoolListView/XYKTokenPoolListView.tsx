@@ -1,5 +1,8 @@
 import { type Option, None, Some } from "@/utils/option";
-import { type Pool, prettifyCurrency } from "@covalenthq/client-sdk";
+import {
+    type PoolsDexDataItem,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
     DropdownMenu,
@@ -31,24 +34,14 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
-import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
+import { type XYKTokenPoolListViewProps } from "@/utils/types/organisms.types";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 
-export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
+export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
     chain_name,
     dex_name,
     on_pool_click,
-    page_size = 10,
+    token_address,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -59,37 +52,24 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [maybeResult, setResult] = useState<Option<Pool[]>>(None);
+    const [maybeResult, setResult] = useState<Option<PoolsDexDataItem[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [windowWidth, setWindowWidth] = useState<number>(0);
-    const [pagination, setPagination] = useState({
-        page_number: 1,
-    });
-    const [hasMore, setHasMore] = useState<boolean>();
-
-    const handlePagination = (page_number: any) => {
-        setPagination((prev) => {
-            return {
-                ...prev,
-                page_number,
-            };
-        });
-    };
 
     useEffect(() => {
         (async () => {
             setResult(None);
             let response;
             try {
-                response = await covalentClient.XykService.getPools(
-                    chain_name,
-                    dex_name,
-                    {
-                        pageNumber: pagination.page_number - 1,
-                        pageSize: page_size,
-                    }
-                );
-                setHasMore(response.data.pagination.has_more);
+                response =
+                    await covalentClient.XykService.getPoolsForTokenAddress(
+                        chain_name,
+                        token_address,
+                        0,
+                        {
+                            dexName: dex_name,
+                        }
+                    );
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
@@ -100,7 +80,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 });
             }
         })();
-    }, [chain_name, dex_name, pagination]);
+    }, [chain_name, dex_name]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -116,7 +96,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
         };
     }, []);
 
-    const columns: ColumnDef<Pool>[] = [
+    const columns: ColumnDef<PoolsDexDataItem>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -275,33 +255,33 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 return <div className="text-right">{valueFormatted}</div>;
             },
         },
-        {
-            id: "annualized_fee",
-            accessorKey: "annualized_fee",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"1y Fees / Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = calculateFeePercentage(
-                    row.original.annualized_fee
-                );
+        // {
+        //     id: "annualized_fee",
+        //     accessorKey: "annualized_fee",
+        //     header: ({ column }) => (
+        //         <TableHeaderSorting
+        //             align="right"
+        //             header_name={"1y Fees / Liquidity"}
+        //             column={column}
+        //         />
+        //     ),
+        //     cell: ({ row }) => {
+        //         const valueFormatted = calculateFeePercentage(
+        //             row.original.annualized_fee
+        //         );
 
-                return (
-                    <div
-                        className={`text-right ${
-                            parseFloat(row.original.annualized_fee) > 0 &&
-                            "text-green-600"
-                        }`}
-                    >
-                        {valueFormatted}
-                    </div>
-                );
-            },
-        },
+        //         return (
+        //             <div
+        //                 className={`text-right ${
+        //                     parseFloat(row.original.annualized_fee) > 0 &&
+        //                     "text-green-600"
+        //                 }`}
+        //             >
+        //                 {valueFormatted}
+        //             </div>
+        //         );
+        //     },
+        // },
         {
             id: "actions",
             cell: ({ row }) => {
@@ -339,7 +319,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
         },
     ];
 
-    const mobile_columns: ColumnDef<Pool>[] = [
+    const mobile_columns: ColumnDef<PoolsDexDataItem>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -492,7 +472,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable float="right" />,
+        None: () => <SkeletonTable cols={5} float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -555,56 +535,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
-            <Pagination className="select-none">
-                <PaginationContent>
-                    <PaginationItem
-                        disabled={pagination.page_number === 1}
-                        onClick={() => {
-                            handlePagination(pagination.page_number - 1);
-                        }}
-                    >
-                        <PaginationPrevious />
-                    </PaginationItem>
-                    {pagination.page_number > 1 && (
-                        <PaginationItem
-                            onClick={() => {
-                                handlePagination(pagination.page_number - 1);
-                            }}
-                        >
-                            <PaginationLink>
-                                {pagination.page_number - 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    )}
-                    <PaginationItem>
-                        <PaginationLink isActive>
-                            {pagination.page_number}
-                        </PaginationLink>
-                    </PaginationItem>
-                    {hasMore && (
-                        <PaginationItem
-                            onClick={() => {
-                                handlePagination(pagination.page_number + 1);
-                            }}
-                        >
-                            <PaginationLink>
-                                {pagination.page_number + 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    )}
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem
-                        disabled={!hasMore}
-                        onClick={() => {
-                            handlePagination(pagination.page_number + 1);
-                        }}
-                    >
-                        <PaginationNext />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
         </div>
     );
 };

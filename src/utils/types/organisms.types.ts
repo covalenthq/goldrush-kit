@@ -72,6 +72,12 @@ export interface XYKTokenTransactionsListViewProps {
     token_address: string;
 }
 
+export interface XYKWalletTransactionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
 export interface TokenBalancesListViewProps {
     chain_names: Chain[];
     address: string;
@@ -84,6 +90,7 @@ export interface XYKTokenListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_token_click: Function;
+    page_size?: number;
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {
@@ -94,4 +101,25 @@ export interface XYKPoolListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_pool_click?: Function;
+    page_size?: number;
+}
+
+export interface XYKTokenPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+    on_pool_click?: Function;
+}
+
+export interface XYKWalletPoolListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+    on_pool_click?: Function;
+}
+
+export interface XYKTokenDetailViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
 }

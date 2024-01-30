@@ -22,7 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { type XYKPoolTransactionsListViewProps } from "@/utils/types/organisms.types";
+import { type XYKWalletTransactionsListViewProps } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
@@ -213,9 +213,9 @@ const columns: ColumnDef<ExchangeTransaction>[] = [
     },
 ];
 
-export const XYKPoolTransactionsListView: React.FC<
-    XYKPoolTransactionsListViewProps
-> = ({ chain_name, dex_name, pool_address }) => {
+export const XYKWalletTransactionsListView: React.FC<
+    XYKWalletTransactionsListViewProps
+> = ({ chain_name, dex_name, wallet_address }) => {
     const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
@@ -235,10 +235,10 @@ export const XYKPoolTransactionsListView: React.FC<
             let response;
             try {
                 response =
-                    await covalentClient.XykService.getTransactionsForExchange(
+                    await covalentClient.XykService.getTransactionsForAccountAddress(
                         chain_name,
                         dex_name,
-                        pool_address.trim()
+                        wallet_address.trim()
                     );
                 setResult(new Some(response.data.items));
                 setError({ error: false, error_message: "" });
@@ -250,7 +250,7 @@ export const XYKPoolTransactionsListView: React.FC<
                 });
             }
         })();
-    }, [pool_address, dex_name, chain_name]);
+    }, [wallet_address, dex_name, chain_name]);
 
     const table = useReactTable({
         data: maybeResult.match({
@@ -282,6 +282,11 @@ export const XYKPoolTransactionsListView: React.FC<
                 </TableRow>
             ) : !error.error && table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => {
+                    if (
+                        !row.original.token_0?.contract_ticker_symbol &&
+                        !row.original.token_1?.contract_ticker_symbol
+                    )
+                        return;
                     return (
                         <Fragment key={row.id}>
                             <TableRow
