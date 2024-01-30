@@ -7,9 +7,19 @@ type Story = StoryObj<typeof DecodedTransaction>;
 const meta: Meta<typeof DecodedTransaction> = {
     title: "Molecules/DecodedTransactions",
     component: DecodedTransaction,
+    argTypes: {
+        setMetadata: {
+            control: false,
+            table: {
+                disable: true,
+            },
+        },
+    },
     render: ({ chain_name, tx_hash, setMetadata }) => (
         <section>
-            <TypographyH1>Decoded Transaction</TypographyH1>
+            <div className="mb-8">
+                <TypographyH1>Decoded Transaction</TypographyH1>
+            </div>
 
             <DecodedTransaction
                 chain_name={chain_name}

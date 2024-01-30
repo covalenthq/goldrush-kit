@@ -97,29 +97,24 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                         key={name}
                                         className="flex w-full flex-col gap-y-6"
                                     >
-                                        <TypographyH4>
-                                            <div className="mt-8 flex items-center gap-x-8">
-                                                <div className="flex items-center gap-x-4">
+                                        <div className="flex items-center gap-x-8">
+                                            <div className="flex items-center gap-x-4">
+                                                <CardTitle>
                                                     {protocol?.name} Protocol
-                                                    <TokenAvatar
-                                                        size={
-                                                            GRK_SIZES.EXTRA_SMALL
-                                                        }
-                                                        chain_color={
-                                                            CHAIN?.color_theme
-                                                                .hex
-                                                        }
-                                                        token_url={
-                                                            protocol?.logo
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="flex items-center justify-between gap-x-4">
-                                                    <Badge>{action}</Badge>
-                                                    <Badge>{category}</Badge>
-                                                </div>
+                                                </CardTitle>
+                                                <TokenAvatar
+                                                    size={GRK_SIZES.EXTRA_SMALL}
+                                                    chain_color={
+                                                        CHAIN?.color_theme.hex
+                                                    }
+                                                    token_url={protocol?.logo}
+                                                />
                                             </div>
-                                        </TypographyH4>
+                                            <div className="flex items-center justify-between gap-x-4">
+                                                <Badge>{action}</Badge>
+                                                <Badge>{category}</Badge>
+                                            </div>
+                                        </div>
 
                                         {tokens?.length && (
                                             <div>
@@ -203,14 +198,14 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 >
                                                                     {title}
                                                                 </CardDescription>
-                                                                <CardTitle
+                                                                <CardContent
                                                                     className="truncate text-ellipsis"
                                                                     title={
                                                                         value
                                                                     }
                                                                 >
                                                                     {value}
-                                                                </CardTitle>
+                                                                </CardContent>
                                                             </div>
                                                         )
                                                     )}
@@ -270,6 +265,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                         title={
                                                                             heading
                                                                         }
+                                                                        className="truncate text-ellipsis"
                                                                     >
                                                                         {
                                                                             heading
