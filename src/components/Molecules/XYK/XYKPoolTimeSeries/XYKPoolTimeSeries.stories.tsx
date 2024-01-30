@@ -4,7 +4,7 @@ import { XYKPoolTimeSeries as XYKPoolTimeSeriesComponent } from "./XYKPoolTimeSe
 type Story = StoryObj<typeof XYKPoolTimeSeriesComponent>;
 
 const meta: Meta<typeof XYKPoolTimeSeriesComponent> = {
-    title: "Molecules/XYK",
+    title: "Molecules/XYK/Pool",
     component: XYKPoolTimeSeriesComponent,
 };
 
