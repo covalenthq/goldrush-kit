@@ -456,7 +456,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     });
 
     const body = filterResult.match({
-        None: () => <SkeletonTable cols={6} float="right" />,
+        None: () => <SkeletonTable cols={6} />,
         Some: () =>
             error.error ? (
                 <TableRow>
