@@ -24,7 +24,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
@@ -118,41 +117,20 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
 
     const columns: ColumnDef<TokenV2Volume>[] = [
         {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
-        {
             id: "contract_name",
             accessorKey: "contract_name",
             header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Token"}
-                    column={column}
-                />
+                <div className="ml-4">
+                    <TableHeaderSorting
+                        align="left"
+                        header_name={"Token"}
+                        column={column}
+                    />
+                </div>
             ),
             cell: ({ row }) => {
                 return (
-                    <div className="flex items-center gap-3">
+                    <div className="ml-4 flex items-center gap-3">
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
                             token_url={row.original.logo_url}
@@ -305,29 +283,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     ];
 
     const mobile_columns: ColumnDef<TokenV2Volume>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             id: "contract_name",
             accessorKey: "contract_name",

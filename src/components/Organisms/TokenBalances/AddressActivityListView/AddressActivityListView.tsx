@@ -192,7 +192,7 @@ export const AddressActivityListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={1} />,
+        None: () => <SkeletonTable cols={2} />,
         Some: () =>
             error.error ? (
                 <TableRow>

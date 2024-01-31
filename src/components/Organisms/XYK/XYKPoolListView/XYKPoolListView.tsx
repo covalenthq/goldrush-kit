@@ -24,7 +24,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
@@ -118,37 +117,16 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
 
     const columns: ColumnDef<Pool>[] = [
         {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
-        {
             id: "contract_name",
             accessorKey: "contract_name",
             header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Pool"}
-                    column={column}
-                />
+                <div className="ml-4">
+                    <TableHeaderSorting
+                        align="left"
+                        header_name={"Pool"}
+                        column={column}
+                    />
+                </div>
             ),
             cell: ({ row }) => {
                 const token_0 = row.original.token_0;
@@ -156,7 +134,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
 
                 return (
-                    <div className="flex items-center gap-3">
+                    <div className="ml-4 flex items-center gap-3">
                         <div className="relative mr-2 flex">
                             <TokenAvatar
                                 size={GRK_SIZES.EXTRA_SMALL}
@@ -340,29 +318,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     ];
 
     const mobile_columns: ColumnDef<Pool>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             id: "contract_name",
             accessorKey: "contract_name",

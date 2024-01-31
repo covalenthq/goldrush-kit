@@ -18,7 +18,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
@@ -30,39 +29,20 @@ import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<ExchangeTransaction>[] = [
     {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
         accessorKey: "block_signed_at",
         header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Time"}
-                column={column}
-            />
+            <div className="ml-4">
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Time"}
+                    column={column}
+                />
+            </div>
         ),
         cell: ({ row }) => {
             const t = row.getValue("block_signed_at") as string;
 
-            return <div>{timestampParser(t, "relative")}</div>;
+            return <div className="ml-4">{timestampParser(t, "relative")}</div>;
         },
     },
     {
