@@ -1,4 +1,5 @@
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -16,6 +17,14 @@ import {
     type Chain,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useCallback, useEffect, useState } from "react";
 
 export const AddressOverview: React.FC<AccountOverviewProps> = ({
@@ -187,6 +196,106 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                         ) : (
                                             <></>
                                         )}
+
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger
+                                                asChild
+                                                className="mx-auto mt-2 w-72"
+                                            >
+                                                <Button
+                                                    variant="outline"
+                                                    style={{
+                                                        borderColor:
+                                                            chain?.color_theme
+                                                                .hex,
+                                                    }}
+                                                >
+                                                    <CardDescription className="flex w-full items-center justify-between">
+                                                        <span className="flex items-center gap-x-2">
+                                                            <span>
+                                                                TOKEN HOLDINGS
+                                                            </span>
+                                                            <span>
+                                                                (
+                                                                {
+                                                                    balances.length
+                                                                }{" "}
+                                                                tokens)
+                                                            </span>
+                                                        </span>
+                                                        <CaretDownIcon />
+                                                    </CardDescription>
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent
+                                                className="z-10 mx-auto w-72 rounded border bg-white"
+                                                align="start"
+                                            >
+                                                {balances.map(
+                                                    ({
+                                                        balance,
+                                                        contract_address,
+                                                        contract_decimals,
+                                                        contract_display_name,
+                                                        contract_ticker_symbol,
+                                                        logo_urls,
+                                                    }) => (
+                                                        <DropdownMenuItem
+                                                            key={
+                                                                contract_address
+                                                            }
+                                                            className="mt-1 flex items-center gap-x-2 p-2"
+                                                        >
+                                                            <div>
+                                                                <TokenAvatar
+                                                                    size={
+                                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                    }
+                                                                    token_url={
+                                                                        logo_urls.token_logo_url
+                                                                    }
+                                                                    chain_color={
+                                                                        chain
+                                                                            ?.color_theme
+                                                                            .hex
+                                                                    }
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <CardDescription className="flex">
+                                                                    {
+                                                                        contract_display_name
+                                                                    }{" "}
+                                                                    (
+                                                                    {
+                                                                        contract_ticker_symbol
+                                                                    }
+                                                                    )
+                                                                </CardDescription>
+                                                                <CardContent>
+                                                                    {balance ? (
+                                                                        <>
+                                                                            {calculatePrettyBalance(
+                                                                                balance,
+                                                                                contract_decimals,
+                                                                                true
+                                                                            )}{" "}
+                                                                            {
+                                                                                contract_ticker_symbol
+                                                                            }
+                                                                        </>
+                                                                    ) : (
+                                                                        <></>
+                                                                    )}
+                                                                </CardContent>
+                                                            </div>
+                                                        </DropdownMenuItem>
+                                                    )
+                                                )}
+                                                <DropdownMenuSeparator />
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
                                     </div>
                                 );
                             })}
