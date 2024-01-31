@@ -23,6 +23,11 @@ export interface GasCardProps {
     event_type: string;
 }
 
+export interface AccountOverviewProps {
+    address: string;
+    chain_names: Chain[];
+}
+
 export interface CollectionCardProps {
     chain_name: Chain;
     collection_address: string;
