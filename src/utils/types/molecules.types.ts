@@ -55,6 +55,15 @@ export interface NFTSalesCountProps {
     token_id?: string;
 }
 
+export interface TransactionListProps {
+    chain_names: Chain[];
+    address: string;
+}
+
+export interface CrossChainTransaction extends Transaction {
+    chain: Chain;
+}
+
 export interface XYKPoolTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
