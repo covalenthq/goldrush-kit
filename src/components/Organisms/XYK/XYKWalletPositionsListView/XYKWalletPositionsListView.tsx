@@ -74,7 +74,6 @@ export const XYKWalletPositionsListView: React.FC<
                     error_message: response ? response.error_message : "",
                 });
             }
-            console.log(response);
         })();
     }, [chain_name, dex_name, wallet_address]);
 
