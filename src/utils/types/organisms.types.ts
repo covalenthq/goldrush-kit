@@ -118,6 +118,13 @@ export interface XYKWalletPoolListViewProps {
     on_pool_click?: Function;
 }
 
+export interface XYKWalletPositionsListViewProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+    on_pool_click?: Function;
+}
+
 export interface XYKTokenDetailViewProps {
     chain_name: Chain;
     dex_name: string;
