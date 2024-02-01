@@ -1,5 +1,5 @@
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCount/NFTSalesCount";
 import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPrice/NFTFloorPrice";
 import { type Option, Some, None } from "@/utils/option";

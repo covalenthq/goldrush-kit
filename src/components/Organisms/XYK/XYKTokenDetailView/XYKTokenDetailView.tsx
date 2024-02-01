@@ -1,5 +1,5 @@
 import { TypographyH1 } from "@/components/ui/typography";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type Option, Some, None } from "@/utils/option";
 import { type XYKTokenDetailViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";

@@ -52,7 +52,7 @@ import {
     type BlockTransactionWithContractTransfersWithDelta,
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [

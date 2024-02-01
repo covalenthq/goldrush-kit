@@ -15,7 +15,7 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
 
 export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({

@@ -17,7 +17,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
 import { CollectionCard } from "@/components/Molecules/CollectionCard/CollectionCard";
 import { Button } from "@/components/ui/button";

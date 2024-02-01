@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { copyToClipboard } from "@/utils/functions";
 import {
     prettifyCurrency,

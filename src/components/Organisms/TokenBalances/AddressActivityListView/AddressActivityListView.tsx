@@ -25,7 +25,7 @@ import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 

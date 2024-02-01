@@ -28,5 +28,5 @@ export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
 export { type TokenTransfersListViewProps } from "./utils/types/organisms.types";
 export { type NFTWalletTokenListViewProps } from "./utils/types/organisms.types";
 export { type NFTCollectionTokenListViewProps } from "./utils/types/organisms.types";
-export { CovalentProvider as GoldRushProvider } from "./utils/store/Covalent";
+export { GoldrushProvider } from "./utils/store";
 export { useCovalent } from "./utils/store/Covalent";

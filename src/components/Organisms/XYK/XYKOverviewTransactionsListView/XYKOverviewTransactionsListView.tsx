@@ -23,7 +23,7 @@ import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { type XYKOverviewTransactionsListViewProps } from "@/utils/types/organisms.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { SkeletonTable } from "@/components/ui/skeletonTable";

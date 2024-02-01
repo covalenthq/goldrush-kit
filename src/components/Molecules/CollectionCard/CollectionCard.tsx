@@ -12,7 +12,7 @@ import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type CollectionCardProps } from "@/utils/types/molecules.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
 import { Skeleton } from "@/components/ui/skeleton";

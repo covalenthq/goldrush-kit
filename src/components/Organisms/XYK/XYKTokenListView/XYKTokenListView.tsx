@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useCovalent } from "@/utils/store";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 import {
