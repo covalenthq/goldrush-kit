@@ -17,7 +17,8 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
     const [showCopy, setShowCopy] = useState(false);
     const { toast } = useToast();
     const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
-    const { covalentClient } = useCovalent();
+    const { covalentClient, chains } = useCovalent();
+    const chain = chains?.find((o) => o.name === chain_name.toString()) ?? null;
 
     const handleCopyClick = () => {
         toast({
@@ -57,75 +58,90 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
             return (
                 <>
                     <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[24rem] lg:max-w-[24rem]">
-                        <TokenAvatar
-                            token_url={block[0].log_events[0].sender_logo_url}
-                            size={GRK_SIZES.MEDIUM}
-                        />
+                        {chain ? (
+                            <TokenAvatar
+                                is_chain_logo
+                                token_url={chain.logo_url}
+                                size={GRK_SIZES.MEDIUM}
+                            />
+                        ) : (
+                            <Skeleton size={GRK_SIZES.MEDIUM} />
+                        )}
                         <div className="flex h-full flex-col justify-center">
                             <h2 className="text-base font-semibold text-muted-foreground">
                                 {chain_name.toString()}
                             </h2>
-                            <div className="flex items-center gap-x-2">
-                                <IconWrapper
-                                    icon_class_name="Height"
-                                    icon_size="text-sm"
-                                    class_name="text-secondary dark:text-secondary"
-                                />
-                                <p className="neo-text-white-dark text-base">
-                                    {block_height.toString()}
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-x-2">
-                                <IconWrapper
-                                    icon_class_name="Schedule"
-                                    icon_size="text-sm"
-                                    class_name="text-secondary dark:text-secondary"
-                                />
-                                <p className="neo-text-white-dark text-base">
-                                    {block[0].block_signed_at.toUTCString()}
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-x-2">
-                                <IconWrapper
-                                    icon_class_name="Construction"
-                                    icon_size="text-sm"
-                                    class_name="text-secondary dark:text-secondary"
-                                />
-                                <p className="neo-text-white-dark text-base">
-                                    {truncate(block[0].miner_address)}
-                                </p>
-                                <div
-                                    className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
-                                    onClick={() =>
-                                        copyToClipboard(block[0].miner_address)
-                                    }
-                                >
-                                    {showCopy ? (
+                            {block.length > 0 ? (
+                                <div>
+                                    <div className="flex items-center gap-x-2">
                                         <IconWrapper
-                                            icon_class_name="done"
+                                            icon_class_name="Height"
                                             icon_size="text-sm"
                                             class_name="text-secondary dark:text-secondary"
                                         />
-                                    ) : (
+                                        <p className="neo-text-white-dark text-base">
+                                            {block_height.toString()}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-x-2">
                                         <IconWrapper
-                                            icon_class_name="content_copy"
+                                            icon_class_name="Schedule"
                                             icon_size="text-sm"
                                             class_name="text-secondary dark:text-secondary"
-                                            on_click={() => handleCopyClick()}
                                         />
-                                    )}
+                                        <p className="neo-text-white-dark text-base">
+                                            {block[0].block_signed_at.toUTCString()}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-x-2">
+                                        <IconWrapper
+                                            icon_class_name="Construction"
+                                            icon_size="text-sm"
+                                            class_name="text-secondary dark:text-secondary"
+                                        />
+                                        <p className="neo-text-white-dark text-base">
+                                            {truncate(block[0].miner_address)}
+                                        </p>
+                                        <div
+                                            className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
+                                            onClick={() =>
+                                                copyToClipboard(
+                                                    block[0].miner_address
+                                                )
+                                            }
+                                        >
+                                            {showCopy ? (
+                                                <IconWrapper
+                                                    icon_class_name="done"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                />
+                                            ) : (
+                                                <IconWrapper
+                                                    icon_class_name="content_copy"
+                                                    icon_size="text-sm"
+                                                    class_name="text-secondary dark:text-secondary"
+                                                    on_click={() =>
+                                                        handleCopyClick()
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-x-2">
+                                        <IconWrapper
+                                            icon_class_name="Functions"
+                                            icon_size="text-sm"
+                                            class_name="text-secondary dark:text-secondary"
+                                        />
+                                        <p className="neo-text-white-dark text-base">
+                                            {block.length}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center gap-x-2">
-                                <IconWrapper
-                                    icon_class_name="Functions"
-                                    icon_size="text-sm"
-                                    class_name="text-secondary dark:text-secondary"
-                                />
-                                <p className="neo-text-white-dark text-base">
-                                    {block.length}
-                                </p>
-                            </div>
+                            ) : (
+                                <div>Missing block height information!</div>
+                            )}
                         </div>
                     </div>
                 </>
