@@ -17,7 +17,7 @@ const months: string[] = [
 ];
 
 export const timestampParser = (
-    timestamp: string,
+    timestamp: string | Date,
     type:
         | "descriptive"
         | "YYYY-MM-DD"

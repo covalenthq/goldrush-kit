@@ -45,6 +45,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
 
     useEffect(() => {
         (async () => {
+            setResult(None);
             const results: {
                 chain_name: Chain;
                 balances: BalanceItem[];

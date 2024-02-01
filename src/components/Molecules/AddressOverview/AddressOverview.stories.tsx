@@ -4,7 +4,7 @@ import { AddressOverview as AddressOverviewComponent } from "./AddressOverview";
 type Story = StoryObj<typeof AddressOverviewComponent>;
 
 const meta: Meta<typeof AddressOverviewComponent> = {
-    title: "Molecules/Address Overview",
+    title: "Molecules",
     component: AddressOverviewComponent,
 };
 
