@@ -49,7 +49,7 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
     border_radius = "medium",
 }) => {
     const covalentClient = useMemo<CovalentClient>(
-        () => new CovalentClient(apikey, undefined, "GoldRush"),
+        () => new CovalentClient(apikey, {}, "GoldRush"),
         [apikey]
     );
     const [chains, setChains] = useState<ChainItem[] | null>(null);
