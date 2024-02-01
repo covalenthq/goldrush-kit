@@ -1,4 +1,7 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    allowedCacheChains,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import type {
     MarketFloorPriceItem,
@@ -16,7 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
-import { CollectionCardView } from "@/components/Molecules/CollectionCardView/CollectionCardView";
+import { CollectionCard } from "@/components/Molecules/CollectionCard/CollectionCard";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -26,7 +29,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 
 export const NFTCollectionTokenListView: React.FC<
     NFTCollectionTokenListViewProps
@@ -46,6 +49,8 @@ export const NFTCollectionTokenListView: React.FC<
     const handleNftsToken = async () => {
         setResult(None);
         let response;
+
+        const cache = !allowedCacheChains.includes(chain_name);
         try {
             response =
                 await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
@@ -54,6 +59,7 @@ export const NFTCollectionTokenListView: React.FC<
                     {
                         pageNumber: paginator.pageNumber,
                         pageSize: paginator.pageSize,
+                        withUncached: cache,
                     }
                 );
             setError({ error: false, error_message: "" });
@@ -103,7 +109,7 @@ export const NFTCollectionTokenListView: React.FC<
     return (
         <div className="space-y-4 ">
             <div className="flex flex-wrap place-content-between gap-2">
-                <CollectionCardView
+                <CollectionCard
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />
