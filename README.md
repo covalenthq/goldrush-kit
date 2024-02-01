@@ -21,12 +21,15 @@
 <div align="center">
 200+ Chains. Open-source. Customizable.
 </div>
-
   <p align="center">
     <br />
     <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
     <br />
 </p>
+<p align="center">
+  <br />
+    Read this in other languages: <a href="https://github.com/covalenthq/goldrush-kit/blob/main/README.hi.md">हिंदी</a>
+  </p>
 
 ## Setup
 
