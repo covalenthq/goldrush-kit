@@ -12,7 +12,7 @@ export default meta;
 
 export const GasCard: Story = {
     args: {
-        address: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-        type: "effigy",
+        chain_name: "eth-mainnet",
+        event_type: "erc20",
     },
 };

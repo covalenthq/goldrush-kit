@@ -13,9 +13,8 @@ export interface AccountCardProps {
 }
 
 export interface GasCardProps {
-    name?: string;
-    address: string;
-    type?: "fingerprint" | "effigy" | "wallet";
+    chain_name: Chain;
+    event_type: string;
 }
 
 export interface CollectionCardProps {
