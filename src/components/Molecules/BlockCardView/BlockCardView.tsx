@@ -56,7 +56,7 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
         Some: (block) => {
             return (
                 <>
-                    <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
+                    <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[24rem] lg:max-w-[24rem]">
                         <TokenAvatar
                             token_url={block[0].log_events[0].sender_logo_url}
                             size={GRK_SIZES.MEDIUM}
