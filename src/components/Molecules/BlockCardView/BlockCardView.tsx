@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { type BlockCardViewProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import { useToast } from "../../../utils/hooks/use-toast";
-import { type Transaction } from "@covalenthq/client-sdk";
+import { type ChainItem, type Transaction } from "@covalenthq/client-sdk";
 import { type Option, Some, None } from "@/utils/option";
-import { IconWrapper } from "../../Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,11 +13,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const BlockCardView: React.FC<BlockCardViewProps> = ({
     chain_name,
     block_id,
-    icon_url
+    icon_url,
 }) => {
     const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
     const { covalentClient } = useCovalent();
     const [showCopy, setShowCopy] = useState(false);
+    const [chainLogos, setChainLogos] = useState<Option<ChainItem[]>>(None);
     const [showCopyMiner, setShowCopyMiner] = useState(false);
     const { toast } = useToast();
     const handleCopyClick = () => {
@@ -61,12 +62,25 @@ export const BlockCardView: React.FC<BlockCardViewProps> = ({
         fetchBlockData();
     }, [chain_name, block_id]);
 
+    useEffect(() => {
+        covalentClient.BaseService.getAllChains().then((resp) => {
+            setChainLogos(new Some(resp.data.items));
+        });
+    }, []);
+
+    var final_icon_url = icon_url
+    if (chainLogos !== None)
+    {
+        final_icon_url = chainLogos.get().filter((x) => {return x.name === chain_name.toString()})[0].logo_url
+    }
+    
+
     return (
         <>
             <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                 <TokenAvatar
                     is_chain_logo={true}
-                    token_url={icon_url}
+                    token_url={final_icon_url}
                     size={GRK_SIZES.MEDIUM}
                 />
                 <div className="flex h-full flex-col justify-center">
