@@ -9,14 +9,14 @@ import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TypographyH4 } from "@/components/ui/typography";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type ChainItem } from "@covalenthq/client-sdk";
-import { Badge } from "@/components/ui/badge";
+import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import {
     Card,
     CardContent,
     CardDescription,
     CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,
@@ -77,7 +77,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     return (
         <>
             {maybeResult.match({
-                None: () => <p>Loading...</p>,
+                None: () => <Skeleton size={GRK_SIZES.LARGE} />,
                 Some: (events) => (
                     <div>
                         {!events.length ? (
@@ -95,48 +95,49 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                 }) => (
                                     <article
                                         key={name}
-                                        className="flex w-full flex-col gap-y-6"
+                                        className="flex w-full flex-col gap-y-4"
                                     >
-                                        <div className="flex items-center gap-x-8">
-                                            <div className="flex items-center gap-x-4">
-                                                <CardTitle>
-                                                    {protocol?.name} Protocol
-                                                </CardTitle>
-                                                <TokenAvatar
-                                                    size={GRK_SIZES.EXTRA_SMALL}
-                                                    chain_color={
-                                                        CHAIN?.color_theme.hex
-                                                    }
-                                                    token_url={protocol?.logo}
-                                                />
-                                            </div>
-                                            <div className="flex items-center justify-between gap-x-4">
-                                                <Badge>{action}</Badge>
-                                                <Badge>{category}</Badge>
-                                            </div>
-                                        </div>
+                                        <header className="flex w-full gap-x-8">
+                                            <CardDescription className="flex flex-col gap-y-1">
+                                                Protocol
+                                                <span className="text-black">
+                                                    {protocol?.name}
+                                                </span>
+                                            </CardDescription>
+
+                                            <CardDescription className="flex flex-col gap-y-1">
+                                                Category
+                                                <span className="text-black">
+                                                    {category}
+                                                </span>
+                                            </CardDescription>
+
+                                            <CardDescription className="flex flex-col gap-y-1">
+                                                Action
+                                                <span className="text-black">
+                                                    {action}
+                                                </span>
+                                            </CardDescription>
+                                        </header>
 
                                         {tokens?.length && (
                                             <div>
-                                                <TypographyH4>
-                                                    Tokens
-                                                </TypographyH4>
+                                                <CardTitle>Tokens</CardTitle>
 
-                                                <div className="mt-4 grid grid-cols-4 items-center justify-evenly gap-4">
+                                                <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                     {tokens.map(
-                                                        (
-                                                            {
-                                                                heading,
-                                                                pretty,
-                                                                ticker_logo,
-                                                                ticker_symbol,
-                                                            },
-                                                            i
-                                                        ) => (
+                                                        ({
+                                                            heading,
+                                                            pretty,
+                                                            ticker_logo,
+                                                            ticker_symbol,
+                                                            decimals,
+                                                            value,
+                                                        }) => (
                                                             <div
                                                                 key={
-                                                                    ticker_symbol ||
-                                                                    "" + i
+                                                                    ticker_symbol +
+                                                                    heading
                                                                 }
                                                             >
                                                                 <CardDescription
@@ -148,25 +149,33 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     {heading ||
                                                                         "Token Amount"}
                                                                 </CardDescription>
-                                                                <CardTitle className="flex items-center gap-x-2 truncate">
-                                                                    <TokenAvatar
-                                                                        size={
-                                                                            GRK_SIZES.EXTRA_SMALL
-                                                                        }
-                                                                        chain_color={
-                                                                            CHAIN
-                                                                                ?.color_theme
-                                                                                .hex
-                                                                        }
-                                                                        token_url={
-                                                                            ticker_logo
-                                                                        }
-                                                                    />
-                                                                    {pretty}{" "}
+                                                                <CardContent className="flex items-center gap-x-2 truncate">
+                                                                    <figure>
+                                                                        <TokenAvatar
+                                                                            size={
+                                                                                GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                            }
+                                                                            chain_color={
+                                                                                CHAIN
+                                                                                    ?.color_theme
+                                                                                    .hex
+                                                                            }
+                                                                            token_url={
+                                                                                ticker_logo
+                                                                            }
+                                                                        />
+                                                                    </figure>
+                                                                    {pretty ||
+                                                                        calculatePrettyBalance(
+                                                                            BigInt(
+                                                                                value
+                                                                            ),
+                                                                            decimals
+                                                                        )}{" "}
                                                                     {
                                                                         ticker_symbol
                                                                     }
-                                                                </CardTitle>
+                                                                </CardContent>
                                                             </div>
                                                         )
                                                     )}
@@ -176,11 +185,9 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
 
                                         {details?.length && (
                                             <div>
-                                                <TypographyH4>
-                                                    Details
-                                                </TypographyH4>
+                                                <CardTitle>Details</CardTitle>
 
-                                                <div className="mt-4 grid grid-cols-4 items-center justify-evenly gap-4">
+                                                <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                     {details.map(
                                                         (
                                                             { title, value },
@@ -191,21 +198,21 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 className="truncate text-ellipsis"
                                                             >
                                                                 <CardDescription
-                                                                    className="truncate text-ellipsis"
+                                                                    className="flex flex-col truncate text-ellipsis"
                                                                     title={
                                                                         title
                                                                     }
                                                                 >
                                                                     {title}
+                                                                    <span
+                                                                        className=" truncate text-ellipsis text-black"
+                                                                        title={
+                                                                            value
+                                                                        }
+                                                                    >
+                                                                        {value}
+                                                                    </span>
                                                                 </CardDescription>
-                                                                <CardContent
-                                                                    className="truncate text-ellipsis"
-                                                                    title={
-                                                                        value
-                                                                    }
-                                                                >
-                                                                    {value}
-                                                                </CardContent>
                                                             </div>
                                                         )
                                                     )}
@@ -215,11 +222,9 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
 
                                         {nfts?.length && (
                                             <div>
-                                                <TypographyH4>
-                                                    NFTs
-                                                </TypographyH4>
+                                                <CardTitle>NFTs</CardTitle>
 
-                                                <div className="mt-4 grid grid-cols-4 items-center justify-evenly gap-4">
+                                                <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                     {nfts.map(
                                                         ({
                                                             collection_address,
@@ -233,61 +238,64 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     collection_address +
                                                                     token_identifier
                                                                 }
-                                                                className="w-64 rounded border"
+                                                                className="w-40 rounded border"
                                                             >
-                                                                <CardContent>
-                                                                    <img
-                                                                        className={`block h-64 w-64 rounded-t`}
-                                                                        src={
-                                                                            images[256] ||
-                                                                            images[512] ||
-                                                                            images[1024] ||
-                                                                            images.default ||
-                                                                            ""
-                                                                        }
-                                                                        onError={(
-                                                                            e
-                                                                        ) => {
-                                                                            e.currentTarget.classList.remove(
-                                                                                "object-cover"
-                                                                            );
-                                                                            e.currentTarget.classList.add(
-                                                                                "p-2"
-                                                                            );
-                                                                            e.currentTarget.src =
-                                                                                "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                                        }}
-                                                                    />
-                                                                </CardContent>
+                                                                <img
+                                                                    className={`block h-40 w-40 rounded-t`}
+                                                                    src={
+                                                                        images[256] ||
+                                                                        images[512] ||
+                                                                        images[1024] ||
+                                                                        images.default ||
+                                                                        ""
+                                                                    }
+                                                                    onError={(
+                                                                        e
+                                                                    ) => {
+                                                                        e.currentTarget.classList.remove(
+                                                                            "object-cover"
+                                                                        );
+                                                                        e.currentTarget.classList.add(
+                                                                            "p-2"
+                                                                        );
+                                                                        e.currentTarget.src =
+                                                                            "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+                                                                    }}
+                                                                />
 
-                                                                <div className="truncate text-ellipsis p-4">
-                                                                    <p
+                                                                <div className="truncate text-ellipsis p-2">
+                                                                    <CardDescription
                                                                         title={
                                                                             heading
                                                                         }
                                                                         className="truncate text-ellipsis"
                                                                     >
-                                                                        {
-                                                                            heading
-                                                                        }
-                                                                    </p>
+                                                                        <span className="text-black">
+                                                                            {
+                                                                                heading
+                                                                            }
+                                                                        </span>
+                                                                    </CardDescription>
 
                                                                     <CardDescription
                                                                         title={
                                                                             collection_name ||
                                                                             "<NO COLLECTION NAME>"
                                                                         }
-                                                                        className="truncate text-ellipsis"
+                                                                        className="text-wrap"
                                                                     >
                                                                         {collection_name ||
                                                                             "<NO COLLECTION NAME>"}
                                                                     </CardDescription>
-                                                                    <CardTitle>
-                                                                        #
-                                                                        {
-                                                                            token_identifier
-                                                                        }
-                                                                    </CardTitle>
+
+                                                                    <CardDescription>
+                                                                        <span className="font-medium">
+                                                                            #
+                                                                            {
+                                                                                token_identifier
+                                                                            }
+                                                                        </span>
+                                                                    </CardDescription>
                                                                 </div>
                                                             </Card>
                                                         )
