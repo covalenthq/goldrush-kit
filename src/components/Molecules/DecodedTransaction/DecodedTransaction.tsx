@@ -98,21 +98,21 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                         className="flex w-full flex-col gap-y-4"
                                     >
                                         <header className="flex w-full gap-x-8">
-                                            <CardDescription className="flex flex-col gap-y-1">
+                                            <CardDescription className="flex flex-col">
                                                 Protocol
                                                 <span className="text-black">
                                                     {protocol?.name}
                                                 </span>
                                             </CardDescription>
 
-                                            <CardDescription className="flex flex-col gap-y-1">
+                                            <CardDescription className="flex flex-col">
                                                 Category
                                                 <span className="text-black">
                                                     {category}
                                                 </span>
                                             </CardDescription>
 
-                                            <CardDescription className="flex flex-col gap-y-1">
+                                            <CardDescription className="flex flex-col">
                                                 Action
                                                 <span className="text-black">
                                                     {action}
