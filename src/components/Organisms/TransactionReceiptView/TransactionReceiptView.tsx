@@ -27,7 +27,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     return (
         <section className="h-fit w-5/6 max-w-[37.5rem] overflow-hidden rounded border">
             <figure
-                className="h-14 min-h-14 w-full"
+                className="h-14 w-full"
                 style={{
                     backgroundImage: `linear-gradient(to right, ${CHAIN?.color_theme.hex}, ${CHAIN?.color_theme.hex})`,
                 }}
