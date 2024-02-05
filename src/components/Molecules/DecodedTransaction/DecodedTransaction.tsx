@@ -50,7 +50,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         (async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.STORYBOOK_GOLDRUSH_DECODER_BASE_URL}/tx/decode`,
+                    "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
                     {
                         body: JSON.stringify({
                             network: chain_name,
