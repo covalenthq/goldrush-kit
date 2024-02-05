@@ -18,15 +18,16 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
+import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
@@ -191,36 +192,7 @@ export const AddressActivityListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => (
-            <TableRow>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-center"
-                ></TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-left"
-                >
-                    <div className="float-left">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-left"
-                >
-                    <div className="float-left">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12  text-center"
-                >
-                    <div className="text-center"></div>
-                </TableCell>
-            </TableRow>
-        ),
+        None: () => <SkeletonTable cols={1} />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -262,7 +234,7 @@ export const AddressActivityListView: React.FC<
     return (
         <div className="space-y-4 ">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                <AccountCard address={address} />
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}

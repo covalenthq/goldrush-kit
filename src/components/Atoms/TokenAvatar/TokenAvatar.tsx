@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { type TokenAvatarProps } from "@/utils/types/atoms.types";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
+const svgCache = new Map();
+
 export const TokenAvatar: React.FC<TokenAvatarProps> = ({
     token_url,
     sub_url,
@@ -48,10 +50,17 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
     useEffect(() => {
         if (is_chain_logo) {
             (async () => {
-                const response = await fetch(
-                    token_url ?? "https://goldrush.vercel.app/icons/token.svg"
-                );
-                const data = await response.text();
+                let data;
+                if (svgCache.has(token_url)) {
+                    data = svgCache.get(token_url);
+                } else {
+                    const response = await fetch(
+                        token_url ??
+                            "https://goldrush.vercel.app/icons/token.svg"
+                    );
+                    data = await response.text();
+                    svgCache.set(token_url, data);
+                }
 
                 const parser = new DOMParser();
                 const svg = parser.parseFromString(

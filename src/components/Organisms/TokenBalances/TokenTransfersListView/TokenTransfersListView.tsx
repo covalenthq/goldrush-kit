@@ -33,7 +33,7 @@ import {
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,7 +45,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {
     type TokenTransfersListViewProps,
@@ -53,6 +53,7 @@ import {
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
 import { useCovalent } from "@/utils/store/Covalent";
+import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
     {
@@ -324,40 +325,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => (
-            <TableRow>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-center"
-                >
-                    <Skeleton size={GRK_SIZES.MEDIUM} />
-                </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-right"
-                >
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12 text-right"
-                >
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-                <TableCell
-                    // colSpan={columns.length}
-                    className="h-12  "
-                >
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.MEDIUM} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        ),
+        None: () => <SkeletonTable cols={6} />,
         Some: () => {
             let lastGroup: TIME_SERIES_GROUP | null = null;
             const now = new Date();
@@ -449,7 +417,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCardView address={address} />
+                <AccountCard address={address} />
                 <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
                     <div className="items-center space-x-1">
                         <span>Network</span>

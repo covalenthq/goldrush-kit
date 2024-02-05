@@ -1,9 +1,6 @@
 <div align="center">
   <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-kit-banner.png">
-    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-kit-banner.png" width="680"/>
-  </picture>
+    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
 </div>
 
@@ -24,12 +21,15 @@
 <div align="center">
 200+ Chains. Open-source. Customizable.
 </div>
-
   <p align="center">
     <br />
     <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
     <br />
 </p>
+<p align="center">
+  <br />
+    Read this in other languages: <a href="https://github.com/covalenthq/goldrush-kit/blob/main/README.hi.md">हिंदी</a>
+  </p>
 
 ## Setup
 

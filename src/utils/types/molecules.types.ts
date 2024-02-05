@@ -1,7 +1,10 @@
 import {
-    type Transaction,
     type Chain,
     type PoolWithTimeseries,
+    type UniswapLikeEcosystemCharts,
+    type TokenV2VolumeWithChartData,
+    type ExchangeTransaction,
+    type Transaction,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
@@ -9,40 +12,77 @@ import {
 } from "../constants/shared.constants";
 import { type Option } from "@/utils/option";
 
-export interface AccountCardViewProps {
+export interface AccountCardProps {
     name?: string;
     address: string;
     type?: "fingerprint" | "effigy" | "wallet";
 }
 
-export interface CollectionCardViewProps {
+export interface CollectionCardProps {
     chain_name: Chain;
     collection_address: string;
 }
 
-export interface NFTFloorPriceViewProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id?: string;
-}
-
-export interface NFTSalesCountViewProps {
+export interface NFTFloorPriceProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
 }
 
-export interface XYKPoolTimeSeriesViewProps {
+export interface NFTSalesCountProps {
+    chain_name: Chain;
+    collection_address: string;
+    token_id?: string;
+}
+
+export interface XYKPoolTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
     pool_data?: PoolWithTimeseries;
+    displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface NFTVolumeViewProps {
+export interface NFTVolumeProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
+}
+
+export interface XYKPoolInformationProps {
+    pool_address: string;
+    chain_name: Chain;
+    dex_name: string;
+    pool_data?: PoolWithTimeseries;
+}
+
+export interface XYKTokenInformationProps {
+    token_address: string;
+    chain_name: Chain;
+    dex_name: string;
+    token_data?: TokenV2VolumeWithChartData;
+}
+
+export interface XYKOverviewTimeSeriesProps {
+    chain_name: Chain;
+    dex_name: string;
+    overview_data?: UniswapLikeEcosystemCharts;
+    displayMetrics?: "both" | "liquidity" | "volume";
+}
+
+export interface XYKTokenTimeSeriesProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+    token_data?: TokenV2VolumeWithChartData;
+    displayMetrics?: "both" | "liquidity" | "volume";
+}
+
+export interface XYKWalletInformationProps {
+    wallet_address: string;
+    chain_name: Chain;
+    dex_name: string;
+    wallet_data?: ExchangeTransaction[];
 }
 
 export interface DecodedTransactionProps {
@@ -53,6 +93,34 @@ export interface DecodedTransactionProps {
     >;
 }
 
+export type EventDetails = {
+    title: string;
+    value: string;
+    type: "address" | "text";
+}[];
+
+export type EventNFTs = {
+    heading: string;
+    collection_name: string | null;
+    token_identifier: string | null;
+    collection_address: string;
+    images: {
+        default: string | null;
+        256: string | null;
+        512: string | null;
+        1024: string | null;
+    };
+}[];
+
+export type EventTokens = {
+    heading: string;
+    value: string;
+    decimals: number;
+    ticker_symbol: string | null;
+    ticker_logo: string | null;
+    pretty_quote: string;
+}[];
+
 export interface DecodedEventType {
     category: DECODED_EVENT_CATEGORY;
     action: DECODED_ACTION;
@@ -61,30 +129,9 @@ export interface DecodedEventType {
         name: string;
         logo: string;
     };
-    tokens?: {
-        heading: string;
-        value: string;
-        decimals: number;
-        ticker_symbol: string | null;
-        ticker_logo: string | null;
-        pretty: string;
-    }[];
-    nfts?: {
-        heading: string;
-        collection_name: string | null;
-        token_identifier: string | null;
-        collection_address: string;
-        images: {
-            default: string | null;
-            256: string | null;
-            512: string | null;
-            1024: string | null;
-        };
-    }[];
-    details?: {
-        title: string;
-        value: string;
-    }[];
+    tokens?: EventTokens;
+    nfts?: EventNFTs;
+    details?: EventDetails;
 }
 
 export type DecodedTransactionMetadata = Omit<

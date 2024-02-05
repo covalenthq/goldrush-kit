@@ -25,20 +25,30 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Atoms/IconWrapper/IconWrapper";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
+import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
     dex_name,
     on_pool_click,
+    page_size = 10,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -52,6 +62,19 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     const [maybeResult, setResult] = useState<Option<Pool[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [pagination, setPagination] = useState({
+        page_number: 1,
+    });
+    const [hasMore, setHasMore] = useState<boolean>();
+
+    const handlePagination = (page_number: any) => {
+        setPagination((prev) => {
+            return {
+                ...prev,
+                page_number,
+            };
+        });
+    };
 
     useEffect(() => {
         (async () => {
@@ -60,8 +83,13 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             try {
                 response = await covalentClient.XykService.getPools(
                     chain_name,
-                    dex_name
+                    dex_name,
+                    {
+                        pageNumber: pagination.page_number - 1,
+                        pageSize: page_size,
+                    }
                 );
+                setHasMore(response.data.pagination.has_more);
                 setError({ error: false, error_message: "" });
                 setResult(new Some(response.data.items));
             } catch (exception) {
@@ -72,7 +100,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 });
             }
         })();
-    }, [chain_name, dex_name]);
+    }, [chain_name, dex_name, pagination]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -464,41 +492,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => (
-            <TableRow>
-                <TableCell className="h-12 text-center"></TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-left">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-                <TableCell className="h-12 text-right">
-                    <div className="float-right">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        ),
+        None: () => <SkeletonTable float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -561,6 +555,56 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 </TableHeader>
                 <TableBody>{body}</TableBody>
             </Table>
+            <Pagination className="select-none">
+                <PaginationContent>
+                    <PaginationItem
+                        disabled={pagination.page_number === 1}
+                        onClick={() => {
+                            handlePagination(pagination.page_number - 1);
+                        }}
+                    >
+                        <PaginationPrevious />
+                    </PaginationItem>
+                    {pagination.page_number > 1 && (
+                        <PaginationItem
+                            onClick={() => {
+                                handlePagination(pagination.page_number - 1);
+                            }}
+                        >
+                            <PaginationLink>
+                                {pagination.page_number - 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+                    <PaginationItem>
+                        <PaginationLink isActive>
+                            {pagination.page_number}
+                        </PaginationLink>
+                    </PaginationItem>
+                    {hasMore && (
+                        <PaginationItem
+                            onClick={() => {
+                                handlePagination(pagination.page_number + 1);
+                            }}
+                        >
+                            <PaginationLink>
+                                {pagination.page_number + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+                    <PaginationItem>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem
+                        disabled={!hasMore}
+                        onClick={() => {
+                            handlePagination(pagination.page_number + 1);
+                        }}
+                    >
+                        <PaginationNext />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </div>
     );
 };
