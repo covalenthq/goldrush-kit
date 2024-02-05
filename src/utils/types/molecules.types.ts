@@ -93,6 +93,34 @@ export interface DecodedTransactionProps {
     >;
 }
 
+export type EventDetails = {
+    title: string;
+    value: string;
+    type: "address" | "text";
+}[];
+
+export type EventNFTs = {
+    heading: string;
+    collection_name: string | null;
+    token_identifier: string | null;
+    collection_address: string;
+    images: {
+        default: string | null;
+        256: string | null;
+        512: string | null;
+        1024: string | null;
+    };
+}[];
+
+export type EventTokens = {
+    heading: string;
+    value: string;
+    decimals: number;
+    ticker_symbol: string | null;
+    ticker_logo: string | null;
+    pretty_quote: string;
+}[];
+
 export interface DecodedEventType {
     category: DECODED_EVENT_CATEGORY;
     action: DECODED_ACTION;
@@ -101,30 +129,9 @@ export interface DecodedEventType {
         name: string;
         logo: string;
     };
-    tokens?: {
-        heading: string;
-        value: string;
-        decimals: number;
-        ticker_symbol: string | null;
-        ticker_logo: string | null;
-        pretty: string;
-    }[];
-    nfts?: {
-        heading: string;
-        collection_name: string | null;
-        token_identifier: string | null;
-        collection_address: string;
-        images: {
-            default: string | null;
-            256: string | null;
-            512: string | null;
-            1024: string | null;
-        };
-    }[];
-    details?: {
-        title: string;
-        value: string;
-    }[];
+    tokens?: EventTokens;
+    nfts?: EventNFTs;
+    details?: EventDetails;
 }
 
 export type DecodedTransactionMetadata = Omit<

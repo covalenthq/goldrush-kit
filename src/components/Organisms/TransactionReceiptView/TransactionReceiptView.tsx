@@ -27,7 +27,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     return (
         <section className="h-fit w-5/6 max-w-[37.5rem] overflow-hidden rounded border">
             <figure
-                className="h-14 w-full"
+                className="h-10 w-full"
                 style={{
                     backgroundImage: `linear-gradient(to right, ${CHAIN?.color_theme.hex}, ${CHAIN?.color_theme.hex})`,
                 }}
@@ -45,7 +45,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                     None: () => null,
                     Some: (metadata) => (
                         <>
-                            <div className="flex flex-col gap-y-2">
+                            <div className="flex flex-col gap-y-1">
                                 <CardDescription>
                                     Network:{" "}
                                     <span className="text-black">
@@ -103,13 +103,24 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                         Transaction Fee
                                     </CardDescription>
                                     <CardDescription>
-                                        <span className="text-black">
-                                            {calculatePrettyBalance(
+                                        <span
+                                            className="text-black"
+                                            title={calculatePrettyBalance(
                                                 BigInt(
                                                     metadata.fees_paid || 0
                                                 )!,
                                                 metadata.gas_metadata
                                                     .contract_decimals
+                                            )}
+                                        >
+                                            {calculatePrettyBalance(
+                                                BigInt(
+                                                    metadata.fees_paid || 0
+                                                )!,
+                                                metadata.gas_metadata
+                                                    .contract_decimals,
+                                                true,
+                                                4
                                             )}{" "}
                                             {
                                                 metadata.gas_metadata
