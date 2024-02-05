@@ -22,6 +22,8 @@ export { XYKWalletInformation } from "./components/Molecules/XYK/XYKWalletInform
 export { XYKOverviewTransactionsListView } from "./components/Organisms/XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
 export { XYKOverviewTimeSeries } from "./components/Molecules/XYK/XYKOverviewTimeSeries/XYKOverviewTimeSeries";
 
+export { TransactionReceiptView } from "./components/Organisms/TransactionReceiptView/TransactionReceiptView";
+
 export { type NFTDetailViewProps } from "./utils/types/organisms.types";
 export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
 export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
