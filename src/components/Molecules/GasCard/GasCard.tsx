@@ -3,7 +3,7 @@ import { type GasCardProps } from "@/utils/types/molecules.types";
 import { useCovalent } from "@/utils/store/Covalent";
 import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
-import type { GasPricesResponse, PriceItem } from "@covalenthq/client-sdk";
+import { type GasPricesResponse, type PriceItem } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
@@ -28,6 +28,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                 setResult(new Some(response.data));
                 return;
             }
+            console.log(response);
             setResult(new Some(response.data));
             setError({ error: false, error_message: "" });
         } catch (error) {
@@ -51,7 +52,17 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                     <span className="text-7xl">⛽</span>
                     <h2 className="text-xl">Current Network Fee</h2>
                     <label className="text-base text-secondary">
-                        Base Fee: 24.5 Gwei
+                        Base Fee:{" "}
+                        {maybeResult.match({
+                            None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
+                            Some: (result) => {
+                                const baseFeeGwei = Math.round(
+                                    (parseInt(String(result.base_fee)) ?? 0) /
+                                        Math.pow(10, 9)
+                                );
+                                return <span>{baseFeeGwei}</span>;
+                            },
+                        })}
                     </label>
                 </div>
                 <div className="flex w-full flex-col gap-6 p-6">
