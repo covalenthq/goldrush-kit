@@ -17,7 +17,6 @@ export const SkeletonTable: React.FC<SkeletonTableProps> = ({
         <>
             {[...Array(rows)].map((_, index) => (
                 <TableRow key={index}>
-                    <TableCell className="h-12 text-center"></TableCell>
                     <TableCell className="h-12 text-right">
                         <div className="float-left">
                             <Skeleton size={GRK_SIZES.LARGE} />

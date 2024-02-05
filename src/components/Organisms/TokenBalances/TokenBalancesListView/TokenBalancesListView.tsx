@@ -30,7 +30,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
@@ -141,50 +140,29 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
 
     const columns: ColumnDef<CrossChainBalanceItem>[] = [
         {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
-        {
             id: "contract_name",
             accessorKey: "contract_name",
-            // header: <div className="text-left">Token</div>,
             header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Token"}
-                    column={column}
-                />
+                <div className="ml-4">
+                    <TableHeaderSorting
+                        align="left"
+                        header_name={"Token"}
+                        column={column}
+                    />
+                </div>
             ),
             cell: ({ row }) => {
                 const chain: ChainItem | null =
                     chains?.find((o) => o.name === row.original.chain) ?? null;
                 const chainColor = chain?.color_theme.hex;
-                const chain_label = (
-                    chain?.label ? chain.label : "FIXME"
-                ).replace(" Mainnet", "");
+                const chain_label = (chain?.label ? chain.label : "").replace(
+                    " Mainnet",
+                    ""
+                );
                 const protocol_url = row.original.logo_urls.protocol_logo_url;
 
                 return (
-                    <div className="flex items-center gap-3">
+                    <div className="ml-4 flex items-center gap-3">
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
@@ -198,7 +176,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <label className="text-base">
                                 {row.original.contract_display_name
                                     ? row.original.contract_display_name
-                                    : "FIXME"}
+                                    : ""}
                             </label>
                         </div>
                     </div>
@@ -363,36 +341,17 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
 
     const mobile_columns: ColumnDef<CrossChainBalanceItem>[] = [
         {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
-        {
             id: "contract_name",
             accessorKey: "contract_name",
             // header: <div className="text-left">Token</div>,
             header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Token"}
-                    column={column}
-                />
+                <div className="ml-4">
+                    <TableHeaderSorting
+                        align="left"
+                        header_name={"Token"}
+                        column={column}
+                    />
+                </div>
             ),
             cell: ({ row }) => {
                 const original = row.original as BalanceItem;
@@ -412,13 +371,14 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 const chain: ChainItem | null =
                     chains?.find((o) => o.name === row.original.chain) ?? null;
                 const chainColor = chain?.color_theme.hex;
-                const chain_label = (
-                    chain?.label ? chain.label : "FIXME"
-                ).replace(" Mainnet", "");
+                const chain_label = (chain?.label ? chain.label : "").replace(
+                    " Mainnet",
+                    ""
+                );
                 const protocol_url = row.original.logo_urls.protocol_logo_url;
 
                 return (
-                    <div className="flex items-center gap-3">
+                    <div className="ml-4 flex items-center gap-3">
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}

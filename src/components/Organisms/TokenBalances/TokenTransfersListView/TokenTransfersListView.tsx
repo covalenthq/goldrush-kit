@@ -24,7 +24,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
 import {
@@ -57,40 +56,20 @@ import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
     {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-
-    {
         accessorKey: "block_signed_at",
         header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Time"}
-                column={column}
-            />
+            <div className="ml-4">
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Time"}
+                    column={column}
+                />
+            </div>
         ),
         cell: ({ row }) => {
             const t = row.getValue("block_signed_at") as string;
 
-            return <div>{timestampParser(t, "relative")}</div>;
+            return <div className="ml-4">{timestampParser(t, "relative")}</div>;
         },
     },
     {
@@ -183,12 +162,21 @@ const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
     },
     {
         accessorKey: "tx_hash",
-        header: "Transaction",
+        header: ({ column }) => (
+            <div className="mr-4">
+                <TableHeaderSorting
+                    align="right"
+                    header_name={"Transaction"}
+                    column={column}
+                    icon={false}
+                />
+            </div>
+        ),
         cell: ({ row }) => {
             const txHash: string = row.getValue("tx_hash");
             return (
                 <a
-                    className="flex items-center gap-x-2"
+                    className="mr-4 flex items-center justify-end gap-x-2"
                     target="_blank"
                     rel="noopener noreferrer"
                     href={row.original.transfers[0].explorers[0].url}
@@ -487,7 +475,6 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                     </div>
                 </div>
             </div>
-
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
