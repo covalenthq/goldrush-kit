@@ -6,11 +6,11 @@ import { useMemo, useState } from "react";
 import { type Option, None } from "@/utils/option";
 import { type DecodedTransactionMetadata } from "@/utils/types/molecules.types";
 import { timestampParser } from "@/utils/functions";
-import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountCardView";
 import { CardDescription } from "@/components/ui/card";
-import { type ChainItem, calculatePrettyBalance } from "@covalenthq/client-sdk";
+import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useCovalent } from "@/utils/store/Covalent";
 import { ClockIcon } from "@radix-ui/react-icons";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 
 export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     chain_name,
@@ -78,7 +78,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             <div className="flex gap-x-8">
                                 <div className="flex flex-col">
                                     <CardDescription>Address</CardDescription>
-                                    <AccountCardView
+                                    <AccountCard
                                         address={metadata.from_address}
                                         name={metadata.from_address_label}
                                     />
@@ -88,7 +88,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                     <CardDescription>
                                         Interacted with
                                     </CardDescription>
-                                    <AccountCardView
+                                    <AccountCard
                                         address={metadata.to_address}
                                         name={metadata.to_address_label}
                                     />
