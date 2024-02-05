@@ -10,6 +10,7 @@ import { AccountCardView } from "@/components/Molecules/AccountCardView/AccountC
 import { CardDescription } from "@/components/ui/card";
 import { type ChainItem, calculatePrettyBalance } from "@covalenthq/client-sdk";
 import { useCovalent } from "@/utils/store/Covalent";
+import { ClockIcon } from "@radix-ui/react-icons";
 
 export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     chain_name,
@@ -19,6 +20,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
 
     const [maybeResult, setResult] =
         useState<Option<DecodedTransactionMetadata>>(None);
+    const [relativeTime, setRelativeTime] = useState<boolean>(false);
 
     const CHAIN = useMemo<ChainItem | null>(() => {
         return chains?.find((o) => o.name === chain_name) ?? null;
@@ -55,11 +57,20 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
 
                                 <CardDescription>
                                     Transaction Time:{" "}
-                                    <span className="text-black">
+                                    <span className="inline-flex items-center gap-x-1 text-black">
                                         {timestampParser(
                                             metadata.block_signed_at.toString(),
-                                            "descriptive"
+                                            relativeTime
+                                                ? "relative"
+                                                : "descriptive"
                                         )}
+                                        <button
+                                            onClick={() =>
+                                                setRelativeTime(!relativeTime)
+                                            }
+                                        >
+                                            <ClockIcon />
+                                        </button>
                                     </span>
                                 </CardDescription>
                             </div>
