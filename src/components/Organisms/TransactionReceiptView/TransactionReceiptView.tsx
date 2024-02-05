@@ -50,14 +50,14 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             <div className="flex flex-col gap-y-1">
                                 <CardDescription>
                                     Network:{" "}
-                                    <span className="text-black">
+                                    <span className="text-black dark:text-text-color-50">
                                         {CHAIN?.label}
                                     </span>
                                 </CardDescription>
 
                                 <CardDescription>
                                     Transaction Time:{" "}
-                                    <span className="inline-flex items-center gap-x-1 text-black">
+                                    <span className="inline-flex items-center gap-x-1 text-black dark:text-text-color-50">
                                         {timestampParser(
                                             metadata.block_signed_at.toString(),
                                             relativeTime
@@ -115,7 +115,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                     </CardDescription>
                                     <CardDescription>
                                         <span
-                                            className="text-black"
+                                            className="text-black dark:text-text-color-50"
                                             title={calculatePrettyBalance(
                                                 BigInt(
                                                     metadata.fees_paid || 0
@@ -147,7 +147,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                         Exchange Rate
                                     </CardDescription>
                                     <CardDescription>
-                                        <span className="text-black">
+                                        <span className="text-black dark:text-text-color-50">
                                             1 USD ={" "}
                                             {1 / (metadata.gas_quote_rate ?? 1)}{" "}
                                             {
@@ -161,7 +161,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                 <div>
                                     <CardDescription>Gas Price</CardDescription>
                                     <CardDescription>
-                                        <span className="text-black">
+                                        <span className="text-black dark:text-text-color-50">
                                             {calculatePrettyBalance(
                                                 BigInt(metadata.gas_price),
                                                 metadata.gas_metadata

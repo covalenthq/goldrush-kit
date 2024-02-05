@@ -164,7 +164,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <p className="truncate text-ellipsis">
                                                                         Collection
                                                                         Name:{" "}
-                                                                        <span className="text-black">
+                                                                        <span className="text-black dark:text-text-color-50">
                                                                             {
                                                                                 collection_name
                                                                             }
@@ -173,7 +173,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <p className="flex gap-x-1 truncate text-ellipsis">
                                                                         Collection
                                                                         Address:
-                                                                        <span className="text-black">
+                                                                        <span className="text-black dark:text-text-color-50">
                                                                             <Address
                                                                                 address={
                                                                                     collection_address
@@ -184,7 +184,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <p className="truncate text-ellipsis">
                                                                         Token
                                                                         ID:{" "}
-                                                                        <span className="text-black">
+                                                                        <span className="text-black dark:text-text-color-50">
                                                                             {
                                                                                 token_identifier
                                                                             }
@@ -288,7 +288,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     {title}
                                                                 </span>
                                                                 <span
-                                                                    className="truncate text-ellipsis text-black"
+                                                                    className="truncate text-ellipsis text-black dark:text-text-color-50"
                                                                     title={
                                                                         value
                                                                     }
