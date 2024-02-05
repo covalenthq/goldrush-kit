@@ -111,7 +111,7 @@ export const XYKWalletPositionsListView: React.FC<
 
                         <div className="flex flex-col">
                             <label className="text-base">
-                                {pool ? pool : "FIXME"}
+                                {pool ? pool : ""}
                             </label>
                         </div>
                     </div>

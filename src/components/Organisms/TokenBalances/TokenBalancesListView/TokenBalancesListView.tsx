@@ -155,9 +155,10 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 const chain: ChainItem | null =
                     chains?.find((o) => o.name === row.original.chain) ?? null;
                 const chainColor = chain?.color_theme.hex;
-                const chain_label = (
-                    chain?.label ? chain.label : "FIXME"
-                ).replace(" Mainnet", "");
+                const chain_label = (chain?.label ? chain.label : "").replace(
+                    " Mainnet",
+                    ""
+                );
                 const protocol_url = row.original.logo_urls.protocol_logo_url;
 
                 return (
@@ -175,7 +176,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                             <label className="text-base">
                                 {row.original.contract_display_name
                                     ? row.original.contract_display_name
-                                    : "FIXME"}
+                                    : ""}
                             </label>
                         </div>
                     </div>
@@ -370,9 +371,10 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 const chain: ChainItem | null =
                     chains?.find((o) => o.name === row.original.chain) ?? null;
                 const chainColor = chain?.color_theme.hex;
-                const chain_label = (
-                    chain?.label ? chain.label : "FIXME"
-                ).replace(" Mainnet", "");
+                const chain_label = (chain?.label ? chain.label : "").replace(
+                    " Mainnet",
+                    ""
+                );
                 const protocol_url = row.original.logo_urls.protocol_logo_url;
 
                 return (

@@ -150,7 +150,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
 
                         <div className="flex flex-col">
                             <label className="text-base">
-                                {pool ? pool : "FIXME"}
+                                {pool ? pool : ""}
                             </label>
                         </div>
                     </div>
@@ -350,7 +350,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
 
                         <div className="flex flex-col">
                             <label className="text-base">
-                                {pool ? pool : "FIXME"}
+                                {pool ? pool : ""}
                             </label>
                         </div>
                     </div>

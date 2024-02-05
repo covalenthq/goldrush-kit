@@ -139,7 +139,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             <label className="text-base">
                                 {row.original.contract_name
                                     ? row.original.contract_name
-                                    : "FIXME"}
+                                    : ""}
                             </label>
                         </div>
                     </div>
@@ -304,7 +304,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             <label className="text-base">
                                 {row.original.contract_name
                                     ? row.original.contract_name
-                                    : "FIXME"}
+                                    : ""}
                             </label>
                         </div>
                     </div>
