@@ -39,8 +39,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         (async () => {
             try {
                 const response = await fetch(
-                    // TODO: replace with deployment URL
-                    "http://localhost:8080/api/v1/tx/decode",
+                    `${import.meta.env.STORYBOOK_GOLDRUSH_DECODER_BASE_URL}/tx/decode`,
                     {
                         body: JSON.stringify({
                             network: chain_name,
