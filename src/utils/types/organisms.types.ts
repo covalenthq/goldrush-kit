@@ -141,7 +141,7 @@ export interface TransactionReceiptViewProps {
     tx_hash: string;
 }
 
-export interface TransactionReceiptViewProps {
-    chain_name: Chain;
-    tx_hash: string;
+export interface AddressDetailsViewProps {
+    address: string;
+    chain_names: Chain[];
 }

@@ -1,7 +1,6 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ChainItem, calculatePrettyBalance } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-
 import {
     type ColumnDef,
     type SortingState,
@@ -20,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TokenAvatar } from "../../Atoms/TokenAvatar/TokenAvatar";
-import { timestampParser, truncate } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
@@ -29,6 +28,7 @@ import {
     type CrossChainTransaction,
     type TransactionListProps,
 } from "@/utils/types/molecules.types";
+import { Address } from "@/components/Atoms/Address/Address";
 
 export const TransactionsList: React.FC<TransactionListProps> = ({
     chain_names,
@@ -144,7 +144,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
                             is_chain_logo
                         />
                         <p className="flex flex-col text-base">
-                            {truncate(row.original.tx_hash)}
+                            <Address address={row.original.tx_hash} />
                         </p>
                     </div>
                 );
@@ -198,8 +198,9 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
             cell: ({ row }) => {
                 return (
                     <p>
-                        {row.original.from_address_label ||
-                            truncate(row.original.from_address)}
+                        {row.original.from_address_label || (
+                            <Address address={row.original.from_address} />
+                        )}
                     </p>
                 );
             },
@@ -216,9 +217,10 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
             ),
             cell: ({ row }) => {
                 return (
-                    <p className="text-left">
-                        {row.original.to_address_label ||
-                            truncate(row.original.to_address)}
+                    <p>
+                        {row.original.to_address_label || (
+                            <Address address={row.original.to_address} />
+                        )}
                     </p>
                 );
             },
@@ -228,7 +230,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
             accessorKey: "value",
             header: ({ column }) => (
                 <TableHeaderSorting
-                    align="center"
+                    align="right"
                     header_name={"Value"}
                     column={column}
                 />
