@@ -113,18 +113,6 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
 
                                 return (
                                     <div key={chain_name} className="mt-4">
-                                        <CardDescription>
-                                            <span
-                                                className="text-lg"
-                                                style={{
-                                                    color: chain?.color_theme
-                                                        .hex,
-                                                }}
-                                            >
-                                                {chain?.label ?? chain_name}
-                                            </span>
-                                        </CardDescription>
-
                                         {native.balance ? (
                                             <CardContent className="mt-2 flex flex-col gap-y-2">
                                                 <div>
@@ -142,13 +130,14 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                                             }
                                                             token_url={
                                                                 native.logo_urls
-                                                                    .token_logo_url
+                                                                    .chain_logo_url
                                                             }
                                                             chain_color={
                                                                 chain
                                                                     ?.color_theme
                                                                     .hex
                                                             }
+                                                            is_chain_logo
                                                         />
                                                         {calculatePrettyBalance(
                                                             native.balance,

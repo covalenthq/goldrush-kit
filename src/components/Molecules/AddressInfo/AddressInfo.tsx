@@ -1,3 +1,4 @@
+import { Address } from "@/components/Atoms/Address/Address";
 import {
     Card,
     CardContent,
@@ -6,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { timestampParser, truncate } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useCovalent } from "@/utils/store/Covalent";
 import {
@@ -90,36 +91,31 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                                         <div key={chain_name} className="mt-4">
                                             <CardDescription>
                                                 <span
-                                                    className="text-lg"
+                                                    className="text-lg font-medium"
                                                     style={{
                                                         color: chain
                                                             ?.color_theme.hex,
                                                     }}
                                                 >
                                                     {chain?.label ?? chain_name}
+                                                </span>{" "}
+                                                <span>
+                                                    ({total_count} transactions)
                                                 </span>
                                             </CardDescription>
 
                                             <CardContent className="mt-2 flex flex-col gap-y-2">
                                                 <div>
                                                     <CardDescription>
-                                                        TOTAL TRANSACTIONS
-                                                    </CardDescription>
-
-                                                    <div className="mt-1 flex items-center gap-x-1.5">
-                                                        {total_count}
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <CardDescription>
                                                         LATEST TRANSACTION
                                                     </CardDescription>
 
                                                     <div className="mt-1 flex items-center gap-x-1.5">
-                                                        {truncate(
-                                                            latest_transaction.tx_hash
-                                                        )}
+                                                        <Address
+                                                            address={
+                                                                latest_transaction.tx_hash
+                                                            }
+                                                        />
                                                         <CardDescription>
                                                             {timestampParser(
                                                                 latest_transaction.block_signed_at,
@@ -135,9 +131,11 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                                                     </CardDescription>
 
                                                     <div className="flex items-center gap-x-2">
-                                                        {truncate(
-                                                            latest_transaction.tx_hash
-                                                        )}
+                                                        <Address
+                                                            address={
+                                                                earliest_transaction.tx_hash
+                                                            }
+                                                        />
                                                         <CardDescription>
                                                             {timestampParser(
                                                                 earliest_transaction.block_signed_at,
