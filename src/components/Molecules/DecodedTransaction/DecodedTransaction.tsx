@@ -43,12 +43,12 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     );
 
     useEffect(() => {
-        setResult(None);
-    }, [chain_name, tx_hash]);
-
-    useEffect(() => {
         (async () => {
             try {
+                setResult(None);
+                if (setMetadata) {
+                    setMetadata(None);
+                }
                 const response = await fetch(
                     "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
                     {
@@ -87,7 +87,11 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     return (
         <>
             {maybeResult.match({
-                None: () => <Skeleton size={GRK_SIZES.LARGE} />,
+                None: () => (
+                    <div className="border-y py-4">
+                        <Skeleton size={GRK_SIZES.LARGE} />
+                    </div>
+                ),
                 Some: (events) => (
                     <div>
                         {!events.length ? (
@@ -97,7 +101,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                 ({ name, details, nfts, protocol, tokens }) => (
                                     <article
                                         key={name}
-                                        className="flex w-full flex-col gap-y-4 border-t py-4 last:border-b"
+                                        className="flex w-full flex-col gap-y-4 border-t py-4 first:border-t-0 first:pt-0 last:pb-0"
                                     >
                                         <header className="flex w-full justify-between">
                                             <h3 className="font-medium">

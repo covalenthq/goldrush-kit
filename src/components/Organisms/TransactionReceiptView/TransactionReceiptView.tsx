@@ -11,6 +11,8 @@ import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useCovalent } from "@/utils/store/Covalent";
 import { ClockIcon } from "@radix-ui/react-icons";
 import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
+import { Skeleton } from "@/components/ui/skeleton";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
 export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     chain_name,
@@ -44,7 +46,19 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                 </header>
 
                 {maybeResult.match({
-                    None: () => null,
+                    None: () => (
+                        <div className="flex flex-col gap-y-4">
+                            <div className="flex flex-col gap-y-2">
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                            </div>
+
+                            <div className="flex gap-6 pb-2">
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                            </div>
+                        </div>
+                    ),
                     Some: (metadata) => (
                         <>
                             <div className="flex flex-col gap-y-1">
@@ -75,7 +89,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                 </CardDescription>
                             </div>
 
-                            <div className="flex gap-x-8">
+                            <div className="flex gap-x-8 border-b pb-4">
                                 <div className="flex flex-col">
                                     <CardDescription>Address</CardDescription>
                                     <AccountCard
@@ -105,10 +119,20 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                 />
 
                 {maybeResult.match({
-                    None: () => null,
+                    None: () => (
+                        <div className="flex flex-col gap-y-4">
+                            <div className="flex flex-col gap-y-2">
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                                <Skeleton size={GRK_SIZES.LARGE} />
+                            </div>
+
+                            <Skeleton size={GRK_SIZES.LARGE} />
+                        </div>
+                    ),
                     Some: (metadata) => (
                         <>
-                            <div className="flex flex-col gap-y-2">
+                            <div className="flex flex-col gap-y-2 border-t pt-4">
                                 <div>
                                     <CardDescription>
                                         Transaction Fee
