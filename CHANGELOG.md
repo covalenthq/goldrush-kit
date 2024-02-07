@@ -1,5 +1,16 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.3.9
+
+## What's Changed
+
+## Fixes
+- Forward apikey in context for transactions receipt fix
+- Fix skeleton for transactions receipt
+
+## Features
+- Added new gas card
+
 ## 0.3.8
 
 ## What's Changed
