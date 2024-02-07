@@ -53,7 +53,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                 <Skeleton size={GRK_SIZES.LARGE} />
                             </div>
 
-                            <div className="flex gap-x-12">
+                            <div className="flex gap-6 pb-2">
                                 <Skeleton size={GRK_SIZES.LARGE} />
                                 <Skeleton size={GRK_SIZES.LARGE} />
                             </div>
