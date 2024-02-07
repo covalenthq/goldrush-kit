@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { updateTheme } from "../functions";
 
 interface CovalentContextType {
+    apikey: string;
     covalentClient: CovalentClient;
     chains: ChainItem[] | null;
 }
@@ -163,7 +164,11 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
 
     return (
         <CovalentContext.Provider
-            value={{ covalentClient: covalentClient, chains: chains }}
+            value={{
+                apikey: apikey,
+                covalentClient: covalentClient,
+                chains: chains,
+            }}
         >
             {children}
             <Toaster />

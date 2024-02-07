@@ -18,7 +18,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     tx_hash,
     setMetadata,
 }) => {
-    const { chains } = useCovalent();
+    const { apikey, chains } = useCovalent();
 
     const [maybeResult, setResult] = useState<Option<DecodedEventType[]>>(None);
 
@@ -58,8 +58,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                         }),
                         headers: {
                             "content-type": "application/json",
-                            "x-covalent-api-key": import.meta.env
-                                .STORYBOOK_COVALENT_API_KEY as string,
+                            "x-covalent-api-key": apikey,
                         },
                         method: "POST",
                     }
