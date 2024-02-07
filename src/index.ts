@@ -24,6 +24,8 @@ export { XYKOverviewTimeSeries } from "./components/Molecules/XYK/XYKOverviewTim
 
 export { TransactionReceiptView } from "./components/Organisms/TransactionReceiptView/TransactionReceiptView";
 
+export { GasCard } from "./components/Molecules/GasCard/GasCard";
+
 export { type NFTDetailViewProps } from "./utils/types/organisms.types";
 export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
 export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
