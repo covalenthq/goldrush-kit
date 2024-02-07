@@ -1,10 +1,5 @@
 import { Address } from "@/components/Atoms/Address/Address";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
@@ -54,7 +49,6 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                     }
                 })
             );
-            console.log(results);
             setResult(new Some(results));
         })();
     }, [address, chain_names]);
@@ -68,7 +62,7 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
 
     return (
         <>
-            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 md:max-w-[20rem] lg:max-w-[20rem]">
+            <Card className="w-[32rem] rounded border p-2">
                 <CardTitle className="">Information</CardTitle>
                 {maybeResult.match({
                     None: () => (
@@ -89,7 +83,7 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
 
                                     return (
                                         <div key={chain_name} className="mt-4">
-                                            <CardDescription>
+                                            <CardDescription className="col-span-2">
                                                 <span
                                                     className="text-lg font-medium"
                                                     style={{
@@ -97,14 +91,14 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                                                             ?.color_theme.hex,
                                                     }}
                                                 >
-                                                    {chain?.label ?? chain_name}
+                                                    {chain?.label || chain_name}
                                                 </span>{" "}
                                                 <span>
                                                     ({total_count} transactions)
                                                 </span>
                                             </CardDescription>
 
-                                            <CardContent className="mt-2 flex flex-col gap-y-2">
+                                            <div className="mt-2 grid grid-cols-2">
                                                 <div>
                                                     <CardDescription>
                                                         LATEST TRANSACTION
@@ -144,7 +138,7 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                                                         </CardDescription>
                                                     </div>
                                                 </div>
-                                            </CardContent>
+                                            </div>
                                         </div>
                                     );
                                 }

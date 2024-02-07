@@ -84,7 +84,6 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                     }
                 })
             );
-            console.log(results);
             setResult(new Some(results));
         })();
     }, [address, chain_names]);
@@ -234,7 +233,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                                             key={
                                                                 contract_address
                                                             }
-                                                            className="mt-1 flex items-center gap-x-2 p-2"
+                                                            className="mt-1 flex items-center gap-x-2 border-t p-2 first:border-t-0"
                                                         >
                                                             <div>
                                                                 <TokenAvatar
@@ -253,7 +252,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                                             </div>
 
                                                             <div>
-                                                                <CardDescription className="flex">
+                                                                <CardDescription className="flex text-xs">
                                                                     {
                                                                         contract_display_name
                                                                     }{" "}
@@ -263,7 +262,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                                                     }
                                                                     )
                                                                 </CardDescription>
-                                                                <CardContent>
+                                                                <CardContent className="text-sm">
                                                                     {balance ? (
                                                                         <>
                                                                             {calculatePrettyBalance(
