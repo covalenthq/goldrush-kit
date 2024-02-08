@@ -30,12 +30,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
 
     return (
         <section className="h-fit w-5/6 max-w-[37.5rem] overflow-hidden rounded border">
-            <figure
-                className="h-10 w-full"
-                style={{
-                    backgroundImage: `linear-gradient(to right, ${CHAIN?.color_theme.hex}, ${CHAIN?.color_theme.hex})`,
-                }}
-            />
+            <figure className="h-10 w-full bg-primary" />
 
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
