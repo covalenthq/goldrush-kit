@@ -78,7 +78,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
 
     return (
         <>
-            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 md:max-w-[20rem] lg:max-w-[20rem]">
+            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-4 md:max-w-[20rem] lg:max-w-[20rem]">
                 <CardTitle className="">Overview</CardTitle>
                 {maybeResult.match({
                     None: () => (
@@ -186,7 +186,7 @@ export const AddressOverview: React.FC<AccountOverviewProps> = ({
                                         }) => (
                                             <DropdownMenuItem
                                                 key={contract_address}
-                                                className="mt-1 flex items-center gap-x-2 border-t p-2 first:border-t-0"
+                                                className="mt-1 flex items-center gap-x-2 border-t p-4 first:border-t-0"
                                             >
                                                 <div>
                                                     <TokenAvatar
