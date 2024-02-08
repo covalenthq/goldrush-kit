@@ -40,9 +40,9 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
                     <TypographyH4>Transaction Receipt</TypographyH4>
-                    <CardDescription>
+                    <div className="text-sm text-muted-foreground">
                         <Address address={tx_hash} />
-                    </CardDescription>
+                    </div>
                 </header>
 
                 {maybeResult.match({

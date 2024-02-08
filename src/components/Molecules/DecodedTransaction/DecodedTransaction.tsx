@@ -9,7 +9,7 @@ import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Address } from "@/components/Atoms/Address/Address";
 
@@ -156,12 +156,12 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 </Card>
                                                             </figure>
 
-                                                            <CardDescription className="flex flex-col gap-y-2 truncate text-ellipsis py-2">
-                                                                <p className="flex whitespace-break-spaces font-medium">
+                                                            <div className="flex flex-col gap-y-2 truncate text-ellipsis py-2 text-sm text-muted-foreground">
+                                                                <div className="flex whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading
                                                                     )}
-                                                                </p>
+                                                                </div>
 
                                                                 <div className="mt-auto flex flex-col gap-y-2">
                                                                     <p className="truncate text-ellipsis">
@@ -173,7 +173,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                             }
                                                                         </span>
                                                                     </p>
-                                                                    <p className="flex gap-x-1 truncate text-ellipsis">
+                                                                    <div className="flex gap-x-1 truncate text-ellipsis">
                                                                         Collection
                                                                         Address:
                                                                         <span className="text-black dark:text-text-color-50">
@@ -183,7 +183,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                                 }
                                                                             />
                                                                         </span>
-                                                                    </p>
+                                                                    </div>
                                                                     <p className="truncate text-ellipsis">
                                                                         Token
                                                                         ID:{" "}
@@ -194,7 +194,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                         </span>
                                                                     </p>
                                                                 </div>
-                                                            </CardDescription>
+                                                            </div>
                                                         </div>
                                                     )
                                                 )}
@@ -218,16 +218,18 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 heading
                                                             }
                                                         >
-                                                            <CardDescription
+                                                            <div
+                                                                className="text-sm text-muted-foreground"
                                                                 title={heading}
                                                             >
-                                                                <p className="flex whitespace-break-spaces font-medium">
+                                                                <div className="flex whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading ||
                                                                             "Token Amount"
                                                                     )}
-                                                                </p>
-                                                            </CardDescription>
+                                                                </div>
+                                                            </div>
+
                                                             <CardContent className="flex items-center truncate text-sm">
                                                                 <span className="text-base">
                                                                     {calculatePrettyBalance(
@@ -259,6 +261,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     />
                                                                 </figure>
                                                             </CardContent>
+
                                                             <p className="text-sm text-muted-foreground">
                                                                 {pretty_quote}
                                                             </p>
@@ -283,14 +286,14 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                             }
                                                             className="truncate text-ellipsis"
                                                         >
-                                                            <CardDescription
-                                                                className="flex flex-col truncate text-ellipsis"
+                                                            <div
+                                                                className="flex flex-col truncate text-ellipsis text-sm text-muted-foreground"
                                                                 title={title}
                                                             >
                                                                 <span className="font-medium">
                                                                     {title}
                                                                 </span>
-                                                                <span
+                                                                <div
                                                                     className="truncate text-ellipsis text-black dark:text-text-color-50"
                                                                     title={
                                                                         value
@@ -306,8 +309,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     ) : (
                                                                         value
                                                                     )}
-                                                                </span>
-                                                            </CardDescription>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     )
                                                 )}
