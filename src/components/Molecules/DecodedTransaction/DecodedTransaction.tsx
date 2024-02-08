@@ -134,9 +134,19 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                     </div>
                                                     <h2 className="mt-4 text-base font-semibold leading-6 text-[#65758B]">
                                                         Transaction status:{" "}
-                                                        <span className="font-bold text-[#4BD37B]">
-                                                            Success
-                                                        </span>
+                                                        {maybeResult.match({
+                                                            None: () => false,
+                                                            Some: (success) =>
+                                                                true,
+                                                        }) ? (
+                                                            <span className="font-bold text-[#4BD37B]">
+                                                                Success
+                                                            </span>
+                                                        ) : (
+                                                            <span className="font-bold text-[#f44949]">
+                                                                Failed
+                                                            </span>
+                                                        )}
                                                     </h2>
                                                 </div>
                                             ))}
