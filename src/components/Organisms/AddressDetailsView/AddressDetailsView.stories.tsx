@@ -13,6 +13,6 @@ export default meta;
 export const AddressDetails: Story = {
     args: {
         address: "0xf15689636571dba322b48E9EC9bA6cFB3DF818e1",
-        chain_names: ["eth-mainnet", "matic-mainnet"],
+        chain_name: "eth-mainnet",
     },
 };

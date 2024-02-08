@@ -143,5 +143,5 @@ export interface TransactionReceiptViewProps {
 
 export interface AddressDetailsViewProps {
     address: string;
-    chain_names: Chain[];
+    chain_name: Chain;
 }
