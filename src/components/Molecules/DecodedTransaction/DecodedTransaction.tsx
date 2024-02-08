@@ -1,4 +1,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import Blockies from "react-blockies";
+import Image from "next/image";
+import copyIcon from "../../../static/copy-icon.svg";
 import {
     type DecodedTransactionMetadata,
     type DecodedEventType,
@@ -97,223 +100,293 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                             <p>No decoded Events.</p>
                         ) : (
                             events.map(
-                                ({ name, details, nfts, protocol, tokens }) => (
-                                    <article
-                                        key={name}
-                                        className="flex w-full flex-col gap-y-4 border-t py-4 first:border-t-0 first:pt-0 last:pb-0"
-                                    >
-                                        <header className="flex w-full justify-between">
-                                            <h3 className="font-medium">
-                                                {name}
-                                            </h3>
-
-                                            <p className="text-sm font-semibold text-muted-foreground">
-                                                {protocol?.name}
-                                            </p>
-                                        </header>
-
-                                        {nfts?.length && (
-                                            <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-2">
-                                                {nfts.map(
-                                                    ({
-                                                        collection_address,
-                                                        collection_name,
-                                                        heading,
-                                                        images,
-                                                        token_identifier,
-                                                    }) => (
-                                                        <div
-                                                            key={
-                                                                collection_address +
-                                                                token_identifier
+                                ({
+                                    name,
+                                    details,
+                                    nfts,
+                                    protocol,
+                                    tokens,
+                                    action,
+                                }) => (
+                                    <div className="flex w-full gap-x-[29px] p-4">
+                                        <div className="flex w-fit flex-col">
+                                            {nfts?.map((nft, i) => (
+                                                <div>
+                                                    <div
+                                                        key={i}
+                                                        className="h-fit w-fit rounded-md bg-black  p-[58px]"
+                                                    >
+                                                        <img
+                                                            className="h-[380px] w-[480px]"
+                                                            src={
+                                                                nft
+                                                                    .images[256] ||
+                                                                nft
+                                                                    .images[512] ||
+                                                                nft
+                                                                    .images[1024] ||
+                                                                nft.images
+                                                                    .default ||
+                                                                ""
                                                             }
-                                                            className="flex gap-x-4"
-                                                        >
-                                                            <figure>
-                                                                <Card className="w-32 overflow-hidden rounded border">
-                                                                    <img
-                                                                        className={`block h-32 w-32 rounded-t`}
-                                                                        src={
-                                                                            images[256] ||
-                                                                            images[512] ||
-                                                                            images[1024] ||
-                                                                            images.default ||
-                                                                            ""
-                                                                        }
-                                                                        onError={(
-                                                                            e
-                                                                        ) => {
-                                                                            e.currentTarget.classList.remove(
-                                                                                "object-cover"
-                                                                            );
-                                                                            e.currentTarget.classList.add(
-                                                                                "p-2"
-                                                                            );
-                                                                            e.currentTarget.src =
-                                                                                "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                                        }}
-                                                                    />
-                                                                </Card>
-                                                            </figure>
-
-                                                            <CardDescription className="flex flex-col gap-y-2 truncate text-ellipsis py-2">
-                                                                <p className="flex whitespace-break-spaces font-medium">
-                                                                    {handleHashInString(
-                                                                        heading
-                                                                    )}
-                                                                </p>
-
-                                                                <div className="mt-auto flex flex-col gap-y-2">
-                                                                    <p className="truncate text-ellipsis">
-                                                                        Collection
-                                                                        Name:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <h2 className="mt-4 text-base font-semibold leading-6 text-[#65758B]">
+                                                        Transaction status:{" "}
+                                                        <span className="font-bold text-[#4BD37B]">
+                                                            Success
+                                                        </span>
+                                                    </h2>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex w-full flex-col gap-y-4">
+                                            <div className="grid w-full grid-cols-[1fr_1fr] gap-x-3">
+                                                <div className="">
+                                                    {nfts?.map((nft, i) => (
+                                                        <div className="">
+                                                            <h4 className="mb-[10px] text-base font-semibold leading-6 text-[#65758B]">
+                                                                Nft Details
+                                                            </h4>
+                                                            <div className="h-[330px] w-full  rounded-lg border-[0.5px] border-solid border-[#8A97A5]">
+                                                                <h2 className="border-b-[0.3px] border-[#8A97A5] px-6 py-4 text-base font-semibold leading-6 text-[#65758B]">
+                                                                    Offered Nft
+                                                                </h2>
+                                                                <div className="flex flex-col gap-y-2 px-6 py-[14px] text-base font-semibold leading-6 text-black">
+                                                                    <div>
+                                                                        <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                            Collection
+                                                                            Name:
+                                                                        </h4>
+                                                                        <h3>
                                                                             {
-                                                                                collection_name
+                                                                                nft.collection_name
                                                                             }
-                                                                        </span>
-                                                                    </p>
-                                                                    <p className="flex gap-x-1 truncate text-ellipsis">
-                                                                        Collection
-                                                                        Address:
-                                                                        <span className="text-black dark:text-text-color-50">
-                                                                            <Address
-                                                                                address={
-                                                                                    collection_address
-                                                                                }
-                                                                            />
-                                                                        </span>
-                                                                    </p>
-                                                                    <p className="truncate text-ellipsis">
-                                                                        Token
-                                                                        ID:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        </h3>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                            Collection
+                                                                            Address:
+                                                                        </h4>
+                                                                        <h3>
+                                                                            {nft.collection_address
+                                                                                .slice(
+                                                                                    0,
+                                                                                    18
+                                                                                )
+                                                                                .concat(
+                                                                                    "..."
+                                                                                )}
+                                                                        </h3>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                            Token
+                                                                            ID:
+                                                                        </h4>
+                                                                        <h3>
                                                                             {
-                                                                                token_identifier
+                                                                                nft.token_identifier
                                                                             }
-                                                                        </span>
-                                                                    </p>
+                                                                        </h3>
+                                                                    </div>
                                                                 </div>
-                                                            </CardDescription>
+                                                            </div>
                                                         </div>
-                                                    )
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {tokens?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
-                                                {tokens.map(
-                                                    ({
-                                                        heading,
-                                                        pretty_quote,
-                                                        ticker_logo,
-                                                        ticker_symbol,
-                                                        decimals,
-                                                        value,
-                                                    }) => (
-                                                        <div
-                                                            key={
-                                                                ticker_symbol +
-                                                                heading
-                                                            }
-                                                        >
-                                                            <CardDescription
-                                                                title={heading}
-                                                            >
-                                                                <p className="flex whitespace-break-spaces font-medium">
-                                                                    {handleHashInString(
-                                                                        heading ||
-                                                                            "Token Amount"
-                                                                    )}
-                                                                </p>
-                                                            </CardDescription>
-                                                            <CardContent className="flex items-center truncate text-sm">
-                                                                <span className="text-base">
-                                                                    {calculatePrettyBalance(
-                                                                        BigInt(
-                                                                            value
-                                                                        ),
-                                                                        decimals
-                                                                    )}{" "}
-                                                                    {
-                                                                        ticker_symbol
-                                                                    }
-                                                                </span>
-
-                                                                <figure>
-                                                                    <TokenAvatar
-                                                                        size={
-                                                                            GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                                        }
-                                                                        chain_color={
-                                                                            CHAIN
-                                                                                ?.color_theme
-                                                                                .hex
-                                                                        }
-                                                                        token_url={
-                                                                            ticker_logo ||
-                                                                            CHAIN?.logo_url
-                                                                        }
-                                                                        is_chain_logo
-                                                                    />
-                                                                </figure>
-                                                            </CardContent>
-                                                            <p className="text-sm text-muted-foreground">
-                                                                {pretty_quote}
-                                                            </p>
-                                                        </div>
-                                                    )
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {details?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
-                                                {details.map(
-                                                    ({
-                                                        title,
-                                                        type,
-                                                        value,
-                                                    }) => (
-                                                        <div
-                                                            key={
-                                                                title +
-                                                                Math.random()
-                                                            }
-                                                            className="truncate text-ellipsis"
-                                                        >
-                                                            <CardDescription
-                                                                className="flex flex-col truncate text-ellipsis"
-                                                                title={title}
-                                                            >
-                                                                <span className="font-medium">
-                                                                    {title}
-                                                                </span>
-                                                                <span
-                                                                    className="truncate text-ellipsis text-black dark:text-text-color-50"
-                                                                    title={
-                                                                        value
-                                                                    }
-                                                                >
-                                                                    {type ===
-                                                                    "address" ? (
-                                                                        <Address
-                                                                            address={
-                                                                                value
+                                                    ))}
+                                                </div>
+                                                <div className="">
+                                                    {nfts?.map((nft, i) => (
+                                                        <>
+                                                            <h4 className="mb-[10px] text-base font-semibold leading-6 text-[#65758B]">
+                                                                Transaction
+                                                                Events
+                                                            </h4>
+                                                            <div className="h-[330px] w-full rounded-lg border-[0.5px] border-solid border-[#8A97A5]">
+                                                                {}
+                                                                <h2 className="border-b-[0.3px] border-[#8A97A5] px-6 py-4 text-base font-semibold leading-6 text-[#65758B]">
+                                                                    {action}:
+                                                                    {name}
+                                                                </h2>
+                                                                <div className="flex flex-col gap-y-2 px-6 py-[14px] text-base font-semibold leading-6 text-black">
+                                                                    <div>
+                                                                        <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                            Protocol:
+                                                                        </h4>
+                                                                        <h3>
+                                                                            {
+                                                                                protocol?.name
                                                                             }
-                                                                        />
-                                                                    ) : (
-                                                                        value
+                                                                        </h3>
+                                                                    </div>
+
+                                                                    {details?.map(
+                                                                        (
+                                                                            detail
+                                                                        ) => (
+                                                                            <div>
+                                                                                <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                                    {
+                                                                                        detail.title
+                                                                                    }
+
+                                                                                    :
+                                                                                </h4>
+                                                                                <h3 className="flex items-center gap-x-2">
+                                                                                    {detail.title !==
+                                                                                        "Order Hash" && (
+                                                                                        <Blockies
+                                                                                            seed={
+                                                                                                detail.value
+                                                                                            }
+                                                                                            scale={
+                                                                                                3
+                                                                                            }
+                                                                                            className="h-4 w-4 rounded-full"
+                                                                                        />
+                                                                                    )}
+                                                                                    {detail.value
+                                                                                        .slice(
+                                                                                            0,
+                                                                                            18
+                                                                                        )
+                                                                                        .concat(
+                                                                                            "..."
+                                                                                        )}
+                                                                                    <button
+                                                                                        className="rounded-lg border-[1px] border-[#c4c4c4] p-2 text-xs"
+                                                                                        onClick={() => {
+                                                                                            navigator.clipboard.writeText(
+                                                                                                detail.value
+                                                                                            );
+                                                                                        }}
+                                                                                    >
+                                                                                        <img
+                                                                                            className="h-3 w-3"
+                                                                                            src={
+                                                                                                copyIcon
+                                                                                            }
+                                                                                            alt=""
+                                                                                        />
+                                                                                    </button>
+                                                                                </h3>
+                                                                            </div>
+                                                                        )
                                                                     )}
-                                                                </span>
-                                                            </CardDescription>
-                                                        </div>
-                                                    )
-                                                )}
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    ))}
+                                                </div>
                                             </div>
-                                        )}
-                                    </article>
+                                            <div className="w-full">
+                                                {nfts?.map((nft, i) => (
+                                                    <>
+                                                        <h4 className="mb-[10px] text-base font-semibold leading-6 text-[#65758B]">
+                                                            Token Details
+                                                        </h4>
+                                                        <div className="w-full rounded-lg border-[0.5px] border-solid border-[#8A97A5]">
+                                                            {}
+                                                            <h2 className="border-b-[0.3px] border-[#8A97A5] px-6 py-4 text-base font-semibold leading-6 text-[#65758B]">
+                                                                Token Sent
+                                                            </h2>
+                                                            <div className="flex items-center justify-between px-6 py-[14px] text-base font-semibold leading-6 text-black">
+                                                                {tokens?.map(
+                                                                    (token) => (
+                                                                        <div>
+                                                                            <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                                Sent
+                                                                                to:
+                                                                            </h4>
+                                                                            <h3 className="mb-[24px] flex items-center gap-1">
+                                                                                <Blockies
+                                                                                    seed={
+                                                                                        token.heading
+                                                                                    }
+                                                                                    scale={
+                                                                                        3
+                                                                                    }
+                                                                                    className="h-4 w-4 rounded-full"
+                                                                                />
+                                                                                {token.heading
+                                                                                    .split(
+                                                                                        " "
+                                                                                    )[2]
+                                                                                    .slice(
+                                                                                        0,
+                                                                                        10
+                                                                                    )
+                                                                                    .concat(
+                                                                                        "..."
+                                                                                    )}
+                                                                                <button
+                                                                                    className="rounded-lg border-[1px] border-[#c4c4c4] p-1 text-xs"
+                                                                                    onClick={() => {
+                                                                                        navigator.clipboard.writeText(
+                                                                                            token.heading
+                                                                                        );
+                                                                                    }}
+                                                                                >
+                                                                                    <img
+                                                                                        className="h-3 w-3"
+                                                                                        src={
+                                                                                            copyIcon
+                                                                                        }
+                                                                                        alt=""
+                                                                                    />
+                                                                                </button>
+                                                                            </h3>
+                                                                            <h4 className="text-xs font-semibold leading-6 text-[#65758B]">
+                                                                                Price:
+                                                                            </h4>
+                                                                            <h3 className="flex items-center text-[13px] font-normal">
+                                                                                <figure>
+                                                                                    <TokenAvatar
+                                                                                        size={
+                                                                                            GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                                        }
+                                                                                        chain_color={
+                                                                                            CHAIN
+                                                                                                ?.color_theme
+                                                                                                .hex
+                                                                                        }
+                                                                                        token_url={
+                                                                                            token.ticker_logo ||
+                                                                                            CHAIN?.logo_url
+                                                                                        }
+                                                                                        is_chain_logo
+                                                                                    />
+                                                                                </figure>
+                                                                                {calculatePrettyBalance(
+                                                                                    BigInt(
+                                                                                        token.value
+                                                                                    ),
+                                                                                    token.decimals
+                                                                                )}
+                                                                                {
+                                                                                    " ETH"
+                                                                                }
+
+                                                                                (
+                                                                                {
+                                                                                    token.pretty_quote
+                                                                                }
+
+                                                                                )
+                                                                            </h3>
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
                                 )
                             )
                         )}
