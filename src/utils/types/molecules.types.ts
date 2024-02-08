@@ -23,6 +23,26 @@ export interface GasCardProps {
     event_type: string;
 }
 
+export interface AccountOverviewProps {
+    address: string;
+    chain_name: Chain;
+}
+
+export interface AccountInformationProps {
+    address: string;
+    chain_name: Chain;
+}
+
+export interface AddressDetailsProps {
+    address: string;
+    chain_name: Chain;
+}
+
+export interface AddressSummaryProps {
+    address: string;
+    chain_name: Chain;
+}
+
 export interface CollectionCardProps {
     chain_name: Chain;
     collection_address: string;
@@ -38,6 +58,11 @@ export interface NFTSalesCountProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
+}
+
+export interface TransactionListProps {
+    chain_name: Chain;
+    address: string;
 }
 
 export interface XYKPoolTimeSeriesProps {
