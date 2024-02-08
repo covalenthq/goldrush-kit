@@ -140,11 +140,11 @@ export default function GoldRushExample() {
 
 ## GoldRush Templates
 
-| Template                              | Description                                                | Link                                                       |
-|---------------------------------------|------------------------------------------------------------|------------------------------------------------------------|
-| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains.       | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
-| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.          | https://github.com/covalenthq/goldrush-nft-gallery-ui      |
-| Uniswap Dex Dashboard UI              | Display pools, tokens and transactions for supported DEXs. | https://github.com/covalenthq/goldrush-uniswap-dex-dashboard                                                           |
+| Template                              | Description                                          | Link                                                       |
+| ------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
+| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains. | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
+| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.    | https://github.com/covalenthq/goldrush-nft-gallery-ui      |
+| Uniswap-like Analytics UI             | Coming soon!                                         |                                                            |
 
 ## Build and customize with Storybook
 
