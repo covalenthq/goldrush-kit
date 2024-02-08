@@ -1,5 +1,15 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.0
+
+## What's Changed
+
+## Fixes
+- Fix hydration error for Transactions Receipt
+
+## Features
+- Added Address Detail View component
+
 ## 0.3.9
 
 ## What's Changed
