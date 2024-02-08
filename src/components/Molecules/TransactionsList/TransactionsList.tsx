@@ -1,6 +1,10 @@
 import { type Option, None, Some } from "@/utils/option";
-import { type ChainItem, calculatePrettyBalance } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
+import {
+    type ChainItem,
+    calculatePrettyBalance,
+    type Transaction,
+} from "@covalenthq/client-sdk";
+import { useEffect, useMemo, useState } from "react";
 import {
     type ColumnDef,
     type SortingState,
@@ -24,14 +28,11 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
-import {
-    type CrossChainTransaction,
-    type TransactionListProps,
-} from "@/utils/types/molecules.types";
+import { type TransactionListProps } from "@/utils/types/molecules.types";
 import { Address } from "@/components/Atoms/Address/Address";
 
 export const TransactionsList: React.FC<TransactionListProps> = ({
-    chain_names,
+    chain_name,
     address,
 }) => {
     const { covalentClient, chains } = useCovalent();
@@ -43,48 +44,43 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [maybeResult, setResult] =
-        useState<Option<CrossChainTransaction[]>>(None);
+    const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
     const [filterResult, setFilterResult] =
-        useState<Option<CrossChainTransaction[]>>(None);
+        useState<Option<Transaction[]>>(None);
 
     useEffect(() => {
         (async () => {
             setResult(None);
-            const promises = chain_names.map(async (chain_name) => {
-                let response;
-                try {
-                    response =
-                        await covalentClient.TransactionService.getAllTransactionsForAddressByPage(
-                            chain_name,
-                            address.trim(),
-                            {
-                                noLogs: true,
-                                withSafe: false,
-                                quoteCurrency: "USD",
-                            }
-                        );
-                    setError({ error: false, error_message: "" });
-                    return response.data.items.map((o) => {
-                        return { ...o, chain: chain_name };
-                    });
-                } catch (error) {
-                    console.error(
-                        `Error fetching balances for ${chain_name}:`,
-                        error
+            try {
+                const { data, ...error } =
+                    await covalentClient.TransactionService.getAllTransactionsForAddressByPage(
+                        chain_name,
+                        address.trim(),
+                        {
+                            noLogs: true,
+                            withSafe: false,
+                            quoteCurrency: "USD",
+                        }
                     );
-                    setError({
-                        error: response ? response.error : false,
-                        error_message: response ? response.error_message : "",
-                    });
-                    return [];
+                if (error.error) {
+                    throw error;
                 }
-            });
-            const results = await Promise.all(promises);
-            setResult(new Some(results.flat()));
+                setResult(new Some(data.items));
+                setError({ error: false, error_message: "" });
+            } catch (error: any) {
+                console.error(
+                    `Error fetching balances for ${chain_name}:`,
+                    error
+                );
+                setError({
+                    error: error.error || false,
+                    error_message: error.error_message || "",
+                });
+                return [];
+            }
         })();
-    }, [chain_names, address]);
+    }, [chain_name, address]);
 
     useEffect(() => {
         maybeResult.match({
@@ -96,7 +92,11 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
         });
     }, [maybeResult]);
 
-    const columns: ColumnDef<CrossChainTransaction>[] = [
+    const CHAIN = useMemo<ChainItem | null>(() => {
+        return chains?.find((o) => o.name === chain_name) ?? null;
+    }, [chains, chain_name]);
+
+    const columns: ColumnDef<Transaction>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -131,16 +131,12 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
                 />
             ),
             cell: ({ row }) => {
-                const chain: ChainItem | null =
-                    chains?.find((o) => o.name === row.original.chain) ?? null;
-                const chainColor = chain?.color_theme.hex;
-
                 return (
                     <div className="flex items-center gap-3">
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
-                            chain_color={chainColor}
-                            token_url={chain?.logo_url}
+                            chain_color={CHAIN?.color_theme.hex}
+                            token_url={CHAIN?.logo_url}
                             is_chain_logo
                         />
                         <p className="flex flex-col text-base">
@@ -291,7 +287,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     });
 
     const body = filterResult.match({
-        None: () => <SkeletonTable cols={6} />,
+        None: () => <SkeletonTable cols={7} />,
         Some: () =>
             error.error ? (
                 <TableRow>

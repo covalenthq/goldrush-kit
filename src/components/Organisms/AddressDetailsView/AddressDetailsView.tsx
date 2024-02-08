@@ -17,7 +17,7 @@ export const AddressDetailsView: React.FC<AddressDetailsViewProps> = ({
                 <AddressInfo address={address} chain_names={chain_names} />
             </header>
 
-            <TransactionsList address={address} chain_names={chain_names} />
+            <TransactionsList address={address} chain_name={chain_names} />
         </section>
     );
 };

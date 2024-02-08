@@ -12,7 +12,7 @@ export default meta;
 
 export const TransactionsList: Story = {
     args: {
-        chain_names: ["eth-mainnet", "matic-mainnet"],
+        chain_name: "eth-mainnet",
         address: "0x972B8FAD70de6e430D8b368198AbFF1E42eFf022",
     },
 };
