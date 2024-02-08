@@ -50,7 +50,7 @@ export const AddressInformation: React.FC<AccountInformationProps> = ({
 
     return (
         <>
-            <Card className="w-[32rem] rounded border p-2">
+            <Card className="w-[32rem] rounded border p-4">
                 <CardTitle className="">Information</CardTitle>
                 {maybeResult.match({
                     None: () => (

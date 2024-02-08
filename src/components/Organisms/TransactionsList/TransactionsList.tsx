@@ -1,10 +1,9 @@
 import { type Option, None, Some } from "@/utils/option";
 import {
-    type ChainItem,
     calculatePrettyBalance,
     type Transaction,
 } from "@covalenthq/client-sdk";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     type ColumnDef,
     type SortingState,
@@ -22,10 +21,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TokenAvatar } from "../../Atoms/TokenAvatar/TokenAvatar";
 import { timestampParser } from "@/utils/functions";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useCovalent } from "@/utils/store/Covalent";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 import { type TransactionListProps } from "@/utils/types/molecules.types";
@@ -35,7 +32,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     chain_name,
     address,
 }) => {
-    const { covalentClient, chains } = useCovalent();
+    const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
@@ -92,10 +89,6 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
         });
     }, [maybeResult]);
 
-    const CHAIN = useMemo<ChainItem | null>(() => {
-        return chains?.find((o) => o.name === chain_name) ?? null;
-    }, [chains, chain_name]);
-
     const columns: ColumnDef<Transaction>[] = [
         {
             id: "select",
@@ -133,12 +126,6 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-3">
-                        <TokenAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            chain_color={CHAIN?.color_theme.hex}
-                            token_url={CHAIN?.logo_url}
-                            is_chain_logo
-                        />
                         <p className="flex flex-col text-base">
                             <Address address={row.original.tx_hash} />
                         </p>
