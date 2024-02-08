@@ -5,7 +5,6 @@ import {
     type TokenV2VolumeWithChartData,
     type ExchangeTransaction,
     type Transaction,
-    type TransactionsSummary,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
@@ -31,10 +30,6 @@ export interface AccountOverviewProps {
 
 export interface AccountInfoProps {
     address: string;
-    chain_names: Chain[];
-}
-
-export interface CrossChainTransactionsSummary extends TransactionsSummary {
     chain_name: Chain;
 }
 

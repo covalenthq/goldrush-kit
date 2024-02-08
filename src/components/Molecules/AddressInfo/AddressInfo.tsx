@@ -5,60 +5,48 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useCovalent } from "@/utils/store/Covalent";
+import { type AccountInfoProps } from "@/utils/types/molecules.types";
 import {
-    type CrossChainTransactionsSummary,
-    type AccountInfoProps,
-} from "@/utils/types/molecules.types";
-import { type Chain } from "@covalenthq/client-sdk";
-import { useCallback, useEffect, useState } from "react";
+    type TransactionsSummary,
+    type ChainItem,
+} from "@covalenthq/client-sdk";
+import { useEffect, useMemo, useState } from "react";
 
 export const AddressInfo: React.FC<AccountInfoProps> = ({
     address,
-    chain_names,
+    chain_name,
 }) => {
     const { covalentClient, chains } = useCovalent();
 
     const [maybeResult, setResult] =
-        useState<Option<CrossChainTransactionsSummary[]>>(None);
+        useState<Option<TransactionsSummary>>(None);
 
     useEffect(() => {
         (async () => {
             setResult(None);
-            const results: CrossChainTransactionsSummary[] = [];
-            await Promise.all(
-                chain_names.map(async (chain_name) => {
-                    let response;
-                    try {
-                        response =
-                            await covalentClient.TransactionService.getTransactionSummary(
-                                chain_name,
-                                address.trim()
-                            );
 
-                        const summary = response.data.items[0];
-
-                        results.push({
-                            chain_name: chain_name,
-                            ...summary,
-                        });
-                    } catch (error) {
-                        console.error(
-                            `Error fetching transactions summary for ${chain_name}:`,
-                            error
-                        );
-                    }
-                })
-            );
-            setResult(new Some(results));
+            try {
+                const { data, ...error } =
+                    await covalentClient.TransactionService.getTransactionSummary(
+                        chain_name,
+                        address.trim()
+                    );
+                if (error.error) {
+                    throw error;
+                }
+                setResult(new Some(data.items[0]));
+            } catch (error) {
+                console.error(
+                    `Error fetching transactions summary for ${chain_name}:`,
+                    error
+                );
+            }
         })();
-    }, [address, chain_names]);
+    }, [address, chain_name]);
 
-    const handleChain = useCallback(
-        (chain_name: Chain) => {
-            return chains?.find((o) => o.name === chain_name) ?? null;
-        },
-        [chains]
-    );
+    const CHAIN = useMemo<ChainItem | null>(() => {
+        return chains?.find((o) => o.name === chain_name) ?? null;
+    }, [chains, chain_name]);
 
     return (
         <>
@@ -70,80 +58,63 @@ export const AddressInfo: React.FC<AccountInfoProps> = ({
                             <Skeleton size={GRK_SIZES.LARGE} />
                         </div>
                     ),
-                    Some: (summary) => (
-                        <>
-                            {summary.map(
-                                ({
-                                    chain_name,
-                                    earliest_transaction,
-                                    latest_transaction,
-                                    total_count,
-                                }) => {
-                                    const chain = handleChain(chain_name);
+                    Some: ({
+                        earliest_transaction,
+                        latest_transaction,
+                        total_count,
+                    }) => (
+                        <div className="mt-4">
+                            <CardDescription className="col-span-2">
+                                <span
+                                    className="font-medium"
+                                    style={{
+                                        color: CHAIN?.color_theme.hex,
+                                    }}
+                                >
+                                    {total_count} TRANSACTIONS
+                                </span>{" "}
+                            </CardDescription>
 
-                                    return (
-                                        <div key={chain_name} className="mt-4">
-                                            <CardDescription className="col-span-2">
-                                                <span
-                                                    className="text-lg font-medium"
-                                                    style={{
-                                                        color: chain
-                                                            ?.color_theme.hex,
-                                                    }}
-                                                >
-                                                    {chain?.label || chain_name}
-                                                </span>{" "}
-                                                <span>
-                                                    ({total_count} transactions)
-                                                </span>
-                                            </CardDescription>
+                            <div className="mt-2 grid grid-cols-2 items-end gap-x-2">
+                                <div>
+                                    <CardDescription>
+                                        LATEST TRANSACTION
+                                    </CardDescription>
 
-                                            <div className="mt-2 grid grid-cols-2">
-                                                <div>
-                                                    <CardDescription>
-                                                        LATEST TRANSACTION
-                                                    </CardDescription>
+                                    <div className="mt-1 flex items-center gap-x-1.5">
+                                        <Address
+                                            address={latest_transaction.tx_hash}
+                                        />
+                                        <CardDescription>
+                                            {timestampParser(
+                                                latest_transaction.block_signed_at,
+                                                "relative"
+                                            )}
+                                        </CardDescription>
+                                    </div>
+                                </div>
 
-                                                    <div className="mt-1 flex items-center gap-x-1.5">
-                                                        <Address
-                                                            address={
-                                                                latest_transaction.tx_hash
-                                                            }
-                                                        />
-                                                        <CardDescription>
-                                                            {timestampParser(
-                                                                latest_transaction.block_signed_at,
-                                                                "relative"
-                                                            )}
-                                                        </CardDescription>
-                                                    </div>
-                                                </div>
+                                <div>
+                                    <CardDescription>
+                                        EARLIEST TRANSACTION
+                                    </CardDescription>
 
-                                                <div>
-                                                    <CardDescription>
-                                                        EARLIEST TRANSACTION
-                                                    </CardDescription>
-
-                                                    <div className="flex items-center gap-x-2">
-                                                        <Address
-                                                            address={
-                                                                earliest_transaction.tx_hash
-                                                            }
-                                                        />
-                                                        <CardDescription>
-                                                            {timestampParser(
-                                                                earliest_transaction.block_signed_at,
-                                                                "relative"
-                                                            )}
-                                                        </CardDescription>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                }
-                            )}
-                        </>
+                                    <div className="flex items-center gap-x-2">
+                                        <Address
+                                            address={
+                                                earliest_transaction.tx_hash
+                                            }
+                                        />
+                                        <CardDescription>
+                                            {timestampParser(
+                                                earliest_transaction.block_signed_at,
+                                                "relative"
+                                            )}
+                                        </CardDescription>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ),
                 })}
             </Card>
