@@ -5,14 +5,14 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useCovalent } from "@/utils/store/Covalent";
-import { type AccountInfoProps } from "@/utils/types/molecules.types";
+import { type AccountInformationProps } from "@/utils/types/molecules.types";
 import {
     type TransactionsSummary,
     type ChainItem,
 } from "@covalenthq/client-sdk";
 import { useEffect, useMemo, useState } from "react";
 
-export const AddressInfo: React.FC<AccountInfoProps> = ({
+export const AddressInformation: React.FC<AccountInformationProps> = ({
     address,
     chain_name,
 }) => {

@@ -28,7 +28,17 @@ export interface AccountOverviewProps {
     chain_name: Chain;
 }
 
-export interface AccountInfoProps {
+export interface AccountInformationProps {
+    address: string;
+    chain_name: Chain;
+}
+
+export interface AddressDetailsProps {
+    address: string;
+    chain_name: Chain;
+}
+
+export interface AddressSummaryProps {
     address: string;
     chain_name: Chain;
 }
