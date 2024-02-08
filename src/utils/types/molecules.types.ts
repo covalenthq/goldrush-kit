@@ -26,7 +26,7 @@ export interface GasCardProps {
 
 export interface AccountOverviewProps {
     address: string;
-    chain_names: Chain[];
+    chain_name: Chain;
 }
 
 export interface AccountInfoProps {
