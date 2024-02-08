@@ -1,15 +1,15 @@
-import { type AddressDetailsViewProps } from "@/utils/types/organisms.types";
-import { TransactionsList } from "@/components/Molecules/TransactionsList/TransactionsList";
-import { AddressDetails } from "@/components/Molecules/Address/AddressDetails/AddressDetails";
+import { type AddressDetailsProps } from "@/utils/types/molecules.types";
+import { AddressSummary } from "../../Molecules/Address/AddressSummary/AddressSummary";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 
-export const AddressDetailsView: React.FC<AddressDetailsViewProps> = ({
+export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     address,
     chain_name,
 }) => {
     return (
-        <section className="flex w-full flex-col gap-y-8">
-            <AddressDetails address={address} chain_name={chain_name} />
-            <TransactionsList address={address} chain_name={chain_name} />
-        </section>
+        <div className="flex w-full flex-col gap-y-8">
+            <AccountCard address={address} />
+            <AddressSummary address={address} chain_name={chain_name} />
+        </div>
     );
 };

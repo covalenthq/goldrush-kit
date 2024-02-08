@@ -4,7 +4,7 @@ import { TransactionsList as TransactionsListComponent } from "./TransactionsLis
 type Story = StoryObj<typeof TransactionsListComponent>;
 
 const meta: Meta<typeof TransactionsListComponent> = {
-    title: "Molecules/Transactions List",
+    title: "Organisms/Transactions List",
     component: TransactionsListComponent,
 };
 
