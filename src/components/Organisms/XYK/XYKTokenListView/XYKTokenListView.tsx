@@ -136,11 +136,28 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             token_url={row.original.logo_url}
                         />
                         <div className="flex flex-col">
-                            <label className="text-base">
-                                {row.original.contract_name
-                                    ? row.original.contract_name
-                                    : ""}
-                            </label>
+                            {on_token_click ? (
+                                <a
+                                    className="cursor-pointer hover:opacity-75"
+                                    onClick={() => {
+                                        if (on_token_click) {
+                                            on_token_click(
+                                                row.original.contract_address
+                                            );
+                                        }
+                                    }}
+                                >
+                                    {row.original.contract_name
+                                        ? row.original.contract_name
+                                        : ""}
+                                </a>
+                            ) : (
+                                <label className="text-base">
+                                    {row.original.contract_name
+                                        ? row.original.contract_name
+                                        : ""}
+                                </label>
+                            )}
                         </div>
                     </div>
                 );
