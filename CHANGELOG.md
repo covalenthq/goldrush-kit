@@ -1,5 +1,14 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.1
+
+## What's Changed
+
+## Fixes
+
+## Features
+- Add `chain_name` to the object when `on_transfer_click` function is ran on the `TokenBalanceListView` component.
+
 ## 0.4.0
 
 ## What's Changed
