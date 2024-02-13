@@ -1,5 +1,19 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.2
+
+## What's Changed
+
+## Fixes
+
+## Features
+- Add transfer clicks to labels on list views
+    - PoolList
+    - TokenList
+    - TokenPoolList
+    - WalletPoolList
+    - WalletPositions
+
 ## 0.4.1
 
 ## What's Changed
