@@ -297,9 +297,12 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 <DropdownMenuItem
                                     onClick={() => {
                                         if (on_transfer_click) {
-                                            on_transfer_click(
-                                                row.original.contract_address
-                                            );
+                                            on_transfer_click({
+                                                chain_name: row.original.chain,
+                                                contract_address:
+                                                    row.original
+                                                        .contract_address,
+                                            });
                                         }
                                     }}
                                 >
@@ -309,13 +312,6 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     />{" "}
                                     View Transfer History
                                 </DropdownMenuItem>
-                                {/* <DropdownMenuItem>
-                                    <IconWrapper
-                                        icon_class_name="swap_calls"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    Swap {row.original.contract_ticker_symbol}
-                                </DropdownMenuItem> */}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuLabel>
                                     <div className="flex">
@@ -446,9 +442,12 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 <DropdownMenuItem
                                     onClick={() => {
                                         if (on_transfer_click) {
-                                            on_transfer_click(
-                                                row.original.contract_address
-                                            );
+                                            on_transfer_click({
+                                                chain_name: row.original.chain,
+                                                contract_address:
+                                                    row.original
+                                                        .contract_address,
+                                            });
                                         }
                                     }}
                                 >
