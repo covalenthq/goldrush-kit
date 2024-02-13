@@ -344,9 +344,24 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
                         </div>
 
                         <div className="flex flex-col">
-                            <label className="text-base">
-                                {pool ? pool : ""}
-                            </label>
+                            {on_pool_click ? (
+                                <a
+                                    className="cursor-pointer hover:opacity-75"
+                                    onClick={() => {
+                                        if (on_pool_click) {
+                                            on_pool_click(
+                                                row.original.exchange
+                                            );
+                                        }
+                                    }}
+                                >
+                                    {pool ? pool : ""}
+                                </a>
+                            ) : (
+                                <label className="text-base">
+                                    {pool ? pool : ""}
+                                </label>
+                            )}
                         </div>
                     </div>
                 );
