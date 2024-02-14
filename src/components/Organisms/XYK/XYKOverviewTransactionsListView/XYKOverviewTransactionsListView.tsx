@@ -27,175 +27,9 @@ import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amoun
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 
-const columns: ColumnDef<ExchangeTransaction>[] = [
-    {
-        accessorKey: "block_signed_at",
-        header: ({ column }) => (
-            <div className="ml-4">
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Time"}
-                    column={column}
-                />
-            </div>
-        ),
-        cell: ({ row }) => {
-            const t = row.getValue("block_signed_at") as string;
-
-            return <div className="ml-4">{timestampParser(t, "relative")}</div>;
-        },
-    },
-    {
-        accessorKey: "act",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Transaction type"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            const token_0 = row.original.token_0;
-            const token_1 = row.original.token_1;
-
-            if (row.original.act !== "SWAP") {
-                return (
-                    <div>
-                        <Badge
-                            className="mr-2"
-                            variant={
-                                POOL_TRANSACTION_MAP[row.original.act].color
-                            }
-                        >
-                            {POOL_TRANSACTION_MAP[row.original.act].name}
-                        </Badge>{" "}
-                        {token_0.contract_ticker_symbol}{" "}
-                        {row.original.act === "SWAP" ? "for" : "and"}{" "}
-                        {token_1.contract_ticker_symbol}
-                    </div>
-                );
-            }
-            const token_in =
-                handleExchangeType(row.original, 0) === "in"
-                    ? token_0
-                    : token_1;
-            const token_out =
-                handleExchangeType(row.original, 0) === "out"
-                    ? token_0
-                    : token_1;
-            return (
-                <div>
-                    <Badge
-                        className="mr-2"
-                        variant={POOL_TRANSACTION_MAP[row.original.act].color}
-                    >
-                        {POOL_TRANSACTION_MAP[row.original.act].name}
-                    </Badge>{" "}
-                    {token_in.contract_ticker_symbol}{" "}
-                    {row.original.act === "SWAP" ? "for" : "and"}{" "}
-                    {token_out.contract_ticker_symbol}
-                </div>
-            );
-        },
-    },
-    {
-        id: "total_quote",
-        accessorKey: "total_quote",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Total value"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            return <>{row.original.pretty_total_quote}</>;
-        },
-    },
-    {
-        id: "amount_0",
-        accessorKey: "amount_0",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Token Amount"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            if (row.original.act !== "SWAP") {
-                return (
-                    <span>
-                        {handleTokenTransactions(
-                            row.original.act,
-                            "0",
-                            row.original,
-                            row.original.token_0.contract_decimals
-                        )}{" "}
-                        {row.original.token_0.contract_ticker_symbol}
-                    </span>
-                );
-            }
-            const token_in =
-                handleExchangeType(row.original, 0) === "in" ? "0" : "1";
-            return (
-                <span>
-                    {handleTokenTransactions(
-                        row.original.act,
-                        token_in,
-                        row.original,
-                        row.original[`token_${token_in}`].contract_decimals
-                    )}{" "}
-                    {row.original[`token_${token_in}`].contract_ticker_symbol}
-                </span>
-            );
-        },
-    },
-    {
-        id: "amount_1",
-        accessorKey: "amount_1",
-        header: ({ column }) => (
-            <TableHeaderSorting
-                align="left"
-                header_name={"Token Amount"}
-                column={column}
-            />
-        ),
-        cell: ({ row }) => {
-            if (row.original.act !== "SWAP") {
-                return (
-                    <span>
-                        {handleTokenTransactions(
-                            row.original.act,
-                            "1",
-                            row.original,
-                            row.original.token_1.contract_decimals
-                        )}{" "}
-                        {row.original.token_1.contract_ticker_symbol}
-                    </span>
-                );
-            }
-            const token_in =
-                handleExchangeType(row.original, 0) === "out" ? "0" : "1";
-            const token_amount = handleTokenTransactions(
-                row.original.act,
-                token_in,
-                row.original,
-                row.original[`token_${token_in}`].contract_decimals
-            );
-            return (
-                <span>
-                    {token_amount}{" "}
-                    {row.original[`token_${token_in}`].contract_ticker_symbol}
-                </span>
-            );
-        },
-    },
-];
-
 export const XYKOverviewTransactionsListView: React.FC<
     XYKOverviewTransactionsListViewProps
-> = ({ chain_name, dex_name }) => {
+> = ({ chain_name, dex_name, on_transaction_click }) => {
     const { covalentClient } = useCovalent();
 
     const [sorting, setSorting] = useState<SortingState>([
@@ -230,6 +64,196 @@ export const XYKOverviewTransactionsListView: React.FC<
             }
         })();
     }, [dex_name, chain_name]);
+
+    const columns: ColumnDef<ExchangeTransaction>[] = [
+        {
+            accessorKey: "block_signed_at",
+            header: ({ column }) => (
+                <div className="ml-4">
+                    <TableHeaderSorting
+                        align="left"
+                        header_name={"Time"}
+                        column={column}
+                    />
+                </div>
+            ),
+            cell: ({ row }) => {
+                const t = row.getValue("block_signed_at") as string;
+
+                return (
+                    <div className="ml-4">{timestampParser(t, "relative")}</div>
+                );
+            },
+        },
+        {
+            accessorKey: "act",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Transaction type"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                const token_0 = row.original.token_0;
+                const token_1 = row.original.token_1;
+
+                if (row.original.act !== "SWAP") {
+                    return (
+                        <div
+                            className="cursor-pointer hover:opacity-75"
+                            onClick={() => {
+                                if (on_transaction_click) {
+                                    on_transaction_click(row.original);
+                                }
+                            }}
+                        >
+                            <Badge
+                                className="mr-2"
+                                variant={
+                                    POOL_TRANSACTION_MAP[row.original.act].color
+                                }
+                            >
+                                {POOL_TRANSACTION_MAP[row.original.act].name}
+                            </Badge>{" "}
+                            {token_0.contract_ticker_symbol}{" "}
+                            {row.original.act === "SWAP" ? "for" : "and"}{" "}
+                            {token_1.contract_ticker_symbol}
+                        </div>
+                    );
+                }
+                const token_in =
+                    handleExchangeType(row.original, 0) === "in"
+                        ? token_0
+                        : token_1;
+                const token_out =
+                    handleExchangeType(row.original, 0) === "out"
+                        ? token_0
+                        : token_1;
+                return (
+                    <div
+                        className="cursor-pointer hover:opacity-75"
+                        onClick={() => {
+                            if (on_transaction_click) {
+                                on_transaction_click(row.original);
+                            }
+                        }}
+                    >
+                        <Badge
+                            className="mr-2"
+                            variant={
+                                POOL_TRANSACTION_MAP[row.original.act].color
+                            }
+                        >
+                            {POOL_TRANSACTION_MAP[row.original.act].name}
+                        </Badge>{" "}
+                        {token_in.contract_ticker_symbol}{" "}
+                        {row.original.act === "SWAP" ? "for" : "and"}{" "}
+                        {token_out.contract_ticker_symbol}
+                    </div>
+                );
+            },
+        },
+        {
+            id: "total_quote",
+            accessorKey: "total_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Total value"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                return <>{row.original.pretty_total_quote}</>;
+            },
+        },
+        {
+            id: "amount_0",
+            accessorKey: "amount_0",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Token Amount"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                if (row.original.act !== "SWAP") {
+                    return (
+                        <span>
+                            {handleTokenTransactions(
+                                row.original.act,
+                                "0",
+                                row.original,
+                                row.original.token_0.contract_decimals
+                            )}{" "}
+                            {row.original.token_0.contract_ticker_symbol}
+                        </span>
+                    );
+                }
+                const token_in =
+                    handleExchangeType(row.original, 0) === "in" ? "0" : "1";
+                return (
+                    <span>
+                        {handleTokenTransactions(
+                            row.original.act,
+                            token_in,
+                            row.original,
+                            row.original[`token_${token_in}`].contract_decimals
+                        )}{" "}
+                        {
+                            row.original[`token_${token_in}`]
+                                .contract_ticker_symbol
+                        }
+                    </span>
+                );
+            },
+        },
+        {
+            id: "amount_1",
+            accessorKey: "amount_1",
+            header: ({ column }) => (
+                <TableHeaderSorting
+                    align="left"
+                    header_name={"Token Amount"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => {
+                if (row.original.act !== "SWAP") {
+                    return (
+                        <span>
+                            {handleTokenTransactions(
+                                row.original.act,
+                                "1",
+                                row.original,
+                                row.original.token_1.contract_decimals
+                            )}{" "}
+                            {row.original.token_1.contract_ticker_symbol}
+                        </span>
+                    );
+                }
+                const token_in =
+                    handleExchangeType(row.original, 0) === "out" ? "0" : "1";
+                const token_amount = handleTokenTransactions(
+                    row.original.act,
+                    token_in,
+                    row.original,
+                    row.original[`token_${token_in}`].contract_decimals
+                );
+                return (
+                    <span>
+                        {token_amount}{" "}
+                        {
+                            row.original[`token_${token_in}`]
+                                .contract_ticker_symbol
+                        }
+                    </span>
+                );
+            },
+        },
+    ];
 
     const table = useReactTable({
         data: maybeResult.match({
