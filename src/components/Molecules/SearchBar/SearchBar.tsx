@@ -8,6 +8,7 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { BlockDetails } from "../BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
 import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
+import { AddressDetailsView } from "@/components/Organisms/AddressDetailsView/AddressDetailsView";
 
 export const SearchBar: React.FC = () => {
     const { selectedChain } = useCovalent();
@@ -24,12 +25,12 @@ export const SearchBar: React.FC = () => {
 
     useDebounce(
         () => {
-            if (searchInput) {
+            if (searchInput && selectedChain) {
                 handleSearch();
             }
         },
         500,
-        [searchInput]
+        [searchInput, selectedChain]
     );
 
     const handleSearch = useCallback(() => {
@@ -61,7 +62,16 @@ export const SearchBar: React.FC = () => {
     const handleResults = useCallback(() => {
         switch (searchType) {
             case "address": {
-                return <AddressActivityListView address={searchInput} />;
+                return (
+                    <div className="flex w-full flex-col gap-y-8">
+                        <AddressDetailsView
+                            address={searchInput}
+                            chain_name={selectedChain?.name as Chain}
+                            show_chain_selector={false}
+                        />
+                        <AddressActivityListView address={searchInput} />
+                    </div>
+                );
             }
             case "tx": {
                 return (
