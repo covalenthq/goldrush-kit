@@ -8,13 +8,13 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { type AddressDetailsProps } from "@/utils/types/molecules.types";
 import {
     type TransactionsSummary,
-    type ChainItem,
+    type Chain,
     type BalanceItem,
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
-import { useEffect, useMemo, useState } from "react";
-import { AccountCard } from "../AccountCard/AccountCard";
+import { useEffect, useState } from "react";
+import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import {
     DropdownMenu,
@@ -25,12 +25,14 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { ChainSelector } from "@/components/Molecules/ChainSelector/ChainSelector";
 
-export const AddressDetails: React.FC<AddressDetailsProps> = ({
+export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     address,
-    chain_name,
+    chain_name: initialChainName,
 }) => {
-    const { covalentClient, chains } = useCovalent();
+    const { covalentClient, chains, setSelectedChain, selectedChain } =
+        useCovalent();
 
     const [maybeResult, setMaybeResult] = useState<
         Option<{
@@ -38,6 +40,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
             summary: TransactionsSummary;
         }>
     >(None);
+    const [chainName, setChainName] = useState<Chain>(initialChainName);
 
     useEffect(() => {
         (async () => {
@@ -49,11 +52,11 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                     { data: balancesData, ...balancesError },
                 ] = await Promise.all([
                     covalentClient.TransactionService.getTransactionSummary(
-                        chain_name,
+                        chainName,
                         address.trim()
                     ),
                     covalentClient.BalanceService.getTokenBalancesForWalletAddress(
-                        chain_name,
+                        chainName,
                         address.trim()
                     ),
                 ]);
@@ -79,26 +82,31 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                 );
             } catch (error) {
                 console.error(
-                    `Error fetching transactions summary for ${chain_name}:`,
+                    `Error fetching transactions summary for ${chainName}:`,
                     error
                 );
             }
         })();
-    }, [address, chain_name]);
+    }, [address, chainName]);
 
-    const CHAIN = useMemo<ChainItem | null>(() => {
-        return chains?.find((o) => o.name === chain_name) ?? null;
-    }, [chains, chain_name]);
+    useEffect(() => {
+        const chain = chains?.find((o) => o.name === chainName) ?? null;
+        setSelectedChain(chain);
+    }, [chains, chainName]);
 
     return (
-        <Card className="flex w-[64rem] flex-col gap-y-8 rounded border p-4">
-            <div>
+        <Card className="flex w-[64rem] flex-col gap-y-4 rounded border p-4">
+            <div className="grid grid-cols-3 items-center gap-4">
                 <AccountCard address={address} />
+                <span />
+                <ChainSelector
+                    onChangeChain={({ name }) => setChainName(name as Chain)}
+                />
             </div>
 
             {maybeResult.match({
                 None: () => (
-                    <div className="grid items-start gap-4 text-sm lg:grid-cols-3">
+                    <div className="grid grid-cols-3 items-start gap-4 text-sm">
                         <Skeleton size={GRK_SIZES.LARGE} />
                         <Skeleton size={GRK_SIZES.LARGE} />
                         <Skeleton size={GRK_SIZES.LARGE} />
@@ -129,7 +137,9 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                             token_url={
                                                 native.logo_urls.chain_logo_url
                                             }
-                                            chain_color={CHAIN?.color_theme.hex}
+                                            chain_color={
+                                                selectedChain?.color_theme.hex
+                                            }
                                             is_chain_logo
                                         />
                                         {calculatePrettyBalance(
@@ -175,7 +185,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                 <Button
                                     variant="outline"
                                     style={{
-                                        borderColor: CHAIN?.color_theme.hex,
+                                        borderColor:
+                                            selectedChain?.color_theme.hex,
                                     }}
                                 >
                                     <CardDescription className="flex w-full items-center justify-between">
@@ -215,7 +226,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                         logo_urls.token_logo_url
                                                     }
                                                     chain_color={
-                                                        CHAIN?.color_theme.hex
+                                                        selectedChain
+                                                            ?.color_theme.hex
                                                     }
                                                 />
                                             </div>

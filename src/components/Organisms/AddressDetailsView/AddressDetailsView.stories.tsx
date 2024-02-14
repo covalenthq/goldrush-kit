@@ -1,10 +1,10 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { AddressDetails as AddressInfoComponent } from "./AddressDetails";
+import { AddressDetailsView as AddressInfoComponent } from "./AddressDetailsView";
 
 type Story = StoryObj<typeof AddressInfoComponent>;
 
 const meta: Meta<typeof AddressInfoComponent> = {
-    title: "Molecules/Address Details",
+    title: "Organisms/Address Details",
     component: AddressInfoComponent,
 };
 
