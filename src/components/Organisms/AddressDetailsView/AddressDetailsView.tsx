@@ -30,6 +30,7 @@ import { ChainSelector } from "@/components/Molecules/ChainSelector/ChainSelecto
 export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     address,
     chain_name: initialChainName,
+    show_chain_selector = true,
 }) => {
     const { covalentClient, chains, setSelectedChain, selectedChain } =
         useCovalent();
@@ -99,9 +100,14 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
             <div className="grid grid-cols-3 items-center gap-4">
                 <AccountCard address={address} />
                 <span />
-                <ChainSelector
-                    onChangeChain={({ name }) => setChainName(name as Chain)}
-                />
+
+                {show_chain_selector && (
+                    <ChainSelector
+                        onChangeChain={({ name }) =>
+                            setChainName(name as Chain)
+                        }
+                    />
+                )}
             </div>
 
             {maybeResult.match({
