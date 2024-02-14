@@ -13,7 +13,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
     height,
 }) => {
     const { covalentClient } = useCovalent();
-
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setResult] = useState<Option<Block>>(None);
 
     useEffect(() => {
@@ -26,6 +26,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                         height.toString()
                     );
                 if (error.error) {
+                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setResult(new Some(data.items[0]));
@@ -45,27 +46,33 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                             <Skeleton size={GRK_SIZES.LARGE} />
                         </div>
                     ),
-                    Some: ({ height, signed_at }) => (
-                        <div className="mt-2 flex flex-col gap-y-2">
-                            <div>
-                                <CardDescription>HEIGHT</CardDescription>
+                    Some: ({ height, signed_at }) =>
+                        errorMessage ? (
+                            <p className="mt-4">{errorMessage}</p>
+                        ) : (
+                            <div className="mt-2 flex flex-col gap-y-2">
+                                <div>
+                                    <CardDescription>HEIGHT</CardDescription>
 
-                                <p className="mt-1 flex items-center gap-x-1.5">
-                                    {height}
-                                </p>
-                            </div>
-
-                            <div>
-                                <CardDescription>SIGNED AT</CardDescription>
-
-                                <div className="flex items-center gap-x-2">
-                                    <p>
-                                        {timestampParser(signed_at, "relative")}
+                                    <p className="mt-1 flex items-center gap-x-1.5">
+                                        {height}
                                     </p>
                                 </div>
+
+                                <div>
+                                    <CardDescription>SIGNED AT</CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        <p>
+                                            {timestampParser(
+                                                signed_at,
+                                                "relative"
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    ),
+                        ),
                 })}
             </Card>
         </>

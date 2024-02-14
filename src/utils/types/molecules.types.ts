@@ -124,7 +124,7 @@ export interface DecodedTransactionProps {
     chain_name: Chain;
     tx_hash: string;
     setMetadata?: React.Dispatch<
-        React.SetStateAction<Option<DecodedTransactionMetadata>>
+        React.SetStateAction<Option<DecodedTransactionMetadata | null>>
     >;
 }
 
