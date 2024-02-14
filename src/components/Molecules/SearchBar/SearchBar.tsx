@@ -3,11 +3,23 @@ import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
 import { AddressActivityListView } from "@/components/Organisms/TokenBalances/AddressActivityListView/AddressActivityListView";
 import { TypographyH3 } from "@/components/ui/typography";
+import { ChainSelector } from "../ChainSelector/ChainSelector";
+import { useCovalent } from "@/utils/store/Covalent";
+import { BlockDetails } from "../BlockDetails/BlockDetails";
+import { type Chain } from "@covalenthq/client-sdk";
+import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
 
 export const SearchBar: React.FC = () => {
+    const { selectedChain } = useCovalent();
+
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchType, setSearchType] = useState<
-        "address" | "tx" | "block" | "token" | "not found" | "none"
+        | "address"
+        | "tx"
+        | "block"
+        // | "token"
+        | "not found"
+        | "none"
     >("none");
 
     useDebounce(
@@ -24,7 +36,7 @@ export const SearchBar: React.FC = () => {
         const addressRegex = /^0x[a-fA-F0-9]{40}$/;
         const txnHashRegex = /^0x[a-fA-F0-9]{64}$/;
         const blockRegex = /^\d+$/;
-        const tokenRegex = /^[a-zA-Z0-9]+$/;
+        // const tokenRegex = /^[a-zA-Z0-9]+$/;
         const domainNameRegex = /^[a-zA-Z0-9.-]+$/;
 
         setSearchType("none");
@@ -35,9 +47,11 @@ export const SearchBar: React.FC = () => {
             setSearchType("tx");
         } else if (blockRegex.test(searchInput)) {
             setSearchType("block");
-        } else if (tokenRegex.test(searchInput)) {
-            setSearchType("token");
-        } else if (domainNameRegex.test(searchInput)) {
+        }
+        // else if (tokenRegex.test(searchInput)) {
+        //     setSearchType("token");
+        // }
+        else if (domainNameRegex.test(searchInput)) {
             setSearchType("address");
         } else {
             setSearchType("not found");
@@ -45,19 +59,28 @@ export const SearchBar: React.FC = () => {
     }, [searchInput]);
 
     const handleResults = useCallback(() => {
-        console.log(searchType);
         switch (searchType) {
             case "address": {
                 return <AddressActivityListView address={searchInput} />;
             }
             case "tx": {
-                return <>need the decoded tx molecule here</>;
+                return (
+                    <TransactionReceiptView
+                        chain_name={selectedChain?.name as Chain}
+                        tx_hash={searchInput}
+                    />
+                );
             }
-            case "token": {
-                return <>not sure how to handle this</>;
-            }
+            // case "token": {
+            //     return <>not sure how to handle this</>;
+            // }
             case "block": {
-                return <>will be added by community</>;
+                return (
+                    <BlockDetails
+                        chain_name={selectedChain?.name as Chain}
+                        height={+searchInput}
+                    />
+                );
             }
             case "none": {
                 return <></>;
@@ -67,17 +90,21 @@ export const SearchBar: React.FC = () => {
                 return <TypographyH3>{searchInput} not found</TypographyH3>;
             }
         }
-    }, [searchType, searchInput]);
+    }, [searchType, searchInput, selectedChain]);
 
     return (
         <main>
-            <Input
-                type="text"
-                name="search"
-                value={searchInput}
-                placeholder="Search by any Address / Txn Hash / Block / Domain Name"
-                onChange={({ target: { value } }) => setSearchInput(value)}
-            />
+            <div className="flex items-center gap-x-4">
+                <ChainSelector />
+                <Input
+                    type="text"
+                    name="search"
+                    value={searchInput}
+                    placeholder="Search by any Address / Txn Hash / Block / Domain Name"
+                    onChange={({ target: { value } }) => setSearchInput(value)}
+                    className="!border-accent-foreground"
+                />
+            </div>
 
             {!searchInput ? (
                 <></>

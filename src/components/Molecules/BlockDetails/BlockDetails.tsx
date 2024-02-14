@@ -55,7 +55,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                     <CardDescription>HEIGHT</CardDescription>
 
                                     <p className="mt-1 flex items-center gap-x-1.5">
-                                        {height}
+                                        {height.toLocaleString()}
                                     </p>
                                 </div>
 
