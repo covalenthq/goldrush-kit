@@ -8,6 +8,8 @@ interface CovalentContextType {
     apikey: string;
     covalentClient: CovalentClient;
     chains: ChainItem[] | null;
+    selectedChain: ChainItem | null;
+    setSelectedChain: React.Dispatch<React.SetStateAction<ChainItem | null>>;
 }
 
 interface CovalentProviderProps {
@@ -54,6 +56,7 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
         [apikey]
     );
     const [chains, setChains] = useState<ChainItem[] | null>(null);
+    const [selectedChain, setSelectedChain] = useState<ChainItem | null>(null);
 
     function changeOnlyColor(accentcolor: string, border_radius: string) {
         if (typeof document !== "undefined") {
@@ -165,6 +168,8 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
     return (
         <CovalentContext.Provider
             value={{
+                selectedChain: selectedChain,
+                setSelectedChain: setSelectedChain,
                 apikey: apikey,
                 covalentClient: covalentClient,
                 chains: chains,
