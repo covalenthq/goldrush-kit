@@ -21,7 +21,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     const { chains } = useCovalent();
 
     const [maybeResult, setResult] =
-        useState<Option<DecodedTransactionMetadata>>(None);
+        useState<Option<DecodedTransactionMetadata | null>>(None);
     const [relativeTime, setRelativeTime] = useState<boolean>(false);
 
     const CHAIN = useMemo<ChainItem | null>(() => {
@@ -54,57 +54,64 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             </div>
                         </div>
                     ),
-                    Some: (metadata) => (
-                        <>
-                            <div className="flex flex-col gap-y-1">
-                                <CardDescription>
-                                    Network:{" "}
-                                    <span className="text-black dark:text-text-color-50">
-                                        {CHAIN?.label}
-                                    </span>
-                                </CardDescription>
-
-                                <CardDescription>
-                                    Transaction Time:{" "}
-                                    <span className="inline-flex items-center gap-x-1 text-black dark:text-text-color-50">
-                                        {timestampParser(
-                                            metadata.block_signed_at.toString(),
-                                            relativeTime
-                                                ? "relative"
-                                                : "descriptive"
-                                        )}
-                                        <button
-                                            onClick={() =>
-                                                setRelativeTime(!relativeTime)
-                                            }
-                                        >
-                                            <ClockIcon />
-                                        </button>
-                                    </span>
-                                </CardDescription>
-                            </div>
-
-                            <div className="flex gap-x-8 border-b pb-4">
-                                <div className="flex flex-col">
-                                    <CardDescription>Address</CardDescription>
-                                    <AccountCard
-                                        address={metadata.from_address}
-                                        name={metadata.from_address_label}
-                                    />
-                                </div>
-
-                                <div className="flex flex-col">
+                    Some: (metadata) =>
+                        !metadata ? (
+                            <></>
+                        ) : (
+                            <>
+                                <div className="flex flex-col gap-y-1">
                                     <CardDescription>
-                                        Interacted with
+                                        Network:{" "}
+                                        <span className="text-black dark:text-text-color-50">
+                                            {CHAIN?.label}
+                                        </span>
                                     </CardDescription>
-                                    <AccountCard
-                                        address={metadata.to_address}
-                                        name={metadata.to_address_label}
-                                    />
+
+                                    <CardDescription>
+                                        Transaction Time:{" "}
+                                        <span className="inline-flex items-center gap-x-1 text-black dark:text-text-color-50">
+                                            {timestampParser(
+                                                metadata.block_signed_at.toString(),
+                                                relativeTime
+                                                    ? "relative"
+                                                    : "descriptive"
+                                            )}
+                                            <button
+                                                onClick={() =>
+                                                    setRelativeTime(
+                                                        !relativeTime
+                                                    )
+                                                }
+                                            >
+                                                <ClockIcon />
+                                            </button>
+                                        </span>
+                                    </CardDescription>
                                 </div>
-                            </div>
-                        </>
-                    ),
+
+                                <div className="flex gap-x-8 border-b pb-4">
+                                    <div className="flex flex-col">
+                                        <CardDescription>
+                                            Address
+                                        </CardDescription>
+                                        <AccountCard
+                                            address={metadata.from_address}
+                                            name={metadata.from_address_label}
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-col">
+                                        <CardDescription>
+                                            Interacted with
+                                        </CardDescription>
+                                        <AccountCard
+                                            address={metadata.to_address}
+                                            name={metadata.to_address_label}
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        ),
                 })}
 
                 <DecodedTransaction
@@ -125,89 +132,96 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             <Skeleton size={GRK_SIZES.LARGE} />
                         </div>
                     ),
-                    Some: (metadata) => (
-                        <>
-                            <div className="flex flex-col gap-y-2 border-t pt-4">
-                                <div>
-                                    <CardDescription>
-                                        Transaction Fee
-                                    </CardDescription>
-                                    <CardDescription>
-                                        <span
-                                            className="text-black dark:text-text-color-50"
-                                            title={calculatePrettyBalance(
-                                                BigInt(
-                                                    metadata.fees_paid || 0
-                                                )!,
-                                                metadata.gas_metadata
-                                                    .contract_decimals
-                                            )}
-                                        >
-                                            {calculatePrettyBalance(
-                                                BigInt(
-                                                    metadata.fees_paid || 0
-                                                )!,
-                                                metadata.gas_metadata
-                                                    .contract_decimals,
-                                                true,
-                                                4
-                                            )}{" "}
-                                            {
-                                                metadata.gas_metadata
-                                                    .contract_ticker_symbol
-                                            }{" "}
-                                        </span>
-                                        {metadata.pretty_gas_quote}
-                                    </CardDescription>
+                    Some: (metadata) =>
+                        !metadata ? (
+                            <></>
+                        ) : (
+                            <>
+                                <div className="flex flex-col gap-y-2 border-t pt-4">
+                                    <div>
+                                        <CardDescription>
+                                            Transaction Fee
+                                        </CardDescription>
+                                        <CardDescription>
+                                            <span
+                                                className="text-black dark:text-text-color-50"
+                                                title={calculatePrettyBalance(
+                                                    BigInt(
+                                                        metadata.fees_paid || 0
+                                                    )!,
+                                                    metadata.gas_metadata
+                                                        .contract_decimals
+                                                )}
+                                            >
+                                                {calculatePrettyBalance(
+                                                    BigInt(
+                                                        metadata.fees_paid || 0
+                                                    )!,
+                                                    metadata.gas_metadata
+                                                        .contract_decimals,
+                                                    true,
+                                                    4
+                                                )}{" "}
+                                                {
+                                                    metadata.gas_metadata
+                                                        .contract_ticker_symbol
+                                                }{" "}
+                                            </span>
+                                            {metadata.pretty_gas_quote}
+                                        </CardDescription>
+                                    </div>
+
+                                    <div>
+                                        <CardDescription>
+                                            Exchange Rate
+                                        </CardDescription>
+                                        <CardDescription>
+                                            <span className="text-black dark:text-text-color-50">
+                                                1 USD ={" "}
+                                                {1 /
+                                                    (metadata.gas_quote_rate ??
+                                                        1)}{" "}
+                                                {
+                                                    metadata.gas_metadata
+                                                        .contract_ticker_symbol
+                                                }
+                                            </span>
+                                        </CardDescription>
+                                    </div>
+
+                                    <div>
+                                        <CardDescription>
+                                            Gas Price
+                                        </CardDescription>
+                                        <CardDescription>
+                                            <span className="text-black dark:text-text-color-50">
+                                                {calculatePrettyBalance(
+                                                    BigInt(metadata.gas_price),
+                                                    metadata.gas_metadata
+                                                        .contract_decimals,
+                                                    true,
+                                                    10
+                                                )}{" "}
+                                                {
+                                                    metadata.gas_metadata
+                                                        .contract_ticker_symbol
+                                                }
+                                            </span>
+                                        </CardDescription>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <CardDescription>
-                                        Exchange Rate
-                                    </CardDescription>
-                                    <CardDescription>
-                                        <span className="text-black dark:text-text-color-50">
-                                            1 USD ={" "}
-                                            {1 / (metadata.gas_quote_rate ?? 1)}{" "}
-                                            {
-                                                metadata.gas_metadata
-                                                    .contract_ticker_symbol
-                                            }
-                                        </span>
-                                    </CardDescription>
-                                </div>
-
-                                <div>
-                                    <CardDescription>Gas Price</CardDescription>
-                                    <CardDescription>
-                                        <span className="text-black dark:text-text-color-50">
-                                            {calculatePrettyBalance(
-                                                BigInt(metadata.gas_price),
-                                                metadata.gas_metadata
-                                                    .contract_decimals,
-                                                true,
-                                                10
-                                            )}{" "}
-                                            {
-                                                metadata.gas_metadata
-                                                    .contract_ticker_symbol
-                                            }
-                                        </span>
-                                    </CardDescription>
-                                </div>
-                            </div>
-
-                            <a
-                                href={metadata.explorers[0].url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm font-semibold hover:underline"
-                            >
-                                View on{" "}
-                                {metadata.explorers[0].label ?? "Explorer"}
-                            </a>
-                        </>
-                    ),
+                                <a
+                                    href={metadata.explorers[0].url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm font-semibold hover:underline"
+                                >
+                                    View on{" "}
+                                    {metadata.explorers[0].label ?? "Explorer"}
+                                </a>
+                            </>
+                        ),
                 })}
             </main>
         </section>
