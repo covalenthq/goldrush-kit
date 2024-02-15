@@ -19,6 +19,11 @@ export interface AccountCardProps {
     type?: "fingerprint" | "effigy" | "wallet";
 }
 
+export interface BlockDetailsProps {
+    chain_name: Chain;
+    height: number;
+}
+
 export interface GasCardProps {
     chain_name: Chain;
     event_type: string;
@@ -110,7 +115,7 @@ export interface DecodedTransactionProps {
     chain_name: Chain;
     tx_hash: string;
     setMetadata?: React.Dispatch<
-        React.SetStateAction<Option<DecodedTransactionMetadata>>
+        React.SetStateAction<Option<DecodedTransactionMetadata | null>>
     >;
 }
 
