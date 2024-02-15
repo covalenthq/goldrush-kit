@@ -6,6 +6,14 @@ type Story = StoryObj<typeof ChainSelectorComponent>;
 const meta: Meta<typeof ChainSelectorComponent> = {
     title: "Molecules/Chain Selector",
     component: ChainSelectorComponent,
+    argTypes: {
+        onChangeChain: {
+            control: false,
+            table: {
+                disable: true,
+            },
+        },
+    },
 };
 
 export default meta;

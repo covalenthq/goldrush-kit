@@ -5,6 +5,7 @@ import {
     type TokenV2VolumeWithChartData,
     type ExchangeTransaction,
     type Transaction,
+    type ChainItem,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
@@ -28,24 +29,14 @@ export interface GasCardProps {
     event_type: string;
 }
 
-export interface AccountOverviewProps {
-    address: string;
-    chain_name: Chain;
-}
-
-export interface AccountInformationProps {
-    address: string;
-    chain_name: Chain;
-}
-
 export interface AddressDetailsProps {
     address: string;
     chain_name: Chain;
+    show_chain_selector?: boolean;
 }
 
-export interface AddressSummaryProps {
-    address: string;
-    chain_name: Chain;
+export interface ChainSelectorProps {
+    onChangeChain?: (chain: ChainItem) => unknown;
 }
 
 export interface CollectionCardProps {
