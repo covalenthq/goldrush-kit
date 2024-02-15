@@ -29,7 +29,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="flex w-72 items-center justify-between text-accent"
+                    className="flex w-72 items-center justify-between text-accent dark:bg-background-dark dark:text-white"
                     style={{
                         borderColor: selectedChain?.color_theme.hex,
                     }}
@@ -39,8 +39,8 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="max-h-96 w-72 overflow-y-scroll rounded bg-accent !p-0">
-                <Command>
+            <PopoverContent className="max-h-96 w-72 overflow-y-scroll rounded bg-accent !p-0 dark:bg-background-dark dark:text-white">
+                <Command className="dark:bg-background-dark dark:text-white">
                     <CommandInput placeholder="Search chain..." />
                     <CommandEmpty>No chain found.</CommandEmpty>
                     <CommandGroup>
@@ -55,6 +55,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                                         onChangeChain(chain);
                                     }
                                 }}
+                                className="dark:bg-background-dark dark:text-white"
                             >
                                 {chain.label}
                             </CommandItem>

@@ -96,10 +96,11 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     }, [chains, chainName]);
 
     return (
-        <Card className="flex w-[64rem] flex-col gap-y-4 rounded border p-4">
-            <div className="grid grid-cols-3 items-center gap-4">
-                <AccountCard address={address} />
-                <span />
+        <Card className="flex flex-col gap-y-4 rounded border p-4 dark:bg-background-dark dark:text-white">
+            <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
+                <div className="md:col-span-2">
+                    <AccountCard address={address} />
+                </div>
 
                 {show_chain_selector && (
                     <ChainSelector
@@ -112,7 +113,7 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
 
             {maybeResult.match({
                 None: () => (
-                    <div className="grid grid-cols-3 items-start gap-4 text-sm">
+                    <div className="grid grid-cols-1 items-start gap-4 text-sm md:grid-cols-3">
                         <Skeleton size={GRK_SIZES.LARGE} />
                         <Skeleton size={GRK_SIZES.LARGE} />
                         <Skeleton size={GRK_SIZES.LARGE} />
@@ -129,7 +130,7 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
                         total_count,
                     },
                 }) => (
-                    <div className="grid grid-cols-3 items-start gap-4 text-sm">
+                    <div className="grid grid-cols-1 items-start gap-4 text-sm md:grid-cols-3">
                         {native.balance ? (
                             <>
                                 <div>
@@ -196,18 +197,14 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
                                     }}
                                 >
                                     <CardDescription className="flex w-full items-center justify-between">
-                                        <span className="flex items-center gap-x-2">
-                                            <span>TOKEN HOLDINGS</span>
-                                            <span>
-                                                ({holdings.length} tokens)
-                                            </span>
-                                        </span>
+                                        Token Holdings ({holdings.length}{" "}
+                                        tokens)
                                         <CaretDownIcon />
                                     </CardDescription>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
-                                className="z-10 mx-auto w-72 rounded border bg-white"
+                                className="z-10 mx-auto w-72 rounded border bg-white dark:bg-background-dark dark:text-white"
                                 align="start"
                             >
                                 {holdings.map(
