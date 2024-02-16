@@ -47,6 +47,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         (async () => {
             try {
                 setResult(None);
+                setErrorMessage(null);
                 if (setMetadata) {
                     setMetadata(None);
                 }

@@ -10,6 +10,7 @@ import { TransactionReceiptView } from "@/components/Organisms/TransactionReceip
 import { AddressDetailsView } from "@/components/Organisms/AddressDetailsView/AddressDetailsView";
 import { useSearch } from "@/utils/hooks/use-search";
 import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
+import { Button } from "@/components/ui/button";
 
 export const SearchBar: React.FC = () => {
     const { selectedChain } = useCovalent();
@@ -79,9 +80,16 @@ export const SearchBar: React.FC = () => {
                     onChange={({ target: { value } }) => setSearchInput(value)}
                     className="!border-accent-foreground"
                 />
+                <Button
+                    variant="outline"
+                    onClick={() => setSearchType(handleSearch(searchInput))}
+                    disabled={!searchInput || !selectedChain}
+                >
+                    Search
+                </Button>
             </div>
 
-            {!searchInput ? (
+            {!searchInput || !selectedChain ? (
                 <></>
             ) : (
                 <div className="mt-4">{handleResults()}</div>
