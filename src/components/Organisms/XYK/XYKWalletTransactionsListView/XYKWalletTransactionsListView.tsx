@@ -118,7 +118,11 @@ export const XYKWalletTransactionsListView: React.FC<
                 if (row.original.act !== "SWAP") {
                     return (
                         <div
-                            className="cursor-pointer hover:opacity-75"
+                            className={
+                                on_transaction_click
+                                    ? "cursor-pointer hover:opacity-75"
+                                    : ""
+                            }
                             onClick={() => {
                                 if (on_transaction_click) {
                                     on_transaction_click(row.original);
@@ -149,7 +153,11 @@ export const XYKWalletTransactionsListView: React.FC<
                         : token_1;
                 return (
                     <div
-                        className="cursor-pointer hover:opacity-75"
+                        className={
+                            on_transaction_click
+                                ? "cursor-pointer hover:opacity-75"
+                                : ""
+                        }
                         onClick={() => {
                             if (on_transaction_click) {
                                 on_transaction_click(row.original);
