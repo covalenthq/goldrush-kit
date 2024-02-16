@@ -38,7 +38,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
 
     return (
         <>
-            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 md:max-w-[20rem] lg:max-w-[20rem]">
+            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 dark:bg-background-dark dark:text-white md:max-w-[20rem] lg:max-w-[20rem]">
                 <CardTitle className="">Overview</CardTitle>
                 {maybeResult.match({
                     None: () => (
