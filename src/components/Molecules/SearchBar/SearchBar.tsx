@@ -2,62 +2,33 @@ import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
 import { AddressActivityListView } from "@/components/Organisms/TokenBalances/AddressActivityListView/AddressActivityListView";
-import { TypographyH3 } from "@/components/ui/typography";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
 import { useCovalent } from "@/utils/store/Covalent";
 import { BlockDetails } from "../BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
 import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
 import { AddressDetailsView } from "@/components/Organisms/AddressDetailsView/AddressDetailsView";
+import { useSearch } from "@/utils/hooks/use-search";
+import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
 
 export const SearchBar: React.FC = () => {
     const { selectedChain } = useCovalent();
+    const { handleSearch } = useSearch();
 
     const [searchInput, setSearchInput] = useState<string>("");
-    const [searchType, setSearchType] = useState<
-        | "address"
-        | "tx"
-        | "block"
-        // | "token"
-        | "not found"
-        | "none"
-    >("none");
+    const [searchType, setSearchType] = useState<SEARCH_RESULTS_TYPE | null>(
+        null
+    );
 
     useDebounce(
         () => {
             if (searchInput && selectedChain) {
-                handleSearch();
+                setSearchType(handleSearch(searchInput));
             }
         },
         500,
         [searchInput, selectedChain]
     );
-
-    const handleSearch = useCallback(() => {
-        const addressRegex = /^0x[a-fA-F0-9]{40}$/;
-        const txnHashRegex = /^0x[a-fA-F0-9]{64}$/;
-        const blockRegex = /^\d+$/;
-        // const tokenRegex = /^[a-zA-Z0-9]+$/;
-        const domainNameRegex = /^[a-zA-Z0-9.-]+$/;
-
-        setSearchType("none");
-
-        if (addressRegex.test(searchInput)) {
-            setSearchType("address");
-        } else if (txnHashRegex.test(searchInput)) {
-            setSearchType("tx");
-        } else if (blockRegex.test(searchInput)) {
-            setSearchType("block");
-        }
-        // else if (tokenRegex.test(searchInput)) {
-        //     setSearchType("token");
-        // }
-        else if (domainNameRegex.test(searchInput)) {
-            setSearchType("address");
-        } else {
-            setSearchType("not found");
-        }
-    }, [searchInput]);
 
     const handleResults = useCallback(() => {
         switch (searchType) {
@@ -81,9 +52,6 @@ export const SearchBar: React.FC = () => {
                     />
                 );
             }
-            // case "token": {
-            //     return <>not sure how to handle this</>;
-            // }
             case "block": {
                 return (
                     <BlockDetails
@@ -92,12 +60,9 @@ export const SearchBar: React.FC = () => {
                     />
                 );
             }
-            case "none": {
-                return <></>;
-            }
             case "not found":
             default: {
-                return <TypographyH3>{searchInput} not found</TypographyH3>;
+                return <p>not found</p>;
             }
         }
     }, [searchType, searchInput, selectedChain]);

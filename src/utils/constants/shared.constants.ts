@@ -31,6 +31,14 @@ export enum TIME_SERIES_GROUP {
     EARLIER = "Earlier",
 }
 
+export enum SEARCH_RESULTS_TYPE {
+    ADDRESS = "address",
+    TRANSACTION = "tx",
+    BLOCK = "block",
+    TOKEN = "token",
+    NOT_FOUND = "not found",
+}
+
 export const COLORS: {
     [name: string]: {
         "50": string;
