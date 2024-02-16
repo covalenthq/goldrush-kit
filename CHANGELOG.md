@@ -1,5 +1,23 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.3
+
+## What's Changed
+
+## Fixes
+- Mobile `on_click` fix
+
+## Features
+- Components
+    - Block Details
+    - Chain Selector
+    - Transactions List
+- Additions
+    - on clicks added to transaction list components that returns row data.
+        - `on_transfer_click` - When user clicks the transaction label, the function returns the row data
+        - `on_goldrush_receipt_click` - Renders button on row, the function returns the row data
+        - `on_native_explorer_click` - Renders button on row, the function returns the row data
+
 ## 0.4.2
 
 ## What's Changed

@@ -23,8 +23,13 @@ export { XYKOverviewTransactionsListView } from "./components/Organisms/XYK/XYKO
 export { XYKOverviewTimeSeries } from "./components/Molecules/XYK/XYKOverviewTimeSeries/XYKOverviewTimeSeries";
 
 export { TransactionReceiptView } from "./components/Organisms/TransactionReceiptView/TransactionReceiptView";
+export { TransactionsList } from "./components/Organisms/TransactionsList/TransactionsList";
 
 export { AddressDetailsView } from "./components/Organisms/AddressDetailsView/AddressDetailsView";
+
+export { BlockDetails } from "./components/Molecules/BlockDetails/BlockDetails";
+
+export { ChainSelector } from "./components/Molecules/ChainSelector/ChainSelector";
 
 export { GasCard } from "./components/Molecules/GasCard/GasCard";
 
@@ -36,3 +41,4 @@ export { type NFTWalletTokenListViewProps } from "./utils/types/organisms.types"
 export { type NFTCollectionTokenListViewProps } from "./utils/types/organisms.types";
 export { CovalentProvider as GoldRushProvider } from "./utils/store/Covalent";
 export { useCovalent } from "./utils/store/Covalent";
+export { useSearch } from "./utils/hooks/use-search";
