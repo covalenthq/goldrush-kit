@@ -65,6 +65,8 @@ export interface XYKPoolTransactionsListViewProps {
     dex_name: string;
     pool_address: string;
     on_transaction_click?: Function;
+    on_native_explorer_click?: Function;
+    on_goldrush_receipt_click?: Function;
 }
 
 export interface XYKTokenTransactionsListViewProps {
@@ -72,6 +74,8 @@ export interface XYKTokenTransactionsListViewProps {
     dex_name: string;
     token_address: string;
     on_transaction_click?: Function;
+    on_native_explorer_click?: Function;
+    on_goldrush_receipt_click?: Function;
 }
 
 export interface XYKWalletTransactionsListViewProps {
@@ -140,6 +144,8 @@ export interface XYKOverviewTransactionsListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_transaction_click?: Function;
+    on_native_explorer_click?: Function;
+    on_goldrush_receipt_click?: Function;
 }
 
 export interface TransactionReceiptViewProps {
