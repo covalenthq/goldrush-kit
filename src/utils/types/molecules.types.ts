@@ -59,6 +59,9 @@ export interface NFTSalesCountProps {
 export interface TransactionListProps {
     chain_name: Chain;
     address: string;
+    on_native_explorer_click?: Function;
+    on_goldrush_receipt_click?: Function;
+    on_transaction_click?: Function;
 }
 
 export interface XYKPoolTimeSeriesProps {

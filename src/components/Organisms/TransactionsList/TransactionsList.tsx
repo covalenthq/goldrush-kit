@@ -27,10 +27,22 @@ import { useCovalent } from "@/utils/store/Covalent";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 import { type TransactionListProps } from "@/utils/types/molecules.types";
 import { Address } from "@/components/Atoms/Address/Address";
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import IconWrapper from "@/components/Shared/IconWrapper";
 
 export const TransactionsList: React.FC<TransactionListProps> = ({
     chain_name,
     address,
+    on_native_explorer_click,
+    on_goldrush_receipt_click,
+    on_transaction_click,
 }) => {
     const { covalentClient } = useCovalent();
 
@@ -126,9 +138,26 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-3">
-                        <p className="flex flex-col text-base">
-                            <Address address={row.original.tx_hash} />
-                        </p>
+                        {on_transaction_click ? (
+                            <div
+                                className={
+                                    on_transaction_click
+                                        ? "cursor-pointer hover:opacity-75"
+                                        : ""
+                                }
+                                onClick={() => {
+                                    if (on_transaction_click) {
+                                        on_transaction_click(row.original);
+                                    }
+                                }}
+                            >
+                                <Address address={row.original.tx_hash} />
+                            </div>
+                        ) : (
+                            <p className="flex flex-col text-base">
+                                <Address address={row.original.tx_hash} />
+                            </p>
+                        )}
                     </div>
                 );
             },
@@ -252,6 +281,58 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
                     </p>
                 ) : (
                     <p className="text-center">-</p>
+                );
+            },
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                if (!on_native_explorer_click && !on_goldrush_receipt_click)
+                    return;
+                return (
+                    <div className="text-right">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="ml-auto  ">
+                                    <span className="sr-only">Open menu</span>
+                                    <IconWrapper icon_class_name="expand_more" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                {on_native_explorer_click && (
+                                    <DropdownMenuItem
+                                        onClick={() => {
+                                            on_native_explorer_click(
+                                                row.original
+                                            );
+                                        }}
+                                    >
+                                        <IconWrapper
+                                            icon_class_name="open_in_new"
+                                            class_name="mr-2"
+                                        />{" "}
+                                        View on explorer
+                                    </DropdownMenuItem>
+                                )}
+                                {on_goldrush_receipt_click && (
+                                    <DropdownMenuItem
+                                        onClick={() => {
+                                            on_goldrush_receipt_click(
+                                                row.original
+                                            );
+                                        }}
+                                    >
+                                        <IconWrapper
+                                            icon_class_name="open_in_new"
+                                            class_name="mr-2"
+                                        />{" "}
+                                        View goldrush receipt
+                                    </DropdownMenuItem>
+                                )}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 );
             },
         },
