@@ -24,7 +24,7 @@ export { XYKOverviewTimeSeries } from "./components/Molecules/XYK/XYKOverviewTim
 
 export { TransactionReceiptView } from "./components/Organisms/TransactionReceiptView/TransactionReceiptView";
 
-export { AddressDetailView } from "./components/Organisms/AddressDetailView/AddressDetailView";
+export { AddressDetailsView } from "./components/Organisms/AddressDetailsView/AddressDetailsView";
 
 export { GasCard } from "./components/Molecules/GasCard/GasCard";
 

@@ -21,6 +21,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     const { apikey, chains } = useCovalent();
 
     const [maybeResult, setResult] = useState<Option<DecodedEventType[]>>(None);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const CHAIN = useMemo<ChainItem | null>(() => {
         return chains?.find((o) => o.name === chain_name) ?? null;
@@ -46,6 +47,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         (async () => {
             try {
                 setResult(None);
+                setErrorMessage(null);
                 if (setMetadata) {
                     setMetadata(None);
                 }
@@ -67,9 +69,10 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                     success: boolean;
                     message?: string;
                     events?: DecodedEventType[];
-                    metadata: DecodedTransactionMetadata;
+                    metadata: DecodedTransactionMetadata | null;
                 };
                 if (!data.success) {
+                    setErrorMessage(data.message as string);
                     throw Error(data.message);
                 }
                 setResult(new Some(data.events!));
@@ -79,6 +82,9 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
             } catch (exception) {
                 console.error(exception);
                 setResult(new Some([]));
+                if (setMetadata) {
+                    setMetadata(new Some(null));
+                }
             }
         })();
     }, [chain_name, tx_hash]);
@@ -93,7 +99,9 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                 ),
                 Some: (events) => (
                     <div>
-                        {!events.length ? (
+                        {errorMessage ? (
+                            <p>{errorMessage}</p>
+                        ) : !events.length ? (
                             <p>No decoded Events.</p>
                         ) : (
                             events.map(

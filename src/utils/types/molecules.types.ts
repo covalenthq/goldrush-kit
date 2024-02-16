@@ -5,6 +5,7 @@ import {
     type TokenV2VolumeWithChartData,
     type ExchangeTransaction,
     type Transaction,
+    type ChainItem,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
@@ -18,29 +19,24 @@ export interface AccountCardProps {
     type?: "fingerprint" | "effigy" | "wallet";
 }
 
+export interface BlockDetailsProps {
+    chain_name: Chain;
+    height: number;
+}
+
 export interface GasCardProps {
     chain_name: Chain;
     event_type: string;
 }
 
-export interface AccountOverviewProps {
-    address: string;
-    chain_name: Chain;
-}
-
-export interface AccountInformationProps {
-    address: string;
-    chain_name: Chain;
-}
-
 export interface AddressDetailsProps {
     address: string;
     chain_name: Chain;
+    show_chain_selector?: boolean;
 }
 
-export interface AddressSummaryProps {
-    address: string;
-    chain_name: Chain;
+export interface ChainSelectorProps {
+    onChangeChain?: (chain: ChainItem) => unknown;
 }
 
 export interface CollectionCardProps {
@@ -119,7 +115,7 @@ export interface DecodedTransactionProps {
     chain_name: Chain;
     tx_hash: string;
     setMetadata?: React.Dispatch<
-        React.SetStateAction<Option<DecodedTransactionMetadata>>
+        React.SetStateAction<Option<DecodedTransactionMetadata | null>>
     >;
 }
 

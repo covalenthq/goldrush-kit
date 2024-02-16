@@ -99,6 +99,7 @@
         "@storybook/theming": "^7.5.3",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
+        "cmdk": "^0.2.1",
         "dayjs": "^1.11.10",
         "lodash": "^4.17.21",
         "react-qr-code": "^2.0.12",
