@@ -117,7 +117,7 @@ export interface XYKWalletInformationProps {
 export interface DecodedTransactionProps {
     chain_name: Chain;
     tx_hash: string;
-    setMetadata?: React.Dispatch<
+    setTxMetadata?: React.Dispatch<
         React.SetStateAction<Option<DecodedTransactionMetadata | null>>
     >;
 }

@@ -8,14 +8,14 @@ const meta: Meta<typeof DecodedTransactionComponent> = {
     title: "Molecules",
     component: DecodedTransactionComponent,
     argTypes: {
-        setMetadata: {
+        setTxMetadata: {
             control: false,
             table: {
                 disable: true,
             },
         },
     },
-    render: ({ chain_name, tx_hash, setMetadata }) => (
+    render: ({ chain_name, tx_hash, setTxMetadata }) => (
         <section>
             <div className="mb-8">
                 <TypographyH1>Decoded Transaction</TypographyH1>
@@ -24,7 +24,7 @@ const meta: Meta<typeof DecodedTransactionComponent> = {
             <DecodedTransactionComponent
                 chain_name={chain_name}
                 tx_hash={tx_hash}
-                setMetadata={setMetadata}
+                setTxMetadata={setTxMetadata}
             />
         </section>
     ),

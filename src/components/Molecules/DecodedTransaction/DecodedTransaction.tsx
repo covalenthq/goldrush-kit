@@ -16,7 +16,7 @@ import { Address } from "@/components/Atoms/Address/Address";
 export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,
     tx_hash,
-    setMetadata,
+    setTxMetadata,
 }) => {
     const { apikey, chains } = useCovalent();
 
@@ -48,8 +48,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
             try {
                 setResult(None);
                 setErrorMessage(null);
-                if (setMetadata) {
-                    setMetadata(None);
+                if (setTxMetadata) {
+                    setTxMetadata(None);
                 }
                 const response = await fetch(
                     "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
@@ -69,21 +69,21 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                     success: boolean;
                     message?: string;
                     events?: DecodedEventType[];
-                    metadata: DecodedTransactionMetadata | null;
+                    tx_metadata: DecodedTransactionMetadata | null;
                 };
                 if (!data.success) {
                     setErrorMessage(data.message as string);
                     throw Error(data.message);
                 }
                 setResult(new Some(data.events!));
-                if (setMetadata) {
-                    setMetadata(new Some(data.metadata));
+                if (setTxMetadata) {
+                    setTxMetadata(new Some(data.tx_metadata));
                 }
             } catch (exception) {
                 console.error(exception);
                 setResult(new Some([]));
-                if (setMetadata) {
-                    setMetadata(new Some(null));
+                if (setTxMetadata) {
+                    setTxMetadata(new Some(null));
                 }
             }
         })();
