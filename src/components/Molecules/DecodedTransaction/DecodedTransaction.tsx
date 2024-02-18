@@ -55,7 +55,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                     "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
                     {
                         body: JSON.stringify({
-                            network: chain_name,
+                            chain_name: chain_name,
                             tx_hash: tx_hash,
                         }),
                         headers: {
