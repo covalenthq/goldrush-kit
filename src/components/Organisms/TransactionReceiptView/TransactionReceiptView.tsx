@@ -61,7 +61,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             <>
                                 <div className="flex flex-col gap-y-1">
                                     <CardDescription>
-                                        Network:{" "}
+                                        Chain:{" "}
                                         <span className="text-black dark:text-text-color-50">
                                             {CHAIN?.label}
                                         </span>
