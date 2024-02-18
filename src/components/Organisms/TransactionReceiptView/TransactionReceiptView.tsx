@@ -117,7 +117,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                 <DecodedTransaction
                     chain_name={chain_name}
                     tx_hash={tx_hash}
-                    setMetadata={setResult}
+                    setTxMetadata={setResult}
                 />
 
                 {maybeResult.match({
