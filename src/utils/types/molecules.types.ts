@@ -123,7 +123,7 @@ export interface DecodedTransactionProps {
 }
 
 export type EventDetails = {
-    title: string;
+    heading: string;
     value: string;
     type: "address" | "text";
 }[];

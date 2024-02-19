@@ -283,23 +283,23 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                             <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                 {details.map(
                                                     ({
-                                                        title,
+                                                        heading,
                                                         type,
                                                         value,
                                                     }) => (
                                                         <div
                                                             key={
-                                                                title +
+                                                                heading +
                                                                 Math.random()
                                                             }
                                                             className="truncate text-ellipsis"
                                                         >
                                                             <div
                                                                 className="flex flex-col truncate text-ellipsis text-sm text-muted-foreground"
-                                                                title={title}
+                                                                title={heading}
                                                             >
                                                                 <span className="font-medium">
-                                                                    {title}
+                                                                    {heading}
                                                                 </span>
                                                                 <div
                                                                     className="truncate text-ellipsis text-black dark:text-text-color-50"
