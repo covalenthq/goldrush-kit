@@ -1,5 +1,15 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.4
+
+## What's Changed
+
+## Fixes
+- Fix decoder api body
+- Detailed keys for Decoder
+
+## Features
+
 ## 0.4.3
 
 ## What's Changed
