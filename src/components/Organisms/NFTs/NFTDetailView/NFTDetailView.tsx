@@ -1,5 +1,5 @@
 import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { NFTSalesCount } from "@/components/Molecules/NFTs/NFTSalesCount/NFTSalesCount";
 import { NFTFloorPrice } from "@/components/Molecules/NFTs/NFTFloorPrice/NFTFloorPrice";
 import { type Option, Some, None } from "@/utils/option";
@@ -19,7 +19,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
 }) => {
     const [maybeResult, setResult] = useState<Option<NftTokenContract>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         let response;

@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
 import {
@@ -49,7 +49,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     on_pool_click,
     page_size = 10,
 }) => {
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const [sorting, setSorting] = useState<SortingState>([
         {

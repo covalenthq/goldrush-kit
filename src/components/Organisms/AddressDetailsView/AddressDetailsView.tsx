@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type AddressDetailsProps } from "@/utils/types/molecules.types";
 import {
     type TransactionsSummary,
@@ -33,7 +33,7 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     show_chain_selector = true,
 }) => {
     const { covalentClient, chains, setSelectedChain, selectedChain } =
-        useCovalent();
+        useGoldRush();
 
     const [maybeResult, setMaybeResult] = useState<
         Option<{

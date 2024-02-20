@@ -8,7 +8,7 @@ import { type DecodedTransactionMetadata } from "@/utils/types/molecules.types";
 import { timestampParser } from "@/utils/functions";
 import { CardDescription } from "@/components/ui/card";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { ClockIcon } from "@radix-ui/react-icons";
 import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,7 +18,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     chain_name,
     tx_hash,
 }) => {
-    const { chains } = useCovalent();
+    const { chains } = useGoldRush();
 
     const [maybeResult, setResult] =
         useState<Option<DecodedTransactionMetadata | null>>(None);

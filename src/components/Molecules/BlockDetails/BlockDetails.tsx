@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type BlockDetailsProps } from "@/utils/types/molecules.types";
 import { type Block } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
     chain_name,
     height,
 }) => {
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setResult] = useState<Option<Block>>(None);
 

@@ -51,7 +51,7 @@ import {
     type BlockTransactionWithContractTransfersWithDelta,
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
@@ -198,7 +198,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     address,
     contract_address,
 }) => {
-    const { covalentClient, chains } = useCovalent();
+    const { covalentClient, chains } = useGoldRush();
 
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState({});

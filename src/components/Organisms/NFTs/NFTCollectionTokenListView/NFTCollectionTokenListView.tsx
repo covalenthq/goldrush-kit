@@ -17,7 +17,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type NFTCollectionTokenListViewProps } from "@/utils/types/organisms.types";
 import { CollectionCard } from "@/components/Molecules/CollectionCard/CollectionCard";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ export const NFTCollectionTokenListView: React.FC<
         pageNumber: 0,
         pageSize: 20,
     });
-    const { covalentClient, chains } = useCovalent();
+    const { covalentClient, chains } = useGoldRush();
     const [error, setError] = useState({ error: false, error_message: "" });
 
     const handleNftsToken = async () => {

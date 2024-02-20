@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { copyToClipboard } from "@/utils/functions";
 import {
     prettifyCurrency,
@@ -22,7 +22,7 @@ export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
     const [maybeResult, setResult] =
         useState<Option<ExchangeTransaction[]>>(None);
     const { toast } = useToast();
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const handlePoolInformation = async () => {
         setResult(None);

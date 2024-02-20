@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { copyToClipboard, truncate } from "@/utils/functions";
 import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
     const [maybeResult, setResult] =
         useState<Option<TokenV2VolumeWithChartData>>(None);
     const { toast } = useToast();
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const handlePoolInformation = async () => {
         setResult(None);

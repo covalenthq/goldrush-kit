@@ -1,5 +1,5 @@
 import { TypographyH1 } from "@/components/ui/typography";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type Option, Some, None } from "@/utils/option";
 import { type XYKTokenDetailViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
 }) => {
     const [maybeResult, setResult] = useState<Option<any>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {

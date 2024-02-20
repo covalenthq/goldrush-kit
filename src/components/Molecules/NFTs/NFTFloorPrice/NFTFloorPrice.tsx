@@ -15,7 +15,7 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
 
 export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
@@ -27,7 +27,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
     const [chartColor, setColor] = useState<any>("");
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {

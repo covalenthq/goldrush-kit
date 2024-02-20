@@ -7,7 +7,7 @@ import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
 import { CHART_COLORS } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type XYKPoolTimeSeriesProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
@@ -29,7 +29,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
         displayMetrics !== "both" ? displayMetrics : "liquidity"
     );
     const [chartColor, setColor] = useState<any>("");
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const handleChartData = () => {
         maybeResult.match({

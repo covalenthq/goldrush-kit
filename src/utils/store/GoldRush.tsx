@@ -4,7 +4,7 @@ import { type ChainItem } from "@covalenthq/client-sdk";
 import { Toaster } from "@/components/ui/toaster";
 import { updateTheme } from "../functions";
 
-interface CovalentContextType {
+interface GoldRushContextType {
     apikey: string;
     covalentClient: CovalentClient;
     chains: ChainItem[] | null;
@@ -12,7 +12,7 @@ interface CovalentContextType {
     setSelectedChain: React.Dispatch<React.SetStateAction<ChainItem | null>>;
 }
 
-interface CovalentProviderProps {
+interface GoldRushProviderProps {
     children: React.ReactNode;
     apikey: string;
     mode?: "dark" | "light";
@@ -39,11 +39,11 @@ interface CovalentProviderProps {
         | "rose";
 }
 
-const CovalentContext = createContext<CovalentContextType>(
-    {} as CovalentContextType
+const GoldRushContext = createContext<GoldRushContextType>(
+    {} as GoldRushContextType
 );
 
-export const CovalentProvider: React.FC<CovalentProviderProps> = ({
+export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     children,
     apikey,
     mode = "light",
@@ -166,7 +166,7 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
     }, []);
 
     return (
-        <CovalentContext.Provider
+        <GoldRushContext.Provider
             value={{
                 selectedChain: selectedChain,
                 setSelectedChain: setSelectedChain,
@@ -177,8 +177,8 @@ export const CovalentProvider: React.FC<CovalentProviderProps> = ({
         >
             {children}
             <Toaster />
-        </CovalentContext.Provider>
+        </GoldRushContext.Provider>
     );
 };
 
-export const useCovalent = () => useContext(CovalentContext);
+export const useGoldRush = () => useContext(GoldRushContext);

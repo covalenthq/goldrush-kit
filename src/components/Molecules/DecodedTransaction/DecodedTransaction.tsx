@@ -7,7 +7,7 @@ import {
 import { type Option, None, Some } from "@/utils/option";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,7 +18,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     tx_hash,
     setTxMetadata,
 }) => {
-    const { apikey, chains } = useCovalent();
+    const { apikey, chains } = useGoldRush();
 
     const [maybeResult, setResult] = useState<Option<DecodedEventType[]>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
