@@ -233,7 +233,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 <div className="flex whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading ||
-                                                                            "Token Amount"
+                                                                        "Token Amount"
                                                                     )}
                                                                 </div>
                                                             </div>
@@ -283,23 +283,23 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                             <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                 {details.map(
                                                     ({
-                                                        heading,
+                                                        title,
                                                         type,
                                                         value,
                                                     }) => (
                                                         <div
                                                             key={
-                                                                heading +
+                                                                title +
                                                                 Math.random()
                                                             }
                                                             className="truncate text-ellipsis"
                                                         >
                                                             <div
                                                                 className="flex flex-col truncate text-ellipsis text-sm text-muted-foreground"
-                                                                title={heading}
+                                                                title={title}
                                                             >
                                                                 <span className="font-medium">
-                                                                    {heading}
+                                                                    {title}
                                                                 </span>
                                                                 <div
                                                                     className="truncate text-ellipsis text-black dark:text-text-color-50"
@@ -308,7 +308,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     }
                                                                 >
                                                                     {type ===
-                                                                    "address" ? (
+                                                                        "address" ? (
                                                                         <Address
                                                                             address={
                                                                                 value
