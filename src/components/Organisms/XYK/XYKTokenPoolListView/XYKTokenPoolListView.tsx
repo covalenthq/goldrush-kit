@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type XYKTokenPoolListViewProps } from "@/utils/types/organisms.types";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 
@@ -42,7 +42,7 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
     on_pool_click,
     token_address,
 }) => {
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const [sorting, setSorting] = useState<SortingState>([
         {

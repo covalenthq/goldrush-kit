@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { copyToClipboard, truncate } from "@/utils/functions";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export const XYKPoolInformation: React.FC<XYKPoolInformationProps> = ({
 }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
     const { toast } = useToast();
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const handlePoolInformation = async () => {
         setResult(None);

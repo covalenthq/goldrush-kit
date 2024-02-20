@@ -1,4 +1,4 @@
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import {
     Command,
     CommandEmpty,
@@ -19,7 +19,7 @@ import { type ChainSelectorProps } from "@/utils/types/molecules.types";
 export const ChainSelector: React.FC<ChainSelectorProps> = ({
     onChangeChain,
 }) => {
-    const { chains, selectedChain, setSelectedChain } = useCovalent();
+    const { chains, selectedChain, setSelectedChain } = useGoldRush();
     const [open, setOpen] = useState<boolean>(false);
 
     return (

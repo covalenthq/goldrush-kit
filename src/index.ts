@@ -39,6 +39,7 @@ export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
 export { type TokenTransfersListViewProps } from "./utils/types/organisms.types";
 export { type NFTWalletTokenListViewProps } from "./utils/types/organisms.types";
 export { type NFTCollectionTokenListViewProps } from "./utils/types/organisms.types";
-export { CovalentProvider as GoldRushProvider } from "./utils/store/Covalent";
-export { useCovalent } from "./utils/store/Covalent";
+export { GoldRushProvider, useGoldRush } from "./utils/store";
+// * INFO: added for backwards compatibility
+export { useGoldRush as useCovalent } from "./utils/store";
 export { useSearch } from "./utils/hooks/use-search";

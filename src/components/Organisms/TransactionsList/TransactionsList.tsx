@@ -23,7 +23,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { timestampParser } from "@/utils/functions";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 import { type TransactionListProps } from "@/utils/types/molecules.types";
 import { Address } from "@/components/Atoms/Address/Address";
@@ -44,7 +44,7 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     on_goldrush_receipt_click,
     on_transaction_click,
 }) => {
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const [sorting, setSorting] = useState<SortingState>([
         {

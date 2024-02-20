@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { type GasCardProps } from "@/utils/types/molecules.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
 import { type GasPricesResponse, type PriceItem } from "@covalenthq/client-sdk";
@@ -10,7 +10,7 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
     const [maybeResult, setResult] = useState<Option<GasPricesResponse>>(None);
     const [error, setError] = useState({ error: false, error_message: "" });
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const handleGas = async () => {
         setResult(None);

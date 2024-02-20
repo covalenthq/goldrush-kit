@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
 import { AddressActivityListView } from "@/components/Organisms/TokenBalances/AddressActivityListView/AddressActivityListView";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { BlockDetails } from "../BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
 import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
@@ -13,7 +13,7 @@ import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 
 export const SearchBar: React.FC = () => {
-    const { selectedChain } = useCovalent();
+    const { selectedChain } = useGoldRush();
     const { handleSearch } = useSearch();
 
     const [searchInput, setSearchInput] = useState<string>("");

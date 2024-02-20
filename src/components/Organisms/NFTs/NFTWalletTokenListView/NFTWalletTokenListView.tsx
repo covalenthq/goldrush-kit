@@ -19,7 +19,7 @@ import flatMap from "lodash/flatMap";
 import sum from "lodash/sum";
 import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 
@@ -29,7 +29,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
 }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
     const [error, setError] = useState({ error: false, error_message: "" });
     const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
 

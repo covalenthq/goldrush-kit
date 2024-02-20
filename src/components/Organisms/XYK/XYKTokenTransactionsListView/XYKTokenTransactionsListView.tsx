@@ -22,7 +22,7 @@ import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { type XYKTokenTransactionsListViewProps } from "@/utils/types/organisms.types";
-import { useCovalent } from "@/utils/store/Covalent";
+import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
@@ -46,7 +46,7 @@ export const XYKTokenTransactionsListView: React.FC<
     on_native_explorer_click,
     on_goldrush_receipt_click,
 }) => {
-    const { covalentClient } = useCovalent();
+    const { covalentClient } = useGoldRush();
 
     const [sorting, setSorting] = useState<SortingState>([
         {
