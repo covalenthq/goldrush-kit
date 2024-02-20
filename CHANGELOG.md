@@ -1,5 +1,16 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.5
+
+## What's Changed
+
+## Fixes
+- Refactor provider
+- Fix quote rate being 0 on token pool list component
+- Fix swap exchange logic
+
+## Features
+
 ## 0.4.4
 
 ## What's Changed
