@@ -16,7 +16,7 @@ const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
                 ▲{DELTA.toLocaleString("en", { maximumFractionDigits: 2 })}%
             </span>
         );
-    } else if (DELTA < 1) {
+    } else if (DELTA < -1) {
         return (
             <span className="text-danger">
                 ▼{DELTA.toLocaleString("en", { maximumFractionDigits: 2 })}%
@@ -24,7 +24,14 @@ const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
         );
     }
 
-    return <span>-</span>;
+    return (
+        <span>
+            {DELTA === 0
+                ? "-"
+                : DELTA.toLocaleString("en", { maximumFractionDigits: 2 }) +
+                  "%"}{" "}
+        </span>
+    );
 };
 
 export default BalancePriceDelta;
