@@ -29,6 +29,10 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                     token_address
                 );
                 setResult(new Some(response.data.items[0]));
+                setError({
+                    error: false,
+                    error_message: "",
+                });
             } catch (error) {
                 setError({
                     error: response ? response.error : false,
@@ -36,10 +40,19 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                 });
             }
         })();
-    }, [chain_name, dex_name]);
+    }, [chain_name, dex_name, token_address]);
 
     if (error.error) {
         return <>{error.error_message}</>;
+    }
+
+    if (
+        !maybeResult.match({
+            None: () => null,
+            Some: (result) => result,
+        })
+    ) {
+        return <>No data found.</>;
     }
 
     return (
