@@ -24,14 +24,7 @@ const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
         );
     }
 
-    return (
-        <span>
-            {DELTA === 0
-                ? "-"
-                : DELTA.toLocaleString("en", { maximumFractionDigits: 2 }) +
-                  "%"}{" "}
-        </span>
-    );
+    return <span>-</span>;
 };
 
 export default BalancePriceDelta;
