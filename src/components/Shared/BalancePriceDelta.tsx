@@ -10,13 +10,13 @@ const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
         [numerator, denominator]
     );
 
-    if (DELTA > 1) {
+    if (DELTA > 0) {
         return (
             <span className="text-success">
                 ▲{DELTA.toLocaleString("en", { maximumFractionDigits: 2 })}%
             </span>
         );
-    } else if (DELTA < 1) {
+    } else if (DELTA < 0) {
         return (
             <span className="text-danger">
                 ▼{DELTA.toLocaleString("en", { maximumFractionDigits: 2 })}%
