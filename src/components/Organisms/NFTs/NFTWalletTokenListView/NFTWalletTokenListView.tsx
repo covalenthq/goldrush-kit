@@ -71,8 +71,8 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
 
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
-                    <h2 className="text-base font-semibold  text-secondary ">
+                <div className="w-full rounded border p-2 md:max-w-60">
+                    <h2 className="text-base font-semibold text-secondary-light">
                         Total Quote
                     </h2>
                     <div className="flex items-end gap-2">
@@ -98,7 +98,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex  gap-1  text-sm text-secondary ">
+                        <div className="flex gap-1 text-sm text-secondary-light">
                             <span className="flex">
                                 {" "}
                                 (
@@ -204,7 +204,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 #{nft.token_id?.toString()}
                                             </CardTitle>
                                             <div className="mt-2">
-                                                <small className="text-muted-foreground">
+                                                <small className="text-secondary-light">
                                                     Est. Value
                                                 </small>
                                                 <p>

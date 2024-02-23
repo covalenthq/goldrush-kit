@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
-import { AddressActivityListView } from "@/components/Organisms/TokenBalances/AddressActivityListView/AddressActivityListView";
+import { AddressActivityListView } from "@/components/Organisms/AddressActivityListView/AddressActivityListView";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
 import { useGoldRush } from "@/utils/store";
 import { BlockDetails } from "../BlockDetails/BlockDetails";

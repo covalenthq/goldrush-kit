@@ -76,7 +76,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                 {maybeResult.match({
                     None: () => (
                         <div className="max-w-[30rem] rounded border ">
-                            <div className="h-[30rem] w-[30rem] animate-pulse rounded bg-accent-foreground" />
+                            <div className="bg-accent-foreground h-[30rem] w-[30rem] animate-pulse rounded" />
 
                             <div className="mt-2 p-4">
                                 <TypographyH4>Attributes</TypographyH4>
@@ -113,9 +113,9 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                                                 return (
                                                     <div
                                                         key={i}
-                                                        className="rounded border bg-accent-foreground/30 p-2"
+                                                        className="rounded border bg-primary-dark-600 p-2"
                                                     >
-                                                        <p className="text-muted-foreground">
+                                                        <p className="text-secondary-light dark:text-secondary-dark">
                                                             {attrs.trait_type}
                                                         </p>
                                                         <p>{attrs.value}</p>

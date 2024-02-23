@@ -118,7 +118,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                 {name}
                                             </h3>
 
-                                            <p className="text-sm font-semibold text-muted-foreground">
+                                            <p className="text-sm font-semibold text-primary-light dark:text-primary-dark">
                                                 {protocol?.name}
                                             </p>
                                         </header>
@@ -167,7 +167,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 </Card>
                                                             </figure>
 
-                                                            <div className="flex flex-col gap-y-2 truncate text-ellipsis py-1 text-sm text-muted-foreground">
+                                                            <div className="flex flex-col gap-y-2 truncate text-ellipsis py-2 text-sm text-secondary-light dark:text-secondary-dark">
                                                                 <div className="flex whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading
@@ -178,7 +178,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <p className="truncate text-ellipsis">
                                                                         Collection
                                                                         Name:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        <span className="text-black dark:text-slate-50">
                                                                             {
                                                                                 collection_name
                                                                             }
@@ -187,7 +187,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <div className="flex gap-x-1 truncate text-ellipsis">
                                                                         Collection
                                                                         Address:
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        <span className="text-black dark:text-slate-50">
                                                                             <Address
                                                                                 address={
                                                                                     collection_address
@@ -198,7 +198,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <p className="truncate text-ellipsis">
                                                                         Token
                                                                         ID:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        <span className="text-black dark:text-slate-50">
                                                                             {
                                                                                 token_identifier
                                                                             }
@@ -240,6 +240,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     ticker_symbol +
                                                                     heading
                                                                 }
+                                                                className="text-sm text-secondary-light dark:text-secondary-dark"
+                                                                title={heading}
                                                             >
                                                                 <div
                                                                     className="text-sm text-muted-foreground"
@@ -292,7 +294,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     </figure>
                                                                 </CardContent>
 
-                                                                <p className="text-sm text-muted-foreground">
+                                                                <p className="text-sm text-secondary-light dark:text-secondary-dark">
                                                                     {
                                                                         pretty_quote
                                                                     }
@@ -322,14 +324,14 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                             className="truncate text-ellipsis"
                                                         >
                                                             <div
-                                                                className="flex flex-col truncate text-ellipsis text-sm text-muted-foreground"
+                                                                className="flex flex-col truncate text-ellipsis text-sm text-secondary-light dark:text-secondary-dark"
                                                                 title={heading}
                                                             >
                                                                 <span className="font-medium">
                                                                     {heading}
                                                                 </span>
                                                                 <div
-                                                                    className="truncate text-ellipsis text-black dark:text-text-color-50"
+                                                                    className="truncate text-ellipsis text-black dark:text-slate-50"
                                                                     title={
                                                                         value
                                                                     }

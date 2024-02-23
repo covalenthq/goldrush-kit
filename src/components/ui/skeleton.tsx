@@ -27,7 +27,7 @@ function Skeleton({ size, isNFT = false }: SkeletonProps) {
     return (
         <div
             className={cn(
-                "animate-pulse rounded bg-accent-foreground",
+                "bg-secondary-light animate-pulse rounded",
                 isNFT ? "h-[280px] w-[230px]" : sizeClass
             )}
         />

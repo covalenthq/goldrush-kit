@@ -94,7 +94,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
             <div className="mt-4 flex flex-col gap-4 md:flex-row">
                 <div className="flex min-w-[20rem] max-w-[70rem] flex-col gap-2 rounded">
                     <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary">
+                        <h2 className="text-md text-secondary-light">
                             Total Liquidity
                         </h2>
                         <div className="flex items-end gap-2">
@@ -117,7 +117,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                         </div>
                     </div>
                     <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary">
+                        <h2 className="text-md text-secondary-light">
                             Volume (24hrs)
                         </h2>
                         <div className="flex items-end gap-2">
@@ -138,7 +138,9 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                         </div>
                     </div>
                     <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary">Fee (24hrs)</h2>
+                        <h2 className="text-md text-secondary-light">
+                            Fee (24hrs)
+                        </h2>
                         <div className="flex items-end gap-2">
                             <span className="text-xl">
                                 {maybeResult.match({
@@ -157,7 +159,7 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                         </div>
                     </div>
                     <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary">
+                        <h2 className="text-md text-secondary-light">
                             Pooled Tokens
                         </h2>
                         <div className="flex items-end gap-2">

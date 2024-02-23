@@ -3,9 +3,9 @@ export { NFTCollectionTokenListView } from "./NFTs/NFTCollectionTokenListView/NF
 export { NFTDetailView } from "./NFTs/NFTDetailView/NFTDetailView";
 export { NFTWalletCollectionView } from "./NFTs/NFTWalletCollectionView/NFTWalletCollectionView";
 export { NFTWalletTokenListView } from "./NFTs/NFTWalletTokenListView/NFTWalletTokenListView";
-export { AddressActivityListView } from "./TokenBalances/AddressActivityListView/AddressActivityListView";
-export { TokenBalancesListView } from "./TokenBalances/TokenBalancesListView/TokenBalancesListView";
-export { TokenTransfersListView } from "./TokenBalances/TokenTransfersListView/TokenTransfersListView";
+export { AddressActivityListView } from "./AddressActivityListView/AddressActivityListView";
+export { TokenBalancesListView } from "./TokenBalancesListView/TokenBalancesListView";
+export { TokenTransfersListView } from "./TokenTransfersListView/TokenTransfersListView";
 export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";
 export { TransactionsList } from "./TransactionsList/TransactionsList";
 export { XYKOverviewTransactionsListView } from "./XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";

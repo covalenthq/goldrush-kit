@@ -239,7 +239,7 @@ export const AddressActivityListView: React.FC<
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}
                         <span>Mainnet Chains Active</span>{" "}
-                        <span className=" text-secondary ">
+                        <span className=" text-secondary-light ">
                             {" "}
                             {maybeResult.match({
                                 None: () => (
@@ -266,7 +266,7 @@ export const AddressActivityListView: React.FC<
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}
                         <span>Testnet Chains Active</span>{" "}
-                        <span className=" text-secondary ">
+                        <span className=" text-secondary-light ">
                             {" "}
                             {maybeResult.match({
                                 None: () => (

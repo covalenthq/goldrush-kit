@@ -50,13 +50,17 @@ export const parameters = {
 import React from "react";
 import { Preview } from "@storybook/react";
 
+const Story = ({ storyFn }) => storyFn();
 const preview: Preview = {
     decorators: [
-        (Story) => (
+        (storyFn) => (
             <GoldRushProvider
                 apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
+                theme={{
+                    borderRadius: 10,
+                }}
             >
-                <Story />
+                <Story storyFn={storyFn} />
             </GoldRushProvider>
         ),
     ],

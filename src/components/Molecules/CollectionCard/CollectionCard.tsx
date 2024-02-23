@@ -67,11 +67,11 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                             size={GRK_SIZES.MEDIUM}
                         />
                         <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-base font-semibold text-muted-foreground">
+                            <h2 className="text-primary-light-200 text-base font-semibold">
                                 {nfts[0].contract_name}
                             </h2>
-                            <div className="flex items-center gap-x-2  ">
-                                <p className="neo-text-white-dark text-base">
+                            <div className="flex items-center gap-x-2">
+                                <p className="text-base">
                                     {truncate(collection_address)}
                                 </p>
                                 <div
@@ -84,17 +84,18 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                                         <IconWrapper
                                             icon_class_name="done"
                                             icon_size="text-sm"
-                                            class_name="text-secondary dark:text-secondary"
+                                            class_name="text-secondary-light dark:text-secondary-dark"
                                         />
                                     ) : (
                                         <IconWrapper
                                             icon_class_name="content_copy"
                                             icon_size="text-sm"
-                                            class_name="text-secondary dark:text-secondary"
+                                            class_name="text-secondary-light dark:text-secondary-dark"
                                             on_click={() => handleCopyClick()}
                                         />
                                     )}
                                 </div>
+
                                 <div className="cursor-pointer">
                                     <Dialog>
                                         <DialogTrigger>
@@ -102,25 +103,25 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                                                 <IconWrapper
                                                     icon_class_name="qr_code_2"
                                                     icon_size="text-sm pt-1"
-                                                    class_name="text-secondary dark:text-secondary"
+                                                    class_name="text-secondary-light dark:text-secondary-dark"
                                                 />
                                             </div>
                                         </DialogTrigger>
 
-                                        <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background text-text-color-900 dark:bg-background-dark/80 dark:text-text-color-50">
+                                        <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
                                             <DialogHeader>
-                                                <p className="pb-4 text-center text-lg font-semibold text-text-color-900 dark:text-text-color-50">
+                                                <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
                                                     QR Code
                                                 </p>
                                             </DialogHeader>
-                                            <div className="flex items-center justify-center rounded border-2 border-border bg-white p-6 dark:border-x-border-dark">
+                                            <div className="border-border dark:border-x-border-dark flex items-center justify-center rounded border-2 bg-white p-6">
                                                 <QRCode
                                                     value={collection_address}
                                                     viewBox="0 0 30 30"
                                                     className="bg-white"
                                                 />
                                             </div>
-                                            <p className="rounded bg-accent-foreground/20 p-2 text-xs text-text-color-500 dark:bg-accent-foreground/10">
+                                            <p className="rounded bg-foreground-light p-2 text-center text-xs text-background-light dark:bg-foreground-dark dark:text-background-dark">
                                                 {collection_address}
                                             </p>
                                         </DialogContent>

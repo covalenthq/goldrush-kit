@@ -1,43 +1,19 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { CovalentClient } from "@covalenthq/client-sdk";
-import { type ChainItem } from "@covalenthq/client-sdk";
-import { Toaster } from "@/components/ui/toaster";
-import { updateTheme } from "../functions";
-
-interface GoldRushContextType {
-    apikey: string;
-    covalentClient: CovalentClient;
-    chains: ChainItem[] | null;
-    selectedChain: ChainItem | null;
-    setSelectedChain: React.Dispatch<React.SetStateAction<ChainItem | null>>;
-}
-
-interface GoldRushProviderProps {
-    children: React.ReactNode;
-    apikey: string;
-    mode?: "dark" | "light";
-    theme?: "classic" | "neo";
-    border_radius?: "none" | "small" | "medium" | "large" | "full";
-    color?:
-        | "slate"
-        | "stone"
-        | "red"
-        | "orange"
-        | "amber"
-        | "yellow"
-        | "lime"
-        | "green"
-        | "emerald"
-        | "cyan"
-        | "sky"
-        | "blue"
-        | "indigo"
-        | "violet"
-        | "purple"
-        | "fuchsia"
-        | "pink"
-        | "rose";
-}
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
+import {
+    type GoldRushThemeType,
+    type GoldRushContextType,
+    type GoldRushProviderProps,
+    type GoldRushThemeColorType,
+} from "../types/store.types";
+import { type ChainItem, CovalentClient } from "@covalenthq/client-sdk";
+import { colorShades } from "../functions";
 
 const GoldRushContext = createContext<GoldRushContextType>(
     {} as GoldRushContextType
@@ -46,137 +22,175 @@ const GoldRushContext = createContext<GoldRushContextType>(
 export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     children,
     apikey,
-    mode = "light",
-    theme = "classic",
-    color = "slate",
-    border_radius = "medium",
+    theme: newTheme,
 }) => {
     const covalentClient = useMemo<CovalentClient>(
         () => new CovalentClient(apikey, {}, "GoldRush"),
         [apikey]
     );
+
+    const defaultTheme = useMemo<GoldRushThemeType>(
+        () => ({
+            borderRadius: 8,
+            colors: {
+                dark: {
+                    primary: "#F7CD60",
+                    background: "#0F172A",
+                    foreground: "#FFFFFF",
+                    secondary: "#B3B3B3",
+                },
+                light: {
+                    primary: "#EA46CB",
+                    background: "#F8F8F8",
+                    foreground: "#090909",
+                    secondary: "#94A3B8",
+                },
+            },
+            mode: "light",
+            style: "classic",
+        }),
+        []
+    );
+
     const [chains, setChains] = useState<ChainItem[] | null>(null);
     const [selectedChain, setSelectedChain] = useState<ChainItem | null>(null);
-
-    function changeOnlyColor(accentcolor: string, border_radius: string) {
-        if (typeof document !== "undefined") {
-            const theme = {
-                accentcolor: accentcolor,
-                borderradius: border_radius,
-            };
-            updateTheme(theme);
-        }
-    }
-
-    function changeMode(mode: "dark" | "light") {
-        if (typeof document !== "undefined") {
-            const body = document.body;
-            const root = document.documentElement;
-
-            if (mode === "dark") {
-                body.classList.add("dark");
-                root.classList.add("dark");
-                return;
-            }
-            body.classList.remove("dark");
-            root.classList.remove("dark");
-        }
-    }
-
-    function changeToNeo() {
-        if (typeof document !== "undefined") {
-            const theme = {
-                backgroundColor: {
-                    light: "#eff6ff",
-                    dark: "#1d4ed8",
-                },
-                borderColor: {
-                    light: "#bfdbfe",
-                    dark: "#1e40af",
-                },
-                secondary: {
-                    light: "#64748b",
-                },
-                surfaceColor: {
-                    light: "#bfdbfe",
-                    dark: "#bfdbfe",
-                },
-                secondaryColor: {
-                    light: "#64748b",
-                    dark: "#64748b",
-                },
-            };
-            updateTheme(theme);
-            const body = document.body;
-            body.classList.add("neo");
-        }
-    }
-
-    function changeToClassic() {
-        if (typeof document !== "undefined") {
-            const theme = {
-                backgroundColor: {
-                    light: "#ffffff",
-                    dark: "#030711",
-                },
-                borderColor: {
-                    light: "#e5e7eb",
-                    dark: "#1f2937",
-                },
-                surfaceColor: {
-                    light: "#e5e7eb",
-                    dark: "#e5e7eb",
-                },
-                secondaryColor: {
-                    light: "#94a3b8",
-                    dark: "#94a3b8",
-                },
-            };
-            updateTheme(theme);
-            const body = document.body;
-            body.classList.remove("neo");
-        }
-    }
-    if (typeof document !== "undefined") {
-        changeOnlyColor(color, border_radius);
-        changeMode(mode);
-        switch (theme) {
-            case "classic":
-                changeToClassic();
-                break;
-            case "neo":
-                changeToNeo();
-                break;
-            default:
-                changeToClassic();
-                break;
-        }
-    }
+    const [theme, setTheme] = useState<GoldRushThemeType>(defaultTheme);
 
     useEffect(() => {
         (async () => {
             try {
                 const allChainsResp =
                     await covalentClient.BaseService.getAllChains();
-                setChains(allChainsResp.data.items);
+                if (allChainsResp?.data?.items) {
+                    setChains(allChainsResp.data.items);
+                }
             } catch (error) {
                 console.error(error);
             }
         })();
     }, []);
 
+    useEffect(() => {
+        const existingTheme = localStorage.getItem("goldrush_theme") || null;
+
+        if (existingTheme) {
+            handleApplyTheme(JSON.parse(existingTheme));
+        } else if (newTheme) {
+            handleUpdateTheme(newTheme);
+        } else {
+            handleApplyTheme(defaultTheme);
+        }
+    }, []);
+
+    const handleUpdateTheme = useCallback(
+        ({ borderRadius, colors, mode, style }: Partial<GoldRushThemeType>) => {
+            const updatedTheme: GoldRushThemeType = { ...theme };
+
+            if (borderRadius) {
+                updatedTheme.borderRadius = borderRadius;
+            }
+            if (mode) {
+                updatedTheme.mode = mode;
+            }
+            if (style) {
+                updatedTheme.style = style;
+            }
+            if (colors) {
+                Object.entries(colors).forEach(([_mode, _types]) => {
+                    Object.entries(_types).forEach(([_type, value]) => {
+                        updatedTheme.colors[_mode as "dark" | "light"]![
+                            _type as keyof GoldRushThemeColorType
+                        ] = value;
+                    });
+                });
+            }
+
+            handleApplyTheme(updatedTheme);
+        },
+        [theme]
+    );
+
+    const handleApplyTheme = useCallback(
+        ({ borderRadius, colors, mode, style }: GoldRushThemeType) => {
+            const body = document.body;
+            const root = document.documentElement;
+
+            switch (mode) {
+                case "dark": {
+                    body.classList.add("dark");
+                    root.classList.add("dark");
+                    break;
+                }
+                case "light": {
+                    body.classList.remove("dark");
+                    root.classList.remove("dark");
+                    break;
+                }
+            }
+
+            switch (style) {
+                case "neo": {
+                    body.classList.add("neo");
+                    root.classList.add("neo");
+                    break;
+                }
+                case "classic": {
+                    body.classList.remove("neo");
+                    root.classList.remove("neo");
+                    break;
+                }
+            }
+
+            root.style.setProperty("--grk-border-radius", `${borderRadius}px`);
+
+            Object.entries(colors).forEach(([_mode, _types]) => {
+                Object.entries(_types).forEach(([_type, value]) => {
+                    if (_type === "primary") {
+                        const shades = colorShades(
+                            value,
+                            _mode as GoldRushThemeType["mode"]
+                        );
+                        Object.entries(shades).forEach(([shade, color]) => {
+                            root.style.setProperty(
+                                `--grk-${_type}-${_mode}-${shade}`,
+                                color
+                            );
+                        });
+                    } else {
+                        root.style.setProperty(
+                            `--grk-${_type}-${_mode}`,
+                            value
+                        );
+                    }
+                });
+            });
+
+            const _theme: GoldRushThemeType = {
+                borderRadius,
+                colors,
+                mode,
+                style,
+            };
+
+            setTheme(_theme);
+            localStorage.setItem("goldrush_theme", JSON.stringify(_theme));
+        },
+        []
+    );
+
     return (
         <GoldRushContext.Provider
             value={{
-                selectedChain: selectedChain,
-                setSelectedChain: setSelectedChain,
-                apikey: apikey,
-                covalentClient: covalentClient,
-                chains: chains,
+                apikey,
+                chains,
+                covalentClient,
+                selectedChain,
+                theme,
+                setSelectedChain,
+                handleUpdateTheme,
             }}
         >
             {children}
-            <Toaster />
         </GoldRushContext.Provider>
     );
 };

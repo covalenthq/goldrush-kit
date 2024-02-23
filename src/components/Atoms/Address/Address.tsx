@@ -31,13 +31,13 @@ export const Address: React.FC<AddressProps> = ({ address }) => {
                     <IconWrapper
                         icon_class_name="done"
                         icon_size="text-sm"
-                        class_name="text-secondary dark:text-secondary"
+                       class_name="text-secondary-light dark:text-secondary-dark"
                     />
                 ) : (
                     <IconWrapper
                         icon_class_name="content_copy"
                         icon_size="text-sm"
-                        class_name="text-secondary dark:text-secondary"
+                        class_name="text-secondary-light dark:text-secondary-dark"
                         on_click={() => handleCopyClick()}
                     />
                 )}

@@ -22,7 +22,7 @@ export const TableHeaderSorting = ({
               : "sort";
     return (
         <div
-            className={`flex cursor-pointer items-center gap-1 whitespace-nowrap hover:text-text-color-900 dark:hover:text-text-color-50  ${
+            className={`flex cursor-pointer items-center gap-1 whitespace-nowrap hover:text-slate-900 dark:hover:text-slate-50  ${
                 align === "right"
                     ? "justify-end"
                     : align === "center"
