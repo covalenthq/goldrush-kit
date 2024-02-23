@@ -1,6 +1,5 @@
 /*eslint-env node*/
 /** @type {import('tailwindcss').Config} */
-import colors from "tailwindcss/colors";
 
 module.exports = {
     darkMode: ["class"],
@@ -61,38 +60,44 @@ module.exports = {
                 },
                 tremor: {
                     background: {
-                        muted: "red",
-                        subtle: "red",
+                        muted: "var(--grk-secondary-light)",
+                        subtle: "var(--grk-secondary-light)",
                         DEFAULT: "var(--grk-background-light)",
-                        emphasis: "red",
+                        emphasis: "var(--grk-background-light)",
                     },
                     border: {
                         DEFAULT: "var(--grk-secondary-light)",
                     },
                     ring: {
-                        DEFAULT: colors.gray[200],
+                        DEFAULT: "var(--grk-secondary-light)",
                     },
                     content: {
                         subtle: "var(--grk-secondary-light)",
                         DEFAULT: "var(--grk-foreground-light)",
                         emphasis: "var(--grk-primary-light-100)",
                         strong: "var(--grk-primary-light-500)",
-                        inverted: "green",
+                        inverted: "var(--grk-foreground-light)",
                     },
                 },
                 "dark-tremor": {
+                    background: {
+                        muted: "var(--grk-secondary-dark)",
+                        subtle: "var(--grk-secondary-dark)",
+                        DEFAULT: "var(--grk-background-dark)",
+                        emphasis: "var(--grk-background-dark)",
+                    },
                     border: {
                         DEFAULT: "var(--grk-secondary-dark)",
                     },
                     ring: {
-                        DEFAULT: colors.gray[800],
+                        DEFAULT: "var(--grk-secondary-dark)",
                     },
                     content: {
-                        subtle: colors.gray[600],
-                        DEFAULT: colors.gray[500],
-                        emphasis: colors.gray[200],
-                        strong: colors.gray[50],
-                        inverted: colors.gray[950],
+                        subtle: "var(--grk-secondary-dark)",
+                        DEFAULT: "var(--grk-foreground-dark)",
+                        emphasis: "var(--grk-primary-dark-100)",
+                        strong: "var(--grk-primary-dark-500)",
+                        inverted: "var(--grk-foreground-dark)",
                     },
                 },
             },
