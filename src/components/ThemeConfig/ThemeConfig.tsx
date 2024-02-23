@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { useGoldRush } from "@/utils/store";
 import { Input } from "../ui/input";
 import { type GoldRushThemeType } from "@/utils/types/store.types";
