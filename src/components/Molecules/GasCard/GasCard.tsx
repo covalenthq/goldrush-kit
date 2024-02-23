@@ -47,11 +47,11 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
     return (
         <>
             <div className="flex w-full flex-col gap-4 rounded border">
-                <div className="h-12 rounded-t bg-accent-light" />
+                <div className="bg-accent-light h-12 rounded-t" />
                 <div className="flex flex-col  items-center justify-center gap-2 p-4">
                     <span className="text-7xl">⛽</span>
                     <h2 className="text-xl">Current Network Fee</h2>
-                    <label className="text-secondary-light text-base">
+                    <label className="text-base text-secondary-light">
                         Base Fee:{" "}
                         {maybeResult.match({
                             None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
@@ -130,7 +130,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                                               ? "Normal"
                                                               : "High"}
                                                     </label>
-                                                    <label className="text-secondary-light text-sm">
+                                                    <label className="text-sm text-secondary-light">
                                                         {o.interval}
                                                     </label>
                                                 </div>
@@ -139,7 +139,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                                 <label>
                                                     {gwei.toFixed(0)} Gwei
                                                 </label>
-                                                <label className="text-secondary-light text-sm">
+                                                <label className="text-sm text-secondary-light">
                                                     {o.pretty_total_gas_quote}
                                                 </label>
                                             </div>

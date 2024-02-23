@@ -76,7 +76,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                 {maybeResult.match({
                     None: () => (
                         <div className="max-w-[30rem] rounded border ">
-                            <div className="bg-accent-foreground h-[30rem] w-[30rem] animate-pulse rounded" />
+                            <div className="bg-accent-foreground animate-pulse h-[30rem] w-[30rem] rounded" />
 
                             <div className="mt-2 p-4">
                                 <TypographyH4>Attributes</TypographyH4>

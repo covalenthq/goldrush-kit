@@ -115,7 +115,7 @@ export const NFTCollectionTokenListView: React.FC<
                 />
                 <div className="flex w-full items-center justify-around gap-4 rounded border p-2 lg:max-w-[20rem]">
                     <div>
-                        <h2 className="text-secondary-light text-base  font-semibold ">
+                        <h2 className="text-base font-semibold text-secondary-light">
                             Market volume
                         </h2>
                         <div className="flex items-end gap-2">
@@ -139,7 +139,7 @@ export const NFTCollectionTokenListView: React.FC<
                         </div>
                     </div>
                     <div>
-                        <h2 className="text-secondary-light text-base  font-semibold ">
+                        <h2 className="text-base font-semibold text-secondary-light">
                             Floor price
                         </h2>
                         <div className="flex items-end gap-2">

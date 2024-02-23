@@ -33,7 +33,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
 
     return (
         <>
-            <div className="flex w-fit items-center gap-x-4 rounded border border p-2 md:max-w-72">
+            <div className="flex w-fit items-center gap-x-4 rounded border p-2 md:max-w-72">
                 <AddressAvatar
                     type={type}
                     address={address}
@@ -41,7 +41,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
                     size={GRK_SIZES.SMALL}
                 />
                 <div className="flex h-full flex-col justify-center">
-                    <h2 className="text-primary-light-200 text-base font-semibold">
+                    <h2 className="text-base font-semibold text-primary-light-200">
                         {name}
                     </h2>
                     <div className="flex items-center gap-x-2">

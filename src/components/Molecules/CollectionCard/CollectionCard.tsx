@@ -67,7 +67,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                             size={GRK_SIZES.MEDIUM}
                         />
                         <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-primary-light-200 text-base font-semibold">
+                            <h2 className="text-base font-semibold text-primary-light-200">
                                 {nfts[0].contract_name}
                             </h2>
                             <div className="flex items-center gap-x-2">

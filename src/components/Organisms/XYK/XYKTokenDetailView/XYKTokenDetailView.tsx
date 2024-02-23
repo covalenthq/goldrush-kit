@@ -61,8 +61,8 @@ export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
                 {maybeResult.match({
                     None: () => (
                         <div className="relative mr-2 flex">
-                            <div className="h-20 w-20 animate-pulse rounded-[100%] bg-slate-600" />
-                            <div className="absolute left-12 h-20 w-20 animate-pulse rounded-[100%] bg-slate-200" />
+                            <div className="animate-pulse h-20 w-20 rounded-[100%] bg-slate-600" />
+                            <div className="animate-pulse absolute left-12 h-20 w-20 rounded-[100%] bg-slate-200" />
                         </div>
                     ),
                     Some: (result) => (
