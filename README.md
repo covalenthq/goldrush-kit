@@ -54,7 +54,7 @@ import { GoldRushProvider } from "@covalenthq/goldrush-kit";
 ```
 
 2. Wrap `GoldRushProvider` around the application.
-3. Configure the provider and add it to the `apikey` props with your Covalent API key. You can register for a free key on [Covalent's website](https://www.covalenthq.com).
+3. Configure the provider and add it to the `apikey` props with your Covalent API key. You can register for a free key on [Covalent's website](https://www.covalenthq.com/platform/auth/register/).
 
 ```tsx
 <GoldRushProvider apikey="<YOUR_API_KEY>">{children}</GoldRushProvider>
@@ -140,11 +140,12 @@ export default function GoldRushExample() {
 
 ## GoldRush Templates
 
-| Template                              | Description                                          | Link                                                       |
-| ------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
-| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains. | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
-| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.    | https://github.com/covalenthq/goldrush-nft-gallery-ui      |
+| Template                              | Description                                                | Link                                                         |
+|---------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
+| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains.       | https://github.com/covalenthq/goldrush-wallet-portfolio-ui   |
+| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.          | https://github.com/covalenthq/goldrush-nft-gallery-ui        |
 | Uniswap-like Analytics UI             | Display Uniswap-like analytics for the dex of your choice. | https://github.com/covalenthq/goldrush-uniswap-dex-dashboard |
+| Transaction Receipt View              | A beautifully designed view for blockchain transactions.   | https://github.com/covalenthq/goldrush-tx-receipt-ui         |
 
 ## Build and customize with Storybook
 
