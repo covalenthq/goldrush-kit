@@ -147,6 +147,18 @@ export default function GoldRushExample() {
 | Uniswap-like Analytics UI             | Display Uniswap-like analytics for the dex of your choice. | https://github.com/covalenthq/goldrush-uniswap-dex-dashboard |
 | Transaction Receipt View              | A beautifully designed view for blockchain transactions.   | https://github.com/covalenthq/goldrush-tx-receipt-ui         |
 
+## HIGHLIGHT: GoldRush Transaction Receipt View
+Designed to transform cluttered blockchain transaction data into meaningful summaries useful to the user. Receipts are fully extensible and enhance the clarity and understanding of various blockchain activities. Imagine a transaction view that shows Game-Fi quest achievements, swap pool position data, or even staking impact on network security—this is all possible with GoldRush-Kit.
+
+https://goldrush-tx-receipt-ui.vercel.app/
+
+https://github.com/covalenthq/goldrush-tx-receipt-ui
+
+## GoldRush Decoder
+Decode transaction log events to display them in a human-readable format. Useful for understanding the data that is emitted from smart contracts and is a critical component of any dApp. Works in tandem with GoldRush-Kit to provide a seamless experience for developers and users alike.
+
+https://github.com/covalenthq/goldrush-decoder
+
 ## Build and customize with Storybook
 
 The components used above are built React, Tailwind, and TypeScript. You can preview and customize the components using Storybook.
