@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import {
     type DecodedTransactionMetadata,
     type DecodedEventType,
@@ -8,24 +8,21 @@ import { type Option, None, Some } from "@/utils/option";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
-import { Card, CardContent } from "@/components/ui/card";
+import { calculatePrettyBalance } from "@covalenthq/client-sdk";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Address } from "@/components/Atoms/Address/Address";
+import { Badge } from "@/components/ui/badge";
 
 export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,
     tx_hash,
     setTxMetadata,
 }) => {
-    const { apikey, chains } = useGoldRush();
+    const { apikey } = useGoldRush();
 
     const [maybeResult, setResult] = useState<Option<DecodedEventType[]>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-    const CHAIN = useMemo<ChainItem | null>(() => {
-        return chains?.find((o) => o.name === chain_name) ?? null;
-    }, [chains, chain_name]);
 
     const handleHashInString = useCallback(
         (text: string) =>
@@ -36,10 +33,20 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                         {t.match(/(0x[a-fA-F0-9]{40})|(0x[a-fA-F0-9]{64})/g) ? (
                             <Address address={t} />
                         ) : (
-                            <span>{t} </span>
+                            t + " "
                         )}
                     </Fragment>
                 )),
+        []
+    );
+
+    const includeAddress = useCallback(
+        (text: string) =>
+            text
+                .split(" ")
+                .some((t) =>
+                    t.match(/(0x[a-fA-F0-9]{40})|(0x[a-fA-F0-9]{64})/g)
+                ),
         []
     );
 
@@ -76,6 +83,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                     throw Error(data.message);
                 }
                 setResult(new Some(data.events!));
+                console.log(new Some(data.events)!);
                 if (setTxMetadata) {
                     setTxMetadata(new Some(data.tx_metadata));
                 }
@@ -108,20 +116,20 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                 ({ name, details, nfts, protocol, tokens }) => (
                                     <article
                                         key={name}
-                                        className="flex w-full flex-col gap-y-4 border-t py-4 first:border-t-0 first:pt-0 last:pb-0"
+                                        className="my-4 flex w-full flex-col rounded-lg border first:my-0"
                                     >
-                                        <header className="flex w-full justify-between">
-                                            <h3 className="font-medium">
+                                        <header className="flex w-full gap-2 border-b p-4">
+                                            <Badge variant="default">
                                                 {name}
-                                            </h3>
+                                            </Badge>
 
-                                            <p className="text-sm font-semibold text-muted-foreground">
+                                            <Badge variant="secondary">
                                                 {protocol?.name}
-                                            </p>
+                                            </Badge>
                                         </header>
 
                                         {nfts?.length && (
-                                            <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-2">
+                                            <div className="grid grid-cols-1 gap-x-4 gap-y-2 border-b p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                                 {nfts.map(
                                                     ({
                                                         collection_address,
@@ -130,42 +138,40 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                         images,
                                                         token_identifier,
                                                     }) => (
-                                                        <div
+                                                        <Card
                                                             key={
                                                                 collection_address +
                                                                 token_identifier
                                                             }
-                                                            className="flex gap-x-4"
+                                                            className="flex max-h-36 gap-x-4"
                                                         >
                                                             <figure>
-                                                                <Card className="w-32 overflow-hidden rounded border">
-                                                                    <img
-                                                                        className={`block h-32 w-32 rounded-t`}
-                                                                        src={
-                                                                            images[256] ||
-                                                                            images[512] ||
-                                                                            images[1024] ||
-                                                                            images.default ||
-                                                                            ""
-                                                                        }
-                                                                        onError={(
-                                                                            e
-                                                                        ) => {
-                                                                            e.currentTarget.classList.remove(
-                                                                                "object-cover"
-                                                                            );
-                                                                            e.currentTarget.classList.add(
-                                                                                "p-2"
-                                                                            );
-                                                                            e.currentTarget.src =
-                                                                                "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                                        }}
-                                                                    />
-                                                                </Card>
+                                                                <img
+                                                                    className={`block h-full w-32 rounded-l`}
+                                                                    src={
+                                                                        images[256] ||
+                                                                        images[512] ||
+                                                                        images[1024] ||
+                                                                        images.default ||
+                                                                        ""
+                                                                    }
+                                                                    onError={(
+                                                                        e
+                                                                    ) => {
+                                                                        e.currentTarget.classList.remove(
+                                                                            "object-cover"
+                                                                        );
+                                                                        e.currentTarget.classList.add(
+                                                                            "p-2"
+                                                                        );
+                                                                        e.currentTarget.src =
+                                                                            "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+                                                                    }}
+                                                                />
                                                             </figure>
 
                                                             <div className="flex flex-col gap-y-2 truncate text-ellipsis py-2 text-sm text-muted-foreground">
-                                                                <div className="flex whitespace-break-spaces font-medium">
+                                                                <div className="flex flex-col whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading
                                                                     )}
@@ -173,17 +179,13 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
 
                                                                 <div className="mt-auto flex flex-col gap-y-2">
                                                                     <p className="truncate text-ellipsis">
-                                                                        Collection
-                                                                        Name:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        <span className="font-semibold text-black dark:text-text-color-50">
                                                                             {
                                                                                 collection_name
                                                                             }
                                                                         </span>
                                                                     </p>
                                                                     <div className="flex gap-x-1 truncate text-ellipsis">
-                                                                        Collection
-                                                                        Address:
                                                                         <span className="text-black dark:text-text-color-50">
                                                                             <Address
                                                                                 address={
@@ -192,25 +194,23 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                             />
                                                                         </span>
                                                                     </div>
-                                                                    <p className="truncate text-ellipsis">
-                                                                        Token
-                                                                        ID:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
-                                                                            {
-                                                                                token_identifier
-                                                                            }
-                                                                        </span>
-                                                                    </p>
+                                                                    <Badge
+                                                                        variant="default"
+                                                                        className="w-fit px-1"
+                                                                    >
+                                                                        {"#" +
+                                                                            token_identifier}
+                                                                    </Badge>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </Card>
                                                     )
                                                 )}
                                             </div>
                                         )}
 
                                         {tokens?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
+                                            <div className="grid grid-cols-1 gap-x-4 gap-y-2 border-b p-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
                                                 {tokens.map(
                                                     ({
                                                         heading,
@@ -220,67 +220,66 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                         decimals,
                                                         value,
                                                     }) => (
-                                                        <div
+                                                        <Card
+                                                            className="p-4"
                                                             key={
                                                                 ticker_symbol +
                                                                 heading
                                                             }
                                                         >
-                                                            <div
-                                                                className="text-sm text-muted-foreground"
+                                                            <CardTitle
+                                                                className="flex items-center justify-between pb-1 text-sm font-medium"
                                                                 title={heading}
                                                             >
-                                                                <div className="flex whitespace-break-spaces font-medium">
+                                                                <div className="flex w-full items-center justify-between whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading ||
                                                                             "Token Amount"
                                                                     )}
                                                                 </div>
-                                                            </div>
+                                                                {!includeAddress(
+                                                                    heading
+                                                                ) && (
+                                                                    <figure>
+                                                                        <TokenAvatar
+                                                                            size={
+                                                                                GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                            }
+                                                                            token_url={
+                                                                                ticker_logo
+                                                                            }
+                                                                        />
+                                                                    </figure>
+                                                                )}
+                                                            </CardTitle>
 
                                                             <CardContent className="flex items-center truncate text-sm">
-                                                                <span className="text-base">
+                                                                <span className="text-xl font-bold">
                                                                     {calculatePrettyBalance(
                                                                         BigInt(
                                                                             value
                                                                         ),
                                                                         decimals
                                                                     )}{" "}
-                                                                    {
-                                                                        ticker_symbol
-                                                                    }
+                                                                    <span className="text-sm">
+                                                                        {
+                                                                            ticker_symbol
+                                                                        }
+                                                                    </span>
                                                                 </span>
-
-                                                                <figure>
-                                                                    <TokenAvatar
-                                                                        size={
-                                                                            GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                                        }
-                                                                        chain_color={
-                                                                            CHAIN
-                                                                                ?.color_theme
-                                                                                .hex
-                                                                        }
-                                                                        token_url={
-                                                                            ticker_logo ||
-                                                                            CHAIN?.logo_url
-                                                                        }
-                                                                        is_chain_logo
-                                                                    />
-                                                                </figure>
                                                             </CardContent>
 
                                                             <p className="text-sm text-muted-foreground">
                                                                 {pretty_quote}
                                                             </p>
-                                                        </div>
+                                                        </Card>
                                                     )
                                                 )}
                                             </div>
                                         )}
 
                                         {details?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
+                                            <div className="grid grid-cols-1 gap-x-4 gap-y-2 border-b p-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
                                                 {details.map(
                                                     ({
                                                         heading,
@@ -334,3 +333,4 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         </>
     );
 };
+
