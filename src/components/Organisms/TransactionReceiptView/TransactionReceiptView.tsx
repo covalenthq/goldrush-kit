@@ -29,7 +29,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     }, [chains, chain_name]);
 
     return (
-        <section className="h-fit w-5/6 max-w-[37.5rem] overflow-hidden rounded border">
+        <section className="overflow-hidden rounded border">
             <figure className="h-10 w-full bg-accent" />
 
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
