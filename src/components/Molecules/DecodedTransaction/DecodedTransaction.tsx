@@ -27,6 +27,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         return chains?.find((o) => o.name === chain_name) ?? null;
     }, [chains, chain_name]);
 
+    console.log(CHAIN);
+
     const handleHashInString = useCallback(
         (text: string) =>
             text
@@ -262,8 +264,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                                 .hex
                                                                         }
                                                                         token_url={
-                                                                            ticker_logo ||
-                                                                            CHAIN?.logo_url
+                                                                            CHAIN?.logo_url ||
+                                                                            ticker_logo
                                                                         }
                                                                         is_chain_logo
                                                                     />
