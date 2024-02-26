@@ -11,7 +11,7 @@ export interface GoldRushContextType {
     handleResetTheme: () => void;
 }
 
-export interface GoldRushThemeAccentShades {
+export interface GoldRushThemePrimaryShades {
     DEFAULT: string;
     100: string;
     200: string;
@@ -24,9 +24,9 @@ export interface GoldRushThemeAccentShades {
     900: string;
 }
 
-export interface GoldRushThemeAccentType {
-    dark: GoldRushThemeAccentShades;
-    light: GoldRushThemeAccentShades;
+export interface GoldRushThemePrimaryType {
+    dark: GoldRushThemePrimaryShades;
+    light: GoldRushThemePrimaryShades;
 }
 
 export interface GoldRushThemeColorType {

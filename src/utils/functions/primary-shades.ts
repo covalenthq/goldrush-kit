@@ -1,12 +1,12 @@
 import {
     type GoldRushThemeType,
-    type GoldRushThemeAccentShades,
+    type GoldRushThemePrimaryShades,
 } from "../types/store.types";
 
-export const colorShades = (
+export const primaryShades = (
     inputColor: string,
     mode: GoldRushThemeType["mode"]
-): GoldRushThemeAccentShades => {
+): GoldRushThemePrimaryShades => {
     function adjustBrightness(color: string, percent: number): string {
         const hex = color.replace(/[^0-9A-F]/gi, "");
         const num = parseInt(hex, 16);
@@ -24,7 +24,7 @@ export const colorShades = (
         );
     }
 
-    const shades: Partial<GoldRushThemeAccentShades> = {
+    const shades: Partial<GoldRushThemePrimaryShades> = {
         DEFAULT: inputColor,
     };
     let currentColor = inputColor;
@@ -34,9 +34,9 @@ export const colorShades = (
 
     for (let i = 1; i <= 9; i++) {
         currentColor = adjustBrightness(currentColor, brightnessFactor);
-        shades[(i * 100) as keyof GoldRushThemeAccentShades] =
+        shades[(i * 100) as keyof GoldRushThemePrimaryShades] =
             currentColor.toUpperCase();
     }
 
-    return shades as GoldRushThemeAccentShades;
+    return shades as GoldRushThemePrimaryShades;
 };

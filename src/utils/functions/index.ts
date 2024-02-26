@@ -1,4 +1,4 @@
-export { colorShades } from "./accent-shades";
+export { primaryShades } from "./primary-shades";
 export { calculateTimeSeriesGroup } from "./calculate-time-series-group";
 export { cn } from "./cn";
 export { copyToClipboard } from "./CopyToClipboard";

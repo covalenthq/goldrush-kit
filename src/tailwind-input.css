@@ -5,11 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-    }
-    /* * {
-        @apply border-border;
-    } */
     body {
         @apply bg-background-light text-foreground-light dark:bg-background-dark dark:text-foreground-dark;
     }
@@ -20,19 +15,6 @@
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #e2e8f0 #32353b;
-}
-
-#mysvg svg path {
-    fill: #ff0000 !important; /* Change to your desired color */
-}
-
-.dark .recharts-responsive-container .recharts-wrapper svg text {
-    @apply !fill-white;
-}
-
-.dark
-    .whitespace-nowrap.truncate.text-tremor-default.text-tremor-content.dark\:text-dark-tremor-content.opacity-100 {
-    @apply !text-white;
 }
 
 .searchResultScrollbar::-webkit-scrollbar-thumb {
@@ -47,52 +29,3 @@
     width: 5px;
     height: 5px;
 }
-
-/* :root.dark > body {
-    @apply bg-slate-900;
-    @apply !text-white;
-}
-:root.dark > body *:not(.tokenAvatar) {
-    @apply !border-slate-700;
-} */
-
-/* .neo .neo-shadow {
-    box-shadow: 4px 4px 0px 0px #020617;
-}
-
-.neo .neo-shadow-lg {
-    box-shadow: 12px 12px 0px 0px #020617;
-}
-
-.neo .neo-border {
-    border: 2px solid #020617;
-}
-
-.neo .neo-text-white {
-    @apply !text-white;
-}
-
-.neo.dark .neo-text-white-dark {
-    @apply !text-white;
-}
-.neo .neo-text-white-light {
-    @apply !text-white;
-}
-.neo.dark .neo-text-dark {
-    @apply !text-black;
-}
-.neo .neo-accent {
-    @apply !bg-accent;
-}
-.neo.dark .neo-hover-dark {
-    @apply hover:bg-accent;
-}
-.neo .neo-hover-dark {
-    @apply hover:bg-accent;
-}
-.neo.dark .neo-header {
-    @apply bg-accent-foreground;
-}
-.neo .neo-header {
-    @apply bg-accent;
-} */

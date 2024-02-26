@@ -13,7 +13,7 @@ import {
     type GoldRushThemeColorType,
 } from "../types/store.types";
 import { type ChainItem, CovalentClient } from "@covalenthq/client-sdk";
-import { colorShades } from "../functions";
+import { primaryShades } from "../functions";
 
 const GoldRushContext = createContext<GoldRushContextType>(
     {} as GoldRushContextType
@@ -146,7 +146,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
             Object.entries(colors).forEach(([_mode, _types]) => {
                 Object.entries(_types).forEach(([_type, value]) => {
                     if (_type === "primary") {
-                        const shades = colorShades(
+                        const shades = primaryShades(
                             value,
                             _mode as GoldRushThemeType["mode"]
                         );
