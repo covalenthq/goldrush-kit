@@ -178,6 +178,10 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         []
     );
 
+    const handleResetTheme = useCallback(() => {
+        handleUpdateTheme(defaultTheme);
+    }, []);
+
     return (
         <GoldRushContext.Provider
             value={{
@@ -188,6 +192,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 theme,
                 setSelectedChain,
                 handleUpdateTheme,
+                handleResetTheme,
             }}
         >
             {children}

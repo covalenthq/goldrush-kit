@@ -8,16 +8,33 @@ export enum GRK_SIZES {
     EXTRA_EXTRA_SMALL = "xxs",
 }
 
-export const CHART_COLORS: Color[] = [
+export const CHART_COLORS: (string | Color)[] = [
+    "primary-light-100",
+    "primary-dark-100",
+    "primary-light-900",
+    "primary-dark-900",
     "slate",
-    "violet",
-    "indigo",
-    "rose",
-    "cyan",
-    "amber",
-    "lime",
+    "gray",
+    "zinc",
+    "neutral",
+    "stone",
+    "red",
     "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "green",
+    "emerald",
+    "teal",
+    "cyan",
+    "sky",
+    "blue",
+    "indigo",
+    "violet",
+    "purple",
     "fuchsia",
+    "pink",
+    "rose",
 ];
 
 export const NFT_COLLECTIONS: { [collection_name: string]: string } = {

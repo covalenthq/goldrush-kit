@@ -10,11 +10,11 @@ import {
 } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+    CHART_COLORS,
     CURRENCY,
     GRK_SIZES,
     PERIOD,
 } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
 

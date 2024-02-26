@@ -5,8 +5,11 @@ import { AreaChart, BarChart } from "@tremor/react";
 import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
+import {
+    CHART_COLORS,
+    GRK_SIZES,
+    PERIOD,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKOverviewTimeSeriesProps } from "@/utils/types/molecules.types";
 import {

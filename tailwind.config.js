@@ -58,6 +58,15 @@ module.exports = {
                     dark: "var(--grk-secondary-dark)",
                     light: "var(--grk-secondary-light)",
                 },
+                fill: {
+                    DEFAULT: "var(--grk-primary-light)",
+                },
+                ring: {
+                    DEFAULT: "var(--grk-primary-light)",
+                },
+                stroke: {
+                    DEFAULT: "var(--grk-primary-light)",
+                },
                 tremor: {
                     background: {
                         muted: "var(--grk-secondary-light)",
@@ -152,13 +161,15 @@ module.exports = {
     safelist: [
         {
             pattern: RegExp(
-                /^(bg|text|shadow|border)-(background|foreground|secondary)-(light|dark)$/
+                /^(bg|text|shadow|border|stroke|ring|fill)-(background|foreground|secondary)-(light|dark)$/
             ),
+            variants: ["hover", "ui-selected"],
         },
         {
             pattern: RegExp(
-                /^(bg|text|shadow|border)-(primary)-(light|dark)-(DEFAULT|100|200|300|400|500|600|700|800|900)$/
+                /^(bg|text|shadow|border|stroke|ring|fill)-(primary)-(light|dark)-(DEFAULT|100|200|300|400|500|600|700|800|900)$/
             ),
+            variants: ["hover", "ui-selected"],
         },
         {
             pattern:

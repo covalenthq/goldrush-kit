@@ -7,12 +7,8 @@ export interface GoldRushContextType {
     selectedChain: ChainItem | null;
     theme: GoldRushThemeType;
     setSelectedChain: React.Dispatch<React.SetStateAction<ChainItem | null>>;
-    handleUpdateTheme: ({
-        borderRadius,
-        colors,
-        mode,
-        style,
-    }: Partial<GoldRushThemeType>) => void;
+    handleUpdateTheme: (newTheme: Partial<GoldRushThemeType>) => void;
+    handleResetTheme: () => void;
 }
 
 export interface GoldRushThemeAccentShades {

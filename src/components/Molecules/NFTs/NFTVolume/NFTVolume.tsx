@@ -6,11 +6,11 @@ import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+    CHART_COLORS,
     CURRENCY,
     GRK_SIZES,
     PERIOD,
 } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTVolumeProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
