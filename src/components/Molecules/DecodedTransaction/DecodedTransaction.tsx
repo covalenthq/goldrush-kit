@@ -265,7 +265,11 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                             CHAIN?.logo_url ||
                                                                             ticker_logo
                                                                         }
-                                                                        is_chain_logo
+                                                                        is_chain_logo={
+                                                                            CHAIN?.logo_url
+                                                                                ? true
+                                                                                : false
+                                                                        }
                                                                     />
                                                                 </figure>
                                                             </CardContent>
