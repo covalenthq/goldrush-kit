@@ -27,8 +27,6 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         return chains?.find((o) => o.name === chain_name) ?? null;
     }, [chains, chain_name]);
 
-    console.log(CHAIN);
-
     const handleHashInString = useCallback(
         (text: string) =>
             text
