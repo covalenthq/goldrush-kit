@@ -32,13 +32,6 @@ export { BlockDetails } from "./components/Molecules/BlockDetails/BlockDetails";
 export { ChainSelector } from "./components/Molecules/ChainSelector/ChainSelector";
 
 export { GasCard } from "./components/Molecules/GasCard/GasCard";
-
-export { type NFTDetailViewProps } from "./utils/types/organisms.types";
-export { type AddressActivityListViewProps } from "./utils/types/organisms.types";
-export { type TokenBalancesListViewProps } from "./utils/types/organisms.types";
-export { type TokenTransfersListViewProps } from "./utils/types/organisms.types";
-export { type NFTWalletTokenListViewProps } from "./utils/types/organisms.types";
-export { type NFTCollectionTokenListViewProps } from "./utils/types/organisms.types";
 export { GoldRushProvider, useGoldRush } from "./utils/store";
 // * INFO: added for backwards compatibility
 export { useGoldRush as useCovalent } from "./utils/store";
