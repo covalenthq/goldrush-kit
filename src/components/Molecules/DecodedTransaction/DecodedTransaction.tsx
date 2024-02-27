@@ -220,9 +220,6 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                         decimals,
                                                         value,
                                                     }) => {
-                                                        console.log(
-                                                            ticker_logo
-                                                        );
                                                         const extension =
                                                             ticker_logo
                                                                 ? ticker_logo
