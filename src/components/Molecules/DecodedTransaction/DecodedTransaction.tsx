@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Address } from "@/components/Atoms/Address/Address";
 
+
 export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,
     tx_hash,
@@ -171,17 +172,18 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     )}
                                                                 </div>
 
-                                                                <div className="mt-auto flex flex-col gap-y-2">
-                                                                    <p className="truncate text-ellipsis">
+                                                                <div className="mt-auto flex flex-col gap-y-2 border p-2">
+                                                                    <p className="text-center font-bold text-success">NFT DETAILS</p>
+                                                                    <p className="truncate text-ellipsis border-bottom font-bold">
                                                                         Collection
                                                                         Name:{" "}
-                                                                        <span className="text-black dark:text-text-color-50">
+                                                                        <span className="text-danger dark:text-text-color-50">
                                                                             {
                                                                                 collection_name
                                                                             }
                                                                         </span>
                                                                     </p>
-                                                                    <div className="flex gap-x-1 truncate text-ellipsis">
+                                                                    <div className="flex gap-x-1 truncate text-ellipsis font-bold">
                                                                         Collection
                                                                         Address:
                                                                         <span className="text-black dark:text-text-color-50">
@@ -192,7 +194,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                             />
                                                                         </span>
                                                                     </div>
-                                                                    <p className="truncate text-ellipsis">
+                                                                    <p className="truncate text-ellipsis font-bold">
                                                                         Token
                                                                         ID:{" "}
                                                                         <span className="text-black dark:text-text-color-50">
@@ -209,9 +211,10 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                             </div>
                                         )}
 
+                                        <div className=" font-bold text-success mt-2 border"><p className="text-center">TOKEN SENT DETAILS</p> 
                                         {tokens?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
-                                                {tokens.map(
+                                            <div className=" grid grid-cols-3 gap-x-4 gap-y-2 p-4">
+                                            {tokens.map(
                                                     ({
                                                         heading,
                                                         pretty_quote,
@@ -280,7 +283,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                         )}
 
                                         {details?.length && (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
+                                            <div className=" grid grid-cols-3 gap-x-4 gap-y-2  p-4 rounded-md border-border-foreground">
                                                 {details.map(
                                                     ({
                                                         heading,
@@ -324,6 +327,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                 )}
                                             </div>
                                         )}
+                                        </div>
                                     </article>
                                 )
                             )
@@ -334,3 +338,4 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         </>
     );
 };
+
