@@ -23,18 +23,18 @@
         "paths": {
             "@/*": ["./src/*"],
             "@goldrushconfig": ["./goldrush.config.ts"],
-            "react-component-library": ["src/index.ts"]
+            "react-component-library": ["src/index.ts"],
         },
         "typeRoots": [
             "./dist/index.d.ts",
             "node_modules/@types",
-            "./node_modules"
-        ]
+            "./node_modules",
+        ],
     },
     "include": ["src", "./index.ts"],
     "references": [
         {
-            "path": "./tsconfig.node.json"
-        }
-    ]
+            "path": "./tsconfig.node.json",
+        },
+    ],
 }
