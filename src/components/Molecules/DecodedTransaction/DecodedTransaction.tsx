@@ -120,7 +120,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                             </p>
                                         </header>
 
-                                        {nfts?.length && (
+                                        {nfts?.length ? (
                                             <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-2">
                                                 {nfts.map(
                                                     ({
@@ -207,9 +207,11 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                     )
                                                 )}
                                             </div>
+                                        ) : (
+                                            <></>
                                         )}
 
-                                        {tokens?.length && (
+                                        {tokens?.length ? (
                                             <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                 {tokens.map(
                                                     ({
@@ -297,9 +299,11 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                     }
                                                 )}
                                             </div>
+                                        ) : (
+                                            <></>
                                         )}
 
-                                        {details?.length && (
+                                        {details?.length ? (
                                             <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
                                                 {details.map(
                                                     ({
@@ -343,6 +347,8 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                     )
                                                 )}
                                             </div>
+                                        ) : (
+                                            <></>
                                         )}
                                     </article>
                                 )
