@@ -219,66 +219,85 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                         ticker_symbol,
                                                         decimals,
                                                         value,
-                                                    }) => (
-                                                        <div
-                                                            key={
-                                                                ticker_symbol +
-                                                                heading
-                                                            }
-                                                        >
+                                                    }) => {
+                                                        console.log(
+                                                            ticker_logo
+                                                        );
+                                                        const extension =
+                                                            ticker_logo
+                                                                ? ticker_logo
+                                                                      ?.split(
+                                                                          "."
+                                                                      )
+                                                                      ?.pop()
+                                                                      ?.toLowerCase()
+                                                                : "";
+                                                        return (
                                                             <div
-                                                                className="text-sm text-muted-foreground"
-                                                                title={heading}
+                                                                key={
+                                                                    ticker_symbol +
+                                                                    heading
+                                                                }
                                                             >
-                                                                <div className="flex whitespace-break-spaces font-medium">
-                                                                    {handleHashInString(
-                                                                        heading ||
-                                                                            "Token Amount"
-                                                                    )}
-                                                                </div>
-                                                            </div>
-
-                                                            <CardContent className="flex items-center truncate text-sm">
-                                                                <span className="text-base">
-                                                                    {calculatePrettyBalance(
-                                                                        BigInt(
-                                                                            value
-                                                                        ),
-                                                                        decimals
-                                                                    )}{" "}
-                                                                    {
-                                                                        ticker_symbol
+                                                                <div
+                                                                    className="text-sm text-muted-foreground"
+                                                                    title={
+                                                                        heading
                                                                     }
-                                                                </span>
+                                                                >
+                                                                    <div className="flex whitespace-break-spaces font-medium">
+                                                                        {handleHashInString(
+                                                                            heading ||
+                                                                                "Token Amount"
+                                                                        )}
+                                                                    </div>
+                                                                </div>
 
-                                                                <figure>
-                                                                    <TokenAvatar
-                                                                        size={
-                                                                            GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                <CardContent className="flex items-center truncate text-sm">
+                                                                    <span className="text-base">
+                                                                        {calculatePrettyBalance(
+                                                                            BigInt(
+                                                                                value
+                                                                            ),
+                                                                            decimals
+                                                                        )}{" "}
+                                                                        {
+                                                                            ticker_symbol
                                                                         }
-                                                                        chain_color={
-                                                                            CHAIN
-                                                                                ?.color_theme
-                                                                                .hex
-                                                                        }
-                                                                        token_url={
-                                                                            CHAIN?.logo_url ||
-                                                                            ticker_logo
-                                                                        }
-                                                                        is_chain_logo={
-                                                                            CHAIN?.logo_url
-                                                                                ? true
-                                                                                : false
-                                                                        }
-                                                                    />
-                                                                </figure>
-                                                            </CardContent>
+                                                                    </span>
 
-                                                            <p className="text-sm text-muted-foreground">
-                                                                {pretty_quote}
-                                                            </p>
-                                                        </div>
-                                                    )
+                                                                    <figure className="ml-2">
+                                                                        <TokenAvatar
+                                                                            size={
+                                                                                GRK_SIZES.EXTRA_SMALL
+                                                                            }
+                                                                            chain_color={
+                                                                                CHAIN
+                                                                                    ?.color_theme
+                                                                                    .hex
+                                                                            }
+                                                                            token_url={
+                                                                                ticker_logo ||
+                                                                                CHAIN?.logo_url
+                                                                            }
+                                                                            is_chain_logo={
+                                                                                extension ===
+                                                                                "svg"
+                                                                                    ? true
+                                                                                    : false
+                                                                            }
+                                                                        />
+                                                                    </figure>
+                                                                </CardContent>
+
+                                                                <p className="text-sm text-muted-foreground">
+                                                                    {
+                                                                        pretty_quote
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        );
+                                                    }
                                                 )}
                                             </div>
                                         )}
