@@ -1,5 +1,15 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.6
+
+## What's Changed
+
+## Fixes
+- Type exporting for components
+- Transaction receipt token image by handling svg or png
+- Token detail error checks
+- Delta display on no price change
+
 ## 0.4.5
 
 ## What's Changed
