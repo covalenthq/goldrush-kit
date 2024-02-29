@@ -1,3 +1,4 @@
+import { Address } from "@/components/Atoms/Address/Address";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
@@ -38,7 +39,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
 
     return (
         <>
-            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 dark:bg-background-dark dark:text-white md:max-w-[20rem] lg:max-w-[20rem]">
+            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 dark:bg-background-dark dark:text-white">
                 <CardTitle className="">Overview</CardTitle>
                 {maybeResult.match({
                     None: () => (
@@ -46,16 +47,16 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                             <Skeleton size={GRK_SIZES.LARGE} />
                         </div>
                     ),
-                    Some: ({ height, signed_at }) =>
+                    Some: (block) =>
                         errorMessage ? (
                             <p className="mt-4">{errorMessage}</p>
                         ) : (
-                            <div className="mt-2 flex flex-col gap-y-2">
+                            <div className="mt-2 grid w-full grid-cols-3 gap-16 gap-y-4">
                                 <div>
                                     <CardDescription>HEIGHT</CardDescription>
 
                                     <p className="mt-1 flex items-center gap-x-1.5">
-                                        {height.toLocaleString()}
+                                        {block.height.toLocaleString()}
                                     </p>
                                 </div>
 
@@ -65,10 +66,78 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                     <div className="flex items-center gap-x-2">
                                         <p>
                                             {timestampParser(
-                                                signed_at,
-                                                "relative"
+                                                block.signed_at,
+                                                "descriptive"
                                             )}
                                         </p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>
+                                        BLOCK HASH
+                                    </CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        <Address address={block.block_hash} />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>GAS USED</CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        {block.gas_used}{" "}
+                                        <CardDescription>
+                                            {(
+                                                (block.gas_used /
+                                                    block.gas_limit) *
+                                                100
+                                            ).toFixed(2)}
+                                            %
+                                        </CardDescription>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>GAS LIMIT</CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        {block.gas_limit.toLocaleString()}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>
+                                        MINER ADDRESS
+                                    </CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        <Address
+                                            address={block.miner_address}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>
+                                        BLOCK PARENT HASH
+                                    </CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        <Address
+                                            address={block.block_parent_hash}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <CardDescription>
+                                        EXTRA DATA
+                                    </CardDescription>
+
+                                    <div className="flex items-center gap-x-2">
+                                        {block.extra_data}
                                     </div>
                                 </div>
                             </div>
