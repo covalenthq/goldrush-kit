@@ -1,5 +1,17 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.4.7
+
+## What's Changed
+
+## Fixes
+- Fix transactions receipt responsiveness
+- Fix copy toast for address copy
+
+## Features
+- Add block details v2
+
+
 ## 0.4.6
 
 ## What's Changed
