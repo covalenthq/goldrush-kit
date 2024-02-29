@@ -105,10 +105,13 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                             <p>No decoded Events.</p>
                         ) : (
                             events.map(
-                                ({ name, details, nfts, protocol, tokens }) => (
+                                (
+                                    { name, details, nfts, protocol, tokens },
+                                    i
+                                ) => (
                                     <article
-                                        key={name}
-                                        className="flex w-full flex-col gap-y-4 border-t py-4 first:border-t-0 first:pt-0 last:pb-0"
+                                        key={name + i}
+                                        className="flex w-full flex-col border-t py-4 last:border-b md:gap-y-4"
                                     >
                                         <header className="flex w-full justify-between">
                                             <h3 className="font-medium">
@@ -135,7 +138,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 collection_address +
                                                                 token_identifier
                                                             }
-                                                            className="flex gap-x-4"
+                                                            className="flex flex-col gap-x-4 sm:flex-row"
                                                         >
                                                             <figure>
                                                                 <Card className="w-32 overflow-hidden rounded border">
@@ -164,7 +167,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 </Card>
                                                             </figure>
 
-                                                            <div className="flex flex-col gap-y-2 truncate text-ellipsis py-2 text-sm text-muted-foreground">
+                                                            <div className="flex flex-col gap-y-2 truncate text-ellipsis py-1 text-sm text-muted-foreground">
                                                                 <div className="flex whitespace-break-spaces font-medium">
                                                                     {handleHashInString(
                                                                         heading
@@ -212,7 +215,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                         )}
 
                                         {tokens?.length ? (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
+                                            <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3">
                                                 {tokens.map(
                                                     ({
                                                         heading,
@@ -268,7 +271,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     <figure className="ml-2">
                                                                         <TokenAvatar
                                                                             size={
-                                                                                GRK_SIZES.EXTRA_SMALL
+                                                                                GRK_SIZES.EXTRA_EXTRA_SMALL
                                                                             }
                                                                             chain_color={
                                                                                 CHAIN
@@ -304,7 +307,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                         )}
 
                                         {details?.length ? (
-                                            <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-2">
+                                            <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3">
                                                 {details.map(
                                                     ({
                                                         heading,
