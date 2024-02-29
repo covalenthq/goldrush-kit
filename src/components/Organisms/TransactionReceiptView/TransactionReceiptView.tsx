@@ -89,7 +89,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                     </CardDescription>
                                 </div>
 
-                                <div className="flex gap-x-8 border-b pb-4">
+                                <div className="flex gap-x-8">
                                     <div className="flex flex-col">
                                         <CardDescription>
                                             Address
@@ -137,7 +137,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                             <></>
                         ) : (
                             <>
-                                <div className="flex flex-col gap-y-2 border-t pt-4">
+                                <div className="flex flex-col gap-y-2">
                                     <div>
                                         <CardDescription>
                                             Transaction Fee
