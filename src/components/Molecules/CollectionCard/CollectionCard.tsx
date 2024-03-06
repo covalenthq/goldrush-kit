@@ -63,7 +63,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                     <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
                         <AddressAvatar
                             type={"nft"}
-                            address={nfts[0].nft_data.external_data.image_512}
+                            address={nfts[0].nft_data?.external_data?.image_512}
                             size={GRK_SIZES.MEDIUM}
                         />
                         <div className="flex h-full flex-col justify-center">
