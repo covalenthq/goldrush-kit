@@ -5,6 +5,9 @@ export { NFTWalletTokenListView } from "./components/Organisms/NFTs/NFTWalletTok
 export { NFTCollectionTokenListView } from "./components/Organisms/NFTs/NFTCollectionTokenListView/NFTCollectionTokenListView";
 export { NFTDetailView } from "./components/Organisms/NFTs/NFTDetailView/NFTDetailView";
 
+export { BlockCardView } from "./components/Molecules/BlockCardView/BlockCardView";
+export { type BlockCardViewProps } from "./utils/types/molecules.types";
+
 export { XYKPoolDetailView } from "./components/Organisms/XYK/XYKPoolDetailView/XYKPoolDetailView";
 export { XYKPoolListView } from "./components/Organisms/XYK/XYKPoolListView/XYKPoolListView";
 export { XYKPoolTransactionsListView } from "./components/Organisms/XYK/XYKPoolTransactionsListView/XYKPoolTransactionsListView";
