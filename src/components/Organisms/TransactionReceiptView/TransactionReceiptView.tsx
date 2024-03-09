@@ -30,7 +30,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
 
     return (
         <section className="overflow-hidden rounded border">
-             <figure className="h-10 w-full bg-primary-light dark:bg-primary-dark" />
+            <figure className="h-10 w-full bg-primary-light dark:bg-primary-dark" />
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
                     <TypographyH4>Transaction Receipt</TypographyH4>

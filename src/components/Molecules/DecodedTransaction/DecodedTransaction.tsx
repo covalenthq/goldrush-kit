@@ -244,7 +244,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 title={heading}
                                                             >
                                                                 <div
-                                                                    className="text-sm text-muted-foreground"
+                                                                    className="text-muted-foreground text-sm"
                                                                     title={
                                                                         heading
                                                                     }

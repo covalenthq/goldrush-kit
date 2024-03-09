@@ -31,7 +31,7 @@ export const Address: React.FC<AddressProps> = ({ address }) => {
                     <IconWrapper
                         icon_class_name="done"
                         icon_size="text-sm"
-                       class_name="text-secondary-light dark:text-secondary-dark"
+                        class_name="text-secondary-light dark:text-secondary-dark"
                     />
                 ) : (
                     <IconWrapper
