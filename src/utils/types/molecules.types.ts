@@ -68,7 +68,7 @@ export interface XYKPoolTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
-    pool_data?: PoolWithTimeseries;
+    pool_data?: PoolWithTimeseries | null;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
@@ -82,14 +82,14 @@ export interface XYKPoolInformationProps {
     pool_address: string;
     chain_name: Chain;
     dex_name: string;
-    pool_data?: PoolWithTimeseries;
+    pool_data?: PoolWithTimeseries | null;
 }
 
 export interface XYKTokenInformationProps {
     token_address: string;
     chain_name: Chain;
     dex_name: string;
-    token_data?: TokenV2VolumeWithChartData;
+    token_data?: TokenV2VolumeWithChartData | null;
 }
 
 export interface XYKOverviewTimeSeriesProps {
@@ -103,7 +103,7 @@ export interface XYKTokenTimeSeriesProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
-    token_data?: TokenV2VolumeWithChartData;
+    token_data?: TokenV2VolumeWithChartData | null;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 

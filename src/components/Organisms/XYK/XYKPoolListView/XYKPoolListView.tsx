@@ -66,7 +66,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     });
     const [hasMore, setHasMore] = useState<boolean>();
 
-    const handlePagination = (page_number: any) => {
+    const handlePagination = (page_number: number) => {
         setPagination((prev) => {
             return {
                 ...prev,
@@ -280,7 +280,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             ),
             cell: ({ row }) => {
                 const valueFormatted = calculateFeePercentage(
-                    row.original.annualized_fee
+                    +row.original.annualized_fee
                 );
 
                 return (

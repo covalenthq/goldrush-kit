@@ -9,38 +9,41 @@ import { XYKPoolTimeSeries } from "@/components/Molecules/XYK/XYKPoolTimeSeries/
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { prettyToken } from "@/utils/functions/pretty-token";
 import { XYKPoolInformation } from "@/components/Molecules/XYK/XYKPoolInformation/XYKPoolInformation";
+import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
     chain_name,
     dex_name,
     pool_address,
 }) => {
-    const [maybeResult, setResult] = useState<Option<any>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
-            let response;
             setResult(None);
+            setErrorMessage(null);
             try {
-                response = await covalentClient.XykService.getPoolByAddress(
-                    chain_name,
-                    dex_name,
-                    pool_address
-                );
-                setResult(new Some(response.data.items[0]));
-            } catch (error) {
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                const { data, ...error } =
+                    await covalentClient.XykService.getPoolByAddress(
+                        chain_name,
+                        dex_name,
+                        pool_address
+                    );
+                setResult(new Some(data.items[0]));
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+            } catch (exception) {
+                console.error(exception);
             }
         })();
     }, [chain_name, dex_name]);
 
-    if (error.error) {
-        return <>{error.error_message}</>;
+    if (errorMessage) {
+        return <>{errorMessage}</>;
     }
 
     return (
@@ -179,8 +182,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                                                         }
                                                     />
                                                     {`${prettyToken(
-                                                        token_0.reserve,
-                                                        token_0.contract_decimals
+                                                        +token_0.reserve,
+                                                        +token_0.contract_decimals
                                                     )} ${
                                                         token_0.contract_ticker_symbol
                                                     }`}
@@ -195,8 +198,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                                                         }
                                                     />
                                                     {`${prettyToken(
-                                                        token_1.reserve,
-                                                        token_1.contract_decimals
+                                                        +token_1.reserve,
+                                                        +token_1.contract_decimals
                                                     )} ${
                                                         token_1.contract_ticker_symbol
                                                     }`}

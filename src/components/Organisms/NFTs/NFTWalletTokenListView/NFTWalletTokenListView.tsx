@@ -15,7 +15,6 @@ import {
     CardDescription,
     CardTitle,
 } from "@/components/ui/card";
-import flatMap from "lodash/flatMap";
 import sum from "lodash/sum";
 import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,50 +28,40 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
 }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
-    const { covalentClient } = useGoldRush();
-    const [error, setError] = useState({ error: false, error_message: "" });
-    const [allChains, setAllChains] = useState<Option<ChainItem[]>>(None);
-
-    const handleAllChains = async () => {
-        const allChainsResp = await covalentClient.BaseService.getAllChains();
-        setAllChains(new Some(allChainsResp.data.items));
-    };
-
-    const handleNftsToken = async () => {
-        setResult(None);
-        const promises = chain_names.map(async (chain) => {
-            const cache = !allowedCacheChains.includes(chain);
-            let response;
-            try {
-                response = await covalentClient.NftService.getNftsForAddress(
-                    chain,
-                    address.trim(),
-                    {
-                        withUncached: cache,
-                    }
-                );
-
-                setError({ error: false, error_message: "" });
-                return response.data.items.map((o) => {
-                    return { ...o, chain };
-                });
-            } catch (error) {
-                console.error(`Error fetching balances for ${chain}:`, error);
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
-                return [];
-            }
-        });
-
-        const results = await Promise.all(promises);
-        setResult(new Some(results.flat()));
-    };
+    const { covalentClient, chains } = useGoldRush();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        handleAllChains();
-        handleNftsToken();
+        (async () => {
+            setResult(None);
+            setErrorMessage(null);
+            const promises = chain_names.map(async (chain) => {
+                const cache = !allowedCacheChains.includes(chain);
+                try {
+                    const { data, ...error } =
+                        await covalentClient.NftService.getNftsForAddress(
+                            chain,
+                            address.trim(),
+                            {
+                                withUncached: cache,
+                            }
+                        );
+                    if (error.error) {
+                        setErrorMessage(error.error_message);
+                        throw error;
+                    }
+                    return data.items.map((o) => {
+                        return { ...o, chain };
+                    });
+                } catch (exception) {
+                    console.error(exception);
+                    return [];
+                }
+            });
+
+            const results = await Promise.all(promises);
+            setResult(new Some(results.flat()));
+        })();
     }, [chain_names, address]);
 
     return (
@@ -131,126 +120,107 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
             <div className="flex flex-wrap gap-3">
                 {maybeResult.match({
                     None: () =>
-                        [1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {
+                        [1, 2, 3, 4, 5, 6, 7, 8].map((o) => {
                             return (
                                 <Skeleton
-                                    key={i}
+                                    key={o}
                                     isNFT
                                     size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                                 />
                             );
                         }),
-                    Some: (result: any) => {
-                        if (error.error) {
-                            return <>{error.error_message}</>;
-                        } else if (!error.error && result.length === 0) {
-                            return <>No results</>;
-                        } else if (result.length > 0) {
-                            return result.map((items: any) => {
-                                return flatMap(items.nft_data, (it) => {
-                                    return allChains.match({
-                                        None: () => <></>,
-                                        Some: (chains) => {
-                                            const chain: ChainItem =
-                                                chains.filter(
-                                                    (o) =>
-                                                        o.name === items.chain
-                                                )[0];
-                                            const chainColor =
-                                                chain.color_theme.hex;
-                                            const isDarkMode =
-                                                document.documentElement.classList.contains(
-                                                    "dark"
-                                                );
-                                            return (
-                                                <Card className="w-[230px] rounded border">
-                                                    <CardContent className="relative rounded bg-slate-100">
-                                                        <img
-                                                            className={`block h-[10rem] w-full rounded-t ${
-                                                                it.external_data
-                                                                    ?.image_512
-                                                                    ? "object-cover"
-                                                                    : "p-2"
-                                                            }`}
-                                                            src={
-                                                                it.external_data
-                                                                    ?.image_512
-                                                                    ? it
-                                                                          .external_data
-                                                                          .image_512
-                                                                    : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
-                                                            }
-                                                            onError={(e) => {
-                                                                e.currentTarget.classList.remove(
-                                                                    "object-cover"
-                                                                );
-                                                                e.currentTarget.classList.add(
-                                                                    "p-2"
-                                                                );
-                                                                e.currentTarget.src =
-                                                                    "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                            }}
-                                                        />
-                                                        <div
-                                                            className={`absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] p-1 ${
-                                                                !isDarkMode
-                                                                    ? "bg-white"
-                                                                    : "bg-black"
-                                                            } tokenAvatar`}
-                                                            style={{
-                                                                border: `2px solid `,
-                                                                borderColor: `${chainColor}`,
-                                                            }}
-                                                        >
-                                                            <TokenAvatar
-                                                                is_chain_logo
-                                                                size={
-                                                                    GRK_SIZES.EXTRA_SMALL
-                                                                }
-                                                                chain_color={
-                                                                    chainColor
-                                                                }
-                                                                token_url={
-                                                                    chain.logo_url
-                                                                }
-                                                            />
-                                                        </div>
-                                                    </CardContent>
-                                                    <div className="p-4">
-                                                        <CardDescription>
-                                                            {" "}
-                                                            {
-                                                                items.contract_name
-                                                            }
-                                                        </CardDescription>
-                                                        <CardTitle className="truncate">
-                                                            #
-                                                            {it.token_id?.toString()}
-                                                        </CardTitle>
-                                                        <div className="mt-2">
-                                                            <small className="text-muted-foreground">
-                                                                Est. Value
-                                                            </small>
-                                                            <p>
-                                                                {" "}
-                                                                {items.pretty_floor_price_quote ? (
-                                                                    items.pretty_floor_price_quote
-                                                                ) : (
-                                                                    <span>
-                                                                        -
-                                                                    </span>
-                                                                )}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </Card>
-                                            );
-                                        },
-                                    });
-                                });
-                            });
-                        }
-                    },
+                    Some: (result) =>
+                        errorMessage ? (
+                            <>{errorMessage}</>
+                        ) : result.length === 0 ? (
+                            <>No results</>
+                        ) : (
+                            result.flatMap((items) => {
+                                const chain: ChainItem | null =
+                                    chains?.find(
+                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                        // @ts-ignore
+                                        (o) => o.name === items.chain
+                                    ) ?? null;
+                                const chainColor = chain?.color_theme.hex;
+                                const isDarkMode =
+                                    document.documentElement.classList.contains(
+                                        "dark"
+                                    );
+                                return items.nft_data.map((nft, i) => (
+                                    <Card
+                                        key={i}
+                                        className="w-[230px] rounded border"
+                                    >
+                                        <CardContent className="relative rounded bg-slate-100">
+                                            <img
+                                                className={`block h-[10rem] w-full rounded-t ${
+                                                    nft.external_data?.image_512
+                                                        ? "object-cover"
+                                                        : "p-2"
+                                                }`}
+                                                src={
+                                                    nft.external_data?.image_512
+                                                        ? nft.external_data
+                                                              .image_512
+                                                        : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                                }
+                                                onError={(e) => {
+                                                    e.currentTarget.classList.remove(
+                                                        "object-cover"
+                                                    );
+                                                    e.currentTarget.classList.add(
+                                                        "p-2"
+                                                    );
+                                                    e.currentTarget.src =
+                                                        "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+                                                }}
+                                            />
+                                            <div
+                                                className={`absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] p-1 ${
+                                                    !isDarkMode
+                                                        ? "bg-white"
+                                                        : "bg-black"
+                                                } tokenAvatar`}
+                                                style={{
+                                                    border: `2px solid `,
+                                                    borderColor: `${chainColor}`,
+                                                }}
+                                            >
+                                                <TokenAvatar
+                                                    is_chain_logo
+                                                    size={GRK_SIZES.EXTRA_SMALL}
+                                                    chain_color={chainColor}
+                                                    token_url={chain?.logo_url}
+                                                />
+                                            </div>
+                                        </CardContent>
+                                        <div className="p-4">
+                                            <CardDescription>
+                                                {" "}
+                                                {items.contract_name}
+                                            </CardDescription>
+                                            <CardTitle className="truncate">
+                                                #{nft.token_id?.toString()}
+                                            </CardTitle>
+                                            <div className="mt-2">
+                                                <small className="text-muted-foreground">
+                                                    Est. Value
+                                                </small>
+                                                <p>
+                                                    {" "}
+                                                    {items.pretty_floor_price_quote ? (
+                                                        items.pretty_floor_price_quote
+                                                    ) : (
+                                                        <span>-</span>
+                                                    )}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                ));
+                            })
+                        ),
                 })}
             </div>
         </div>

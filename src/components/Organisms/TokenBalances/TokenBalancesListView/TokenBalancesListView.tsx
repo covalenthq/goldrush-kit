@@ -266,8 +266,8 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 />
             ),
             cell: ({ row }) => {
+                // * INFO: debugger
                 // const delta =  row.original.quote / (row.original as any).quote_24h
-                // debugger;
 
                 return (
                     <div className="text-right">

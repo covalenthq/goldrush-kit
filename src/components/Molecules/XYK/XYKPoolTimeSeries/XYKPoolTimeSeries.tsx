@@ -12,6 +12,7 @@ import { type XYKPoolTimeSeriesProps } from "@/utils/types/molecules.types";
 import {
     prettifyCurrency,
     type PoolWithTimeseries,
+    type LiquidityTimeseries,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
@@ -23,7 +24,8 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
     displayMetrics = "both",
 }) => {
     const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
-    const [chartData, setChartData] = useState<Option<any>>(None);
+    const [chartData, setChartData] =
+        useState<Option<{ [key: string]: string | number | Date }[]>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [timeSeries, setTimeSeries] = useState<string>(
         displayMetrics !== "both" ? displayMetrics : "liquidity"
@@ -31,28 +33,32 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
     const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
 
-    const handleChartData = () => {
+    useEffect(() => {
         maybeResult.match({
             None: () => null,
-            Some: (response: any) => {
+            Some: (response) => {
                 const chart_key = `${timeSeries}_timeseries_${period}d`;
                 const value_key =
                     timeSeries === "price"
                         ? "price_of_token0_in_token1"
                         : `${timeSeries}_quote`;
 
-                const result = response[chart_key].map((x: any) => {
+                const result = (
+                    response[
+                        chart_key as keyof typeof response
+                    ] as PoolWithTimeseries["liquidity_timeseries_7d"]
+                ).map((x) => {
                     const dt = timestampParser(x.dt, "DD MMM YY");
                     return {
                         date: dt,
                         [`${capitalizeFirstLetter(timeSeries)} (USD)`]:
-                            x[value_key],
+                            x[value_key as keyof LiquidityTimeseries],
                     };
                 });
                 setChartData(new Some(result));
             },
         });
-    };
+    }, [maybeResult, period, timeSeries, displayMetrics]);
 
     useEffect(() => {
         setColor(rootColor());
@@ -70,10 +76,6 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
             setResult(new Some(response.data.items[0]));
         })();
     }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
-
-    useEffect(() => {
-        handleChartData();
-    }, [maybeResult, period, timeSeries, displayMetrics]);
 
     useEffect(() => {
         if (displayMetrics === "both") return;
