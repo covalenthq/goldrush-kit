@@ -3,7 +3,7 @@ import {
     allowedCacheChains,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import type { ChainItem } from "@covalenthq/client-sdk";
+import type { Chain, ChainItem } from "@covalenthq/client-sdk";
 import {
     prettifyCurrency,
     type NftTokenContractBalanceItem,
@@ -26,21 +26,23 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     chain_names,
     address,
 }) => {
-    const [maybeResult, setResult] =
-        useState<Option<NftTokenContractBalanceItem[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<
+            Option<(NftTokenContractBalanceItem & { chain_name: Chain })[]>
+        >(None);
     const { covalentClient, chains } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
-            const promises = chain_names.map(async (chain) => {
-                const cache = !allowedCacheChains.includes(chain);
+            const promises = chain_names.map(async (chain_name) => {
+                const cache = !allowedCacheChains.includes(chain_name);
                 try {
                     const { data, ...error } =
                         await covalentClient.NftService.getNftsForAddress(
-                            chain,
+                            chain_name,
                             address.trim(),
                             {
                                 withUncached: cache,
@@ -51,7 +53,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                         throw error;
                     }
                     return data.items.map((o) => {
-                        return { ...o, chain };
+                        return { ...o, chain_name };
                     });
                 } catch (exception) {
                     console.error(exception);
@@ -60,7 +62,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
             });
 
             const results = await Promise.all(promises);
-            setResult(new Some(results.flat()));
+            setMaybeResult(new Some(results.flat()));
         })();
     }, [chain_names, address]);
 
@@ -138,9 +140,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                             result.flatMap((items) => {
                                 const chain: ChainItem | null =
                                     chains?.find(
-                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                        // @ts-ignore
-                                        (o) => o.name === items.chain
+                                        (o) => o.name === items.chain_name
                                     ) ?? null;
                                 const chainColor = chain?.color_theme.hex;
                                 const isDarkMode =
