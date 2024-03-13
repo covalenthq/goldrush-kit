@@ -22,7 +22,15 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     chain_name,
     collection_address,
 }) => {
-    const [maybeResult, setResult] = useState<Option<any[]>>(None);
+    const [maybeResult, setResult] = useState<
+        Option<
+            {
+                date: string;
+                [floor_price: `Floor price (${string})`]: number | string;
+                pretty_floor_price_quote: string;
+            }[]
+        >
+    >(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
@@ -43,7 +51,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
             setColor(rootColor());
             setResult(
                 new Some(
-                    response.data.items.map((x: any) => {
+                    response.data.items.map((x) => {
                         const dt = timestampParser(x.date, "DD MMM YY");
                         return {
                             date: dt,

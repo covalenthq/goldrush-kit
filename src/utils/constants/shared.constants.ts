@@ -339,7 +339,10 @@ export enum PERIOD {
     DAYS_90 = 90,
 }
 
-export const POOL_TRANSACTION_MAP: any = {
+export const POOL_TRANSACTION_MAP: Record<
+    string,
+    { name: string; color: string }
+> = {
     SWAP: {
         name: "SWAP",
         color: "secondary",

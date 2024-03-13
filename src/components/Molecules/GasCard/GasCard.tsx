@@ -88,7 +88,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                 </div>
                             );
                         },
-                        Some: (result: any) => {
+                        Some: (result) => {
                             if (error.error) {
                                 return (
                                     <div className="flex items-center justify-center">

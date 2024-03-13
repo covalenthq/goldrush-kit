@@ -20,6 +20,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
     useEffect(() => {
         (async () => {
             setResult(None);
+            setErrorMessage(null);
             try {
                 const { data, ...error } =
                     await covalentClient.BaseService.getBlock(

@@ -65,7 +65,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     });
     const [hasMore, setHasMore] = useState<boolean>();
 
-    const handlePagination = (page_number: any) => {
+    const handlePagination = (page_number: number) => {
         setPagination((prev) => {
             return {
                 ...prev,

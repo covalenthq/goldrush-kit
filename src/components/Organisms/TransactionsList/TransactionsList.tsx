@@ -54,13 +54,14 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     ]);
     const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [filterResult, setFilterResult] =
         useState<Option<Transaction[]>>(None);
 
     useEffect(() => {
         (async () => {
             setResult(None);
+            setErrorMessage(null);
             try {
                 const { data, ...error } =
                     await covalentClient.TransactionService.getAllTransactionsForAddressByPage(
@@ -73,20 +74,12 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
                         }
                     );
                 if (error.error) {
+                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setResult(new Some(data.items));
-                setError({ error: false, error_message: "" });
-            } catch (error: any) {
-                console.error(
-                    `Error fetching balances for ${chain_name}:`,
-                    error
-                );
-                setError({
-                    error: error.error || false,
-                    error_message: error.error_message || "",
-                });
-                return [];
+            } catch (exception) {
+                console.error(exception);
             }
         })();
     }, [chain_name, address]);
@@ -357,16 +350,16 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
     const body = filterResult.match({
         None: () => <SkeletonTable cols={7} />,
         Some: () =>
-            error.error ? (
+            errorMessage ? (
                 <TableRow>
                     <TableCell
                         colSpan={columns.length}
                         className="h-24 text-center"
                     >
-                        {error.error_message}
+                        {errorMessage}
                     </TableCell>
                 </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
+            ) : table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                     <TableRow
                         key={row.id}

@@ -14,7 +14,14 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
     chain_name,
     collection_address,
 }) => {
-    const [maybeResult, setResult] = useState<Option<any[]>>(None);
+    const [maybeResult, setResult] = useState<
+        Option<
+            {
+                date: string;
+                "Sale Count": number;
+            }[]
+        >
+    >(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
@@ -32,7 +39,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
 
             setResult(
                 new Some(
-                    response.data.items.map((x: any) => {
+                    response.data.items.map((x) => {
                         const dt = timestampParser(x.date, "DD MMM YY");
                         return {
                             date: dt,

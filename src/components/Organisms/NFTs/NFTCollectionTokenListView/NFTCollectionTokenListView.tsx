@@ -124,7 +124,7 @@ export const NFTCollectionTokenListView: React.FC<
                                     None: () => (
                                         <Skeleton size={GRK_SIZES.LARGE} />
                                     ),
-                                    Some: (data: any) => {
+                                    Some: (data) => {
                                         return (
                                             <>
                                                 {
@@ -148,7 +148,7 @@ export const NFTCollectionTokenListView: React.FC<
                                     None: () => (
                                         <Skeleton size={GRK_SIZES.LARGE} />
                                     ),
-                                    Some: (data: any) => {
+                                    Some: (data) => {
                                         return (
                                             <>
                                                 {
@@ -178,7 +178,7 @@ export const NFTCollectionTokenListView: React.FC<
                                     />
                                 );
                             }),
-                        Some: (result: any) => {
+                        Some: (result) => {
                             if (error.error) {
                                 return <>{error.error_message}</>;
                             } else if (!error.error && result.length === 0) {

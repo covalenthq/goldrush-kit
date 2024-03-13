@@ -8,42 +8,42 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 import { XYKTokenInformation } from "@/components/Molecules/XYK/XYKTokenInformation/XYKTokenInformation";
 import { XYKTokenTimeSeries } from "@/components/Molecules/XYK/XYKTokenTimeSeries/XYKTokenTimeSeries";
+import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 
 export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({
     chain_name,
     dex_name,
     token_address,
 }) => {
-    const [maybeResult, setResult] = useState<Option<any>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [maybeResult, setResult] =
+        useState<Option<TokenV2VolumeWithChartData>>(None);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
-            let response;
             setResult(None);
+            setErrorMessage(null);
             try {
-                response = await covalentClient.XykService.getLpTokenView(
-                    chain_name,
-                    dex_name,
-                    token_address
-                );
-                setResult(new Some(response.data.items[0]));
-                setError({
-                    error: false,
-                    error_message: "",
-                });
-            } catch (error) {
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                const { data, ...error } =
+                    await covalentClient.XykService.getLpTokenView(
+                        chain_name,
+                        dex_name,
+                        token_address
+                    );
+                setResult(new Some(data.items[0]));
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+            } catch (exception) {
+                console.error(exception);
             }
         })();
     }, [chain_name, dex_name, token_address]);
 
-    if (error.error) {
-        return <>{error.error_message}</>;
+    if (errorMessage) {
+        return <>{errorMessage}</>;
     }
 
     if (
