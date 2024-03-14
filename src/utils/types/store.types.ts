@@ -49,5 +49,39 @@ export interface GoldRushThemeType {
 export interface GoldRushProviderProps {
     children: React.ReactNode;
     apikey: string;
-    theme?: Partial<GoldRushThemeType>;
+    newTheme?: Partial<GoldRushThemeType>;
+    /**
+     * @deprecated `mode` is deprecated as support will be removed in the upcoming releases. Use `newTheme.mode` instead.
+     */
+    mode?: "dark" | "light";
+    /**
+     * @deprecated `theme` is deprecated as support will be removed in the upcoming releases. Use `newTheme.style` instead.
+     */
+    theme?: "classic" | "neo";
+    /**
+     * @deprecated `border_radius` is deprecated as support will be removed in the upcoming releases. Use `newTheme.borderRadius` instead.
+     */
+    border_radius?: "none" | "small" | "medium" | "large" | "full";
+    /**
+     * @deprecated `color` is deprecated as support will be removed in the upcoming releases. Use `newTheme.colors` instead.
+     */
+    color?:
+        | "slate"
+        | "stone"
+        | "red"
+        | "orange"
+        | "amber"
+        | "yellow"
+        | "lime"
+        | "green"
+        | "emerald"
+        | "cyan"
+        | "sky"
+        | "blue"
+        | "indigo"
+        | "violet"
+        | "purple"
+        | "fuchsia"
+        | "pink"
+        | "rose";
 }

@@ -22,7 +22,7 @@ const GoldRushContext = createContext<GoldRushContextType>(
 export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     children,
     apikey,
-    theme: newTheme,
+    newTheme,
 }) => {
     const covalentClient = useMemo<CovalentClient>(
         () => new CovalentClient(apikey, {}, "GoldRush"),
