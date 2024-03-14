@@ -52,7 +52,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                     setTxMetadata(None);
                 }
                 const response = await fetch(
-                    "http://localhost:8080/api/v1/tx/decode",
+                    "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
                     {
                         body: JSON.stringify({
                             chain_name: chain_name,
