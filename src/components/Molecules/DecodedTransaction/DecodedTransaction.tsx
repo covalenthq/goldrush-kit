@@ -240,11 +240,11 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                     ticker_symbol +
                                                                     heading
                                                                 }
-                                                                className="text-sm text-secondary-light dark:text-secondary-dark"
+                                                                className="text-sm"
                                                                 title={heading}
                                                             >
                                                                 <div
-                                                                    className="text-muted-foreground text-sm"
+                                                                    className=" text-sm text-secondary-light dark:text-secondary-dark"
                                                                     title={
                                                                         heading
                                                                     }
