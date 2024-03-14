@@ -1,11 +1,12 @@
 import { copyToClipboard, truncate } from "@/utils/functions";
 import { IconWrapper } from "@/components/Shared";
 import { type AddressProps } from "@/utils/types/atoms.types";
-import { toast } from "@/utils/hooks/use-toast";
+import { useToast } from "@/utils/hooks";
 import { useState } from "react";
 
 export const Address: React.FC<AddressProps> = ({ address }) => {
     const [showCopy, setShowCopy] = useState(false);
+    const { toast } = useToast();
 
     const handleCopyClick = () => {
         toast({

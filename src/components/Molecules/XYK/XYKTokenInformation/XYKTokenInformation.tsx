@@ -4,7 +4,7 @@ import { useGoldRush } from "@/utils/store";
 import { copyToClipboard, truncate } from "@/utils/functions";
 import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 import { useState } from "react";
-import { useToast } from "../../../../utils/hooks/use-toast";
+import { useToast } from "../../../../utils/hooks";
 import { IconWrapper } from "@/components/Shared";
 import { type XYKTokenInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
