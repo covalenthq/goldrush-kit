@@ -7,7 +7,7 @@ import {
     type ExchangeTransaction,
 } from "@covalenthq/client-sdk";
 import { useState } from "react";
-import { useToast } from "../../../../utils/hooks/use-toast";
+import { useToast } from "../../../../utils/hooks";
 import { IconWrapper } from "@/components/Shared";
 import { type XYKWalletInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";

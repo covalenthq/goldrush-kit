@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import QRCode from "react-qr-code";
 import { useState } from "react";
-import { useToast } from "../../../utils/hooks/use-toast";
+import { useToast } from "../../../utils/hooks";
 import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
