@@ -341,7 +341,7 @@ export enum PERIOD {
 
 export const POOL_TRANSACTION_MAP: Record<
     string,
-    { name: string; color: string }
+    { name: string; color: "default" | "secondary" | "destructive" | "outline" }
 > = {
     SWAP: {
         name: "SWAP",
