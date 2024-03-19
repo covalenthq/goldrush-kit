@@ -30,12 +30,11 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
 
     return (
         <section className="overflow-hidden rounded border">
-            <figure className="h-10 w-full bg-accent" />
-
+            <figure className="h-10 w-full bg-primary-light dark:bg-primary-dark" />
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
                     <TypographyH4>Transaction Receipt</TypographyH4>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-secondary-light dark:text-secondary-dark">
                         <Address address={tx_hash} />
                     </div>
                 </header>
@@ -62,14 +61,14 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                 <div className="flex flex-col gap-y-1">
                                     <CardDescription>
                                         Chain:{" "}
-                                        <span className="text-black dark:text-text-color-50">
+                                        <span className="text-black dark:text-slate-50">
                                             {CHAIN?.label}
                                         </span>
                                     </CardDescription>
 
                                     <CardDescription>
                                         Transaction Time:{" "}
-                                        <span className="inline-flex items-center gap-x-1 text-black dark:text-text-color-50">
+                                        <span className="inline-flex items-center gap-x-1 text-black dark:text-slate-50">
                                             {timestampParser(
                                                 metadata.block_signed_at.toString(),
                                                 relativeTime
@@ -144,7 +143,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                         </CardDescription>
                                         <CardDescription>
                                             <span
-                                                className="text-black dark:text-text-color-50"
+                                                className="text-black dark:text-slate-50"
                                                 title={calculatePrettyBalance(
                                                     BigInt(
                                                         metadata.fees_paid || 0
@@ -176,7 +175,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                             Exchange Rate
                                         </CardDescription>
                                         <CardDescription>
-                                            <span className="text-black dark:text-text-color-50">
+                                            <span className="text-black dark:text-slate-50">
                                                 1 USD ={" "}
                                                 {1 /
                                                     (metadata.gas_quote_rate ??
@@ -194,7 +193,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                             Gas Price
                                         </CardDescription>
                                         <CardDescription>
-                                            <span className="text-black dark:text-text-color-50">
+                                            <span className="text-black dark:text-slate-50">
                                                 {calculatePrettyBalance(
                                                     BigInt(metadata.gas_price),
                                                     metadata.gas_metadata

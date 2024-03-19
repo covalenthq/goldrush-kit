@@ -2,11 +2,14 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BarChart } from "@tremor/react";
-import { rootColor, timestampParser } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
+import {
+    CHART_COLORS,
+    GRK_SIZES,
+    PERIOD,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTSalesCountProps } from "@/utils/types/molecules.types";
 
@@ -23,7 +26,6 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
         >
     >(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
@@ -35,7 +37,6 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                     collection_address,
                     { days: period }
                 );
-            setColor(rootColor());
 
             setResult(
                 new Some(
@@ -67,7 +68,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                         data={result}
                         index="date"
                         categories={["Sale Count"]}
-                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                        colors={CHART_COLORS}
                     />
                 </div>
             );
@@ -86,7 +87,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_7 ? "accent" : "outline"
+                            period === PERIOD.DAYS_7 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_7)}
                     >
@@ -95,7 +96,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_30 ? "accent" : "outline"
+                            period === PERIOD.DAYS_30 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_30)}
                     >
@@ -104,7 +105,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_90 ? "accent" : "outline"
+                            period === PERIOD.DAYS_90 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_90)}
                     >

@@ -25,7 +25,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatar } from "../../Atoms/TokenAvatar/TokenAvatar";
 import {
     timestampParser,
     truncate,
@@ -340,7 +340,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                 if (lastGroup !== currentGroup) {
                                     lastGroup = currentGroup;
                                     return (
-                                        <TableRow className="bg-accent bg-opacity-10 text-xs uppercase text-muted-foreground">
+                                        <TableRow className="bg-accent bg-opacity-10 text-xs uppercase text-primary-light-200">
                                             <TableCell
                                                 colSpan={
                                                     row.getVisibleCells().length
@@ -432,7 +432,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                     }
                                                 />
-                                                <span className=" text-secondary ">
+                                                <span className=" text-secondary-light ">
                                                     {chain?.category_label}
                                                 </span>
                                             </>
@@ -461,7 +461,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                     }
                                                 />
-                                                <span className=" text-secondary ">
+                                                <span className=" text-secondary-light ">
                                                     {
                                                         result.contract_ticker_symbol
                                                     }
@@ -536,7 +536,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                 : 0;
                                             handleSkipPagination(page);
                                         }}
-                                        className="p-1 rounded w-16 border text-accent dark:text-text-color-50  bg-transparent shadow-sm hover:bg-accent border-accent-foreground hover:bg-accent-foreground"
+                                        className="p-1 rounded w-16 border text-accent dark:text-slate-50  bg-transparent shadow-sm hover:bg-accent border-accent-foreground hover:bg-accent-foreground"
                                     />
                                 </div> */}
                                 <DropdownMenu>

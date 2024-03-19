@@ -66,20 +66,20 @@ export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
                         <IconWrapper
                             icon_class_name="done"
                             icon_size="text-sm"
-                            class_name="text-secondary dark:text-secondary"
+                            class_name="text-secondary-light dark:text-secondary-dark"
                         />
                     ) : (
                         copy && (
                             <IconWrapper
                                 icon_class_name="content_copy"
                                 icon_size="text-sm"
-                                class_name="text-secondary dark:text-secondary cursor-pointer"
+                                class_name="text-secondary-light dark:text-secondary-light cursor-pointer"
                                 on_click={() => handleCopyClick()}
                             />
                         )
                     )}
                 </div>
-                <div className="text-md text-secondary">{label}</div>
+                <div className="text-md text-secondary-light">{label}</div>
             </div>
         );
     };

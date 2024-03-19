@@ -2,7 +2,7 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
-import { rootColor, timestampParser } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import {
     calculatePrettyBalance,
@@ -10,11 +10,11 @@ import {
 } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+    CHART_COLORS,
     CURRENCY,
     GRK_SIZES,
     PERIOD,
 } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
 
@@ -34,7 +34,6 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
-    const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
@@ -48,7 +47,6 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                     { days: period }
                 );
 
-            setColor(rootColor());
             setResult(
                 new Some(
                     response.data.items.map((x) => {
@@ -90,7 +88,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
             return (
                 <div>
                     <LineChart
-                        className="mt-2 p-2"
+                        className="mt-2 border p-2"
                         data={result}
                         index="date"
                         valueFormatter={
@@ -103,7 +101,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                                 ? "Floor price (USD)"
                                 : floor_price_native,
                         ]}
-                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                        colors={CHART_COLORS}
                         yAxisWidth={80}
                     />
                 </div>
@@ -122,7 +120,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            currency === CURRENCY.USD ? "accent" : "outline"
+                            currency === CURRENCY.USD ? "primary" : "outline"
                         }
                         onClick={() => setCurrency(CURRENCY.USD)}
                     >
@@ -141,7 +139,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                             <Button
                                 variant={
                                     currency === CURRENCY.NATIVE
-                                        ? "accent"
+                                        ? "primary"
                                         : "outline"
                                 }
                                 onClick={() => setCurrency(CURRENCY.NATIVE)}
@@ -158,7 +156,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                 <div className="flex gap-2">
                     <Button
                         variant={
-                            period === PERIOD.DAYS_7 ? "accent" : "outline"
+                            period === PERIOD.DAYS_7 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_7)}
                         disabled={!maybeResult.isDefined}
@@ -167,7 +165,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                     </Button>
                     <Button
                         variant={
-                            period === PERIOD.DAYS_30 ? "accent" : "outline"
+                            period === PERIOD.DAYS_30 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_30)}
                         disabled={!maybeResult.isDefined}
@@ -176,7 +174,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                     </Button>
                     <Button
                         variant={
-                            period === PERIOD.DAYS_90 ? "accent" : "outline"
+                            period === PERIOD.DAYS_90 ? "primary" : "outline"
                         }
                         disabled={!maybeResult.isDefined}
                         onClick={() => setPeriod(PERIOD.DAYS_90)}

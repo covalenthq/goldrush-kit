@@ -31,7 +31,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatar } from "../../Atoms/TokenAvatar/TokenAvatar";
 import { Button } from "@/components/ui/button";
 import { timestampParser } from "@/utils/functions";
 import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
@@ -548,7 +548,9 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
                 <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
-                    <h2 className="text-md text-secondary">Total Quote</h2>
+                    <h2 className="text-md text-secondary-light">
+                        Total Quote
+                    </h2>
                     <div className="flex items-end gap-2">
                         <span className="text-base">
                             {filterResult.match({
@@ -570,7 +572,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <span className="flex text-sm text-secondary">
+                        <span className="flex text-sm text-secondary-light">
                             {filterResult.match({
                                 None: () => (
                                     <Skeleton

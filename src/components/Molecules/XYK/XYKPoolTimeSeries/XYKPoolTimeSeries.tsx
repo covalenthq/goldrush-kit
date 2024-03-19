@@ -2,11 +2,14 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AreaChart, BarChart } from "@tremor/react";
-import { rootColor, timestampParser } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES, PERIOD } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
+import {
+    CHART_COLORS,
+    GRK_SIZES,
+    PERIOD,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolTimeSeriesProps } from "@/utils/types/molecules.types";
 import {
@@ -30,7 +33,6 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
     const [timeSeries, setTimeSeries] = useState<string>(
         displayMetrics !== "both" ? displayMetrics : "liquidity"
     );
-    const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
@@ -61,7 +63,6 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
     }, [maybeResult, period, timeSeries, displayMetrics]);
 
     useEffect(() => {
-        setColor(rootColor());
         if (pool_data) {
             setResult(new Some(pool_data));
             return;
@@ -102,7 +103,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                         categories={[
                             `${capitalizeFirstLetter(timeSeries)} (USD)`,
                         ]}
-                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                        colors={CHART_COLORS}
                     />
                 );
             }
@@ -117,7 +118,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                         categories={[
                             `${capitalizeFirstLetter(timeSeries)} (USD)`,
                         ]}
-                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                        colors={CHART_COLORS}
                     />
                 </div>
             );
@@ -139,7 +140,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                             disabled={!maybeResult.isDefined}
                             variant={
                                 timeSeries === "liquidity"
-                                    ? "accent"
+                                    ? "primary"
                                     : "outline"
                             }
                             onClick={() => setTimeSeries("liquidity")}
@@ -149,7 +150,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                         <Button
                             disabled={!maybeResult.isDefined}
                             variant={
-                                timeSeries === "volume" ? "accent" : "outline"
+                                timeSeries === "volume" ? "primary" : "outline"
                             }
                             onClick={() => setTimeSeries("volume")}
                         >
@@ -161,7 +162,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_7 ? "accent" : "outline"
+                            period === PERIOD.DAYS_7 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_7)}
                     >
@@ -170,7 +171,7 @@ export const XYKPoolTimeSeries: React.FC<XYKPoolTimeSeriesProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_30 ? "accent" : "outline"
+                            period === PERIOD.DAYS_30 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_30)}
                     >

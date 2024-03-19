@@ -2,15 +2,15 @@ import { type Option, None, Some } from "@/utils/option";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
-import { rootColor, timestampParser } from "@/utils/functions";
+import { timestampParser } from "@/utils/functions";
 import { TypographyH4 } from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+    CHART_COLORS,
     CURRENCY,
     GRK_SIZES,
     PERIOD,
 } from "@/utils/constants/shared.constants";
-import { CHART_COLORS } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTVolumeProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
@@ -31,7 +31,6 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
-    const [chartColor, setColor] = useState<any>("");
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
@@ -42,7 +41,6 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                 collection_address,
                 { days: period }
             );
-            setColor(rootColor());
 
             setResult(
                 new Some(
@@ -94,7 +92,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                                 ? "Volume (USD)"
                                 : floor_price_native,
                         ]}
-                        colors={chartColor ? [chartColor] : CHART_COLORS}
+                        colors={CHART_COLORS}
                     />
                 </div>
             );
@@ -112,7 +110,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            currency === CURRENCY.USD ? "accent" : "outline"
+                            currency === CURRENCY.USD ? "primary" : "outline"
                         }
                         onClick={() => setCurrency(CURRENCY.USD)}
                     >
@@ -131,7 +129,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                             <Button
                                 variant={
                                     currency === CURRENCY.NATIVE
-                                        ? "accent"
+                                        ? "primary"
                                         : "outline"
                                 }
                                 onClick={() => setCurrency(CURRENCY.NATIVE)}
@@ -149,7 +147,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_7 ? "accent" : "outline"
+                            period === PERIOD.DAYS_7 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_7)}
                     >
@@ -158,7 +156,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_30 ? "accent" : "outline"
+                            period === PERIOD.DAYS_30 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_30)}
                     >
@@ -167,7 +165,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                     <Button
                         disabled={!maybeResult.isDefined}
                         variant={
-                            period === PERIOD.DAYS_90 ? "accent" : "outline"
+                            period === PERIOD.DAYS_90 ? "primary" : "outline"
                         }
                         onClick={() => setPeriod(PERIOD.DAYS_90)}
                     >
