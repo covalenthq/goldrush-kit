@@ -4,7 +4,6 @@ import { GoldRushProvider } from "../src/utils/store";
 // import { useDarkMode } from 'storybook-dark-mode' // uncomment out this one line for dark mode
 
 export const parameters = {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     themes: {
         clearable: false,
         list: [
@@ -56,7 +55,7 @@ const preview: Preview = {
         (storyFn) => (
             <GoldRushProvider
                 apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
-                theme={{
+                newTheme={{
                     borderRadius: 10,
                 }}
             >

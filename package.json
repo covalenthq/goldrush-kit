@@ -1,5 +1,5 @@
 {
-  "_id": "goldrush-kit@0.0.1",
+  "_id": "@covalenthq/goldrush-kit@0.4.7",
   "name": "@covalenthq/goldrush-kit",
   "version": "0.4.7",
   "types": "dist/index.d.ts",
@@ -20,23 +20,30 @@
   "files": [
     "/dist"
   ],
-  "repository": "https://github.com/covalenthq/goldrush-kit",
-  "author": "Covalent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/covalenthq/goldrush-kit.git"
+  },
+  "author": {
+    "name": "Covalent"
+  },
   "license": "Apache-2.0",
   "scripts": {
     "build:library": "vite build && npm run build:library-css",
     "build:library-css": "tailwindcss -m -i ./src/tailwind-input.css -o ./dist/styles.css --minify",
-    "build:storybook": "storybook build && npm run build:storybook-css",
+    "build:storybook": "storybook build && npm run build:storybook-css -o ./storybook-static",
     "build:storybook-css": "tailwindcss -m -i ./src/tailwind-input.css -o ./src/tailwind-output.css --minify",
     "bundle-size": "npx vite-bundle-visualizer",
     "dev": "concurrently -n \"storybook-css,storybook\" -c \"blue,red\" \"npm run dev:css\" \"storybook dev -p 6006\"",
     "dev:css": "tailwindcss -w -i ./src/tailwind-input.css -o ./src/tailwind-output.css --minify",
     "lint": "eslint ./src/",
     "prepublishOnly": "npm run build:library",
-    "pretty": "prettier . --write"
+    "pretty": "prettier . --write",
+    "chromatic": "npx chromatic --project-token=chpt_b1871680a878880 --build-script-name=build:storybook"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
+    "@storybook/addon-designs": "^8.0.0",
     "@storybook/addon-essentials": "^8.0.4",
     "@storybook/addon-interactions": "^8.0.4",
     "@storybook/addon-links": "^8.0.4",
@@ -53,7 +60,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.17",
     "babel-loader": "^8.3.0",
-    "chromatic": "^7.4.0",
+    "chromatic": "^7.6.0",
     "concurrently": "^7.6.0",
     "eslint": "^8.51.0",
     "eslint-config-standard-with-typescript": "^39.1.1",
@@ -106,5 +113,10 @@
     "storybook-tailwind-dark-mode": "^1.0.22",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/covalenthq/goldrush-kit/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/covalenthq/goldrush-kit#readme"
 }
