@@ -9,11 +9,14 @@ module.exports = {
         "storybook-dark-mode",
         // 'storybook-tailwind-dark-mode',
     ],
+    typescript: {
+        reactDocgen: "react-docgen-typescript",
+    },
     framework: {
         name: "@storybook/react-vite",
         options: {},
     },
     docs: {
-        docsPage: true,
+        autodocs: "tag",
     },
 };
