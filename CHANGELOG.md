@@ -39,16 +39,20 @@
 
 **Fixes**
 
+## Fixes
+
 -   Fix transactions receipt responsiveness
 -   Fix copy toast for address copy
 
-**Features**
+## Features
 
 -   Add block details v2
 
 ## 0.4.6
 
 **Fixes**
+
+## Fixes
 
 -   Type exporting for components
 -   Transaction receipt token image by handling svg or png
@@ -58,6 +62,8 @@
 ## 0.4.5
 
 **Fixes**
+
+## Fixes
 
 -   Refactor provider
 -   Fix quote rate being 0 on token pool list component
@@ -69,6 +75,8 @@
 
 **Fixes**
 
+## Fixes
+
 -   Fix decoder api body
 -   Detailed keys for Decoder
 
@@ -78,9 +86,11 @@
 
 **Fixes**
 
+## Fixes
+
 -   Mobile `on_click` fix
 
-**Features**
+## Features
 
 -   Components
     -   Block Details
@@ -98,6 +108,8 @@
 
 **Features**
 
+## Features
+
 -   Add transfer clicks to labels on list views
     -   PoolList
     -   TokenList
@@ -111,15 +123,19 @@
 
 **Features**
 
+## Features
+
 -   Add `chain_name` to the object when `on_transfer_click` function is ran on the `TokenBalanceListView` component.
 
 ## 0.4.0
 
 **Fixes**
 
+## Fixes
+
 -   Fix hydration error for Transactions Receipt
 
-**Features**
+## Features
 
 -   Added Address Detail View component
 
@@ -127,16 +143,20 @@
 
 **Fixes**
 
+## Fixes
+
 -   Forward apikey in context for transactions receipt fix
 -   Fix skeleton for transactions receipt
 
-**Features**
+## Features
 
 -   Added new gas card
 
 ## 0.3.8
 
 **Fixes**
+
+## Fixes
 
 -   Fixed image in README
 -   Added user agent
@@ -152,6 +172,8 @@
 
 **Fixes**
 
+## Fixes
+
 -   Added pagination to token list and pool list views
 -   Cache SVGs for token icons
 -   Consistent stories
@@ -165,6 +187,8 @@
 ## 0.3.6
 
 **Fixes**
+
+## Fixes
 
 -   Added pagination to token list and pool list views
 -   Cache SVGs for token icons
