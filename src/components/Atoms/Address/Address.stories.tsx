@@ -11,6 +11,13 @@ export default meta;
 type Story = StoryObj<typeof AddressComponent>;
 
 export const Address: Story = {
+    // Add figma design link
+    // parameters: {
+    //     design: {
+    //         type: "figma",
+    //         url: "",
+    //     },
+    // },
     args: {
         address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
     },

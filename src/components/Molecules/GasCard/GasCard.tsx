@@ -57,7 +57,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                             None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
                             Some: (result) => {
                                 const baseFeeGwei = Math.round(
-                                    (parseInt(String(result.base_fee)) ?? 0) /
+                                    (parseInt(String(result?.base_fee)) ?? 0) /
                                         Math.pow(10, 9)
                                 );
                                 return <span>{baseFeeGwei}</span>;

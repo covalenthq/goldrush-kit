@@ -1,4 +1,6 @@
-module.exports = {
+import { defineConfig } from "vite";
+
+export default defineConfig({
     stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
     staticDirs: ["../src/static/"],
     addons: [
@@ -7,13 +9,17 @@ module.exports = {
         "@storybook/addon-interactions",
         "storybook-addon-themes",
         "storybook-dark-mode",
+        "@storybook/addon-designs",
         // 'storybook-tailwind-dark-mode',
     ],
+    typescript: {
+        reactDocgen: "react-docgen-typescript",
+    },
     framework: {
         name: "@storybook/react-vite",
         options: {},
     },
     docs: {
-        docsPage: true,
+        autodocs: "tag",
     },
-};
+});
