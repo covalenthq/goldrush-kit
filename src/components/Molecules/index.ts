@@ -7,7 +7,6 @@ export { GasCard } from "./GasCard/GasCard";
 export { NFTFloorPrice } from "./NFTs/NFTFloorPrice/NFTFloorPrice";
 export { NFTSalesCount } from "./NFTs/NFTSalesCount/NFTSalesCount";
 export { NFTVolume } from "./NFTs/NFTVolume/NFTVolume";
-export { SearchBar } from "./SearchBar/SearchBar";
 export { XYKOverviewTimeSeries } from "./XYK/XYKOverviewTimeSeries/XYKOverviewTimeSeries";
 export { XYKPoolInformation } from "./XYK/XYKPoolInformation/XYKPoolInformation";
 export { XYKPoolTimeSeries } from "./XYK/XYKPoolTimeSeries/XYKPoolTimeSeries";

@@ -10,7 +10,7 @@ import { TypographyH3, TypographyH4 } from "../ui/typography";
 import { Button } from "../ui/button";
 
 export const ThemeConfig: React.FC = () => {
-    const { theme, handleUpdateTheme, handleResetTheme } = useGoldRush();
+    const { theme, updateThemeHandler, resetThemeHandler } = useGoldRush();
 
     return (
         <div className="flex w-full flex-col gap-16 p-10">
@@ -31,7 +31,7 @@ export const ThemeConfig: React.FC = () => {
                                 type="checkbox"
                                 checked={theme.mode === "dark"}
                                 onChange={() =>
-                                    handleUpdateTheme({
+                                    updateThemeHandler({
                                         mode:
                                             theme.mode === "dark"
                                                 ? "light"
@@ -49,7 +49,7 @@ export const ThemeConfig: React.FC = () => {
                             type="number"
                             value={theme.borderRadius}
                             onChange={(e) =>
-                                handleUpdateTheme({
+                                updateThemeHandler({
                                     borderRadius: +e.target.value,
                                 })
                             }
@@ -59,7 +59,9 @@ export const ThemeConfig: React.FC = () => {
                 </div>
 
                 <div className="ml-auto">
-                    <Button onClick={handleResetTheme}>Reset to Default</Button>
+                    <Button onClick={resetThemeHandler}>
+                        Reset to Default
+                    </Button>
                 </div>
             </div>
 
@@ -92,7 +94,7 @@ export const ThemeConfig: React.FC = () => {
                                         type="color"
                                         value={theme.colors[mode]?.[shade]}
                                         onChange={(e) =>
-                                            handleUpdateTheme({
+                                            updateThemeHandler({
                                                 colors: {
                                                     [mode]: {
                                                         [shade]: e.target.value,

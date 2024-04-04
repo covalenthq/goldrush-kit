@@ -8,13 +8,11 @@ import { BlockDetails } from "../BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
 import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
 import { AddressDetailsView } from "@/components/Organisms/AddressDetailsView/AddressDetailsView";
-import { useSearch } from "@/utils/hooks/use-search";
 import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 
 export const SearchBar: React.FC = () => {
-    const { selectedChain } = useGoldRush();
-    const { handleSearch } = useSearch();
+    const { selectedChain, searchHandler } = useGoldRush();
 
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchType, setSearchType] = useState<SEARCH_RESULTS_TYPE | null>(
@@ -24,7 +22,7 @@ export const SearchBar: React.FC = () => {
     useDebounce(
         () => {
             if (searchInput && selectedChain) {
-                setSearchType(handleSearch(searchInput));
+                setSearchType(searchHandler(searchInput));
             }
         },
         500,
@@ -82,7 +80,7 @@ export const SearchBar: React.FC = () => {
                 />
                 <Button
                     variant="outline"
-                    onClick={() => setSearchType(handleSearch(searchInput))}
+                    onClick={() => setSearchType(searchHandler(searchInput))}
                     disabled={!searchInput || !selectedChain}
                 >
                     Search
