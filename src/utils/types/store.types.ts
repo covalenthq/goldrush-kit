@@ -1,4 +1,5 @@
 import { type ChainItem, type CovalentClient } from "@covalenthq/client-sdk";
+import { type SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
 
 export interface GoldRushContextType {
     apikey: string;
@@ -7,8 +8,9 @@ export interface GoldRushContextType {
     selectedChain: ChainItem | null;
     theme: GoldRushThemeType;
     setSelectedChain: React.Dispatch<React.SetStateAction<ChainItem | null>>;
-    handleUpdateTheme: (newTheme: Partial<GoldRushThemeType>) => void;
-    handleResetTheme: () => void;
+    updateThemeHandler: (newTheme: Partial<GoldRushThemeType>) => void;
+    resetThemeHandler: () => void;
+    searchHandler: (searchInput: string) => SEARCH_RESULTS_TYPE;
 }
 
 export interface GoldRushThemePrimaryShades {

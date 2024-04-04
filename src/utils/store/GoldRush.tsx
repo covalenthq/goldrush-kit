@@ -14,6 +14,7 @@ import {
 } from "../types/store.types";
 import { type ChainItem, CovalentClient } from "@covalenthq/client-sdk";
 import { primaryShades } from "../functions";
+import { SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
 
 const GoldRushContext = createContext<GoldRushContextType>(
     {} as GoldRushContextType
@@ -73,16 +74,16 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     useEffect(() => {
         const existingTheme = localStorage.getItem("goldrush_theme") || null;
 
-        if (existingTheme) {
-            handleApplyTheme(JSON.parse(existingTheme));
-        } else if (newTheme) {
-            handleUpdateTheme(newTheme);
+        if (newTheme) {
+            updateThemeHandler(newTheme);
+        } else if (existingTheme) {
+            applyThemeHandler(JSON.parse(existingTheme));
         } else {
-            handleApplyTheme(defaultTheme);
+            applyThemeHandler(defaultTheme);
         }
     }, []);
 
-    const handleUpdateTheme = useCallback(
+    const updateThemeHandler = useCallback(
         ({ borderRadius, colors, mode, style }: Partial<GoldRushThemeType>) => {
             const updatedTheme: GoldRushThemeType = { ...theme };
 
@@ -105,12 +106,12 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 });
             }
 
-            handleApplyTheme(updatedTheme);
+            applyThemeHandler(updatedTheme);
         },
         [theme]
     );
 
-    const handleApplyTheme = useCallback(
+    const applyThemeHandler = useCallback(
         ({ borderRadius, colors, mode, style }: GoldRushThemeType) => {
             const body = document.body;
             const root = document.documentElement;
@@ -178,9 +179,34 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         []
     );
 
-    const handleResetTheme = useCallback(() => {
-        handleUpdateTheme(defaultTheme);
+    const resetThemeHandler = useCallback(() => {
+        updateThemeHandler(defaultTheme);
     }, []);
+
+    const searchHandler = useCallback(
+        (searchInput: string): SEARCH_RESULTS_TYPE => {
+            const addressRegex = /^0x[a-fA-F0-9]{40}$/;
+            const txnHashRegex = /^0x[a-fA-F0-9]{64}$/;
+            const blockRegex = /^\d+$/;
+            const tokenRegex = /^[a-zA-Z0-9]+$/;
+            const domainNameRegex = /^[a-zA-Z0-9.-]+$/;
+
+            if (addressRegex.test(searchInput)) {
+                return SEARCH_RESULTS_TYPE.ADDRESS;
+            } else if (txnHashRegex.test(searchInput)) {
+                return SEARCH_RESULTS_TYPE.TRANSACTION;
+            } else if (blockRegex.test(searchInput)) {
+                return SEARCH_RESULTS_TYPE.BLOCK;
+            } else if (tokenRegex.test(searchInput)) {
+                return SEARCH_RESULTS_TYPE.TOKEN;
+            } else if (domainNameRegex.test(searchInput)) {
+                return SEARCH_RESULTS_TYPE.ADDRESS;
+            } else {
+                return SEARCH_RESULTS_TYPE.NOT_FOUND;
+            }
+        },
+        []
+    );
 
     return (
         <GoldRushContext.Provider
@@ -191,8 +217,9 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 selectedChain,
                 theme,
                 setSelectedChain,
-                handleUpdateTheme,
-                handleResetTheme,
+                updateThemeHandler,
+                resetThemeHandler,
+                searchHandler,
             }}
         >
             {children}
