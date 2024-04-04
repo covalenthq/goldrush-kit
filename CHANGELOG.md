@@ -6,6 +6,8 @@
 
 -   Fix search function exported from `useGoldRush`
 -   Update TypeScript Client SDK
+-   Fix exported components TypeScript support for props
+-   Fix `prettyToken` implementation
 
 ## 0.5.0
 
