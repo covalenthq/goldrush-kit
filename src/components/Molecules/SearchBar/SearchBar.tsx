@@ -1,13 +1,15 @@
 import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
-import { AddressActivityListView } from "@/components/Organisms/AddressActivityListView/AddressActivityListView";
+import {
+    AddressActivityListView,
+    AddressDetailsView,
+    TransactionReceiptView,
+} from "@/components/Organisms";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
 import { useGoldRush } from "@/utils/store";
 import { BlockDetails } from "../BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
-import { TransactionReceiptView } from "@/components/Organisms/TransactionReceiptView/TransactionReceiptView";
-import { AddressDetailsView } from "@/components/Organisms/AddressDetailsView/AddressDetailsView";
 import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 

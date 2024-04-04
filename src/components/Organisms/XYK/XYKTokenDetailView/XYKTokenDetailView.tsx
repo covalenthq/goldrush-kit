@@ -5,9 +5,11 @@ import { type XYKTokenDetailViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
-import { XYKTokenInformation } from "@/components/Molecules/XYK/XYKTokenInformation/XYKTokenInformation";
-import { XYKTokenTimeSeries } from "@/components/Molecules/XYK/XYKTokenTimeSeries/XYKTokenTimeSeries";
+import { TokenAvatar } from "@/components/Atoms";
+import {
+    XYKTokenInformation,
+    XYKTokenTimeSeries,
+} from "@/components/Molecules";
 import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 
 export const XYKTokenDetailView: React.FC<XYKTokenDetailViewProps> = ({

@@ -1,4 +1,4 @@
-import { Address } from "@/components/Atoms/Address/Address";
+import { Address, TokenAvatar } from "@/components/Atoms";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
@@ -14,8 +14,7 @@ import {
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { AccountCard, ChainSelector } from "@/components/Molecules";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,7 +24,6 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
-import { ChainSelector } from "@/components/Molecules/ChainSelector/ChainSelector";
 
 export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     address,

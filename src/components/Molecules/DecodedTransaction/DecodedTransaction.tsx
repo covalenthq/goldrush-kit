@@ -5,13 +5,12 @@ import {
     type DecodedTransactionProps,
 } from "@/utils/types/molecules.types";
 import { type Option, None, Some } from "@/utils/option";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { Address, TokenAvatar } from "@/components/Atoms";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Address } from "@/components/Atoms/Address/Address";
 
 export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
     chain_name,

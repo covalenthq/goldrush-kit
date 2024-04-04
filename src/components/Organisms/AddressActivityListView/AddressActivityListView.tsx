@@ -18,10 +18,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
+import { AccountCard } from "@/components/Molecules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatar } from "@/components/Atoms";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";

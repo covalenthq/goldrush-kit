@@ -6,6 +6,11 @@ import tsConfigPaths from "vite-tsconfig-paths";
 // import * as packageJson from "./package.json";
 
 export default defineConfig(() => ({
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "./src"),
+        },
+    },
     plugins: [react(), tsConfigPaths(), dts()],
     build: {
         lib: {

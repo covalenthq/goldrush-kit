@@ -26,7 +26,7 @@ import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { useGoldRush } from "@/utils/store";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
 import { type TransactionListProps } from "@/utils/types/molecules.types";
-import { Address } from "@/components/Atoms/Address/Address";
+import { Address } from "@/components/Atoms";
 import {
     DropdownMenu,
     DropdownMenuTrigger,

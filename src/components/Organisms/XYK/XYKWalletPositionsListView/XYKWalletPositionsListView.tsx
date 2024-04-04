@@ -28,7 +28,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { TokenAvatar } from "../../../Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatar } from "../../../Atoms";
 import { Button } from "@/components/ui/button";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { IconWrapper } from "@/components/Shared";

@@ -25,14 +25,14 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../Atoms/TokenAvatar/TokenAvatar";
+import { AddressAvatar, TokenAvatar } from "../../Atoms";
 import {
     timestampParser,
     truncate,
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
+import { AccountCard } from "@/components/Molecules";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,7 +43,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AddressAvatar } from "@/components/Atoms/AddressAvatar/AddressAvatar";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {

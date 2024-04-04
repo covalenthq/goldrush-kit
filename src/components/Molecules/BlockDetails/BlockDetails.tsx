@@ -1,4 +1,4 @@
-import { Address } from "@/components/Atoms/Address/Address";
+import { Address } from "@/components/Atoms";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
