@@ -11,13 +11,13 @@ export const handleTokenTransactions = (
         if (token_num === "0") {
             if (transaction.amount_0_in.toString() !== "0") {
                 return prettyToken(
-                    transaction[`amount_${token_num}_in`],
+                    +transaction[`amount_${token_num}_in`],
                     contract_decimals,
                     4
                 );
             }
             return prettyToken(
-                transaction[`amount_${token_num}_out`],
+                +transaction[`amount_${token_num}_out`],
                 contract_decimals,
                 4
             );
@@ -25,13 +25,13 @@ export const handleTokenTransactions = (
         if (token_num === "1") {
             if (transaction.amount_1_in.toString() !== "0") {
                 return prettyToken(
-                    transaction[`amount_${token_num}_in`],
+                    +transaction[`amount_${token_num}_in`],
                     contract_decimals,
                     4
                 );
             }
             return prettyToken(
-                transaction[`amount_${token_num}_out`],
+                +transaction[`amount_${token_num}_out`],
                 contract_decimals,
                 4
             );
@@ -39,14 +39,14 @@ export const handleTokenTransactions = (
     } else {
         if (token_num === "0") {
             return prettyToken(
-                transaction[`amount_${token_num}`],
+                +transaction[`amount_${token_num}`],
                 contract_decimals,
                 4
             );
         }
         if (token_num === "1") {
             return prettyToken(
-                transaction[`amount_${token_num}`],
+                +transaction[`amount_${token_num}`],
                 contract_decimals,
                 4
             );
