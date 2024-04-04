@@ -1,37 +1,38 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.5.1
+
+**Fixes**
+
+-   Fix search function exported from `useGoldRush`
+-   Update TypeScript Client SDK
+
 ## 0.5.0
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Fix `image_512` null check error
 -   Fix TypeScript types - remove use of `any` type
 -   Fix exported components for the library
 
-## Features
+**Features**
 
 -   Themeing is updated to a new implementation
 
 ## 0.4.7
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Fix transactions receipt responsiveness
 -   Fix copy toast for address copy
 
-## Features
+**Features**
 
 -   Add block details v2
 
 ## 0.4.6
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Type exporting for components
 -   Transaction receipt token image by handling svg or png
@@ -40,36 +41,30 @@
 
 ## 0.4.5
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Refactor provider
 -   Fix quote rate being 0 on token pool list component
 -   Fix swap exchange logic
 
-## Features
+**Features**
 
 ## 0.4.4
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Fix decoder api body
 -   Detailed keys for Decoder
 
-## Features
+**Features**
 
 ## 0.4.3
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Mobile `on_click` fix
 
-## Features
+**Features**
 
 -   Components
     -   Block Details
@@ -83,11 +78,9 @@
 
 ## 0.4.2
 
-## What's Changed
+**Fixes**
 
-## Fixes
-
-## Features
+**Features**
 
 -   Add transfer clicks to labels on list views
     -   PoolList
@@ -98,50 +91,42 @@
 
 ## 0.4.1
 
-## What's Changed
+**Fixes**
 
-## Fixes
-
-## Features
+**Features**
 
 -   Add `chain_name` to the object when `on_transfer_click` function is ran on the `TokenBalanceListView` component.
 
 ## 0.4.0
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Fix hydration error for Transactions Receipt
 
-## Features
+**Features**
 
 -   Added Address Detail View component
 
 ## 0.3.9
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Forward apikey in context for transactions receipt fix
 -   Fix skeleton for transactions receipt
 
-## Features
+**Features**
 
 -   Added new gas card
 
 ## 0.3.8
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Fixed image in README
 -   Added user agent
 -   Remove unnecessary checkboxes in list components
 
-## Features
+**Features**
 
 ### Block Explorer Components
 
@@ -149,15 +134,13 @@
 
 ## 0.3.7
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Added pagination to token list and pool list views
 -   Cache SVGs for token icons
 -   Consistent stories
 
-## Features
+**Features**
 
 ### XYK Components
 
@@ -165,15 +148,13 @@
 
 ## 0.3.6
 
-## What's Changed
-
-## Fixes
+**Fixes**
 
 -   Added pagination to token list and pool list views
 -   Cache SVGs for token icons
 -   Consistent stories
 
-## Features
+**Features**
 
 ### XYK Components
 
