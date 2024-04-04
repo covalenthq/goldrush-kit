@@ -5,10 +5,9 @@ import { type XYKPoolDetailViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { XYKPoolTimeSeries } from "@/components/Molecules/XYK/XYKPoolTimeSeries/XYKPoolTimeSeries";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { XYKPoolInformation, XYKPoolTimeSeries } from "@/components/Molecules";
+import { TokenAvatar } from "@/components/Atoms";
 import { prettyToken } from "@/utils/functions/pretty-token";
-import { XYKPoolInformation } from "@/components/Molecules/XYK/XYKPoolInformation/XYKPoolInformation";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 
 export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({

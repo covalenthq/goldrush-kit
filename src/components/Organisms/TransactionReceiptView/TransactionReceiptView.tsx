@@ -1,7 +1,7 @@
 import { type TransactionReceiptViewProps } from "@/utils/types/organisms.types";
 import { TypographyH4 } from "@/components/ui/typography";
-import { Address } from "@/components/Atoms/Address/Address";
-import { DecodedTransaction } from "@/components/Molecules/DecodedTransaction/DecodedTransaction";
+import { Address } from "@/components/Atoms";
+import { AccountCard, DecodedTransaction } from "@/components/Molecules";
 import { useMemo, useState } from "react";
 import { type Option, None } from "@/utils/option";
 import { type DecodedTransactionMetadata } from "@/utils/types/molecules.types";
@@ -10,7 +10,6 @@ import { CardDescription } from "@/components/ui/card";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useGoldRush } from "@/utils/store";
 import { ClockIcon } from "@radix-ui/react-icons";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 

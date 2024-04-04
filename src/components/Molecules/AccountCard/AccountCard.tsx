@@ -8,7 +8,7 @@ import {
 import QRCode from "react-qr-code";
 import { useState } from "react";
 import { useToast } from "../../../utils/hooks";
-import { AddressAvatar } from "../../Atoms/AddressAvatar/AddressAvatar";
+import { AddressAvatar } from "../../Atoms";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type AccountCardProps } from "@/utils/types/molecules.types";

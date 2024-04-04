@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { TypographyH3 } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
+import { AccountCard } from "@/components/Molecules";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sum } from "lodash";

@@ -16,11 +16,11 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import sum from "lodash/sum";
-import { AccountCard } from "@/components/Molecules/AccountCard/AccountCard";
+import { AccountCard } from "@/components/Molecules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGoldRush } from "@/utils/store";
 import { type NFTWalletTokenListViewProps } from "@/utils/types/organisms.types";
-import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
+import { TokenAvatar } from "@/components/Atoms";
 
 export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     chain_names,
