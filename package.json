@@ -100,7 +100,6 @@
         "clsx": "^2.1.0",
         "cmdk": "^0.2.1",
         "dayjs": "^1.11.10",
-        "lodash": "^4.17.21",
         "lucide-react": "^0.335.0",
         "react-qr-code": "^2.0.12",
         "storybook-dark-mode": "^3.0.1",

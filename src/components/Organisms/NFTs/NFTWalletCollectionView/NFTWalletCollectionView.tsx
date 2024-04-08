@@ -16,7 +16,6 @@ import { Badge } from "@/components/ui/badge";
 import { AccountCard } from "@/components/Molecules";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { sum } from "lodash";
 import { useGoldRush } from "@/utils/store";
 
 export const NFTWalletCollectionView: React.FC<
@@ -132,15 +131,16 @@ export const NFTWalletCollectionView: React.FC<
                                             <Skeleton size={GRK_SIZES.MEDIUM} />
                                         ),
                                         Some: (result) => {
-                                            const s = sum(
-                                                result.map(
-                                                    (x) => x.floor_price_quote
-                                                )
+                                            let totalFloorPriceQuote: number = 0;
+                                            result.forEach(
+                                                ({ floor_price_quote }) =>
+                                                    (totalFloorPriceQuote +=
+                                                        floor_price_quote)
                                             );
                                             return (
                                                 <span>
                                                     {prettifyCurrency(
-                                                        s,
+                                                        totalFloorPriceQuote,
                                                         2,
                                                         "USD",
                                                         true
