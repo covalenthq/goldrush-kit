@@ -7,7 +7,12 @@ export { AddressActivityListView } from "./AddressActivityListView/AddressActivi
 export { TokenBalancesListView } from "./TokenBalancesListView/TokenBalancesListView";
 export { TokenTransfersListView } from "./TokenTransfersListView/TokenTransfersListView";
 export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";
-export { TransactionsList } from "./TransactionsList/TransactionsList";
+export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
+export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
+/**
+ * @deprecated This component is deprecated. Please use AddressTransactions instead.
+ */
+export { AddressTransactions as TransactionsList } from "./AddressTransactions/AddressTransactions";
 export { XYKOverviewTransactionsListView } from "./XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
 export { XYKPoolDetailView } from "./XYK/XYKPoolDetailView/XYKPoolDetailView";
 export { XYKPoolListView } from "./XYK/XYKPoolListView/XYKPoolListView";

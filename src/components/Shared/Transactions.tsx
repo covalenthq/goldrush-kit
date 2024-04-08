@@ -23,9 +23,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { timestampParser } from "@/utils/functions";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { useGoldRush } from "@/utils/store";
 import { SkeletonTable } from "@/components/ui/skeletonTable";
-import { type TransactionListProps } from "@/utils/types/molecules.types";
+import { type TransactionsProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 import {
     DropdownMenu,
@@ -37,15 +36,13 @@ import {
 import { Button } from "@/components/ui/button";
 import IconWrapper from "@/components/Shared/IconWrapper";
 
-export const TransactionsList: React.FC<TransactionListProps> = ({
-    chain_name,
-    address,
-    on_native_explorer_click,
+const Transactions: React.FC<TransactionsProps> = ({
     on_goldrush_receipt_click,
+    on_native_explorer_click,
     on_transaction_click,
+    errorMessage,
+    maybeResult,
 }) => {
-    const { covalentClient } = useGoldRush();
-
     const [sorting, setSorting] = useState<SortingState>([
         {
             id: "block_signed_at",
@@ -53,36 +50,8 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
         },
     ]);
     const [rowSelection, setRowSelection] = useState({});
-    const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [filterResult, setFilterResult] =
         useState<Option<Transaction[]>>(None);
-
-    useEffect(() => {
-        (async () => {
-            setResult(None);
-            setErrorMessage(null);
-            try {
-                const { data, ...error } =
-                    await covalentClient.TransactionService.getAllTransactionsForAddressByPage(
-                        chain_name,
-                        address.trim(),
-                        {
-                            noLogs: true,
-                            withSafe: false,
-                            quoteCurrency: "USD",
-                        }
-                    );
-                if (error.error) {
-                    setErrorMessage(error.error_message);
-                    throw error;
-                }
-                setResult(new Some(data.items));
-            } catch (exception) {
-                console.error(exception);
-            }
-        })();
-    }, [chain_name, address]);
 
     useEffect(() => {
         maybeResult.match({
@@ -411,3 +380,5 @@ export const TransactionsList: React.FC<TransactionListProps> = ({
         </Table>
     );
 };
+
+export default Transactions;
