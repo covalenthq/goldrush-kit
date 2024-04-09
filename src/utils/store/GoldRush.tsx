@@ -74,12 +74,14 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     useEffect(() => {
         const existingTheme = localStorage.getItem("goldrush_theme") || null;
 
+        if (!existingTheme) {
+            applyThemeHandler(defaultTheme);
+        } else {
+            applyThemeHandler(JSON.parse(existingTheme));
+        }
+
         if (newTheme) {
             updateThemeHandler(newTheme);
-        } else if (existingTheme) {
-            applyThemeHandler(JSON.parse(existingTheme));
-        } else {
-            applyThemeHandler(defaultTheme);
         }
     }, []);
 
