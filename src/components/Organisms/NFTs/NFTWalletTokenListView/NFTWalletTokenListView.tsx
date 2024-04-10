@@ -15,7 +15,6 @@ import {
     CardDescription,
     CardTitle,
 } from "@/components/ui/card";
-import sum from "lodash/sum";
 import { AccountCard } from "@/components/Molecules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGoldRush } from "@/utils/store";
@@ -82,13 +81,16 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                     <Skeleton size={GRK_SIZES.MEDIUM} />
                                 ),
                                 Some: (result) => {
-                                    const s = sum(
-                                        result.map((x) => x.floor_price_quote)
+                                    let totalFloorPriceQuote: number = 0;
+                                    result.forEach(
+                                        ({ floor_price_quote }) =>
+                                            (totalFloorPriceQuote +=
+                                                floor_price_quote)
                                     );
                                     return (
                                         <span>
                                             {prettifyCurrency(
-                                                s,
+                                                totalFloorPriceQuote,
                                                 2,
                                                 "USD",
                                                 true

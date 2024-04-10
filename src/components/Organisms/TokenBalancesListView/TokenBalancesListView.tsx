@@ -36,7 +36,6 @@ import { Button } from "@/components/ui/button";
 import { timestampParser } from "@/utils/functions";
 import { AccountCard } from "@/components/Molecules";
 import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { sum } from "lodash";
 import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
@@ -320,7 +319,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                             class_name="mr-2"
                                         />
                                         {row.original.last_transferred_at
-                                            ? `Last transfered ${timestampParser(
+                                            ? `Last transferred ${timestampParser(
                                                   row.original.last_transferred_at.toDateString(),
                                                   "relative"
                                               )} `
@@ -472,7 +471,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                             class_name="mr-2"
                                         />
                                         {row.original.last_transferred_at
-                                            ? `Last transfered ${timestampParser(
+                                            ? `Last transferred ${timestampParser(
                                                   row.original.last_transferred_at.toDateString(),
                                                   "relative"
                                               )} `
@@ -558,11 +557,14 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                     <Skeleton size={GRK_SIZES.MEDIUM} />
                                 ),
                                 Some: (result) => {
-                                    const s = sum(result.map((x) => x.quote));
+                                    let totalQuote: number = 0;
+                                    result.forEach(
+                                        ({ quote }) => (totalQuote += quote)
+                                    );
                                     return (
                                         <span>
                                             {prettifyCurrency(
-                                                s,
+                                                totalQuote,
                                                 2,
                                                 "USD",
                                                 true
