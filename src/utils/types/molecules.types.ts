@@ -56,9 +56,17 @@ export interface NFTSalesCountProps {
     token_id?: string;
 }
 
-export interface TransactionListProps {
+export interface AddressTransactionsProps {
     chain_name: Chain;
     address: string;
+    on_native_explorer_click?: Function;
+    on_goldrush_receipt_click?: Function;
+    on_transaction_click?: Function;
+}
+
+export interface BlockTransactionsProps {
+    chain_name: Chain;
+    block_height: number;
     on_native_explorer_click?: Function;
     on_goldrush_receipt_click?: Function;
     on_transaction_click?: Function;

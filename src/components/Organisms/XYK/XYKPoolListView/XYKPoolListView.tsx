@@ -286,8 +286,8 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                 return (
                     <div
                         className={`text-right ${
-                            parseFloat(row.original.annualized_fee) > 0 &&
-                            "text-green-600"
+                            parseFloat(row.original.annualized_fee.toString()) >
+                                0 && "text-green-600"
                         }`}
                     >
                         {valueFormatted}
