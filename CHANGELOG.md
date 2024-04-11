@@ -69,6 +69,10 @@
 -   Fix quote rate being 0 on token pool list component
 -   Fix swap exchange logic
 
+-   Refactor provider
+-   Fix quote rate being 0 on token pool list component
+-   Fix swap exchange logic
+
 **Features**
 
 ## 0.4.4
@@ -76,6 +80,9 @@
 **Fixes**
 
 ## Fixes
+
+-   Fix decoder api body
+-   Detailed keys for Decoder
 
 -   Fix decoder api body
 -   Detailed keys for Decoder
@@ -162,6 +169,10 @@
 -   Added user agent
 -   Remove unnecessary checkboxes in list components
 
+-   Fixed image in README
+-   Added user agent
+-   Remove unnecessary checkboxes in list components
+
 **Features**
 
 ### Block Explorer Components
@@ -178,6 +189,10 @@
 -   Cache SVGs for token icons
 -   Consistent stories
 
+-   Added pagination to token list and pool list views
+-   Cache SVGs for token icons
+-   Consistent stories
+
 **Features**
 
 ### XYK Components
@@ -189,6 +204,10 @@
 **Fixes**
 
 ## Fixes
+
+-   Added pagination to token list and pool list views
+-   Cache SVGs for token icons
+-   Consistent stories
 
 -   Added pagination to token list and pool list views
 -   Cache SVGs for token icons
