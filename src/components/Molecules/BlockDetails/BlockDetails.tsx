@@ -28,6 +28,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                         height.toString()
                     );
                 if (error.error) {
+                    console.log(error.error_message);
                     setErrorMessage(error.error_message);
                     throw error;
                 }
