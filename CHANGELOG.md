@@ -1,5 +1,19 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.5.2
+
+**Fixes**
+
+-   Fix bundle size
+-   Fix logic of selection of theme to be applied
+-   Update dependencies and remove dead packages
+-   Fix GitHub Actions workflow conditions
+
+**Features**
+
+-   Add `BlockTransactions` Organism
+-   `TransactionsList` is now deprecated and replaced with `AddressTransactions`
+
 ## 0.5.1
 
 **Fixes**
