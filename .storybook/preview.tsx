@@ -4,7 +4,6 @@ import { GoldRushProvider } from "../src/utils/store";
 // import { useDarkMode } from 'storybook-dark-mode' // uncomment out this one line for dark mode
 
 export const parameters = {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     themes: {
         clearable: false,
         list: [

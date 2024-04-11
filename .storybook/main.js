@@ -7,6 +7,7 @@ module.exports = {
         "@storybook/addon-interactions",
         "storybook-addon-themes",
         "storybook-dark-mode",
+        "@storybook/addon-designs",
         // 'storybook-tailwind-dark-mode',
     ],
     typescript: {
