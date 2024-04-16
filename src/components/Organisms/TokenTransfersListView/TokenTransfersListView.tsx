@@ -33,7 +33,6 @@ import {
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { AccountCard } from "@/components/Molecules";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -43,7 +42,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconWrapper } from "@/components/Shared";
+import {
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import {
     type TokenTransfersListViewProps,
@@ -51,7 +54,6 @@ import {
     type TokenTransferMeta,
 } from "@/utils/types/organisms.types";
 import { useGoldRush } from "@/utils/store";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
     {
@@ -312,7 +314,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={6} />,
+        None: () => <SkeletonTable cols={7} />,
         Some: () => {
             let lastGroup: TIME_SERIES_GROUP | null = null;
             const now = new Date();
@@ -339,7 +341,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                 if (lastGroup !== currentGroup) {
                                     lastGroup = currentGroup;
                                     return (
-                                        <TableRow className="bg-accent bg-opacity-10 text-xs uppercase text-primary-light-200">
+                                        <TableRow className="bg-opacity-10 text-xs uppercase text-primary-light dark:text-primary-dark">
                                             <TableCell
                                                 colSpan={
                                                     row.getVisibleCells().length
@@ -405,7 +407,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
-                <div className="lg:max-w-[15rem]] w-full rounded border p-2 md:max-w-[15rem]">
+                <div className="lg:max-w-60] w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:max-w-60">
                     <div className="items-center space-x-1">
                         <span>Network</span>
                         <div className="float-right">
@@ -431,7 +433,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                     }
                                                 />
-                                                <span className=" text-secondary-light ">
+                                                <span className="text-secondary-light dark:text-secondary-dark">
                                                     {chain?.category_label}
                                                 </span>
                                             </>
@@ -460,7 +462,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                     }
                                                 />
-                                                <span className=" text-secondary-light ">
+                                                <span className="text-secondary-light dark:text-secondary-dark">
                                                     {
                                                         result.contract_ticker_symbol
                                                     }
@@ -555,6 +557,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                                                 onClick={() => {
                                                     handlePageSize(pageSize);
                                                 }}
+                                                className="cursor-pointer"
                                             >
                                                 <span>{pageSize}</span>
                                             </DropdownMenuItem>

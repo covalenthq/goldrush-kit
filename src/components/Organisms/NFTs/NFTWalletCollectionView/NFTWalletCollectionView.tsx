@@ -11,7 +11,7 @@ import {
     CardDescription,
     CardTitle,
 } from "@/components/ui/card";
-import { TypographyH3 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { Badge } from "@/components/ui/badge";
 import { AccountCard } from "@/components/Molecules";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
@@ -44,7 +44,7 @@ export const NFTWalletCollectionView: React.FC<
                 return (
                     <div className="" key={i}>
                         <div className="mb-2">
-                            <TypographyH3>
+                            <Heading size={3}>
                                 <div className="flex items-center gap-x-2">
                                     {items.contract_name}{" "}
                                     <Badge>
@@ -52,7 +52,7 @@ export const NFTWalletCollectionView: React.FC<
                                         {items.nft_data.length} items{" "}
                                     </Badge>{" "}
                                 </div>
-                            </TypographyH3>
+                            </Heading>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
@@ -120,8 +120,8 @@ export const NFTWalletCollectionView: React.FC<
                     <div className="flex flex-wrap place-content-between gap-2">
                         <AccountCard address={address} />
 
-                        <div className="w-full rounded border p-2 md:w-min lg:w-min">
-                            <h2 className="text-base font-semibold  text-secondary-light ">
+                        <div className="w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:w-min lg:w-min">
+                            <h2 className="text-base font-semibold text-secondary-light dark:text-secondary-dark">
                                 Total Quote
                             </h2>
                             <div className="flex items-end gap-2">
@@ -150,7 +150,7 @@ export const NFTWalletCollectionView: React.FC<
                                         },
                                     })}
                                 </span>
-                                <div className="flex  gap-1  text-sm text-secondary-light">
+                                <div className="flex gap-1 text-sm text-secondary-light dark:text-secondary-dark">
                                     <span className="">
                                         {" "}
                                         (

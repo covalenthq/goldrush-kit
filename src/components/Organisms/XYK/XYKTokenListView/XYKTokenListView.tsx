@@ -24,14 +24,17 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { TokenAvatar } from "../../../Atoms";
+import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
+import {
+    BalancePriceDelta,
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 import {
     Pagination,
     PaginationContent,
@@ -435,7 +438,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={5} float="right" />,
+        None: () => <SkeletonTable cols={6} float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -501,7 +504,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             <Pagination className="select-none">
                 <PaginationContent>
                     <PaginationItem
-                        disabled={pagination.page_number === 1}
+                        // ! ERROR: `disabled does not exist on prop
+                        // disabled={pagination.page_number === 1}
                         onClick={() => {
                             handlePagination(pagination.page_number - 1);
                         }}
@@ -539,7 +543,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         <PaginationEllipsis />
                     </PaginationItem>
                     <PaginationItem
-                        disabled={!hasMore}
+                        // ! ERROR: `disabled does not exist on prop
+                        // disabled={!hasMore}
                         onClick={() => {
                             handlePagination(pagination.page_number + 1);
                         }}

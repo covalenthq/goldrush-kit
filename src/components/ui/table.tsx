@@ -1,12 +1,11 @@
-import * as React from "react";
+import { forwardRef } from "react";
+import { cn } from "@/utils/functions";
 
-import { cn } from "../../utils/functions";
-
-const Table = React.forwardRef<
+const Table = forwardRef<
     HTMLTableElement,
     React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-    <div className="w-full overflow-auto rounded border">
+    <div className="relative w-full overflow-auto rounded border border-secondary-light dark:border-secondary-dark">
         <table
             ref={ref}
             className={cn("w-full caption-bottom text-sm", className)}
@@ -16,15 +15,15 @@ const Table = React.forwardRef<
 ));
 Table.displayName = "Table";
 
-const TableHeader = React.forwardRef<
+const TableHeader = forwardRef<
     HTMLTableSectionElement,
     React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn("&_tr]:border-b ", className)} {...props} />
+    <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
 ));
 TableHeader.displayName = "TableHeader";
 
-const TableBody = React.forwardRef<
+const TableBody = forwardRef<
     HTMLTableSectionElement,
     React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
@@ -36,14 +35,14 @@ const TableBody = React.forwardRef<
 ));
 TableBody.displayName = "TableBody";
 
-const TableFooter = React.forwardRef<
+const TableFooter = forwardRef<
     HTMLTableSectionElement,
     React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
     <tfoot
         ref={ref}
         className={cn(
-            "bg-background font-medium text-slate-900 dark:bg-background-dark dark:text-slate-50",
+            "border-t bg-primary-light bg-opacity-55 font-medium dark:bg-primary-dark [&>tr]:last:border-b-0",
             className
         )}
         {...props}
@@ -51,14 +50,14 @@ const TableFooter = React.forwardRef<
 ));
 TableFooter.displayName = "TableFooter";
 
-const TableRow = React.forwardRef<
+const TableRow = forwardRef<
     HTMLTableRowElement,
     React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, ref) => (
     <tr
         ref={ref}
         className={cn(
-            "data-[state=selected]:bg-muted border-b transition-colors hover:bg-secondary-light data-[state=selected]:bg-opacity-20 dark:hover:bg-secondary-dark",
+            "border-b border-secondary-light transition-colors hover:bg-secondary-light data-[state=selected]:bg-primary-light dark:border-secondary-dark dark:hover:bg-primary-dark dark:data-[state=selected]:bg-primary-dark",
             className
         )}
         {...props}
@@ -66,14 +65,14 @@ const TableRow = React.forwardRef<
 ));
 TableRow.displayName = "TableRow";
 
-const TableHead = React.forwardRef<
+const TableHead = forwardRef<
     HTMLTableCellElement,
     React.ThHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
     <th
         ref={ref}
         className={cn(
-            "px-2 py-4 text-left align-middle font-medium text-primary-light dark:text-primary-dark [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+            "h-10 px-2 text-left align-middle font-medium text-primary-light dark:text-primary-dark [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
             className
         )}
         {...props}
@@ -81,7 +80,7 @@ const TableHead = React.forwardRef<
 ));
 TableHead.displayName = "TableHead";
 
-const TableCell = React.forwardRef<
+const TableCell = forwardRef<
     HTMLTableCellElement,
     React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
@@ -96,13 +95,16 @@ const TableCell = React.forwardRef<
 ));
 TableCell.displayName = "TableCell";
 
-const TableCaption = React.forwardRef<
+const TableCaption = forwardRef<
     HTMLTableCaptionElement,
     React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
     <caption
         ref={ref}
-        className={cn("mt-4 text-sm text-primary-light-200", className)}
+        className={cn(
+            "mt-4 text-sm text-foreground-light dark:text-foreground-dark",
+            className
+        )}
         {...props}
     />
 ));

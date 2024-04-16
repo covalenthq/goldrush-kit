@@ -39,112 +39,101 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
     }, [chain_name, height]);
 
     return (
-        <>
-            <Card className="flex w-full flex-col items-start gap-x-4 rounded border p-2 dark:bg-background-dark dark:text-white">
-                <CardTitle className="">Overview</CardTitle>
-                {maybeResult.match({
-                    None: () => (
-                        <div className="mt-4">
-                            <Skeleton size={GRK_SIZES.LARGE} />
-                        </div>
-                    ),
-                    Some: (block) =>
-                        errorMessage ? (
-                            <p className="mt-4">{errorMessage}</p>
-                        ) : (
-                            <div className="mt-2 grid w-full grid-cols-3 gap-16 gap-y-4">
-                                <div>
-                                    <CardDescription>HEIGHT</CardDescription>
+        <Card className="flex w-full flex-col items-start gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
+            <CardTitle className="">Overview</CardTitle>
+            {maybeResult.match({
+                None: () => (
+                    <div className="mt-4">
+                        <Skeleton size={GRK_SIZES.LARGE} />
+                    </div>
+                ),
+                Some: (block) =>
+                    errorMessage ? (
+                        <p className="mt-4">{errorMessage}</p>
+                    ) : (
+                        <div className="mt-2 grid w-full grid-cols-3 gap-16 gap-y-4">
+                            <div>
+                                <CardDescription>HEIGHT</CardDescription>
 
-                                    <p className="mt-1 flex items-center gap-x-1.5">
-                                        {block.height.toLocaleString()}
+                                <p className="mt-1 flex items-center gap-x-1.5">
+                                    {block.height.toLocaleString()}
+                                </p>
+                            </div>
+
+                            <div>
+                                <CardDescription>SIGNED AT</CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    <p>
+                                        {timestampParser(
+                                            block.signed_at,
+                                            "descriptive"
+                                        )}
                                     </p>
                                 </div>
+                            </div>
 
-                                <div>
-                                    <CardDescription>SIGNED AT</CardDescription>
+                            <div>
+                                <CardDescription>BLOCK HASH</CardDescription>
 
-                                    <div className="flex items-center gap-x-2">
-                                        <p>
-                                            {timestampParser(
-                                                block.signed_at,
-                                                "descriptive"
-                                            )}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>
-                                        BLOCK HASH
-                                    </CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        <Address address={block.block_hash} />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>GAS USED</CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        {block.gas_used}{" "}
-                                        <CardDescription>
-                                            {(
-                                                (block.gas_used /
-                                                    block.gas_limit) *
-                                                100
-                                            ).toFixed(2)}
-                                            %
-                                        </CardDescription>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>GAS LIMIT</CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        {block.gas_limit.toLocaleString()}
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>
-                                        MINER ADDRESS
-                                    </CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        <Address
-                                            address={block.miner_address}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>
-                                        BLOCK PARENT HASH
-                                    </CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        <Address
-                                            address={block.block_parent_hash}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>
-                                        EXTRA DATA
-                                    </CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        {block.extra_data}
-                                    </div>
+                                <div className="flex items-end gap-x-2">
+                                    <Address address={block.block_hash} />
                                 </div>
                             </div>
-                        ),
-                })}
-            </Card>
-        </>
+
+                            <div>
+                                <CardDescription>GAS USED</CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    {block.gas_used}{" "}
+                                    <CardDescription>
+                                        {(
+                                            (block.gas_used / block.gas_limit) *
+                                            100
+                                        ).toFixed(2)}
+                                        %
+                                    </CardDescription>
+                                </div>
+                            </div>
+
+                            <div>
+                                <CardDescription>GAS LIMIT</CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    {block.gas_limit.toLocaleString()}
+                                </div>
+                            </div>
+
+                            <div>
+                                <CardDescription>MINER ADDRESS</CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    <Address address={block.miner_address} />
+                                </div>
+                            </div>
+
+                            <div>
+                                <CardDescription>
+                                    BLOCK PARENT HASH
+                                </CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    <Address
+                                        address={block.block_parent_hash}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <CardDescription>EXTRA DATA</CardDescription>
+
+                                <div className="flex items-center gap-x-2">
+                                    {block.extra_data}
+                                </div>
+                            </div>
+                        </div>
+                    ),
+            })}
+        </Card>
     );
 };

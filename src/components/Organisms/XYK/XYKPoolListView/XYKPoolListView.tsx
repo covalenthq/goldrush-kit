@@ -24,10 +24,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { TokenAvatar } from "../../../Atoms";
+import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Shared";
+import {
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
@@ -41,7 +44,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     chain_name,
@@ -317,6 +319,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                                             );
                                         }
                                     }}
+                                    className="cursor-pointer"
                                 >
                                     <IconWrapper
                                         icon_class_name="swap_horiz"
@@ -477,7 +480,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable float="right" />,
+        None: () => <SkeletonTable float="right" cols={7} />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -543,7 +546,8 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             <Pagination className="select-none">
                 <PaginationContent>
                     <PaginationItem
-                        disabled={pagination.page_number === 1}
+                        // ! ERROR: `disabled does not exist on prop
+                        // disabled={pagination.page_number === 1}
                         onClick={() => {
                             handlePagination(pagination.page_number - 1);
                         }}
@@ -581,7 +585,8 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                         <PaginationEllipsis />
                     </PaginationItem>
                     <PaginationItem
-                        disabled={!hasMore}
+                        // ! ERROR: `disabled does not exist on prop
+                        // disabled={!hasMore}
                         onClick={() => {
                             handlePagination(pagination.page_number + 1);
                         }}

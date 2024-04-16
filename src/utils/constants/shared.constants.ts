@@ -1,4 +1,5 @@
 import { type Color } from "@tremor/react";
+import { type GoldRushThemeMode } from "../types/store.types";
 
 export enum GRK_SIZES {
     LARGE = "lg",
@@ -8,34 +9,10 @@ export enum GRK_SIZES {
     EXTRA_EXTRA_SMALL = "xxs",
 }
 
-export const CHART_COLORS: (string | Color)[] = [
-    "primary-light-100",
-    "primary-dark-100",
-    "primary-light-900",
-    "primary-dark-900",
-    "slate",
-    "gray",
-    "zinc",
-    "neutral",
-    "stone",
-    "red",
-    "orange",
-    "amber",
-    "yellow",
-    "lime",
-    "green",
-    "emerald",
-    "teal",
-    "cyan",
-    "sky",
-    "blue",
-    "indigo",
-    "violet",
-    "purple",
-    "fuchsia",
-    "pink",
-    "rose",
-];
+export const CHART_COLORS: Record<GoldRushThemeMode, (string | Color)[]> = {
+    dark: ["primary-dark-100", "primary-dark-900"],
+    light: ["primary-light-100", "primary-light-900"],
+};
 
 export const NFT_COLLECTIONS: { [collection_name: string]: string } = {
     BAYC: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
@@ -54,20 +31,6 @@ export enum SEARCH_RESULTS_TYPE {
     BLOCK = "block",
     TOKEN = "token",
     NOT_FOUND = "not found",
-}
-
-export enum CUSTOM_DATE_FORMAT {
-    "8:02 PM" = "LT",
-    "8:02:18 PM" = "LTS",
-    "08/16/2018" = "L",
-    "August 16, 2018" = "LL",
-    "August 16, 2018 8:02 PM" = "lll",
-    "Aug 16, 2018" = "ll",
-    "Thu, Aug 16, 2018 8:02 PM" = "llll",
-    "Aug 2018" = "MMMM YYYY",
-    "8:02 PM August 16, 2018 " = "LT LL",
-    "8:02 PM 08/16/2018 " = "LT L",
-    "5/2/23" = "M/D/YY",
 }
 
 export enum PERIOD {

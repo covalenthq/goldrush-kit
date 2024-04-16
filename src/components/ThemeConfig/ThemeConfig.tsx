@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
-
 import { useGoldRush } from "@/utils/store";
 import { Input } from "../ui/input";
 import {
     type GoldRushThemeColorType,
     type GoldRushThemeType,
 } from "@/utils/types/store.types";
-import { TypographyH3, TypographyH4 } from "../ui/typography";
+import { Heading } from "../Shared";
 import { Button } from "../ui/button";
 
 export const ThemeConfig: React.FC = () => {
@@ -16,11 +14,11 @@ export const ThemeConfig: React.FC = () => {
         <div className="flex w-full flex-col gap-16 p-10">
             <div className="flex flex-col items-center gap-16 lg:flex-row">
                 <div className="w-2/12">
-                    <TypographyH3>
+                    <Heading size={3}>
                         Theme
                         <br />
                         Settings
-                    </TypographyH3>
+                    </Heading>
                 </div>
 
                 <div className="10/12">
@@ -68,11 +66,11 @@ export const ThemeConfig: React.FC = () => {
             {(["light", "dark"] as GoldRushThemeType["mode"][]).map((mode) => (
                 <div key={mode} className="flex flex-col gap-16 lg:flex-row">
                     <div className="w-full lg:w-2/12">
-                        <TypographyH3>
+                        <Heading size={3}>
                             <span className="capitalize"> {mode}</span>
                             <br />
                             Theme
-                        </TypographyH3>
+                        </Heading>
                     </div>
 
                     <div className="flex w-full flex-col justify-between lg:w-3/12">
@@ -134,7 +132,7 @@ export const ThemeConfig: React.FC = () => {
                         className={`m-auto flex min-h-40 w-full items-center justify-center rounded lg:w-3/12 text-foreground-${mode} border border-secondary-${mode} bg-background-${mode}`}
                     >
                         <div>
-                            <TypographyH4>Preview</TypographyH4>
+                            <Heading size={4}>Preview</Heading>
                             <div
                                 className={`w-18 h-1 bg-primary-${mode} mx-auto mt-2 rounded`}
                             />

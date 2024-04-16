@@ -14,7 +14,9 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     rounded = false,
     class_name,
 }) => {
-    const SRC = useMemo<string>(() => {
+    const SRC = useMemo<
+        string | React.FunctionComponent<React.SVGAttributes<SVGElement>>
+    >(() => {
         switch (type) {
             case "effigy":
                 return `https://effigy.im/a/${address}.png`;
@@ -63,7 +65,7 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
                 class_name || ""
             }`}
         >
-            <AvatarImage style={BG_COLOR} src={SRC} />
+            <AvatarImage style={BG_COLOR} src={SRC as string} />
             <AvatarFallback style={BG_COLOR}>{fallback}</AvatarFallback>
         </Avatar>
     );

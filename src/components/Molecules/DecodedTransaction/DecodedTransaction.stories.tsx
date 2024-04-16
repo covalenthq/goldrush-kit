@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { DecodedTransaction as DecodedTransactionComponent } from "./DecodedTransaction";
-import { TypographyH1 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 
 type Story = StoryObj<typeof DecodedTransactionComponent>;
 
@@ -18,7 +18,7 @@ const meta: Meta<typeof DecodedTransactionComponent> = {
     render: ({ chain_name, tx_hash, setTxMetadata }) => (
         <section>
             <div className="mb-8">
-                <TypographyH1>Decoded Transaction</TypographyH1>
+                <Heading size={1}>Decoded Transaction</Heading>
             </div>
 
             <DecodedTransactionComponent

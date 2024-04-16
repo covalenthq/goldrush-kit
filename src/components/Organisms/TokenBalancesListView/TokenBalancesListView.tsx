@@ -31,19 +31,22 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TokenAvatar } from "../../Atoms";
+import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 import { timestampParser } from "@/utils/functions";
 import { AccountCard } from "@/components/Molecules";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { BalancePriceDelta, IconWrapper } from "@/components/Shared";
+import {
+    BalancePriceDelta,
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import {
     type CrossChainBalanceItem,
     type TokenBalancesListViewProps,
 } from "@/utils/types/organisms.types";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     chain_names,
@@ -286,7 +289,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                     <div className="text-right">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
+                                <Button variant="ghost" className="ml-auto">
                                     <span className="sr-only">Open menu</span>
                                     <IconWrapper icon_class_name="expand_more" />
                                 </Button>
@@ -546,8 +549,8 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
-                    <h2 className="text-md text-secondary-light">
+                <div className="w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:max-w-60 lg:max-w-60">
+                    <h2 className="text-md text-secondary-light dark:text-secondary-dark">
                         Total Quote
                     </h2>
                     <div className="flex items-end gap-2">
@@ -574,7 +577,7 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <span className="flex text-sm text-secondary-light">
+                        <span className="flex text-sm text-secondary-light dark:text-secondary-dark">
                             {filterResult.match({
                                 None: () => (
                                     <Skeleton

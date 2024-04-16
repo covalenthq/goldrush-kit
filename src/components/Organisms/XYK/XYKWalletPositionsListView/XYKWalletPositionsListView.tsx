@@ -28,14 +28,16 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { TokenAvatar } from "../../../Atoms";
+import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { IconWrapper } from "@/components/Shared";
+import {
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKWalletPositionsListViewProps } from "@/utils/types/organisms.types";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const XYKWalletPositionsListView: React.FC<
     XYKWalletPositionsListViewProps
@@ -262,7 +264,7 @@ export const XYKWalletPositionsListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={5} float="right" />,
+        None: () => <SkeletonTable cols={4} float="right" />,
         Some: () =>
             error.error ? (
                 <TableRow>

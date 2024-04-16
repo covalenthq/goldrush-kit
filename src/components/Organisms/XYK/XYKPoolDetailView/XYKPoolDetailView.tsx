@@ -1,4 +1,4 @@
-import { TypographyH1 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { useGoldRush } from "@/utils/store";
 import { type Option, Some, None } from "@/utils/option";
 import { type XYKPoolDetailViewProps } from "@/utils/types/organisms.types";
@@ -51,8 +51,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                 {maybeResult.match({
                     None: () => (
                         <div className="relative mr-2 flex">
-                            <div className="animate-pulse h-20 w-20 rounded-[100%] bg-slate-600" />
-                            <div className="animate-pulse absolute left-12 h-20 w-20 rounded-[100%] bg-slate-200" />
+                            <div className="h-20 w-20 animate-pulse rounded-[100%] bg-slate-600" />
+                            <div className="absolute left-12 h-20 w-20 animate-pulse rounded-[100%] bg-slate-200" />
                         </div>
                     ),
                     Some: (result) => (
@@ -78,22 +78,22 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                         </div>
                     ),
                     Some: (result) => (
-                        <TypographyH1>
+                        <Heading size={1}>
                             <span className="ml-8">
                                 {" "}
                                 {result.token_0.contract_ticker_symbol}-
                                 {result.token_1.contract_ticker_symbol}{" "}
                             </span>
                             Pair
-                        </TypographyH1>
+                        </Heading>
                     ),
                 })}{" "}
             </div>
 
             <div className="mt-4 flex flex-col gap-4 md:flex-row">
-                <div className="flex min-w-[20rem] max-w-[70rem] flex-col gap-2 rounded">
-                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary-light">
+                <div className="flex min-w-80 max-w-[70rem] flex-col gap-2 rounded">
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border border-secondary-light p-4 dark:border-secondary-dark">
+                        <h2 className="text-md text-secondary-light dark:text-secondary-dark">
                             Total Liquidity
                         </h2>
                         <div className="flex items-end gap-2">
@@ -115,8 +115,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                             </span>
                         </div>
                     </div>
-                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary-light">
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border border-secondary-light p-4 dark:border-secondary-dark">
+                        <h2 className="text-md text-secondary-light dark:text-secondary-dark">
                             Volume (24hrs)
                         </h2>
                         <div className="flex items-end gap-2">
@@ -136,8 +136,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                             </span>
                         </div>
                     </div>
-                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary-light">
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border border-secondary-light p-4 dark:border-secondary-dark">
+                        <h2 className="text-md text-secondary-light dark:text-secondary-dark">
                             Fee (24hrs)
                         </h2>
                         <div className="flex items-end gap-2">
@@ -157,8 +157,8 @@ export const XYKPoolDetailView: React.FC<XYKPoolDetailViewProps> = ({
                             </span>
                         </div>
                     </div>
-                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border p-4">
-                        <h2 className="text-md text-secondary-light">
+                    <div className="flex w-full flex-grow flex-col justify-center gap-2 rounded border border-secondary-light p-4 dark:border-secondary-dark">
+                        <h2 className="text-md text-secondary-light dark:text-secondary-dark">
                             Pooled Tokens
                         </h2>
                         <div className="flex items-end gap-2">

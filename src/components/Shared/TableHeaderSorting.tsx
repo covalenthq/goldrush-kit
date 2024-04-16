@@ -1,19 +1,12 @@
-import { type Column } from "@tanstack/react-table";
-import { IconWrapper } from "../Shared";
+import { IconWrapper } from ".";
+import { type TableHeaderSortingProps } from "@/utils/types/shared.types";
 
-export interface TableHeaderSortingProps {
-    header_name: string;
-    column: Column<any, unknown>;
-    align: "left" | "right" | "center";
-    icon?: boolean;
-}
-
-export const TableHeaderSorting = ({
+export const TableHeaderSorting: React.FC<TableHeaderSortingProps> = ({
     header_name,
     column,
     align,
     icon = true,
-}: TableHeaderSortingProps) => {
+}) => {
     const sortedIcon =
         column.getIsSorted() === "asc"
             ? "arrow_drop_up"
@@ -22,7 +15,7 @@ export const TableHeaderSorting = ({
               : "sort";
     return (
         <div
-            className={`flex cursor-pointer items-center gap-1 whitespace-nowrap hover:text-slate-900 dark:hover:text-slate-50  ${
+            className={`flex cursor-pointer items-center gap-1 whitespace-nowrap ${
                 align === "right"
                     ? "justify-end"
                     : align === "center"

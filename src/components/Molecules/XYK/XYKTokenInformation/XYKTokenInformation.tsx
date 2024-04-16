@@ -57,7 +57,9 @@ export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
 
         return (
             <div className="flex flex-col gap-1">
-                <h2 className="text-md text-secondary-light">{label}</h2>
+                <h2 className="text-md text-secondary-light dark:text-secondary-dark">
+                    {label}
+                </h2>
                 <div className="flex gap-2">
                     {truncate(text)}
                     {showCopy ? (
@@ -71,7 +73,7 @@ export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
                             <IconWrapper
                                 icon_class_name="content_copy"
                                 icon_size="text-sm"
-                                class_name="text-secondary-light dark:text-secondary-light cursor-pointer"
+                                class_name="text-secondary-light dark:text-secondary-dark cursor-pointer"
                                 on_click={() => handleCopyClick()}
                             />
                         )
@@ -91,7 +93,7 @@ export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
 
     return (
         <>
-            <div className="flex items-center rounded border p-4">
+            <div className="flex items-center rounded border border-secondary-light p-4 dark:border-secondary-dark">
                 {maybeResult.match({
                     None: () => {
                         return (

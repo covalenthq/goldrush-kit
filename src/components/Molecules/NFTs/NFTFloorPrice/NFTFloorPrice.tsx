@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
 import { timestampParser } from "@/utils/functions";
-import { TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import {
     calculatePrettyBalance,
     prettifyCurrency,
@@ -34,7 +34,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
-    const { covalentClient } = useGoldRush();
+    const { covalentClient, theme } = useGoldRush();
 
     useEffect(() => {
         (async () => {
@@ -88,7 +88,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
             return (
                 <div>
                     <LineChart
-                        className="mt-2 border p-2"
+                        className="mt-2 p-2"
                         data={result}
                         index="date"
                         valueFormatter={
@@ -101,7 +101,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
                                 ? "Floor price (USD)"
                                 : floor_price_native,
                         ]}
-                        colors={CHART_COLORS}
+                        colors={CHART_COLORS[theme.mode]}
                         yAxisWidth={80}
                     />
                 </div>
@@ -110,9 +110,9 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     });
 
     return (
-        <div className="min-h-[25rem] w-full rounded border p-4">
+        <div className="min-h-[25rem] w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
-                <TypographyH4>Floor Price</TypographyH4>
+                <Heading size={4}>Floor Price</Heading>
             </div>
 
             <div className="flex justify-between">

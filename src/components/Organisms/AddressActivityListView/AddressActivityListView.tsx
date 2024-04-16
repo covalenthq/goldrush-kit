@@ -22,12 +22,11 @@ import { AccountCard } from "@/components/Molecules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
 import { TokenAvatar } from "@/components/Atoms";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
+import { SkeletonTable, TableHeaderSorting } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListViewProps } from "@/utils/types/organisms.types";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
@@ -123,7 +122,7 @@ export const AddressActivityListView: React.FC<
             ),
             cell: ({ row }) => {
                 return (
-                    <div className="flex items-center gap-x-1 ">
+                    <div className="flex items-center gap-x-1">
                         <TokenAvatar
                             is_chain_logo={true}
                             token_url={row.original.logo_url}
@@ -144,7 +143,7 @@ export const AddressActivityListView: React.FC<
                 />
             ),
             cell: ({ row }) => {
-                const t = (row.getValue("last_seen_at") as any).toString();
+                const t = (row.getValue("last_seen_at") as string).toString();
 
                 return <div>{timestampParser(t, "relative")}</div>;
             },
@@ -192,7 +191,7 @@ export const AddressActivityListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={2} />,
+        None: () => <SkeletonTable cols={4} />,
         Some: () =>
             error.error ? (
                 <TableRow>
@@ -232,14 +231,14 @@ export const AddressActivityListView: React.FC<
     });
 
     return (
-        <div className="space-y-4 ">
+        <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
+                <div className="w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:max-w-60 lg:max-w-60">
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}
                         <span>Mainnet Chains Active</span>{" "}
-                        <span className=" text-secondary-light ">
+                        <span className="text-secondary-light dark:text-secondary-dark">
                             {" "}
                             {maybeResult.match({
                                 None: () => (
@@ -266,7 +265,7 @@ export const AddressActivityListView: React.FC<
                     <div className="flex place-content-between items-center space-x-1">
                         {" "}
                         <span>Testnet Chains Active</span>{" "}
-                        <span className=" text-secondary-light ">
+                        <span className="text-secondary-light dark:text-secondary-dark">
                             {" "}
                             {maybeResult.match({
                                 None: () => (

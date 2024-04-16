@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/dialog";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
-import { useToast } from "../../../utils/hooks";
-import { AddressAvatar } from "../../Atoms";
-import { IconWrapper } from "../../Shared";
+import { useToast } from "@/utils/hooks";
+import { AddressAvatar } from "@/components/Atoms";
+import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type CollectionCardProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
@@ -59,78 +59,75 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
         None: () => <Skeleton size={GRK_SIZES.LARGE} />,
         Some: (nfts) => {
             return (
-                <>
-                    <div className="flex w-full items-center gap-x-4 rounded border p-2 md:max-w-[18rem] lg:max-w-[18rem]">
-                        <AddressAvatar
-                            type={"nft"}
-                            address={nfts[0].nft_data?.external_data?.image_512}
-                            size={GRK_SIZES.MEDIUM}
-                        />
-                        <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-base font-semibold text-primary-light-200">
-                                {nfts[0].contract_name}
-                            </h2>
-                            <div className="flex items-center gap-x-2">
-                                <p className="text-base">
-                                    {truncate(collection_address)}
-                                </p>
-                                <div
-                                    className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
-                                    onClick={() =>
-                                        copyToClipboard(collection_address)
-                                    }
-                                >
-                                    {showCopy ? (
-                                        <IconWrapper
-                                            icon_class_name="done"
-                                            icon_size="text-sm"
-                                            class_name="text-secondary-light dark:text-secondary-dark"
-                                        />
-                                    ) : (
-                                        <IconWrapper
-                                            icon_class_name="content_copy"
-                                            icon_size="text-sm"
-                                            class_name="text-secondary-light dark:text-secondary-dark"
-                                            on_click={() => handleCopyClick()}
-                                        />
-                                    )}
-                                </div>
-
-                                <div className="cursor-pointer">
-                                    <Dialog>
-                                        <DialogTrigger>
-                                            <div className="h-5 w-5 items-center justify-center rounded-full">
-                                                <IconWrapper
-                                                    icon_class_name="qr_code_2"
-                                                    icon_size="text-sm pt-1"
-                                                    class_name="text-secondary-light dark:text-secondary-dark"
-                                                />
-                                            </div>
-                                        </DialogTrigger>
-
-                                        <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
-                                            <DialogHeader>
-                                                <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
-                                                    QR Code
-                                                </p>
-                                            </DialogHeader>
-                                            <div className="border-border dark:border-x-border-dark flex items-center justify-center rounded border-2 bg-white p-6">
-                                                <QRCode
-                                                    value={collection_address}
-                                                    viewBox="0 0 30 30"
-                                                    className="bg-white"
-                                                />
-                                            </div>
-                                            <p className="rounded bg-foreground-light p-2 text-center text-xs text-background-light dark:bg-foreground-dark dark:text-background-dark">
-                                                {collection_address}
-                                            </p>
-                                        </DialogContent>
-                                    </Dialog>
-                                </div>
+                <div className="flex items-center gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
+                    <AddressAvatar
+                        type={"nft"}
+                        address={nfts[0].nft_data?.external_data?.image_512}
+                        rounded
+                        size={GRK_SIZES.SMALL}
+                    />
+                    <div className="flex h-full flex-col justify-center">
+                        <h2 className="text-base font-semibold text-primary-light dark:text-primary-dark">
+                            {nfts[0].contract_name}
+                        </h2>
+                        <div className="flex items-center gap-x-2">
+                            <p className="text-base">
+                                {truncate(collection_address)}
+                            </p>
+                            <div
+                                className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
+                                onClick={() =>
+                                    copyToClipboard(collection_address)
+                                }
+                            >
+                                {showCopy ? (
+                                    <IconWrapper
+                                        icon_class_name="done"
+                                        icon_size="text-sm"
+                                        class_name="text-secondary-light dark:text-secondary-dark"
+                                    />
+                                ) : (
+                                    <IconWrapper
+                                        icon_class_name="content_copy"
+                                        icon_size="text-sm"
+                                        class_name="text-secondary-light dark:text-secondary-dark"
+                                        on_click={() => handleCopyClick()}
+                                    />
+                                )}
                             </div>
+
+                            <Dialog>
+                                <DialogTrigger>
+                                    <div className="h-5 w-5 items-center justify-center rounded-full">
+                                        <IconWrapper
+                                            icon_class_name="qr_code_2"
+                                            icon_size="text-sm"
+                                            class_name="text-secondary-light dark:text-secondary-dark"
+                                        />
+                                    </div>
+                                </DialogTrigger>
+
+                                <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
+                                    <DialogHeader>
+                                        <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
+                                            QR Code
+                                        </p>
+                                    </DialogHeader>
+                                    <div className="border-border dark:border-x-border-dark flex items-center justify-center rounded border-2 bg-white p-6">
+                                        <QRCode
+                                            value={collection_address}
+                                            viewBox="0 0 30 30"
+                                            className="bg-white"
+                                        />
+                                    </div>
+                                    <p className="p-2 text-xs text-secondary-light dark:text-secondary-dark">
+                                        {collection_address}
+                                    </p>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </div>
-                </>
+                </div>
             );
         },
     });

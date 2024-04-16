@@ -92,7 +92,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
         <>
             {maybeResult.match({
                 None: () => (
-                    <div className="border-y py-4">
+                    <div className="border-y border-secondary-light py-4 dark:border-secondary-dark">
                         <Skeleton size={GRK_SIZES.LARGE} />
                     </div>
                 ),
@@ -110,7 +110,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                 ) => (
                                     <article
                                         key={name + i}
-                                        className="flex w-full flex-col border-t py-4 last:border-b md:gap-y-4"
+                                        className="flex w-full flex-col border-t border-secondary-light py-4 last:border-b dark:border-secondary-dark md:gap-y-4"
                                     >
                                         <header className="flex w-full justify-between">
                                             <h3 className="font-medium">
@@ -243,7 +243,7 @@ export const DecodedTransaction: React.FC<DecodedTransactionProps> = ({
                                                                 title={heading}
                                                             >
                                                                 <div
-                                                                    className=" text-sm text-secondary-light dark:text-secondary-dark"
+                                                                    className="text-sm text-secondary-light dark:text-secondary-dark"
                                                                     title={
                                                                         heading
                                                                     }

@@ -38,8 +38,10 @@ export interface GoldRushThemeColorType {
     secondary: string;
 }
 
+export type GoldRushThemeMode = "dark" | "light";
+
 export interface GoldRushThemeType {
-    mode: "dark" | "light";
+    mode: GoldRushThemeMode;
     style: "classic" | "neo";
     borderRadius: number;
     colors: Partial<{
@@ -55,7 +57,7 @@ export interface GoldRushProviderProps {
     /**
      * @deprecated `mode` is deprecated as support will be removed in the upcoming releases. Use `newTheme.mode` instead.
      */
-    mode?: "dark" | "light";
+    mode?: GoldRushThemeMode;
     /**
      * @deprecated `theme` is deprecated as support will be removed in the upcoming releases. Use `newTheme.style` instead.
      */

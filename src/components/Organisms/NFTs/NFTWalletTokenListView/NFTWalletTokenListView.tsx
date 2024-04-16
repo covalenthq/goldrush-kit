@@ -66,12 +66,12 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     }, [chain_names, address]);
 
     return (
-        <div className="space-y-4 ">
+        <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
                 <AccountCard address={address} />
 
-                <div className="w-full rounded border p-2 md:max-w-60">
-                    <h2 className="text-base font-semibold text-secondary-light">
+                <div className="w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:max-w-60">
+                    <h2 className="text-base font-semibold text-secondary-light dark:text-secondary-dark">
                         Total Quote
                     </h2>
                     <div className="flex items-end gap-2">
@@ -100,7 +100,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                 },
                             })}
                         </span>
-                        <div className="flex gap-1 text-sm text-secondary-light">
+                        <div className="flex gap-1 text-sm text-secondary-light dark:text-secondary-dark">
                             <span className="flex">
                                 {" "}
                                 (
@@ -206,7 +206,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                 #{nft.token_id?.toString()}
                                             </CardTitle>
                                             <div className="mt-2">
-                                                <small className="text-secondary-light">
+                                                <small className="text-secondary-light dark:text-secondary-dark">
                                                     Est. Value
                                                 </small>
                                                 <p>

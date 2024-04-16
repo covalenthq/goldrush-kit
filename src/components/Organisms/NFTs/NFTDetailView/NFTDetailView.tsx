@@ -1,4 +1,4 @@
-import { TypographyH1, TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { useGoldRush } from "@/utils/store";
 import { NFTFloorPrice, NFTSalesCount } from "@/components/Molecules";
 import { type Option, Some, None } from "@/utils/option";
@@ -63,10 +63,10 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                 ),
                 Some: (result) => {
                     return (
-                        <TypographyH1>
+                        <Heading size={1}>
                             {result.contract_name} #
                             {result.nft_data.token_id?.toString()}{" "}
-                        </TypographyH1>
+                        </Heading>
                     );
                 },
             })}
@@ -75,10 +75,10 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                 {maybeResult.match({
                     None: () => (
                         <div className="max-w-[30rem] rounded border ">
-                            <div className="bg-accent-foreground animate-pulse h-[30rem] w-[30rem] rounded" />
+                            <div className="bg-accent-foreground h-[30rem] w-[30rem] animate-pulse rounded" />
 
                             <div className="mt-2 p-4">
-                                <TypographyH4>Attributes</TypographyH4>
+                                <Heading size={4}>Attributes</Heading>
 
                                 <div className="mt-2 flex flex-wrap gap-4">
                                     {[1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {
@@ -95,7 +95,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                     ),
                     Some: (result) => {
                         return (
-                            <div className="max-w-[30rem] rounded border ">
+                            <div className="max-w-[30rem] rounded border border-secondary-light dark:border-secondary-dark">
                                 <img
                                     className="rounded-t"
                                     src={
@@ -104,7 +104,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                                 />
 
                                 <div className="mt-2 p-4">
-                                    <TypographyH4>Attributes</TypographyH4>
+                                    <Heading size={4}>Attributes</Heading>
 
                                     <div className="mt-2 flex flex-wrap gap-4">
                                         {result.nft_data.external_data?.attributes.map(
@@ -112,12 +112,14 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                                                 return (
                                                     <div
                                                         key={i}
-                                                        className="rounded border bg-primary-dark-600 p-2"
+                                                        className="rounded border border-secondary-light bg-secondary-light p-2 text-primary-light dark:border-secondary-dark dark:bg-secondary-dark dark:text-primary-dark"
                                                     >
-                                                        <p className="text-secondary-light dark:text-secondary-dark">
+                                                        <p>
                                                             {attrs.trait_type}
                                                         </p>
-                                                        <p>{attrs.value}</p>
+                                                        <p className="text-foreground-light dark:text-foreground-dark">
+                                                            {attrs.value}
+                                                        </p>
                                                     </div>
                                                 );
                                             }
