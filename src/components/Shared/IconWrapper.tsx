@@ -1,6 +1,6 @@
 import { type IconWrapperProps } from "@/utils/types/shared.types";
 
-const IconWrapper: React.FC<IconWrapperProps> = ({
+export const IconWrapper: React.FC<IconWrapperProps> = ({
     class_name,
     icon_class_name,
     on_click,
@@ -23,5 +23,3 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
         </div>
     );
 };
-
-export default IconWrapper;

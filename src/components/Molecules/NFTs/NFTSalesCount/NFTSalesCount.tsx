@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BarChart } from "@tremor/react";
 import { timestampParser } from "@/utils/functions";
-import { TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CHART_COLORS,
@@ -26,7 +26,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
         >
     >(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const { covalentClient } = useGoldRush();
+    const { covalentClient, theme } = useGoldRush();
 
     useEffect(() => {
         (async () => {
@@ -68,7 +68,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
                         data={result}
                         index="date"
                         categories={["Sale Count"]}
-                        colors={CHART_COLORS}
+                        colors={CHART_COLORS[theme.mode]}
                     />
                 </div>
             );
@@ -76,9 +76,9 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
     });
 
     return (
-        <div className="min-h-[20rem] w-full rounded border p-4">
+        <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
-                <TypographyH4>Sales History</TypographyH4>
+                <Heading size={4}>Sales History</Heading>
             </div>
 
             <div className="flex justify-between">

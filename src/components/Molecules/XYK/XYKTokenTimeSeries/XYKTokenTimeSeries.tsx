@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AreaChart, BarChart } from "@tremor/react";
 import { timestampParser } from "@/utils/functions";
-import { TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CHART_COLORS,
@@ -34,7 +34,7 @@ export const XYKTokenTimeSeries: React.FC<XYKTokenTimeSeriesProps> = ({
     const [timeSeries, setTimeSeries] = useState<string>(
         displayMetrics !== "both" ? displayMetrics : "liquidity"
     );
-    const { covalentClient } = useGoldRush();
+    const { covalentClient, theme } = useGoldRush();
 
     useEffect(() => {
         maybeResult.match({
@@ -104,7 +104,7 @@ export const XYKTokenTimeSeries: React.FC<XYKTokenTimeSeriesProps> = ({
                         categories={[
                             `${capitalizeFirstLetter(timeSeries)} (USD)`,
                         ]}
-                        colors={CHART_COLORS}
+                        colors={CHART_COLORS[theme.mode]}
                     />
                 );
             }
@@ -119,7 +119,7 @@ export const XYKTokenTimeSeries: React.FC<XYKTokenTimeSeriesProps> = ({
                         categories={[
                             `${capitalizeFirstLetter(timeSeries)} (USD)`,
                         ]}
-                        colors={CHART_COLORS}
+                        colors={CHART_COLORS[theme.mode]}
                     />
                 </div>
             );
@@ -127,11 +127,11 @@ export const XYKTokenTimeSeries: React.FC<XYKTokenTimeSeriesProps> = ({
     });
 
     return (
-        <div className="min-h-[20rem] w-full rounded border p-4">
+        <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
-                <TypographyH4>{`${capitalizeFirstLetter(
-                    timeSeries
-                )} (USD)`}</TypographyH4>
+                <Heading size={4}>
+                    {`${capitalizeFirstLetter(timeSeries)} (USD)`}
+                </Heading>
             </div>
 
             <div className="flex justify-between">

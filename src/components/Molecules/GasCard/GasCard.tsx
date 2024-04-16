@@ -46,12 +46,12 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
 
     return (
         <>
-            <div className="flex w-full flex-col gap-4 rounded border">
+            <div className="flex w-full flex-col gap-4 rounded border border-secondary-light dark:border-secondary-dark">
                 <div className="bg-accent-light h-12 rounded-t" />
                 <div className="flex flex-col  items-center justify-center gap-2 p-4">
                     <span className="text-7xl">⛽</span>
                     <h2 className="text-xl">Current Network Fee</h2>
-                    <label className="text-base text-secondary-light">
+                    <label className="flex items-center gap-x-2 text-base text-secondary-light dark:text-secondary-dark">
                         Base Fee:{" "}
                         {maybeResult.match({
                             None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
@@ -60,7 +60,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                     (parseInt(String(result.base_fee)) ?? 0) /
                                         Math.pow(10, 9)
                                 );
-                                return <span>{baseFeeGwei}</span>;
+                                return <span> {baseFeeGwei}</span>;
                             },
                         })}
                     </label>
@@ -130,7 +130,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                                               ? "Normal"
                                                               : "High"}
                                                     </label>
-                                                    <label className="text-sm text-secondary-light">
+                                                    <label className="text-sm text-secondary-light dark:text-secondary-dark">
                                                         {o.interval}
                                                     </label>
                                                 </div>
@@ -139,7 +139,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                                 <label>
                                                     {gwei.toFixed(0)} Gwei
                                                 </label>
-                                                <label className="text-sm text-secondary-light">
+                                                <label className="text-sm text-secondary-light dark:text-secondary-dark">
                                                     {o.pretty_total_gas_quote}
                                                 </label>
                                             </div>

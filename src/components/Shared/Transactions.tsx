@@ -22,8 +22,7 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { timestampParser } from "@/utils/functions";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
+import { IconWrapper, SkeletonTable, TableHeaderSorting } from ".";
 import { type TransactionsProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 import {
@@ -34,9 +33,8 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import IconWrapper from "@/components/Shared/IconWrapper";
 
-const Transactions: React.FC<TransactionsProps> = ({
+export const Transactions: React.FC<TransactionsProps> = ({
     on_goldrush_receipt_click,
     on_native_explorer_click,
     on_transaction_click,
@@ -317,7 +315,7 @@ const Transactions: React.FC<TransactionsProps> = ({
     });
 
     const body = filterResult.match({
-        None: () => <SkeletonTable cols={7} />,
+        None: () => <SkeletonTable cols={8} />,
         Some: () =>
             errorMessage ? (
                 <TableRow>
@@ -380,5 +378,3 @@ const Transactions: React.FC<TransactionsProps> = ({
         </Table>
     );
 };
-
-export default Transactions;

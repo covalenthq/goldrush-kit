@@ -20,13 +20,15 @@ import {
 } from "@/components/ui/table";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { TableHeaderSorting } from "@/components/ui/tableHeaderSorting";
 import { type XYKOverviewTransactionsListViewProps } from "@/utils/types/organisms.types";
 import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
-import { SkeletonTable } from "@/components/ui/skeletonTable";
-import { IconWrapper } from "@/components/Shared";
+import {
+    IconWrapper,
+    SkeletonTable,
+    TableHeaderSorting,
+} from "@/components/Shared";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -347,7 +349,7 @@ export const XYKOverviewTransactionsListView: React.FC<
     });
 
     const body = maybeResult.match({
-        None: () => <SkeletonTable cols={4} />,
+        None: () => <SkeletonTable cols={5} />,
         Some: () => {
             return error.error ? (
                 <TableRow>

@@ -1,6 +1,3 @@
-import dayjs from "dayjs";
-import { CUSTOM_DATE_FORMAT } from "../constants/shared.constants";
-
 const months: string[] = [
     "January",
     "February",
@@ -18,26 +15,12 @@ const months: string[] = [
 
 export const timestampParser = (
     timestamp: string | Date,
-    type:
-        | "descriptive"
-        | "YYYY-MM-DD"
-        | "DD MMM YY"
-        | "relative"
-        | "relative-only-period"
-        | keyof typeof CUSTOM_DATE_FORMAT
+    type: "descriptive" | "DD MMM YY" | "relative"
 ): string => {
-    const ago = type === "relative-only-period" ? "" : " ago";
-
-    if (Object.keys(CUSTOM_DATE_FORMAT).includes(type)) {
-        return dayjs(timestamp).format(
-            CUSTOM_DATE_FORMAT[type as keyof typeof CUSTOM_DATE_FORMAT]
-        );
-    }
+    const _unix: Date = new Date(timestamp);
 
     switch (type) {
         case "descriptive": {
-            const _unix: Date = new Date(timestamp);
-
             const _minutes = _unix.getMinutes();
             const _hours = _unix.getHours();
             const _seconds = _unix.getSeconds();
@@ -54,54 +37,42 @@ export const timestampParser = (
             } ${_unix.getDate()} ${_unix.getFullYear()} at ${_parsedHours}:${_parsedMinutes}:${_parsedSeconds}`;
         }
 
-        case "DD MMM YY":
-            return dayjs(new Date(timestamp)).format("DD MMM 'YY");
-
-        case "YYYY-MM-DD": {
-            const date = new Date(timestamp);
-
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-
-            return `${year}-${month}-${day}`;
+        case "DD MMM YY": {
+            const day = _unix.getDate().toString().padStart(2, "0");
+            const month = months[_unix.getMonth()].substring(0, 3);
+            const year = _unix.getFullYear();
+            return `${day} ${month} ${year}`;
         }
 
-        case "relative-only-period":
         case "relative": {
             const currentTime = new Date();
-            const pastTime = new Date(timestamp);
 
             const yearsDifference =
-                currentTime.getFullYear() - pastTime.getFullYear();
-            const monthsDifference =
-                currentTime.getMonth() - pastTime.getMonth();
-            const daysDifference = currentTime.getDate() - pastTime.getDate();
-            const hoursDifference =
-                currentTime.getHours() - pastTime.getHours();
+                currentTime.getFullYear() - _unix.getFullYear();
+            const monthsDifference = currentTime.getMonth() - _unix.getMonth();
+            const daysDifference = currentTime.getDate() - _unix.getDate();
+            const hoursDifference = currentTime.getHours() - _unix.getHours();
             const minutesDifference =
-                currentTime.getMinutes() - pastTime.getMinutes();
+                currentTime.getMinutes() - _unix.getMinutes();
 
             if (yearsDifference > 0) {
                 return `${yearsDifference} year${
                     yearsDifference > 1 ? "s" : ""
-                } ${ago}`;
+                } ago`;
             } else if (monthsDifference > 0) {
                 return `${monthsDifference} month${
                     monthsDifference > 1 ? "s" : ""
-                } ${ago}`;
+                } ago`;
             } else if (daysDifference > 0) {
-                return `${daysDifference} day${
-                    daysDifference > 1 ? "s" : ""
-                } ${ago}`;
+                return `${daysDifference} day${daysDifference > 1 ? "s" : ""} ago`;
             } else if (hoursDifference > 0) {
                 return `${hoursDifference} hour${
                     hoursDifference > 1 ? "s" : ""
-                } ${ago}`;
+                } ago`;
             } else if (minutesDifference > 0) {
                 return `${minutesDifference} minute${
                     minutesDifference > 1 ? "s" : ""
-                } ${ago}`;
+                } ago`;
             } else {
                 return `just now`;
             }

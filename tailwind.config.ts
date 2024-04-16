@@ -1,7 +1,6 @@
-/*eslint-env node*/
-/** @type {import('tailwindcss').Config} */
+import type { Config } from "tailwindcss";
 
-module.exports = {
+const config = {
     darkMode: ["class"],
     content: [
         "./src/**/*.{js,ts,jsx,tsx}",
@@ -140,22 +139,22 @@ module.exports = {
                 "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
                 "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
             },
-        },
-        keyframes: {
-            "accordion-down": {
-                from: { height: 0 },
-                to: { height: "var(--grk-radix-accordion-content-height)" },
-            },
-            "accordion-up": {
-                from: {
-                    height: "var(--grk-radix-accordion-content-height)",
+            keyframes: {
+                "accordion-down": {
+                    from: { height: "0" },
+                    to: { height: "var(--grk-radix-accordion-content-height)" },
                 },
-                to: { height: 0 },
+                "accordion-up": {
+                    from: {
+                        height: "var(--grk-radix-accordion-content-height)",
+                    },
+                    to: { height: "0" },
+                },
             },
-        },
-        animation: {
-            "accordion-down": "accordion-down 0.2s ease-out",
-            "accordion-up": "accordion-up 0.2s ease-out",
+            animation: {
+                "accordion-down": "accordion-down 0.2s ease-out",
+                "accordion-up": "accordion-up 0.2s ease-out",
+            },
         },
     },
     safelist: [
@@ -171,36 +170,38 @@ module.exports = {
             ),
             variants: ["hover", "ui-selected"],
         },
-        {
-            pattern:
-                /^(bg-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-            variants: ["hover", "ui-selected"],
-        },
-        {
-            pattern:
-                /^(text-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-            variants: ["hover", "ui-selected"],
-        },
-        {
-            pattern:
-                /^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-            variants: ["hover", "ui-selected"],
-        },
-        {
-            pattern:
-                /^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-        },
-        {
-            pattern:
-                /^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-        },
-        {
-            pattern:
-                /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-        },
+        // {
+        //     pattern:
+        //         /^(bg-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        //     variants: ["hover", "ui-selected"],
+        // },
+        // {
+        //     pattern:
+        //         /^(text-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        //     variants: ["hover", "ui-selected"],
+        // },
+        // {
+        //     pattern:
+        //         /^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        //     variants: ["hover", "ui-selected"],
+        // },
+        // {
+        //     pattern:
+        //         /^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        // },
+        // {
+        //     pattern:
+        //         /^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        // },
+        // {
+        //     pattern:
+        //         /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+        // },
     ],
     plugins: [
         require("tailwindcss-animate"),
         require("@headlessui/tailwindcss"),
     ],
-};
+} satisfies Config;
+
+export default config;

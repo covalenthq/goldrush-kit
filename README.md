@@ -21,15 +21,11 @@
 <div align="center">
 200+ Chains. Open-source. Customizable.
 </div>
-  <p align="center">
+<p align="center">
     <br />
     <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
     <br />
 </p>
-<p align="center">
-  <br />
-    Read this in other languages: <a href="https://github.com/covalenthq/goldrush-kit/blob/main/README.hi.md">हिंदी</a>
-  </p>
 
 ## Setup
 
@@ -141,13 +137,14 @@ export default function GoldRushExample() {
 ## GoldRush Templates
 
 | Template                              | Description                                                | Link                                                         |
-|---------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
+| ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
 | Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains.       | https://github.com/covalenthq/goldrush-wallet-portfolio-ui   |
 | NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.          | https://github.com/covalenthq/goldrush-nft-gallery-ui        |
 | Uniswap-like Analytics UI             | Display Uniswap-like analytics for the dex of your choice. | https://github.com/covalenthq/goldrush-uniswap-dex-dashboard |
 | Transaction Receipt View              | A beautifully designed view for blockchain transactions.   | https://github.com/covalenthq/goldrush-tx-receipt-ui         |
 
 ## HIGHLIGHT: GoldRush Transaction Receipt View
+
 Designed to transform cluttered blockchain transaction data into meaningful summaries useful to the user. Receipts are fully extensible and enhance the clarity and understanding of various blockchain activities. Imagine a transaction view that shows Game-Fi quest achievements, swap pool position data, or even staking impact on network security—this is all possible with GoldRush-Kit.
 
 https://goldrush-tx-receipt-ui.vercel.app/
@@ -155,6 +152,7 @@ https://goldrush-tx-receipt-ui.vercel.app/
 https://github.com/covalenthq/goldrush-tx-receipt-ui
 
 ## GoldRush Decoder
+
 Decode transaction log events to display them in a human-readable format. Useful for understanding the data that is emitted from smart contracts and is a critical component of any dApp. Works in tandem with GoldRush-Kit to provide a seamless experience for developers and users alike.
 
 https://github.com/covalenthq/goldrush-decoder

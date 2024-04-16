@@ -23,7 +23,6 @@ import {
     DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 
 export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     address,
@@ -94,9 +93,9 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
     }, [chains, chainName]);
 
     return (
-        <Card className="flex flex-col gap-y-4 rounded border p-4 dark:bg-background-dark dark:text-white">
+        <Card className="flex flex-col gap-y-4 rounded p-4 dark:bg-background-dark dark:text-white">
             <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
-                <div className="md:col-span-2">
+                <div className="w-fit md:col-span-2">
                     <AccountCard address={address} />
                 </div>
 
@@ -187,22 +186,14 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="mt-2 w-72">
-                                <Button
-                                    variant="outline"
-                                    style={{
-                                        borderColor:
-                                            selectedChain?.color_theme.hex,
-                                    }}
-                                >
-                                    <CardDescription className="flex w-full items-center justify-between">
-                                        Token Holdings ({holdings.length}{" "}
-                                        tokens)
-                                        <CaretDownIcon />
-                                    </CardDescription>
-                                </Button>
+                                <p className="flex w-full cursor-pointer items-center justify-between rounded border border-secondary-light px-4 py-2 text-sm text-secondary-light dark:border-secondary-dark dark:text-secondary-dark">
+                                    Token Holdings ({holdings.length} tokens)
+                                    <CaretDownIcon />
+                                </p>
                             </DropdownMenuTrigger>
+
                             <DropdownMenuContent
-                                className="z-10 mx-auto w-72 rounded border bg-white dark:bg-background-dark dark:text-white"
+                                className="z-10 mx-auto w-72 rounded border border-secondary-light bg-white dark:border-secondary-dark dark:bg-background-dark dark:text-white"
                                 align="start"
                             >
                                 {holdings.map(
@@ -216,7 +207,7 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
                                     }) => (
                                         <DropdownMenuItem
                                             key={contract_address}
-                                            className="mt-1 flex items-center gap-x-2 border-t p-1 first:border-t-0"
+                                            className="mt-1 flex w-full items-center gap-x-4 border-t border-secondary-light px-2 py-1 first:border-t-0 dark:border-secondary-dark"
                                         >
                                             <div>
                                                 <TokenAvatar

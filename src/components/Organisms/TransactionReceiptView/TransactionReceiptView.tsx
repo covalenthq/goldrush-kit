@@ -1,5 +1,5 @@
 import { type TransactionReceiptViewProps } from "@/utils/types/organisms.types";
-import { TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { Address } from "@/components/Atoms";
 import { AccountCard, DecodedTransaction } from "@/components/Molecules";
 import { useMemo, useState } from "react";
@@ -28,11 +28,11 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
     }, [chains, chain_name]);
 
     return (
-        <section className="overflow-hidden rounded border">
+        <section className="overflow-hidden rounded border border-secondary-light dark:border-secondary-dark">
             <figure className="h-10 w-full bg-primary-light dark:bg-primary-dark" />
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
-                    <TypographyH4>Transaction Receipt</TypographyH4>
+                    <Heading size={4}>Transaction Receipt</Heading>
                     <div className="text-sm text-secondary-light dark:text-secondary-dark">
                         <Address address={tx_hash} />
                     </div>

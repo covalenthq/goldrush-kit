@@ -113,9 +113,9 @@ export const NFTCollectionTokenListView: React.FC<
                     collection_address={collection_address}
                     chain_name={chain_name}
                 />
-                <div className="flex w-full items-center justify-around gap-4 rounded border p-2 lg:max-w-[20rem]">
+                <div className="flex w-full items-center justify-around gap-4 rounded border border-secondary-light p-2 dark:border-secondary-dark lg:max-w-80">
                     <div>
-                        <h2 className="text-base font-semibold text-secondary-light">
+                        <h2 className="text-base font-semibold text-secondary-light dark:text-secondary-dark">
                             Market volume
                         </h2>
                         <div className="flex items-end gap-2">
@@ -139,7 +139,7 @@ export const NFTCollectionTokenListView: React.FC<
                         </div>
                     </div>
                     <div>
-                        <h2 className="text-base font-semibold text-secondary-light">
+                        <h2 className="text-base font-semibold text-secondary-light dark:text-secondary-dark">
                             Floor price
                         </h2>
                         <div className="flex items-end gap-2">
@@ -198,7 +198,7 @@ export const NFTCollectionTokenListView: React.FC<
                                             }}
                                         >
                                             <CardContent className="relative rounded bg-slate-100 transition-all">
-                                                <div className="absolute h-full w-full rounded-t bg-black  bg-opacity-0  transition-all  group-hover:bg-opacity-30">
+                                                <div className="absolute h-full w-full rounded-t bg-black bg-opacity-0 transition-all group-hover:bg-opacity-30">
                                                     <IconWrapper
                                                         icon_class_name="open_in_new"
                                                         icon_size="text-xl pt-1"
@@ -251,8 +251,8 @@ export const NFTCollectionTokenListView: React.FC<
                 None: () => <Skeleton size={GRK_SIZES.LARGE} />,
                 Some: (data) => {
                     return (
-                        <div className="flex items-center justify-between  gap-2">
-                            <div className="flex items-center  gap-2">
+                        <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
                                 <Button
                                     variant={"outline"}
                                     disabled={data.page_number === 0}
@@ -283,7 +283,7 @@ export const NFTCollectionTokenListView: React.FC<
                                     Next
                                 </Button>
                             </div>
-                            <div className="flex  gap-2">
+                            <div className="flex gap-2">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline">
@@ -298,6 +298,7 @@ export const NFTCollectionTokenListView: React.FC<
                                         {[5, 10, 15, 20].map((pageSize) => (
                                             <DropdownMenuItem
                                                 key={pageSize}
+                                                className="cursor-pointer"
                                                 onClick={() => {
                                                     setPaginator((prev) => {
                                                         return {

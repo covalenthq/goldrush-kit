@@ -1,5 +1,6 @@
 import { type Transaction } from "@covalenthq/client-sdk";
 import { type Option } from "@/utils/option";
+import { type Column } from "@tanstack/react-table";
 
 export interface BalancePriceDeltaProps {
     numerator: number;
@@ -24,4 +25,25 @@ export interface TransactionsProps {
     on_transaction_click?: Function;
     maybeResult: Option<Transaction[]>;
     errorMessage: string | null;
+}
+
+export interface SkeletonTableProps {
+    rows?: number;
+    cols?: number;
+    float?: "right" | "left";
+}
+
+export interface TableHeaderSortingProps {
+    header_name: string;
+    column: Column<any, unknown>;
+    align: "left" | "right" | "center";
+    icon?: boolean;
+}
+
+export interface HeadingProps
+    extends React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLHeadingElement>,
+        HTMLHeadingElement
+    > {
+    size: 1 | 2 | 3 | 4;
 }

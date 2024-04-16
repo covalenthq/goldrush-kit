@@ -4,13 +4,14 @@
     "rsc": false,
     "tsx": true,
     "tailwind": {
-        "config": "tailwind.config.js",
+        "config": "tailwind.config.ts",
         "css": "src/tailwind-input.css",
         "baseColor": "neutral",
-        "cssVariables": true
+        "cssVariables": true,
+        "prefix": ""
     },
     "aliases": {
         "components": "@/components",
-        "utils": "@/lib/utils"
+        "utils": "@/utils/functions"
     }
 }

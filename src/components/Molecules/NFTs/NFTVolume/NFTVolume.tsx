@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LineChart } from "@tremor/react";
 import { timestampParser } from "@/utils/functions";
-import { TypographyH4 } from "@/components/ui/typography";
+import { Heading } from "@/components/Shared";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     CHART_COLORS,
@@ -31,7 +31,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
     const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
     const [nativeCurrency, setNativeCurrency] = useState<Option<string>>(None);
-    const { covalentClient } = useGoldRush();
+    const { covalentClient, theme } = useGoldRush();
 
     useEffect(() => {
         (async () => {
@@ -92,7 +92,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
                                 ? "Volume (USD)"
                                 : floor_price_native,
                         ]}
-                        colors={CHART_COLORS}
+                        colors={CHART_COLORS[theme.mode]}
                     />
                 </div>
             );
@@ -100,9 +100,9 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
     });
 
     return (
-        <div className="rounded border p-4">
+        <div className="rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
-                <TypographyH4>Volume</TypographyH4>
+                <Heading size={4}>Volume</Heading>
             </div>
 
             <div className="flex justify-between">
