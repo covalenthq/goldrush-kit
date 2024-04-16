@@ -2,32 +2,35 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-import tsConfigPaths from "vite-tsconfig-paths";
-// import * as packageJson from "./package.json";
+import { peerDependencies } from "./package.json";
 
-export default defineConfig(() => ({
+export default defineConfig({
     resolve: {
         alias: {
             "@": resolve(__dirname, "./src"),
         },
     },
-    plugins: [react(), tsConfigPaths(), dts()],
+    plugins: [
+        react(),
+        dts({
+            rollupTypes: true,
+        }),
+    ],
     build: {
         lib: {
-            entry: resolve("./", "index.ts"),
-            name: "goldrush-kit",
-            fileName: (format) => `goldrush-kit.${format}.js`,
+            entry: resolve("./src", "index.ts"),
+            formats: ["es"],
         },
         rollupOptions: {
-            external: ["react", "react-dom"],
+            external: Object.keys(peerDependencies),
             output: {
+                preserveModules: false,
                 globals: {
                     react: "React",
-                    "react-dom": "ReactDOM",
                 },
             },
         },
         sourcemap: true,
         emptyOutDir: true,
     },
-}));
+});
