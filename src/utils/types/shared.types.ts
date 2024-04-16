@@ -33,9 +33,9 @@ export interface SkeletonTableProps {
     float?: "right" | "left";
 }
 
-export interface TableHeaderSortingProps<T> {
+export interface TableHeaderSortingProps {
     header_name: string;
-    column: Column<T, unknown>;
+    column: Column<any, unknown>;
     align: "left" | "right" | "center";
     icon?: boolean;
 }
