@@ -107,7 +107,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
                                     </div>
                                 </DialogTrigger>
 
-                                <DialogContent className="flex aspect-square items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
+                                <DialogContent className="flex aspect-square flex-col items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
                                     <DialogHeader>
                                         <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
                                             QR Code
