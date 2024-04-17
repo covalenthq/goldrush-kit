@@ -4,6 +4,7 @@ export { ChainSelector } from "./ChainSelector/ChainSelector";
 export { CollectionCard } from "./CollectionCard/CollectionCard";
 export { DecodedTransaction } from "./DecodedTransaction/DecodedTransaction";
 export { GasCard } from "./GasCard/GasCard";
+export { LatestBlocks } from "./LatestBlocks/LatestBlocks";
 export { NFTFloorPrice } from "./NFTs/NFTFloorPrice/NFTFloorPrice";
 export { NFTSalesCount } from "./NFTs/NFTSalesCount/NFTSalesCount";
 export { NFTVolume } from "./NFTs/NFTVolume/NFTVolume";
