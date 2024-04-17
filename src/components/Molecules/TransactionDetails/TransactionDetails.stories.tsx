@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { TransactionDetails as TransactionDetailsComponent } from "./TransactionDetails";
-import { Heading } from "@/components/Shared";
 
 type Story = StoryObj<typeof TransactionDetailsComponent>;
 
