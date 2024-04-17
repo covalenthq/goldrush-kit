@@ -26,6 +26,10 @@
         "name": "covalenthq",
         "url": "https://covalenthq.com"
     },
+    "bugs": {
+        "url": "https://github.com/covalenthq/goldrush-kit/issues"
+    },
+    "homepage": "https://github.com/covalenthq/goldrush-kit#readme",
     "license": "Apache-2.0",
     "scripts": {
         "build:library": "vite build && npm run build:library-css",
