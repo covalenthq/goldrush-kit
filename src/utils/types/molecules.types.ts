@@ -6,6 +6,7 @@ import {
     type ExchangeTransaction,
     type Transaction,
     type ChainItem,
+    type Block,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
@@ -22,6 +23,13 @@ export interface AccountCardProps {
 export interface BlockDetailsProps {
     chain_name: Chain;
     height: number;
+}
+
+export interface LatestBlocksProps {
+    chain_name: Chain;
+    height: number;
+    limit?: number;
+    on_view_details?: (block: Block) => void;
 }
 
 export interface GasCardProps {
