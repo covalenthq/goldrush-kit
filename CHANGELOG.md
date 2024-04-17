@@ -1,5 +1,20 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.5.3
+
+**Fixes**
+
+-   Fix themeing and CSS inconsistencies across all components
+-   Prune dead code and dependencies
+-   Typescript and linting warnings at multiple places
+
+**Features**
+
+-   Update all dependencies like eslint, storybook, shadcn and more
+-   Add chromatic for internal UI auditing
+-   Add `LatestBlocks` component
+-   Add `TransactionDetails` component
+
 ## 0.5.2
 
 **Fixes**
