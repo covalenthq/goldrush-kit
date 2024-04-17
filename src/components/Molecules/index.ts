@@ -8,6 +8,7 @@ export { LatestBlocks } from "./LatestBlocks/LatestBlocks";
 export { NFTFloorPrice } from "./NFTs/NFTFloorPrice/NFTFloorPrice";
 export { NFTSalesCount } from "./NFTs/NFTSalesCount/NFTSalesCount";
 export { NFTVolume } from "./NFTs/NFTVolume/NFTVolume";
+export { TransactionDetails } from "./TransactionDetails/TransactionDetails";
 export { XYKOverviewTimeSeries } from "./XYK/XYKOverviewTimeSeries/XYKOverviewTimeSeries";
 export { XYKPoolInformation } from "./XYK/XYKPoolInformation/XYKPoolInformation";
 export { XYKPoolTimeSeries } from "./XYK/XYKPoolTimeSeries/XYKPoolTimeSeries";

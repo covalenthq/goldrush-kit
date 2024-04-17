@@ -138,6 +138,11 @@ export interface DecodedTransactionProps {
     >;
 }
 
+export interface TransactionDetailsProps {
+    chain_name: Chain;
+    tx_hash: string;
+}
+
 export type EventDetails = {
     heading: string;
     value: string;
