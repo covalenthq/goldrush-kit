@@ -2,6 +2,7 @@ import { type GRK_SIZES } from "../constants/shared.constants";
 
 export interface AddressProps {
     address: string;
+    show_copy_icon?: boolean;
 }
 
 export interface AddressAvatarProps {

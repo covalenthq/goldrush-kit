@@ -15,7 +15,7 @@ const months: string[] = [
 
 export const timestampParser = (
     timestamp: string | Date,
-    type: "descriptive" | "DD MMM YY" | "relative"
+    type: "descriptive" | "DD MMM YY" | "relative" | "YYYY MM DD"
 ): string => {
     const _unix: Date = new Date(timestamp);
 
@@ -78,8 +78,16 @@ export const timestampParser = (
             }
         }
 
+        case "YYYY MM DD": {
+            const year = _unix.getFullYear();
+            const month = String(_unix.getMonth() + 1).padStart(2, "0");
+            const day = String(_unix.getDate()).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
         default: {
-            return "error";
+            return _unix.toISOString();
         }
     }
 };
