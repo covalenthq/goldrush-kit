@@ -1,11 +1,10 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { DecodedTransaction as DecodedTransactionComponent } from "./DecodedTransaction";
-import { Heading } from "@/components/Shared";
 
 type Story = StoryObj<typeof DecodedTransactionComponent>;
 
 const meta: Meta<typeof DecodedTransactionComponent> = {
-    title: "Molecules",
+    title: "Molecules/Decoded Transaction",
     component: DecodedTransactionComponent,
     argTypes: {
         setTxMetadata: {
@@ -15,19 +14,6 @@ const meta: Meta<typeof DecodedTransactionComponent> = {
             },
         },
     },
-    render: ({ chain_name, tx_hash, setTxMetadata }) => (
-        <section>
-            <div className="mb-8">
-                <Heading size={1}>Decoded Transaction</Heading>
-            </div>
-
-            <DecodedTransactionComponent
-                chain_name={chain_name}
-                tx_hash={tx_hash}
-                setTxMetadata={setTxMetadata}
-            />
-        </section>
-    ),
 };
 
 export default meta;
