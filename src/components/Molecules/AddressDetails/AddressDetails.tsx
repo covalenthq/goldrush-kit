@@ -8,13 +8,11 @@ import { useGoldRush } from "@/utils/store";
 import { type AddressDetailsProps } from "@/utils/types/molecules.types";
 import {
     type TransactionsSummary,
-    type Chain,
     type BalanceItem,
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import { AccountCard, ChainSelector } from "@/components/Molecules";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -24,13 +22,11 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 
-export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
+export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
-    chain_name: initialChainName,
-    show_chain_selector = true,
+    chain_name,
 }) => {
-    const { covalentClient, chains, setSelectedChain, selectedChain } =
-        useGoldRush();
+    const { covalentClient, selectedChain } = useGoldRush();
 
     const [maybeResult, setMaybeResult] = useState<
         Option<{
@@ -38,7 +34,6 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
             summary: TransactionsSummary;
         }>
     >(None);
-    const [chainName, setChainName] = useState<Chain>(initialChainName);
 
     useEffect(() => {
         (async () => {
@@ -50,11 +45,11 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
                     { data: balancesData, ...balancesError },
                 ] = await Promise.all([
                     covalentClient.TransactionService.getTransactionSummary(
-                        chainName,
+                        chain_name,
                         address.trim()
                     ),
                     covalentClient.BalanceService.getTokenBalancesForWalletAddress(
-                        chainName,
+                        chain_name,
                         address.trim()
                     ),
                 ]);
@@ -80,34 +75,15 @@ export const AddressDetailsView: React.FC<AddressDetailsProps> = ({
                 );
             } catch (error) {
                 console.error(
-                    `Error fetching transactions summary for ${chainName}:`,
+                    `Error fetching transactions summary for ${chain_name}:`,
                     error
                 );
             }
         })();
-    }, [address, chainName]);
-
-    useEffect(() => {
-        const chain = chains?.find((o) => o.name === chainName) ?? null;
-        setSelectedChain(chain);
-    }, [chains, chainName]);
+    }, [address, chain_name]);
 
     return (
         <Card className="flex flex-col gap-y-4 rounded p-4 dark:bg-background-dark dark:text-white">
-            <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
-                <div className="w-fit md:col-span-2">
-                    <AccountCard address={address} />
-                </div>
-
-                {show_chain_selector && (
-                    <ChainSelector
-                        onChangeChain={({ name }) =>
-                            setChainName(name as Chain)
-                        }
-                    />
-                )}
-            </div>
-
             {maybeResult.match({
                 None: () => (
                     <div className="grid grid-cols-1 items-start gap-4 text-sm md:grid-cols-3">

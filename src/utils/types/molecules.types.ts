@@ -39,7 +39,6 @@ export interface GasCardProps {
 export interface AddressDetailsProps {
     address: string;
     chain_name: Chain;
-    show_chain_selector?: boolean;
 }
 
 export interface ChainSelectorProps {

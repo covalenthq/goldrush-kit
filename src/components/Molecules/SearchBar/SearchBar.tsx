@@ -3,9 +3,9 @@ import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/utils/hooks/use-debounce";
 import {
     AddressActivityListView,
-    AddressDetailsView,
     TransactionReceiptView,
 } from "@/components/Organisms";
+import { AddressDetails } from "../";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
 import { useGoldRush } from "@/utils/store";
 import { BlockDetails } from "../BlockDetails/BlockDetails";
@@ -36,10 +36,9 @@ export const SearchBar: React.FC = () => {
             case "address": {
                 return (
                     <div className="flex w-full flex-col gap-y-8">
-                        <AddressDetailsView
+                        <AddressDetails
                             address={searchInput}
                             chain_name={selectedChain?.name as Chain}
-                            show_chain_selector={false}
                         />
                         <AddressActivityListView address={searchInput} />
                     </div>
