@@ -27,7 +27,6 @@ export interface BlockDetailsProps {
 
 export interface LatestBlocksProps {
     chain_name: Chain;
-    height: number;
     limit?: number;
     on_view_details?: (block: Block) => void;
 }

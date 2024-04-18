@@ -13,6 +13,5 @@ export default meta;
 export const LatestBlocks: Story = {
     args: {
         chain_name: "eth-mainnet",
-        height: 16643179,
     },
 };
