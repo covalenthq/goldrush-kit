@@ -27,7 +27,6 @@ export interface BlockDetailsProps {
 
 export interface LatestBlocksProps {
     chain_name: Chain;
-    height: number;
     limit?: number;
     on_view_details?: (block: Block) => void;
 }
@@ -40,7 +39,6 @@ export interface GasCardProps {
 export interface AddressDetailsProps {
     address: string;
     chain_name: Chain;
-    show_chain_selector?: boolean;
 }
 
 export interface ChainSelectorProps {

@@ -1,4 +1,3 @@
-export { AddressDetailsView } from "./AddressDetailsView/AddressDetailsView";
 export { NFTCollectionTokenListView } from "./NFTs/NFTCollectionTokenListView/NFTCollectionTokenListView";
 export { NFTDetailView } from "./NFTs/NFTDetailView/NFTDetailView";
 export { NFTWalletCollectionView } from "./NFTs/NFTWalletCollectionView/NFTWalletCollectionView";
@@ -10,7 +9,7 @@ export { TransactionReceiptView } from "./TransactionReceiptView/TransactionRece
 export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
 export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
 /**
- * @deprecated This component is deprecated. Please use AddressTransactions instead.
+ * @deprecated This component is deprecated. Please use `AddressTransactions` instead.
  */
 export { AddressTransactions as TransactionsList } from "./AddressTransactions/AddressTransactions";
 export { XYKOverviewTransactionsListView } from "./XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";

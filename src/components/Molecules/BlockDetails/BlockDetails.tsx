@@ -1,5 +1,5 @@
 import { Address } from "@/components/Atoms";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
@@ -40,7 +40,6 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
 
     return (
         <Card className="flex w-full flex-col items-start gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
-            <CardTitle className="">Overview</CardTitle>
             {maybeResult.match({
                 None: () => (
                     <div className="mt-4">

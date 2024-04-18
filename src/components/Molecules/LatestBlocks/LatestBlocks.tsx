@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 
 export const LatestBlocks: React.FC<LatestBlocksProps> = ({
     chain_name,
-    height,
     limit = 5,
     on_view_details,
 }) => {
@@ -44,7 +43,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 console.error(error);
             }
         })();
-    }, [chain_name, height, limit]);
+    }, [chain_name, limit]);
 
     return maybeResult.match({
         None: () => (
@@ -61,7 +60,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 blocks.map((block) => (
                     <Card
                         key={block.height}
-                        className="m-4 flex w-full flex-col rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white"
+                        className="flex w-full flex-col rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white"
                     >
                         <div className="flex w-full justify-between">
                             <CardDescription>BLOCK HEIGHT</CardDescription>
