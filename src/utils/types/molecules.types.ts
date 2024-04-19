@@ -42,6 +42,7 @@ export interface AddressDetailsProps {
 }
 
 export interface ChainSelectorProps {
+    chain_options?: Chain[];
     onChangeChain?: (chain: ChainItem) => unknown;
 }
 
