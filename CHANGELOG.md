@@ -4,68 +4,81 @@
 
 **Fixes**
 
--   Fix themeing and CSS inconsistencies across all components
--   Prune dead code and dependencies
--   Typescript and linting warnings at multiple places
+-   Migrated `AddressDetails` as a Molecule instead of an Organism
+-   Removed `ChainSelector` from `AddressDetails`
+-   Fixed `LatestBlocks` for `height` parameter and improve CSS
 
 **Features**
 
--   Update all dependencies like eslint, storybook, shadcn and more
--   Add chromatic for internal UI auditing
--   Add `LatestBlocks` component
--   Add `TransactionDetails` component
+-   Added `chain_options` for `ChainSelector` to limit options as per need
+-   Added a loader skeleton for `ChainSelector`
+
+## 0.5.3
+
+**Fixes**
+
+-   Fixed themeing and CSS inconsistencies across all components
+-   Pruned dead code and dependencies
+-   Fixed Typescript and linting warnings at multiple places
+
+**Features**
+
+-   Updated all dependencies like eslint, storybook, shadcn and more
+-   Added chromatic for internal UI auditing
+-   Added `LatestBlocks` component
+-   Added `TransactionDetails` component
 
 ## 0.5.2
 
 **Fixes**
 
--   Fix bundle size
--   Fix logic of selection of theme to be applied
--   Update dependencies and remove dead packages
--   Fix GitHub Actions workflow conditions
+-   Fixed bundle size
+-   Fixed logic of selection of theme to be applied
+-   Updated dependencies and remove dead packages
+-   Fixed GitHub Actions workflow conditions
 
 **Features**
 
--   Add `BlockTransactions` Organism
--   `TransactionsList` is now deprecated and replaced with `AddressTransactions`
+-   Added `BlockTransactions` Organism
+-   Deprecated `TransactionsList` with `AddressTransactions`
 
 ## 0.5.1
 
 **Fixes**
 
--   Fix search function exported from `useGoldRush`
--   Update TypeScript Client SDK
--   Fix exported components TypeScript support for props
--   Fix `prettyToken` implementation
+-   Fixed search function exported from `useGoldRush`
+-   Updated TypeScript Client SDK
+-   Fixed exported components TypeScript support for props
+-   Fixed `prettyToken` implementation
 
 ## 0.5.0
 
 **Fixes**
 
--   Fix `image_512` null check error
--   Fix TypeScript types - remove use of `any` type
--   Fix exported components for the library
+-   Fixed `image_512` null check error
+-   Fixed TypeScript types - remove use of `any` type
+-   Fixed exported components for the library
 
 **Features**
 
--   Themeing is updated to a new implementation
+-   Updated themeing to a new implementation
 
 ## 0.4.7
 
 **Fixes**
 
--   Fix transactions receipt responsiveness
--   Fix copy toast for address copy
+-   Fixed transactions receipt responsiveness
+-   Fixed copy toast for address copy
 
 **Features**
 
--   Add block details v2
+-   Added block details v2
 
 ## 0.4.6
 
 **Fixes**
 
--   Type exporting for components
+-   Types and Props exports for components
 -   Transaction receipt token image by handling svg or png
 -   Token detail error checks
 -   Delta display on no price change
@@ -74,9 +87,9 @@
 
 **Fixes**
 
--   Refactor provider
--   Fix quote rate being 0 on token pool list component
--   Fix swap exchange logic
+-   Refactored GoldRush Provider
+-   Fixed `quote_rate` being 0 on `TokenPoolList`
+-   Fixed swap exchange logic
 
 **Features**
 
@@ -84,7 +97,7 @@
 
 **Fixes**
 
--   Fix decoder api body
+-   Fixed decoder api body
 -   Detailed keys for Decoder
 
 **Features**
