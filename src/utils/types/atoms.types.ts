@@ -12,6 +12,7 @@ export interface AddressAvatarProps {
     rounded?: boolean;
     fallback?: string;
     class_name?: string;
+    custom_avatar?: string;
 }
 
 export interface BalancePriceDeltaProps {

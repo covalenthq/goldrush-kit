@@ -18,7 +18,13 @@ export const AddressAvatar: Story = {
         type: "fingerprint",
         address: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
     },
-    render: ({ size, type, address, rounded }: AddressAvatarProps) => {
+    render: ({
+        size,
+        type,
+        address,
+        rounded,
+        custom_avatar,
+    }: AddressAvatarProps) => {
         return (
             <>
                 <div className="m-1">
@@ -27,6 +33,7 @@ export const AddressAvatar: Story = {
                         size={size}
                         type={type}
                         rounded={rounded}
+                        custom_avatar={custom_avatar}
                     />
                 </div>
 
