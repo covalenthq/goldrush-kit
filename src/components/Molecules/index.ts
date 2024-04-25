@@ -10,6 +10,7 @@ export { CollectionCard } from "./CollectionCard/CollectionCard";
 export { DecodedTransaction } from "./DecodedTransaction/DecodedTransaction";
 export { GasCard } from "./GasCard/GasCard";
 export { LatestBlocks } from "./LatestBlocks/LatestBlocks";
+export { LatestPrice } from "./LatestPrice/LatestPrice";
 export { NFTFloorPrice } from "./NFTs/NFTFloorPrice/NFTFloorPrice";
 export { NFTSalesCount } from "./NFTs/NFTSalesCount/NFTSalesCount";
 export { NFTVolume } from "./NFTs/NFTVolume/NFTVolume";
