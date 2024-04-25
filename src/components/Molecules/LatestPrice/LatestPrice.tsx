@@ -27,7 +27,6 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
                     setErrorMessage(error.error_message);
                     throw error;
                 }
-                console.log(data);
                 setResult(new Some(data[0].items[0]));
             } catch (error) {
                 console.error(error);

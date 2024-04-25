@@ -37,7 +37,7 @@ export interface LatestPriceProps {
 
 export interface GasCardProps {
     chain_name: Chain;
-    event_type: string;
+    event_type: "erc20" | "nativetokens";
 }
 
 export interface AddressDetailsProps {
