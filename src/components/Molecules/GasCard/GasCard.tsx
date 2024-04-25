@@ -3,7 +3,7 @@ import { type GasCardProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
-import { type GasPricesResponse, type PriceItem } from "@covalenthq/client-sdk";
+import { type GasPricesResponse } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
