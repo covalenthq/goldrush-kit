@@ -53,11 +53,8 @@ export const Transactions: React.FC<TransactionsProps> = ({
 
     useEffect(() => {
         maybeResult.match({
-            None: () => [],
-            Some: (result) => {
-                setFilterResult(new Some(result));
-                return [];
-            },
+            None: () => setFilterResult(None),
+            Some: (result) => setFilterResult(new Some(result)),
         });
     }, [maybeResult]);
 
