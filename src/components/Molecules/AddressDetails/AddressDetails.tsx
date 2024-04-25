@@ -169,7 +169,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                             </DropdownMenuTrigger>
 
                             <DropdownMenuContent
-                                className="z-10 mx-auto w-72 rounded border border-secondary-light bg-white dark:border-secondary-dark dark:bg-background-dark dark:text-white"
+                                className="z-10 mx-auto max-h-96 w-72 overflow-y-scroll rounded border border-secondary-light bg-white dark:border-secondary-dark dark:bg-background-dark dark:text-white"
                                 align="start"
                             >
                                 {holdings.map(
