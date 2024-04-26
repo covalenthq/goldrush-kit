@@ -41,16 +41,12 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
     return (
         <Card className="flex w-full flex-col items-start gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
             {maybeResult.match({
-                None: () => (
-                    <div className="mt-4">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
-                ),
+                None: () => <Skeleton size={GRK_SIZES.LARGE} />,
                 Some: (block) =>
                     errorMessage ? (
                         <p className="mt-4">{errorMessage}</p>
                     ) : (
-                        <div className="mt-2 grid w-full grid-cols-3 gap-16 gap-y-4">
+                        <div className="grid w-full grid-cols-3 gap-16 gap-y-4">
                             <div>
                                 <CardDescription>HEIGHT</CardDescription>
 

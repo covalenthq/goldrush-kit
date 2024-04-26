@@ -31,9 +31,13 @@ export interface LatestBlocksProps {
     on_view_details?: (block: Block) => void;
 }
 
+export interface LatestPriceProps {
+    chain_name: Chain;
+}
+
 export interface GasCardProps {
     chain_name: Chain;
-    event_type: string;
+    event_type: "erc20" | "nativetokens";
 }
 
 export interface AddressDetailsProps {

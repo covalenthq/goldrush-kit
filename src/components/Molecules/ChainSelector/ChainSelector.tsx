@@ -25,7 +25,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
     onChangeChain,
 }) => {
     const { chains, selectedChain, setSelectedChain } = useGoldRush();
-    const [open, setOpen] = useState<boolean>(!false);
+    const [open, setOpen] = useState<boolean>(false);
 
     const dropdownChains = useMemo<ChainItem[] | null>(() => {
         if (!chains) {
