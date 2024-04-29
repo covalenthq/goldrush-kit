@@ -13,10 +13,14 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     fallback,
     rounded = false,
     class_name,
+    custom_avatar,
 }) => {
     const SRC = useMemo<
         string | React.FunctionComponent<React.SVGAttributes<SVGElement>>
     >(() => {
+        if (custom_avatar) {
+            return custom_avatar;
+        }
         switch (type) {
             case "effigy":
                 return `https://effigy.im/a/${address}.png`;
@@ -33,7 +37,7 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
             default:
                 return Fingerprint;
         }
-    }, [type, address, rounded]);
+    }, [type, address, rounded, custom_avatar]);
 
     const SIZE_CLASS = useMemo<string>(() => {
         switch (size) {
