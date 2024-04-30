@@ -93,14 +93,14 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
         <div ref={ref} className={SIZE_CLASS} />
     ) : (
         <div
-            className={`${SIZE_CLASS} relative rounded-[100%]`}
+            className={`${SIZE_CLASS} relative rounded-full`}
             style={{ background: chain_color ?? "", padding: "2px" }}
         >
             <img
                 src={token_url ?? "https://goldrush.vercel.app/icons/token.svg"}
                 alt="Token Image"
                 style={{ background: "#fff" }}
-                className={`h-full w-full rounded-[100%] p-0.5`}
+                className={`h-full w-full rounded-full p-0.5`}
                 onError={(e) => {
                     e.currentTarget.src =
                         "https://goldrush.vercel.app/icons/token.svg";
@@ -114,7 +114,7 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                         background: chain_color ? chain_color : "grey",
                         padding: "1px",
                     }}
-                    className={`${SUB_SIZE} absolute -bottom-2 -left-3 rounded-[100%] p-0.5`}
+                    className={`${SUB_SIZE} absolute -bottom-2 -left-3 rounded-full p-0.5`}
                     onError={(e) => {
                         e.currentTarget.src =
                             "https://goldrush.vercel.app/icons/token.svg";
