@@ -1,6 +1,22 @@
 # Changelog for Covalent GoldRush Kit
 
-## 0.5.3
+## 0.5.5
+
+**Features**
+
+-   Added `LatestPrice` for native token molecule
+-   Added `custom_avatar` for `Address`
+-   Updated UI for `GasCard`
+
+**Fixes**
+
+-   Initial state of `ChainSelector`
+-   `AddressDetails` token holdings dropdown height
+-   CSS in `AddressDetails`, `BlockDetails` and `TransactionDetails`
+-   Loading state for list of transactions
+-   Misc CSS
+
+## 0.5.4
 
 **Fixes**
 
