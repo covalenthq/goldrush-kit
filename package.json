@@ -34,7 +34,7 @@
     "scripts": {
         "build:library": "vite build && npm run build:library-css",
         "build:library-css": "tailwindcss -m -i ./src/tailwind-input.css -o ./dist/styles.css --minify",
-        "build:storybook": "storybook build && npm run build:storybook-css",
+        "build:storybook": "npm run build:library && npm run build:storybook-css && storybook build",
         "build:storybook-css": "tailwindcss -m -i ./src/tailwind-input.css -o ./src/tailwind-output.css --minify",
         "bundle-size": "npx vite-bundle-visualizer",
         "dev": "concurrently -n \"storybook-css,storybook\" -c \"blue,red\" \"npm run dev:css\" \"storybook dev -p 6006\"",
