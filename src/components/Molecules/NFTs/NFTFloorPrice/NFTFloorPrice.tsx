@@ -110,7 +110,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     });
 
     return (
-        <div className="min-h-[25rem] w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
+        <div className="min-h-96 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
                 <Heading size={4}>Floor Price</Heading>
             </div>
