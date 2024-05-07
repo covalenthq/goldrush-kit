@@ -1,28 +1,10 @@
-import { type Option, None, Some } from "@/utils/option";
 import {
     calculatePrettyBalance,
     type Transaction,
 } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
+import { type ColumnDef } from "@tanstack/react-table";
 import { timestampParser } from "@/utils/functions";
-import { IconWrapper, SkeletonTable, TableHeaderSorting } from ".";
+import { IconWrapper, TableHeaderSorting, TableList } from ".";
 import { type TransactionsProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 import {
@@ -41,47 +23,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
     errorMessage,
     maybeResult,
 }) => {
-    const [sorting, setSorting] = useState<SortingState>([
-        {
-            id: "block_signed_at",
-            desc: true,
-        },
-    ]);
-    const [rowSelection, setRowSelection] = useState({});
-    const [filterResult, setFilterResult] =
-        useState<Option<Transaction[]>>(None);
-
-    useEffect(() => {
-        maybeResult.match({
-            None: () => setFilterResult(None),
-            Some: (result) => setFilterResult(new Some(result)),
-        });
-    }, [maybeResult]);
-
     const columns: ColumnDef<Transaction>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    className="mx-1"
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             id: "tx_hash",
             accessorKey: "tx_hash",
@@ -295,83 +237,17 @@ export const Transactions: React.FC<TransactionsProps> = ({
         },
     ];
 
-    const table = useReactTable({
-        data: filterResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns: columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = filterResult.match({
-        None: () => <SkeletonTable cols={8} />,
-        Some: () =>
-            errorMessage ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {errorMessage}
-                    </TableCell>
-                </TableRow>
-            ) : table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            ),
-    });
-
     return (
-        <Table>
-            <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                            return (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
-                                </TableHead>
-                            );
-                        })}
-                    </TableRow>
-                ))}
-            </TableHeader>
-            <TableBody>{body}</TableBody>
-        </Table>
+        <TableList<Transaction>
+            columns={columns}
+            errorMessage={errorMessage}
+            maybeData={maybeResult}
+            sorting_state={[
+                {
+                    id: "block_signed_at",
+                    desc: true,
+                },
+            ]}
+        />
     );
 };

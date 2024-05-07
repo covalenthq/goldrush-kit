@@ -1,5 +1,5 @@
 import { Address, TokenAvatar } from "@/components/Atoms";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
@@ -21,13 +21,15 @@ import {
     DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { CardDetail } from "@/components/Shared";
+import { CardDetailProps } from "@/utils/types/shared.types";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
     chain_name,
 }) => {
     const { covalentClient, selectedChain } = useGoldRush();
-
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] = useState<
         Option<{
             balances: BalanceItem[];
@@ -54,9 +56,11 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                     ),
                 ]);
                 if (summaryError.error) {
+                    setErrorMessage(summaryError.error_message);
                     throw summaryError;
                 }
                 if (balancesError.error) {
+                    setErrorMessage(balancesError.error_message);
                     throw balancesError;
                 }
                 const balances = balancesData.items;
@@ -74,26 +78,24 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                     })
                 );
             } catch (error) {
-                console.error(
-                    `Error fetching transactions summary for ${chain_name}:`,
-                    error
-                );
+                console.error(error);
             }
         })();
     }, [address, chain_name]);
 
     return (
-        <Card className="flex flex-col gap-y-4 rounded p-4 dark:bg-background-dark dark:text-white">
+        <Card className="grid w-full grid-cols-1 items-start gap-4 break-all border p-2 md:grid-cols-3">
             {maybeResult.match({
                 None: () => (
-                    <div className="grid grid-cols-1 items-start gap-4 text-sm md:grid-cols-3">
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                        <Skeleton size={GRK_SIZES.LARGE} />
-                    </div>
+                    <>
+                        {Array(6)
+                            .fill(null)
+                            .map(() => (
+                                <div key={Math.random()}>
+                                    <Skeleton size={GRK_SIZES.LARGE} />
+                                </div>
+                            ))}
+                    </>
                 ),
                 Some: ({
                     balances: [native, ...holdings],
@@ -102,174 +104,167 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                         latest_transaction,
                         total_count,
                     },
-                }) => (
-                    <div className="grid grid-cols-1 items-start gap-4 text-sm md:grid-cols-3">
-                        {native.balance ? (
-                            <>
-                                <div>
-                                    <CardDescription>
-                                        {native.contract_ticker_symbol} BALANCE
-                                    </CardDescription>
+                }) =>
+                    errorMessage ? (
+                        <p className="col-span-3">{errorMessage}</p>
+                    ) : (
+                        (
+                            [
+                                {
+                                    heading: `${native.contract_ticker_symbol} BALANCE`,
+                                    content: (
+                                        <>
+                                            <TokenAvatar
+                                                size={
+                                                    GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                }
+                                                token_url={
+                                                    native.logo_urls
+                                                        .chain_logo_url
+                                                }
+                                                chain_color={
+                                                    selectedChain?.color_theme
+                                                        .hex
+                                                }
+                                                is_chain_logo
+                                            />
+                                            {calculatePrettyBalance(
+                                                native.balance ?? 0,
+                                                native.contract_decimals,
+                                                false,
+                                                native.contract_decimals
+                                            )}{" "}
+                                            {native.contract_ticker_symbol}
+                                        </>
+                                    ),
+                                },
+                                {
+                                    heading: `${native.contract_ticker_symbol} VALUE`,
+                                    content: prettifyCurrency(
+                                        (Number(native.balance) /
+                                            Math.pow(
+                                                10,
+                                                native.contract_decimals
+                                            )) *
+                                            native.quote_rate
+                                    ),
+                                    subtext: `@${prettifyCurrency(
+                                        native.quote_rate
+                                    )}/${native.contract_ticker_symbol}`,
+                                },
+                                {
+                                    content: (
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger
+                                                asChild
+                                                className="mt-2 w-full"
+                                            >
+                                                <p className="flex w-full cursor-pointer items-center justify-between rounded border border-secondary-light px-4 py-2 text-sm text-secondary-light dark:border-secondary-dark dark:text-secondary-dark">
+                                                    Token Holdings (
+                                                    {holdings.length} tokens)
+                                                    <CaretDownIcon />
+                                                </p>
+                                            </DropdownMenuTrigger>
 
-                                    <div className="mt-1 flex items-center gap-x-1.5">
-                                        <TokenAvatar
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                            token_url={
-                                                native.logo_urls.chain_logo_url
-                                            }
-                                            chain_color={
-                                                selectedChain?.color_theme.hex
-                                            }
-                                            is_chain_logo
-                                        />
-                                        {calculatePrettyBalance(
-                                            native.balance,
-                                            native.contract_decimals,
-                                            false,
-                                            native.contract_decimals
-                                        )}{" "}
-                                        {native.contract_ticker_symbol}
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <CardDescription>
-                                        {native.contract_ticker_symbol} VALUE
-                                    </CardDescription>
-
-                                    <div className="flex items-center gap-x-2">
-                                        {prettifyCurrency(
-                                            (Number(native.balance) /
-                                                Math.pow(
-                                                    10,
-                                                    native.contract_decimals
-                                                )) *
-                                                native.quote_rate
-                                        )}
-                                        <CardDescription>
-                                            @{" "}
-                                            {prettifyCurrency(
-                                                native.quote_rate
-                                            )}
-                                            /{native.contract_ticker_symbol}
-                                        </CardDescription>
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            <></>
-                        )}
-
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild className="mt-2 w-72">
-                                <p className="flex w-full cursor-pointer items-center justify-between rounded border border-secondary-light px-4 py-2 text-sm text-secondary-light dark:border-secondary-dark dark:text-secondary-dark">
-                                    Token Holdings ({holdings.length} tokens)
-                                    <CaretDownIcon />
-                                </p>
-                            </DropdownMenuTrigger>
-
-                            <DropdownMenuContent
-                                className="z-10 mx-auto max-h-96 w-72 overflow-y-scroll rounded border border-secondary-light bg-white dark:border-secondary-dark dark:bg-background-dark dark:text-white"
-                                align="start"
-                            >
-                                {holdings.map(
-                                    ({
-                                        balance,
-                                        contract_address,
-                                        contract_decimals,
-                                        contract_display_name,
-                                        contract_ticker_symbol,
-                                        logo_urls,
-                                    }) => (
-                                        <DropdownMenuItem
-                                            key={contract_address}
-                                            className="mt-1 flex w-full items-center gap-x-4 border-t border-secondary-light px-2 py-1 first:border-t-0 dark:border-secondary-dark"
-                                        >
-                                            <div>
-                                                <TokenAvatar
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                    token_url={
-                                                        logo_urls.token_logo_url
-                                                    }
-                                                    chain_color={
-                                                        selectedChain
-                                                            ?.color_theme.hex
-                                                    }
-                                                />
-                                            </div>
-
-                                            <div>
-                                                <CardDescription className="flex text-xs">
-                                                    {contract_display_name} (
-                                                    {contract_ticker_symbol})
-                                                </CardDescription>
-                                                <CardContent className="text-sm">
-                                                    {balance ? (
-                                                        <>
-                                                            {calculatePrettyBalance(
-                                                                balance,
-                                                                contract_decimals,
-                                                                true
-                                                            )}{" "}
-                                                            {
-                                                                contract_ticker_symbol
+                                            <DropdownMenuContent
+                                                className="z-10 mx-auto max-h-96 w-full overflow-y-scroll rounded border border-secondary-light bg-white dark:border-secondary-dark dark:bg-background-dark dark:text-white"
+                                                align="start"
+                                            >
+                                                {holdings.map(
+                                                    ({
+                                                        balance,
+                                                        contract_address,
+                                                        contract_decimals,
+                                                        contract_display_name,
+                                                        contract_ticker_symbol,
+                                                        logo_urls,
+                                                    }) => (
+                                                        <DropdownMenuItem
+                                                            key={
+                                                                contract_address
                                                             }
-                                                        </>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                </CardContent>
-                                            </div>
-                                        </DropdownMenuItem>
-                                    )
-                                )}
-                                <DropdownMenuSeparator />
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                                                            className="mt-1 flex w-full items-center gap-x-4 border-t border-secondary-light px-2 py-1 first:border-t-0 dark:border-secondary-dark"
+                                                        >
+                                                            <div>
+                                                                <TokenAvatar
+                                                                    size={
+                                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                    }
+                                                                    token_url={
+                                                                        logo_urls.token_logo_url
+                                                                    }
+                                                                    chain_color={
+                                                                        selectedChain
+                                                                            ?.color_theme
+                                                                            .hex
+                                                                    }
+                                                                />
+                                                            </div>
 
-                        <div>
-                            <CardDescription>
-                                LATEST TRANSACTION
-                            </CardDescription>
-
-                            <div className="mt-1 flex items-center gap-x-1.5">
-                                <Address address={latest_transaction.tx_hash} />
-                                <CardDescription>
-                                    {timestampParser(
+                                                            <CardDetail
+                                                                heading={`${contract_display_name} (
+                                                                    ${contract_ticker_symbol})`}
+                                                                content={
+                                                                    balance ? (
+                                                                        <>
+                                                                            {calculatePrettyBalance(
+                                                                                balance,
+                                                                                contract_decimals,
+                                                                                true
+                                                                            )}{" "}
+                                                                            {
+                                                                                contract_ticker_symbol
+                                                                            }
+                                                                        </>
+                                                                    ) : null
+                                                                }
+                                                            />
+                                                        </DropdownMenuItem>
+                                                    )
+                                                )}
+                                                <DropdownMenuSeparator />
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    ),
+                                },
+                                {
+                                    heading: "LATEST TRANSACTION",
+                                    content: (
+                                        <Address
+                                            address={latest_transaction.tx_hash}
+                                        />
+                                    ),
+                                    subtext: timestampParser(
                                         latest_transaction.block_signed_at,
                                         "relative"
-                                    )}
-                                </CardDescription>
-                            </div>
-                        </div>
-
-                        <div>
-                            <CardDescription>
-                                EARLIEST TRANSACTION
-                            </CardDescription>
-
-                            <div className="flex items-center gap-x-2">
-                                <Address
-                                    address={earliest_transaction.tx_hash}
-                                />
-                                <CardDescription>
-                                    {timestampParser(
+                                    ),
+                                },
+                                {
+                                    heading: "EARLIEST TRANSACTION",
+                                    content: (
+                                        <Address
+                                            address={
+                                                earliest_transaction.tx_hash
+                                            }
+                                        />
+                                    ),
+                                    subtext: timestampParser(
                                         earliest_transaction.block_signed_at,
                                         "relative"
-                                    )}
-                                </CardDescription>
-                            </div>
-                        </div>
-
-                        <div>
-                            <CardDescription>TOTAL COUNT</CardDescription>
-
-                            <p>{total_count.toLocaleString()} transactions</p>
-                        </div>
-                    </div>
-                ),
+                                    ),
+                                },
+                                {
+                                    heading: "TOTAL COUNT",
+                                    content: `${total_count.toLocaleString()} transactions`,
+                                },
+                            ] as CardDetailProps[]
+                        ).map((props) => (
+                            <CardDetail
+                                key={props.heading?.toString()}
+                                {...props}
+                            />
+                        ))
+                    ),
             })}
         </Card>
     );

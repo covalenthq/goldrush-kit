@@ -1,139 +1,101 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { type Option, Some, None } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { copyToClipboard } from "@/utils/functions";
 import {
     prettifyCurrency,
     type ExchangeTransaction,
 } from "@covalenthq/client-sdk";
 import { useState } from "react";
-import { useToast } from "../../../../utils/hooks";
-import { IconWrapper } from "@/components/Shared";
+import { CardDetail } from "@/components/Shared";
 import { type XYKWalletInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { Card } from "@/components/ui/card";
+import { CardDetailProps } from "@/utils/types/shared.types";
 
 export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
-    wallet_address,
     chain_name,
     dex_name,
+    wallet_address,
     wallet_data,
 }) => {
     const [maybeResult, setResult] =
         useState<Option<ExchangeTransaction[]>>(None);
-    const { toast } = useToast();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
-    const handlePoolInformation = async () => {
-        setResult(None);
-        let response;
-        try {
-            response =
-                await covalentClient.XykService.getTransactionsForAccountAddress(
-                    chain_name,
-                    dex_name,
-                    wallet_address
-                );
-            setResult(new Some(response.data.items));
-        } catch (error) {
-            console.error(`Error fetching token for ${chain_name}:`, error);
-        }
-    };
-
-    const InformationContainer: React.FC<{
-        label: string;
-        text: string;
-        copy?: boolean;
-    }> = ({ label, text, copy = false }) => {
-        const [showCopy, setShowCopy] = useState(false);
-
-        const handleCopyClick = () => {
-            toast({
-                description: "Address copied!",
-            });
-            copyToClipboard(text);
-            setShowCopy(true);
-            setTimeout(() => {
-                setShowCopy(false);
-            }, 3000);
-        };
-
-        return (
-            <div className="flex flex-col gap-1">
-                <div className="flex gap-2">
-                    <h2 className="text-xl">{text}</h2>
-                    {showCopy ? (
-                        <IconWrapper
-                            icon_class_name="done"
-                            icon_size="text-sm"
-                            class_name="text-secondary-light dark:text-secondary-dark"
-                        />
-                    ) : (
-                        copy && (
-                            <IconWrapper
-                                icon_class_name="content_copy"
-                                icon_size="text-sm"
-                                class_name="text-secondary-light dark:text-secondary-dark cursor-pointer"
-                                on_click={() => handleCopyClick()}
-                            />
-                        )
-                    )}
-                </div>
-                <div className="text-md text-secondary-light dark:text-secondary-dark">
-                    {label}
-                </div>
-            </div>
-        );
-    };
-
     useEffect(() => {
-        if (wallet_data) {
-            setResult(new Some(wallet_data));
-            return;
-        }
-        handlePoolInformation();
-    }, [dex_name, wallet_address, chain_name]);
+        (async () => {
+            if (wallet_data) {
+                setResult(new Some(wallet_data));
+                return;
+            }
+
+            setResult(None);
+            setErrorMessage(null);
+            try {
+                const { data, ...error } =
+                    await covalentClient.XykService.getTransactionsForAccountAddress(
+                        chain_name,
+                        dex_name,
+                        wallet_address
+                    );
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+    }, [chain_name, dex_name, wallet_address, wallet_data]);
 
     return (
-        <>
-            <div className="flex items-center rounded border border-secondary-light p-4 dark:border-secondary-dark">
-                {maybeResult.match({
-                    None: () => {
-                        return (
-                            <div className="flex flex-grow items-center gap-x-8">
-                                {[1, 2].map((o, i) => {
-                                    return (
-                                        <Skeleton
-                                            key={i}
-                                            size={GRK_SIZES.LARGE}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        );
-                    },
-                    Some: (result) => {
-                        const sumOfValueQuotes = result
-                            .filter((o) => o.act === "SWAP")
-                            .reduce((acc, obj) => {
-                                const valueQuote = obj.total_quote;
-                                return acc + valueQuote;
-                            }, 0);
-                        return (
-                            <div className="flex flex-grow flex-wrap items-center gap-8">
-                                <InformationContainer
-                                    label="Total Value Swapped"
-                                    text={prettifyCurrency(sumOfValueQuotes)}
-                                />
-                                <InformationContainer
-                                    label="Total Transactions"
-                                    text={result.length.toString()}
-                                />
-                            </div>
-                        );
-                    },
-                })}
-            </div>
-        </>
+        <Card className="grid w-full grid-cols-1 items-center gap-4 break-all p-2 md:grid-cols-2">
+            {maybeResult.match({
+                None: () => (
+                    <>
+                        {Array(2)
+                            .fill(null)
+                            .map(() => (
+                                <div key={Math.random()}>
+                                    <Skeleton size={GRK_SIZES.LARGE} />
+                                </div>
+                            ))}
+                    </>
+                ),
+                Some: (result) =>
+                    errorMessage ? (
+                        <p className="col-span-4">{errorMessage}</p>
+                    ) : (
+                        (
+                            [
+                                {
+                                    heading: "TOTAL VALUE SWAPPED",
+                                    content: prettifyCurrency(
+                                        result
+                                            .filter((o) => o.act === "SWAP")
+                                            .reduce((acc, obj) => {
+                                                const valueQuote =
+                                                    obj.total_quote;
+                                                return acc + valueQuote;
+                                            }, 0)
+                                    ),
+                                },
+                                {
+                                    heading: "TOTAL TRANSACTIONS",
+                                    content: result.length.toLocaleString(),
+                                },
+                            ] as CardDetailProps[]
+                        ).map((props) => (
+                            <CardDetail
+                                key={props.heading?.toString()}
+                                {...props}
+                            />
+                        ))
+                    ),
+            })}
+        </Card>
     );
 };

@@ -1,23 +1,8 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ExchangeTransaction } from "@covalenthq/client-sdk";
 import { POOL_TRANSACTION_MAP } from "@/utils/constants/shared.constants";
-import { Fragment, useEffect, useState } from "react";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { useEffect, useState } from "react";
+import { type ColumnDef } from "@tanstack/react-table";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { type XYKWalletTransactionsListViewProps } from "@/utils/types/organisms.types";
@@ -26,8 +11,8 @@ import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amoun
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import {
     IconWrapper,
-    SkeletonTable,
     TableHeaderSorting,
+    TableList,
 } from "@/components/Shared";
 import {
     DropdownMenu,
@@ -49,37 +34,28 @@ export const XYKWalletTransactionsListView: React.FC<
     on_goldrush_receipt_click,
 }) => {
     const { covalentClient } = useGoldRush();
-
-    const [sorting, setSorting] = useState<SortingState>([
-        {
-            id: "block_signed_at",
-            desc: true,
-        },
-    ]);
-    const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] =
         useState<Option<ExchangeTransaction[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        setResult(None);
         (async () => {
-            let response;
+            setResult(None);
+            setErrorMessage(null);
             try {
-                response =
+                const { data, ...error } =
                     await covalentClient.XykService.getTransactionsForAccountAddress(
                         chain_name,
                         dex_name,
                         wallet_address.trim()
                     );
-                setResult(new Some(response.data.items));
-                setError({ error: false, error_message: "" });
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setResult(new Some(data.items));
             } catch (error) {
-                setResult(new Some([]));
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                console.error(error);
             }
         })();
     }, [wallet_address, dex_name, chain_name]);
@@ -334,96 +310,19 @@ export const XYKWalletTransactionsListView: React.FC<
         },
     ];
 
-    const table = useReactTable({
-        data: maybeResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = maybeResult.match({
-        None: () => <SkeletonTable cols={5} />,
-        Some: () => {
-            return error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => {
-                    if (
-                        !row.original.token_0?.contract_ticker_symbol &&
-                        !row.original.token_1?.contract_ticker_symbol
-                    )
-                        return;
-                    return (
-                        <Fragment key={row.id}>
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && "selected"}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </Fragment>
-                    );
-                })
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            );
-        },
-    });
-
     return (
         <div className="space-y-4">
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
+            <TableList<ExchangeTransaction>
+                columns={columns}
+                errorMessage={errorMessage}
+                maybeData={maybeResult}
+                sorting_state={[
+                    {
+                        id: "block_signed_at",
+                        desc: true,
+                    },
+                ]}
+            />
         </div>
     );
 };

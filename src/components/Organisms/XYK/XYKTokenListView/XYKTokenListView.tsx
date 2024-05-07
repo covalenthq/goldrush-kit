@@ -8,29 +8,14 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 import {
     BalancePriceDelta,
     IconWrapper,
-    SkeletonTable,
     TableHeaderSorting,
+    TableList,
 } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
@@ -52,16 +37,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     page_size = 10,
 }) => {
     const { covalentClient } = useGoldRush();
-
-    const [sorting, setSorting] = useState<SortingState>([
-        {
-            id: "total_volume_24h_quote",
-            desc: true,
-        },
-    ]);
-    const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [pagination, setPagination] = useState({
         page_number: 1,
@@ -80,9 +57,9 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     useEffect(() => {
         (async () => {
             setResult(None);
-            let response;
+            setErrorMessage(null);
             try {
-                response =
+                const { data, ...error } =
                     await covalentClient.XykService.getNetworkExchangeTokens(
                         chain_name,
                         dex_name,
@@ -91,28 +68,25 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                             pageSize: page_size,
                         }
                     );
-                setHasMore(response.data.pagination.has_more);
-                setError({ error: false, error_message: "" });
-                setResult(new Some(response.data.items));
-            } catch (exception) {
-                setResult(new Some([]));
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setHasMore(data.pagination.has_more);
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
+                return [];
             }
         })();
     }, [chain_name, dex_name, pagination]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
-
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
         };
-
         window.addEventListener("resize", handleResize);
-
         return () => {
             window.removeEventListener("resize", handleResize);
         };
@@ -421,86 +395,20 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
         },
     ];
 
-    const table = useReactTable({
-        data: maybeResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns: windowWidth < 700 ? mobile_columns : columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = maybeResult.match({
-        None: () => <SkeletonTable cols={6} float="right" />,
-        Some: () =>
-            error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            ),
-    });
-
     return (
         <div className="space-y-4">
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
+            <TableList<TokenV2Volume>
+                columns={windowWidth < 700 ? mobile_columns : columns}
+                errorMessage={errorMessage}
+                maybeData={maybeResult}
+                sorting_state={[
+                    {
+                        id: "total_volume_24h_quote",
+                        desc: true,
+                    },
+                ]}
+            />
+
             <Pagination className="select-none">
                 <PaginationContent>
                     <PaginationItem

@@ -58,22 +58,22 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
 
     return (
         <div className="flex w-full flex-col gap-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
-            <div className="flex flex-col items-center justify-center gap-2">
-                {maybeResult.match({
-                    None: () => <Skeleton size={GRK_SIZES.LARGE} />,
-                    Some: ({ base_fee }) => (
-                        <p className="text-xl">
-                            ⛽ Base Fee:{" "}
-                            {Math.round(
-                                (Number(base_fee) ?? 0) / Math.pow(10, 9)
-                            )}{" "}
-                            Gwei
-                        </p>
-                    ),
-                })}
-            </div>
+            {maybeResult.match({
+                None: () => (
+                    <div className="mx-auto">
+                        <Skeleton size={GRK_SIZES.LARGE} />
+                    </div>
+                ),
+                Some: ({ base_fee }) => (
+                    <p className="text-center text-xl">
+                        ⛽ Base Fee:{" "}
+                        {Math.round((Number(base_fee) ?? 0) / Math.pow(10, 9))}{" "}
+                        Gwei
+                    </p>
+                ),
+            })}
 
-            <div className="grid grid-cols-3 items-center">
+            <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
                 {maybeResult.match({
                     None: () =>
                         Array(3)
