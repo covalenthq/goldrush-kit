@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CardDetailProps } from "@/utils/types/shared.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 
 export const XYKPoolInformation: React.FC<XYKPoolInformationProps> = ({

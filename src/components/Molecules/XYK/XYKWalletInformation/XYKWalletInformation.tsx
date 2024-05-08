@@ -11,7 +11,7 @@ import { type XYKWalletInformationProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Card } from "@/components/ui/card";
-import { CardDetailProps } from "@/utils/types/shared.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 
 export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
     chain_name,

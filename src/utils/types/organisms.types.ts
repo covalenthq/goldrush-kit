@@ -1,4 +1,3 @@
-import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type BlockTransactionWithContractTransfers,

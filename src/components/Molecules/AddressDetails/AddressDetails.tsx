@@ -22,7 +22,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { CardDetail } from "@/components/Shared";
-import { CardDetailProps } from "@/utils/types/shared.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,

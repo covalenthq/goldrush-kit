@@ -7,7 +7,7 @@ import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionDetailsProps } from "@/utils/types/molecules.types";
-import { CardDetailProps } from "@/utils/types/shared.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
