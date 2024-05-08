@@ -15,6 +15,7 @@ export interface CardDetailProps {
     heading?: React.ReactNode;
     content?: React.ReactNode;
     subtext?: React.ReactNode;
+    wrapperClassName?: string;
 }
 
 export interface CopyImageProps {

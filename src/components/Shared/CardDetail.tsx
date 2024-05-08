@@ -5,13 +5,15 @@ export const CardDetail: React.FC<CardDetailProps> = ({
     content = null,
     heading = null,
     subtext = null,
+    wrapperClassName = "",
 }) => {
     return (
-        <div>
+        <div className={wrapperClassName}>
             <CardDescription>{heading}</CardDescription>
 
             <CardContent className="flex items-center gap-x-2">
-                {content} <CardDescription>{subtext}</CardDescription>
+                {content}{" "}
+                {subtext ? <CardDescription>{subtext}</CardDescription> : <></>}
             </CardContent>
         </div>
     );

@@ -1,18 +1,18 @@
+import { type Option } from "@/utils/option";
 import {
-    type Chain,
-    type PoolWithTimeseries,
-    type UniswapLikeEcosystemCharts,
-    type TokenV2VolumeWithChartData,
-    type ExchangeTransaction,
-    type Transaction,
-    type ChainItem,
     type Block,
+    type Chain,
+    type ChainItem,
+    type ExchangeTransaction,
+    type PoolWithTimeseries,
+    type TokenV2VolumeWithChartData,
+    type Transaction,
+    type UniswapLikeEcosystemCharts,
 } from "@covalenthq/client-sdk";
 import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
-import { type Option } from "@/utils/option";
 
 export interface AccountCardProps {
     name?: string;
@@ -33,6 +33,12 @@ export interface LatestBlocksProps {
 
 export interface LatestPriceProps {
     chain_name: Chain;
+}
+
+export interface LatestTransactionsProps {
+    chain_name: Chain;
+    limit?: number;
+    on_view_details?: (block: Transaction) => void;
 }
 
 export interface GasCardProps {

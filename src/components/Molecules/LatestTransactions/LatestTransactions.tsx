@@ -7,40 +7,55 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { type LatestBlocksProps } from "@/utils/types/molecules.types";
+import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
 import { type CardDetailProps } from "@/utils/types/shared.types";
-import { type Block } from "@covalenthq/client-sdk";
+import { type Transaction } from "@covalenthq/client-sdk";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 
-export const LatestBlocks: React.FC<LatestBlocksProps> = ({
+export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     chain_name,
     limit = 5,
     on_view_details,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [maybeResult, setResult] = useState<Option<Block[]>>(None);
+    const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
 
     useEffect(() => {
         (async () => {
             setResult(None);
             setErrorMessage(null);
             try {
-                const { data, ...error } =
+                const { data: blockData, ...blockError } =
                     await covalentClient.BaseService.getBlockHeightsByPage(
                         chain_name,
                         timestampParser(Date(), "YYYY MM DD"),
                         "2100-01-01",
                         {
-                            pageSize: limit,
+                            pageSize: 1,
                         }
                     );
-                if (error.error) {
-                    setErrorMessage(error.error_message);
-                    throw error;
+                if (blockError.error) {
+                    setErrorMessage(blockError.error_message);
+                    throw blockError;
                 }
-                setResult(new Some(data.items));
+                const latestBlock = blockData.items[0];
+                const { data: txData, ...txError } =
+                    await covalentClient.TransactionService.getTransactionsForBlock(
+                        chain_name,
+                        latestBlock.height - 2,
+                        {
+                            noLogs: true,
+                            quoteCurrency: "USD",
+                            withSafe: false,
+                        }
+                    );
+                if (txError.error) {
+                    setErrorMessage(txError.error_message);
+                    throw txError;
+                }
+                setResult(new Some(txData.items.slice(-limit)));
             } catch (error) {
                 console.error(error);
             }
@@ -55,47 +70,47 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 ))}
             </>
         ),
-        Some: (blocks) =>
+        Some: (txs) =>
             errorMessage ? (
                 <p className="col-span-5">{errorMessage}</p>
             ) : (
-                blocks.map((block) => (
+                txs.map((tx) => (
                     <Card
-                        key={block.height}
+                        key={tx.tx_hash}
                         className="flex w-full flex-col rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white"
                     >
                         {(
                             [
                                 {
+                                    heading: "TRANSACTION HASH",
+                                    content: <Address address={tx.tx_hash} />,
+                                },
+                                {
                                     heading: "BLOCK HEIGHT",
-                                    content: block.height.toLocaleString(),
+                                    content: tx.block_height.toLocaleString(),
                                 },
                                 {
-                                    heading: "SIGNED AT",
-                                    content: timestampParser(
-                                        block.signed_at,
-                                        "relative"
-                                    ),
-                                },
-                                {
-                                    heading: "BLOCK HASH",
+                                    heading: "FROM",
                                     content: (
-                                        <Address
-                                            address={block.block_hash}
-                                            show_copy_icon={false}
-                                        />
+                                        <Address address={tx.from_address} />
                                     ),
                                 },
                                 {
-                                    heading: "GAS USED",
-                                    content: `${(
-                                        (block.gas_used / block.gas_limit) *
-                                        100
-                                    ).toFixed(2)}%`,
+                                    heading: "TO",
+                                    content: (
+                                        <Address address={tx.to_address} />
+                                    ),
                                 },
                                 {
-                                    heading: "GAS LIMIT",
-                                    content: block.gas_limit.toLocaleString(),
+                                    heading: "VALUE",
+                                    content: `${
+                                        Number(tx.value) /
+                                        Math.pow(
+                                            10,
+                                            tx.gas_metadata.contract_decimals
+                                        )
+                                    } ${tx.gas_metadata.contract_ticker_symbol}`,
+                                    subtext: tx.pretty_value_quote,
                                 },
                             ] as CardDetailProps[]
                         ).map((props) => (
@@ -110,9 +125,9 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                             <Button
                                 variant="ghost"
                                 className="mx-auto mb-2 mt-4 flex items-center justify-center gap-x-2 text-sm"
-                                onClick={() => on_view_details(block)}
+                                onClick={() => on_view_details(tx)}
                             >
-                                View Block Details
+                                View Transaction Details
                                 <ExternalLinkIcon />
                             </Button>
                         ) : (
