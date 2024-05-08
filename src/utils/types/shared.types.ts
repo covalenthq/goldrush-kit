@@ -1,10 +1,21 @@
 import { type Transaction } from "@covalenthq/client-sdk";
 import { type Option } from "@/utils/option";
-import { type Column } from "@tanstack/react-table";
+import {
+    type ColumnDef,
+    type SortingState,
+    type Column,
+} from "@tanstack/react-table";
 
 export interface BalancePriceDeltaProps {
     numerator: number;
     denominator: number;
+}
+
+export interface CardDetailProps {
+    heading?: React.ReactNode;
+    content?: React.ReactNode;
+    subtext?: React.ReactNode;
+    wrapperClassName?: string;
 }
 
 export interface CopyImageProps {
@@ -38,6 +49,14 @@ export interface TableHeaderSortingProps {
     column: Column<any, unknown>;
     align: "left" | "right" | "center";
     icon?: boolean;
+}
+
+export interface TableListProps<T> {
+    maybeData: Option<T[]>;
+    columns: ColumnDef<T>[];
+    row_selection_state?: Record<string, boolean>;
+    sorting_state?: SortingState;
+    errorMessage: string | null;
 }
 
 export interface HeadingProps

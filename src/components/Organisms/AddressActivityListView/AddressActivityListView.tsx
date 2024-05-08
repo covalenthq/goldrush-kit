@@ -1,28 +1,12 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ChainActivityEvent } from "@covalenthq/client-sdk";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { AccountCard } from "@/components/Molecules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { timestampParser } from "@/utils/functions";
 import { TokenAvatar } from "@/components/Atoms";
-import { SkeletonTable, TableHeaderSorting } from "@/components/Shared";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
@@ -30,87 +14,36 @@ import { type AddressActivityListViewProps } from "@/utils/types/organisms.types
 
 export const AddressActivityListView: React.FC<
     AddressActivityListViewProps
-> = ({
-    address,
-    get_all_row_selection,
-    get_row_selection_state,
-    row_selection_state,
-}) => {
+> = ({ address }) => {
     const { covalentClient } = useGoldRush();
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = useState(
-        row_selection_state ? row_selection_state : {}
-    );
     const [maybeResult, setResult] =
         useState<Option<ChainActivityEvent[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
-
-    useEffect(() => {
-        maybeResult.match({
-            None: () => null,
-            Some: (resp) => {
-                const chains_selected: ChainActivityEvent[] = [];
-                for (const i in rowSelection) {
-                    const index: number = parseInt(i);
-                    chains_selected.push(resp[index]);
-                }
-                if (get_all_row_selection) {
-                    get_all_row_selection(chains_selected);
-                }
-            },
-        });
-        if (get_row_selection_state) {
-            get_row_selection_state(rowSelection);
-        }
-    }, [maybeResult, rowSelection, row_selection_state]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             setResult(None);
-            let response;
+            setErrorMessage(null);
             try {
-                response = await covalentClient.BaseService.getAddressActivity(
-                    address.trim(),
-                    {
-                        testnets: true,
-                    }
-                );
-                setError({ error: false, error_message: "" });
-                setResult(new Some(response.data.items));
-            } catch (exception) {
-                setResult(new Some([]));
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                const { data, ...error } =
+                    await covalentClient.BaseService.getAddressActivity(
+                        address.trim(),
+                        {
+                            testnets: true,
+                        }
+                    );
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
             }
         })();
     }, [address]);
 
     const columns: ColumnDef<ChainActivityEvent>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    checked={table.getIsAllPageRowsSelected()}
-                    onCheckedChange={(value) => {
-                        table.toggleAllPageRowsSelected(!!value);
-                    }}
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => {
-                        row.toggleSelected(!!value);
-                    }}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             accessorKey: "label",
             header: ({ column }) => (
@@ -174,62 +107,6 @@ export const AddressActivityListView: React.FC<
         },
     ];
 
-    const table = useReactTable({
-        data: maybeResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = maybeResult.match({
-        None: () => <SkeletonTable cols={4} />,
-        Some: () =>
-            error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            ),
-    });
-
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
@@ -290,28 +167,11 @@ export const AddressActivityListView: React.FC<
                 </div>
             </div>
 
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
+            <TableList<ChainActivityEvent>
+                columns={columns}
+                errorMessage={errorMessage}
+                maybeData={maybeResult}
+            />
         </div>
     );
 };

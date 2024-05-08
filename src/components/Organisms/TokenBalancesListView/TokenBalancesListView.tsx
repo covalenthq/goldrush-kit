@@ -14,22 +14,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
@@ -38,8 +23,8 @@ import { AccountCard } from "@/components/Molecules";
 import {
     BalancePriceDelta,
     IconWrapper,
-    SkeletonTable,
     TableHeaderSorting,
+    TableList,
 } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
@@ -56,66 +41,51 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
     on_transfer_click,
 }) => {
     const { covalentClient, chains } = useGoldRush();
-
-    const [sorting, setSorting] = useState<SortingState>([
-        {
-            id: "pretty_quote",
-            desc: true,
-        },
-    ]);
-    const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] =
         useState<Option<CrossChainBalanceItem[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [filterResult, setFilterResult] =
         useState<Option<CrossChainBalanceItem[]>>(None);
     const [windowWidth, setWindowWidth] = useState<number>(0);
 
-    const handleTokenBalances = async (_address: string) => {
-        setResult(None);
-        const promises = chain_names.map(async (chain) => {
-            let response;
-            try {
-                response =
-                    await covalentClient.BalanceService.getTokenBalancesForWalletAddress(
-                        chain,
-                        _address.trim()
-                    );
-
-                setError({ error: false, error_message: "" });
-                return response.data.items.map((o) => {
-                    return { ...o, chain };
-                });
-            } catch (error) {
-                console.error(`Error fetching balances for ${chain}:`, error);
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
-                return [];
-            }
-        });
-
-        const results = await Promise.all(promises);
-        setResult(new Some(results.flat()));
-    };
-
     useEffect(() => {
         setWindowWidth(window.innerWidth);
-
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
         };
-
         window.addEventListener("resize", handleResize);
-
         return () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
 
     useEffect(() => {
-        handleTokenBalances(address);
+        (async () => {
+            setResult(None);
+            setErrorMessage(null);
+            const results = await Promise.all(
+                chain_names.map(async (chain) => {
+                    try {
+                        const { data, ...error } =
+                            await covalentClient.BalanceService.getTokenBalancesForWalletAddress(
+                                chain,
+                                address.trim()
+                            );
+                        if (error.error) {
+                            setErrorMessage(error.error_message);
+                            throw error;
+                        }
+                        return data.items.map((o) => {
+                            return { ...o, chain };
+                        });
+                    } catch (error) {
+                        console.error(error);
+                        return [];
+                    }
+                })
+            );
+            setResult(new Some(results.flat()));
+        })();
     }, [chain_names, address]);
 
     useEffect(() => {
@@ -489,62 +459,6 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
         },
     ];
 
-    const table = useReactTable({
-        data: filterResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns: windowWidth < 700 ? mobile_columns : columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = filterResult.match({
-        None: () => <SkeletonTable cols={4} float="right" />,
-        Some: () =>
-            error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            ),
-    });
-
     return (
         <div className="space-y-4">
             <div className="flex flex-wrap place-content-between gap-2">
@@ -595,28 +509,17 @@ export const TokenBalancesListView: React.FC<TokenBalancesListViewProps> = ({
                 </div>
             </div>
 
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
+            <TableList<CrossChainBalanceItem>
+                columns={windowWidth < 700 ? mobile_columns : columns}
+                errorMessage={errorMessage}
+                maybeData={maybeResult}
+                sorting_state={[
+                    {
+                        id: "pretty_quote",
+                        desc: true,
+                    },
+                ]}
+            />
         </div>
     );
 };

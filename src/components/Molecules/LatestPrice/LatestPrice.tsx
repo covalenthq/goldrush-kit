@@ -1,4 +1,5 @@
-import { Card, CardDescription } from "@/components/ui/card";
+import { CardDetail } from "@/components/Shared";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { None, Some, type Option } from "@/utils/option";
@@ -46,15 +47,10 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
                         <p className="mt-4">{errorMessage}</p>
                     ) : (
                         <div className="w-full">
-                            <div>
-                                <CardDescription>
-                                    {contract_ticker_symbol} PRICE
-                                </CardDescription>
-
-                                <p className="mt-1 flex items-center gap-x-1.5">
-                                    {pretty_price}
-                                </p>
-                            </div>
+                            <CardDetail
+                                heading={`${contract_ticker_symbol} PRICE`}
+                                content={pretty_price}
+                            />
                         </div>
                     ),
             })}

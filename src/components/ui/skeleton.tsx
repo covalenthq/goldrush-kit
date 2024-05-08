@@ -31,7 +31,7 @@ function Skeleton({
     return (
         <div
             className={cn(
-                "animate-pulse rounded bg-secondary-light dark:bg-secondary-dark",
+                "animate-pulse rounded border bg-secondary-light dark:bg-secondary-dark",
                 isNFT ? "h-[280px] w-[230px]" : sizeClass(),
                 className
             )}

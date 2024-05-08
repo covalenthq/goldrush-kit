@@ -1,4 +1,3 @@
-import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type BlockTransactionWithContractTransfers,
@@ -35,11 +34,6 @@ export interface NFTCollectionTokenListViewProps {
 
 export interface AddressActivityListViewProps {
     address: string;
-    get_all_row_selection?: (newValue: ChainActivityEvent[]) => void;
-    get_row_selection_state?: (selectionState: {
-        [key: string]: boolean;
-    }) => void;
-    row_selection_state?: { [key: string]: boolean };
 }
 
 export interface TokenTransferMeta {

@@ -11,28 +11,14 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { type ColumnDef } from "@tanstack/react-table";
+
 import { TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 import {
     IconWrapper,
-    SkeletonTable,
     TableHeaderSorting,
+    TableList,
 } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
@@ -45,24 +31,16 @@ export const XYKWalletPoolListView: React.FC<XYKWalletPoolListViewProps> = ({
     wallet_address,
 }) => {
     const { covalentClient } = useGoldRush();
-
-    const [sorting, setSorting] = useState<SortingState>([
-        {
-            id: "total_liquidity_quote",
-            desc: true,
-        },
-    ]);
-    const [rowSelection, setRowSelection] = useState({});
     const [maybeResult, setResult] = useState<Option<PoolsDexDataItem[]>>(None);
-    const [error, setError] = useState({ error: false, error_message: "" });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [windowWidth, setWindowWidth] = useState<number>(0);
 
     useEffect(() => {
         (async () => {
             setResult(None);
-            let response;
+            setErrorMessage(null);
             try {
-                response =
+                const { data, ...error } =
                     await covalentClient.XykService.getPoolsForWalletAddress(
                         chain_name,
                         wallet_address,
@@ -71,27 +49,23 @@ export const XYKWalletPoolListView: React.FC<XYKWalletPoolListViewProps> = ({
                             dexName: dex_name,
                         }
                     );
-                setError({ error: false, error_message: "" });
-                setResult(new Some(response.data.items));
-            } catch (exception) {
-                setResult(new Some([]));
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
             }
         })();
     }, [chain_name, dex_name, wallet_address]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
-
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
         };
-
         window.addEventListener("resize", handleResize);
-
         return () => {
             window.removeEventListener("resize", handleResize);
         };
@@ -415,86 +389,19 @@ export const XYKWalletPoolListView: React.FC<XYKWalletPoolListViewProps> = ({
         },
     ];
 
-    const table = useReactTable({
-        data: maybeResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns: windowWidth < 700 ? mobile_columns : columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            rowSelection,
-        },
-    });
-
-    const body = maybeResult.match({
-        None: () => <SkeletonTable cols={6} float="right" />,
-        Some: () =>
-            error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            ),
-    });
-
     return (
         <div className="space-y-4">
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
+            <TableList<PoolsDexDataItem>
+                columns={windowWidth < 700 ? mobile_columns : columns}
+                errorMessage={errorMessage}
+                maybeData={maybeResult}
+                sorting_state={[
+                    {
+                        id: "total_liquidity_quote",
+                        desc: true,
+                    },
+                ]}
+            />
         </div>
     );
 };

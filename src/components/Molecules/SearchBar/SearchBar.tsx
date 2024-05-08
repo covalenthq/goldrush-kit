@@ -69,20 +69,25 @@ export const SearchBar: React.FC = () => {
 
     return (
         <main>
-            <div className="flex items-center gap-x-4">
-                <ChainSelector />
+            <div className="grid w-full grid-cols-1 gap-x-4 md:grid-cols-6">
+                <div className="md:col-span-2">
+                    <ChainSelector />
+                </div>
+
                 <Input
                     type="text"
                     name="search"
                     value={searchInput}
                     placeholder="Search by any Address / Txn Hash / Block / Domain Name"
                     onChange={({ target: { value } }) => setSearchInput(value)}
-                    className="!border-accent-foreground"
+                    className="!border-accent-foreground md:col-span-3"
                 />
+
                 <Button
                     variant="outline"
                     onClick={() => setSearchType(searchHandler(searchInput))}
                     disabled={!searchInput || !selectedChain}
+                    className="md:col-span-1"
                 >
                     Search
                 </Button>
