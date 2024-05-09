@@ -10,7 +10,7 @@ const meta: Meta<typeof AddressActivityListView> = {
 
 export default meta;
 
-export const AddressActivityList: Story = {
+export const AddressActivity: Story = {
     args: {
         address: "ganeshswami.eth",
     },

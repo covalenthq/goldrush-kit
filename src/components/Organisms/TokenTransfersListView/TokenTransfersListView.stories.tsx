@@ -10,7 +10,7 @@ const meta: Meta<typeof TokenTransfersListView> = {
 
 export default meta;
 
-export const TokenTransfersList: Story = {
+export const TokenTransfers: Story = {
     args: {
         chain_name: "eth-mainnet",
         address: "0x1dc3bcc07b93c73c476d7e1056b64c8bd947184a",
