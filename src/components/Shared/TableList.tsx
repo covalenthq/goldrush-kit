@@ -13,16 +13,21 @@ import {
     getCoreRowModel,
     getSortedRowModel,
     flexRender,
+    type Row,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SkeletonTable } from "./SkeletonTable";
+import { PaginationFooter } from "./PaginationFooter";
 
-export const TableList: <T>(props: TableListProps<T>) => JSX.Element = ({
+export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
     columns,
     row_selection_state = {},
     errorMessage,
     maybeData,
     sorting_state = [],
+    pagination = null,
+    onChangePaginationHandler,
+    customRows,
 }) => {
     const [sorting, setSorting] = useState<SortingState>(sorting_state);
     const [rowSelection, setRowSelection] = useState(row_selection_state);
@@ -43,69 +48,107 @@ export const TableList: <T>(props: TableListProps<T>) => JSX.Element = ({
         },
     });
 
-    return (
-        <Table>
-            <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                            return (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
-                                </TableHead>
-                            );
-                        })}
-                    </TableRow>
+    const defaultRow = useCallback(
+        (row: Row<unknown>): React.ReactNode => (
+            <TableRow
+                id={row.id}
+                data-state={row.getIsSelected() && "selected"}
+            >
+                {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                        {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                        )}
+                    </TableCell>
                 ))}
-            </TableHeader>
-            <TableBody>
-                {maybeData.match({
-                    None: () => <SkeletonTable cols={columns.length} />,
-                    Some: () =>
-                        errorMessage ? (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
-                                    {errorMessage}
-                                </TableCell>
-                            </TableRow>
-                        ) : table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && "selected"
-                                    }
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </TableCell>
-                                    ))}
+            </TableRow>
+        ),
+        []
+    );
+
+    return (
+        <div className="space-y-4">
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
+                                    </TableHead>
+                                );
+                            })}
+                        </TableRow>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                    {maybeData.match({
+                        None: () => <SkeletonTable cols={columns.length} />,
+                        Some: () =>
+                            errorMessage ? (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        {errorMessage}
+                                    </TableCell>
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        ),
+                            ) : table.getRowModel().rows?.length ? (
+                                customRows ? (
+                                    customRows(
+                                        table.getRowModel().rows,
+                                        defaultRow
+                                    )
+                                ) : (
+                                    table
+                                        .getRowModel()
+                                        .rows.map((row) => defaultRow(row))
+                                )
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        No results.
+                                    </TableCell>
+                                </TableRow>
+                            ),
+                    })}
+                </TableBody>
+            </Table>
+
+            {pagination &&
+                onChangePaginationHandler &&
+                maybeData.match({
+                    None: () => (
+                        <PaginationFooter
+                            disabled
+                            pagination={pagination}
+                            onChangePaginationHandler={
+                                onChangePaginationHandler
+                            }
+                        />
+                    ),
+                    Some: (data) => (
+                        <PaginationFooter
+                            disabled={data?.length ? false : true}
+                            pagination={pagination}
+                            onChangePaginationHandler={
+                                onChangePaginationHandler
+                            }
+                        />
+                    ),
                 })}
-            </TableBody>
-        </Table>
+        </div>
     );
 };

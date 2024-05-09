@@ -1,161 +1,81 @@
 import { type Option, None, Some } from "@/utils/option";
 import {
     type BlockTransactionWithContractTransfers,
-    type ChainItem,
     type Pagination,
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
-import { Fragment, useEffect, useState } from "react";
-import {
-    type ColumnDef,
-    type SortingState,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AddressAvatar, TokenAvatar } from "../../Atoms";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import { type ColumnDef } from "@tanstack/react-table";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { AddressAvatar } from "../../Atoms";
 import {
     timestampParser,
     truncate,
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { AccountCard } from "@/components/Molecules";
-import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
     IconWrapper,
-    SkeletonTable,
     TableHeaderSorting,
+    TableList,
 } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import {
-    type TokenTransfersListViewProps,
-    type BlockTransactionWithContractTransfersWithDelta,
-    type TokenTransferMeta,
-} from "@/utils/types/organisms.types";
+import { type TokenTransfersListViewProps } from "@/utils/types/organisms.types";
 import { useGoldRush } from "@/utils/store";
 
 export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     chain_name,
     address,
     contract_address,
+    page_size = 10,
 }) => {
-    const { covalentClient, chains } = useGoldRush();
+    const { covalentClient } = useGoldRush();
 
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [paginator, setPaginator] = useState({
-        pageNumber: 0,
-        pageSize: 10,
-    });
-    const [maybePagination, setPagination] = useState<Option<Pagination>>(None);
+    const [pagination, setPagination] = useState<Pagination | null>(null);
     const [maybeResult, setResult] =
-        useState<Option<BlockTransactionWithContractTransfersWithDelta[]>>(
-            None
-        );
-    const [error, setError] = useState({ error: false, error_message: "" });
-    const [maybeMeta, setMeta] = useState<Option<TokenTransferMeta>>(None);
+        useState<Option<BlockTransactionWithContractTransfers[]>>(None);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [_, setLastTimeSeries] = useState<[]>([]);
 
     useEffect(() => {
-        setResult(None);
-        (async () => {
-            let response;
-            try {
-                response =
-                    await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
-                        chain_name,
-                        address.trim(),
-                        {
-                            contractAddress: contract_address.trim(),
-                            pageNumber:
-                                paginator.pageNumber >= 0
-                                    ? paginator.pageNumber
-                                    : 0,
-                            pageSize: paginator.pageSize,
-                        }
-                    );
+        setLastTimeSeries([]);
+    }, [pagination]);
 
-                if (response.data.items.length > 0) {
-                    setMeta(
-                        new Some({
-                            chain_name: response.data.chain_name,
-                            contract_ticker_symbol:
-                                response.data.items[0].transfers[0]
-                                    .contract_ticker_symbol,
-                            logo_url:
-                                response.data.items[0].transfers[0].logo_url,
-                        })
-                    );
-                    setResult(
-                        new Some(
-                            response.data.items.map((o) => {
-                                const _item: BlockTransactionWithContractTransfersWithDelta =
-                                    {
-                                        ...o,
-                                        ["delta_quote"]:
-                                            o.transfers[0].delta_quote,
-                                        ["delta"]: o.transfers[0].delta,
-                                    };
+    useEffect(() => {
+        updateResult(null);
+    }, [address, contract_address, chain_name, page_size]);
 
-                                return _item;
-                            })
-                        )
-                    );
-                } else {
-                    setMeta(
-                        new Some({
-                            chain_name: "",
-                            contract_ticker_symbol: "",
-                            logo_url: "",
-                        })
-                    );
-                    setResult(new Some([]));
-                }
-                setPagination(new Some(response.data.pagination));
-                setError({ error: false, error_message: "" });
-            } catch (exception) {
-                setMeta(
-                    new Some({
-                        chain_name: "",
-                        contract_ticker_symbol: "",
-                        logo_url: "",
-                    })
+    const updateResult = useCallback(async (_pagination: Pagination | null) => {
+        try {
+            setResult(None);
+            setErrorMessage(null);
+            const { data, ...error } =
+                await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
+                    chain_name,
+                    address.trim(),
+                    {
+                        contractAddress: contract_address.trim(),
+                        pageNumber: _pagination?.page_number ?? 0,
+                        pageSize: _pagination?.page_size ?? page_size,
+                    }
                 );
-                setPagination(
-                    new Some({
-                        has_more: false,
-                        page_number: 0,
-                        page_size: 100,
-                        total_count: 0,
-                    })
-                );
-                setResult(new Some([]));
-                setError({
-                    error: response ? response.error : false,
-                    error_message: response ? response.error_message : "",
-                });
+            if (error.error) {
+                setErrorMessage(error.error_message);
+                throw error;
             }
-        })();
-    }, [address, contract_address, chain_name, paginator]);
+            setPagination(data.pagination);
+            setResult(new Some(data.items));
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+    const handleOnChangePagination = (updatedPagination: Pagination) => {
+        setPagination(updatedPagination);
+        updateResult(updatedPagination);
+    };
 
     const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         {
@@ -271,7 +191,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                 <div className="mr-4">
                     <TableHeaderSorting
                         align="right"
-                        header_name={"Transsdaction"}
+                        header_name={"Transaction"}
                         column={column}
                         icon={false}
                     />
@@ -298,277 +218,40 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
         },
     ];
 
-    const table = useReactTable({
-        data: maybeResult.match({
-            None: () => [],
-            Some: (result) => result,
-        }),
-        columns,
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        state: {
-            sorting,
-        },
-    });
-
-    const body = maybeResult.match({
-        None: () => <SkeletonTable cols={7} />,
-        Some: () => {
-            let lastGroup: TIME_SERIES_GROUP | null = null;
-            const now = new Date();
-
-            return error.error ? (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        {error.error_message}
-                    </TableCell>
-                </TableRow>
-            ) : !error.error && table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => {
-                    const currentGroup = calculateTimeSeriesGroup(
-                        now,
+    let lastTimeSeries: TIME_SERIES_GROUP | null = null;
+    return (
+        <TableList<BlockTransactionWithContractTransfers>
+            columns={columns}
+            errorMessage={errorMessage}
+            maybeData={maybeResult}
+            pagination={pagination}
+            onChangePaginationHandler={handleOnChangePagination}
+            customRows={(rows, defaultRow) =>
+                rows.map((row) => {
+                    const currentTimeSeries = calculateTimeSeriesGroup(
+                        new Date(),
                         row.original.block_signed_at
                     );
-
                     return (
                         <Fragment key={row.id}>
                             {(() => {
-                                if (lastGroup !== currentGroup) {
-                                    lastGroup = currentGroup;
+                                if (lastTimeSeries !== currentTimeSeries) {
+                                    lastTimeSeries = currentTimeSeries;
                                     return (
                                         <TableRow className="bg-opacity-10 text-xs uppercase text-primary-light dark:text-primary-dark">
-                                            <TableCell
-                                                colSpan={
-                                                    row.getVisibleCells().length
-                                                }
-                                            >
-                                                {currentGroup}
+                                            <TableCell colSpan={columns.length}>
+                                                {currentTimeSeries}
                                             </TableCell>
                                         </TableRow>
                                     );
                                 }
                             })()}
 
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && "selected"}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
+                            {defaultRow(row)}
                         </Fragment>
                     );
                 })
-            ) : (
-                <TableRow>
-                    <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                    >
-                        No results.
-                    </TableCell>
-                </TableRow>
-            );
-        },
-    });
-
-    const handlePagination = (action: "next" | "previous") => {
-        setPaginator((prev) => {
-            const flip =
-                action === "next" ? prev.pageNumber + 1 : prev.pageNumber - 1;
-            return {
-                ...prev,
-                pageNumber: flip,
-            };
-        });
-    };
-
-    const handlePageSize = (size: number) => {
-        setPaginator((prev) => {
-            return {
-                ...prev,
-                pageSize: size,
-            };
-        });
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCard address={address} />
-                <div className="lg:max-w-60] w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:max-w-60">
-                    <div className="items-center space-x-1">
-                        <span>Network</span>
-                        <div className="float-right">
-                            <div className="flex">
-                                {maybeMeta.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        const chain: ChainItem | null =
-                                            chains?.find(
-                                                (o) =>
-                                                    o.name === result.chain_name
-                                            ) ?? null;
-                                        return (
-                                            <>
-                                                <TokenAvatar
-                                                    is_chain_logo
-                                                    token_url={chain?.logo_url}
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                />
-                                                <span className="text-secondary-light dark:text-secondary-dark">
-                                                    {chain?.category_label}
-                                                </span>
-                                            </>
-                                        );
-                                    },
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="items-center space-x-1">
-                        <span>Token</span>
-                        <div className="float-right">
-                            <div className="flex">
-                                {maybeMeta.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        return (
-                                            <>
-                                                <TokenAvatar
-                                                    token_url={result.logo_url}
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                />
-                                                <span className="text-secondary-light dark:text-secondary-dark">
-                                                    {
-                                                        result.contract_ticker_symbol
-                                                    }
-                                                </span>
-                                            </>
-                                        );
-                                    },
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>{body}</TableBody>
-            </Table>
-
-            {maybePagination.match({
-                None: () => <Skeleton size={GRK_SIZES.MEDIUM} />,
-                Some: (data) => {
-                    return (
-                        <div className="flex items-center justify-between  gap-2">
-                            <div className="flex items-center  gap-2">
-                                <Button
-                                    variant={"outline"}
-                                    disabled={data.page_number === 0}
-                                    onClick={() => {
-                                        handlePagination("previous");
-                                    }}
-                                >
-                                    Previous
-                                </Button>
-                                Page {data.page_number + 1}
-                                <Button
-                                    variant={"outline"}
-                                    disabled={!data.has_more}
-                                    onClick={() => {
-                                        handlePagination("next");
-                                    }}
-                                >
-                                    Next
-                                </Button>
-                            </div>
-                            <div className="flex  gap-2">
-                                {/* <div className="flex gap-2 items-center text-accent">
-                                    Skip to page:
-                                    <input
-                                        type="number"
-                                        defaultValue={1}
-                                        onChange={(e) => {
-                                            const page = e.target.value
-                                                ? Number(e.target.value)
-                                                : 0;
-                                            handleSkipPagination(page);
-                                        }}
-                                        className="p-1 rounded w-16 border text-accent dark:text-slate-50  bg-transparent shadow-sm hover:bg-accent border-accent-foreground hover:bg-accent-foreground"
-                                    />
-                                </div> */}
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="outline">
-                                            Rows per page: {data.page_size}
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuLabel>
-                                            Choose rows per page
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        {[5, 10, 15, 20].map((pageSize) => (
-                                            <DropdownMenuItem
-                                                key={pageSize}
-                                                onClick={() => {
-                                                    handlePageSize(pageSize);
-                                                }}
-                                                className="cursor-pointer"
-                                            >
-                                                <span>{pageSize}</span>
-                                            </DropdownMenuItem>
-                                        ))}
-                                        <DropdownMenuSeparator />
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
-                        </div>
-                    );
-                },
-            })}
-        </div>
+            }
+        />
     );
 };

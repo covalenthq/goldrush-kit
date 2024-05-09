@@ -1,6 +1,10 @@
 import { type Option, None, Some } from "@/utils/option";
-import { type TokenV2Volume, prettifyCurrency } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
+import {
+    type TokenV2Volume,
+    prettifyCurrency,
+    type Pagination,
+} from "@covalenthq/client-sdk";
+import { useCallback, useEffect, useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,15 +24,6 @@ import {
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 
 export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     chain_name,
@@ -39,47 +34,8 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     const { covalentClient } = useGoldRush();
     const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [pagination, setPagination] = useState<Pagination | null>(null);
     const [windowWidth, setWindowWidth] = useState<number>(0);
-    const [pagination, setPagination] = useState({
-        page_number: 1,
-    });
-    const [hasMore, setHasMore] = useState<boolean>();
-
-    const handlePagination = (page_number: number) => {
-        setPagination((prev) => {
-            return {
-                ...prev,
-                page_number,
-            };
-        });
-    };
-
-    useEffect(() => {
-        (async () => {
-            setResult(None);
-            setErrorMessage(null);
-            try {
-                const { data, ...error } =
-                    await covalentClient.XykService.getNetworkExchangeTokens(
-                        chain_name,
-                        dex_name,
-                        {
-                            pageNumber: pagination.page_number - 1,
-                            pageSize: page_size,
-                        }
-                    );
-                if (error.error) {
-                    setErrorMessage(error.error_message);
-                    throw error;
-                }
-                setHasMore(data.pagination.has_more);
-                setResult(new Some(data.items));
-            } catch (error) {
-                console.error(error);
-                return [];
-            }
-        })();
-    }, [chain_name, dex_name, pagination]);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -91,6 +47,39 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        updateResult(null);
+    }, [chain_name, dex_name, page_size]);
+
+    const updateResult = useCallback(async (_pagination: Pagination | null) => {
+        try {
+            setResult(None);
+            setErrorMessage(null);
+            const { data, ...error } =
+                await covalentClient.XykService.getNetworkExchangeTokens(
+                    chain_name,
+                    dex_name,
+                    {
+                        pageNumber: _pagination?.page_number ?? 0,
+                        pageSize: _pagination?.page_size ?? page_size,
+                    }
+                );
+            if (error.error) {
+                setErrorMessage(error.error_message);
+                throw error;
+            }
+            setPagination(data.pagination);
+            setResult(new Some(data.items));
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+    const handleOnChangePagination = (updatedPagination: Pagination) => {
+        setPagination(updatedPagination);
+        updateResult(updatedPagination);
+    };
 
     const columns: ColumnDef<TokenV2Volume>[] = [
         {
@@ -396,71 +385,18 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     ];
 
     return (
-        <div className="space-y-4">
-            <TableList<TokenV2Volume>
-                columns={windowWidth < 700 ? mobile_columns : columns}
-                errorMessage={errorMessage}
-                maybeData={maybeResult}
-                sorting_state={[
-                    {
-                        id: "total_volume_24h_quote",
-                        desc: true,
-                    },
-                ]}
-            />
-
-            <Pagination className="select-none">
-                <PaginationContent>
-                    <PaginationItem
-                        // ! ERROR: `disabled does not exist on prop
-                        // disabled={pagination.page_number === 1}
-                        onClick={() => {
-                            handlePagination(pagination.page_number - 1);
-                        }}
-                    >
-                        <PaginationPrevious />
-                    </PaginationItem>
-                    {pagination.page_number > 1 && (
-                        <PaginationItem
-                            onClick={() => {
-                                handlePagination(pagination.page_number - 1);
-                            }}
-                        >
-                            <PaginationLink>
-                                {pagination.page_number - 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    )}
-                    <PaginationItem>
-                        <PaginationLink isActive>
-                            {pagination.page_number}
-                        </PaginationLink>
-                    </PaginationItem>
-                    {hasMore && (
-                        <PaginationItem
-                            onClick={() => {
-                                handlePagination(pagination.page_number + 1);
-                            }}
-                        >
-                            <PaginationLink>
-                                {pagination.page_number + 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    )}
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem
-                        // ! ERROR: `disabled does not exist on prop
-                        // disabled={!hasMore}
-                        onClick={() => {
-                            handlePagination(pagination.page_number + 1);
-                        }}
-                    >
-                        <PaginationNext />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
-        </div>
+        <TableList<TokenV2Volume>
+            columns={windowWidth < 700 ? mobile_columns : columns}
+            errorMessage={errorMessage}
+            maybeData={maybeResult}
+            sorting_state={[
+                {
+                    id: "total_volume_24h_quote",
+                    desc: true,
+                },
+            ]}
+            pagination={pagination}
+            onChangePaginationHandler={handleOnChangePagination}
+        />
     );
 };

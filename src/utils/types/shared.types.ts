@@ -1,9 +1,10 @@
-import { type Transaction } from "@covalenthq/client-sdk";
 import { type Option } from "@/utils/option";
+import { type Pagination, type Transaction } from "@covalenthq/client-sdk";
 import {
-    type ColumnDef,
-    type SortingState,
     type Column,
+    type ColumnDef,
+    type Row,
+    type SortingState,
 } from "@tanstack/react-table";
 
 export interface BalancePriceDeltaProps {
@@ -51,12 +52,22 @@ export interface TableHeaderSortingProps {
     icon?: boolean;
 }
 
-export interface TableListProps<T> {
+export interface TableListProps<T> extends Partial<PaginationFooterProps> {
     maybeData: Option<T[]>;
     columns: ColumnDef<T>[];
     row_selection_state?: Record<string, boolean>;
     sorting_state?: SortingState;
     errorMessage: string | null;
+    customRows?: (
+        row: Row<T>[],
+        defaultRow: (row: Row<T>) => React.ReactNode
+    ) => React.ReactNode[];
+}
+
+export interface PaginationFooterProps {
+    disabled?: boolean;
+    pagination: Pagination | null;
+    onChangePaginationHandler: (updatedPagination: Pagination) => void;
 }
 
 export interface HeadingProps

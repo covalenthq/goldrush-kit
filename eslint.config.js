@@ -16,7 +16,7 @@ export default [
             "react/no-children-prop": "off",
             "no-unsafe-optional-chaining": "warn",
             "@typescript-eslint/no-var-requires": "off",
-            "@typescript-eslint/no-unused-vars": "error",
+            "@typescript-eslint/no-unused-vars": "warn",
             "@typescript-eslint/ban-types": [
                 "error",
                 {

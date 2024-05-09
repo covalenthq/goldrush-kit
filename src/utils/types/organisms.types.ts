@@ -1,8 +1,4 @@
-import {
-    type BalanceItem,
-    type BlockTransactionWithContractTransfers,
-    type Chain,
-} from "@covalenthq/client-sdk";
+import { type BalanceItem, type Chain } from "@covalenthq/client-sdk";
 
 export interface NFTDetailViewProps {
     chain_name: Chain;
@@ -30,6 +26,7 @@ export interface NFTCollectionTokenListViewProps {
     chain_name: Chain;
     collection_address: string;
     on_nft_click: Function;
+    page_size?: number;
 }
 
 export interface AddressActivityListViewProps {
@@ -42,16 +39,11 @@ export interface TokenTransferMeta {
     logo_url: string;
 }
 
-export interface BlockTransactionWithContractTransfersWithDelta
-    extends BlockTransactionWithContractTransfers {
-    delta_quote: number;
-    delta: bigint | null;
-}
-
 export interface TokenTransfersListViewProps {
     chain_name: Chain;
     address: string;
     contract_address: string;
+    page_size?: number;
 }
 
 export interface XYKPoolTransactionsListViewProps {
