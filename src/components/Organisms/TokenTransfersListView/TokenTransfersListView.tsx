@@ -5,7 +5,7 @@ import {
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
-import { TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
+import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -191,7 +191,7 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
                 <div className="mr-4">
                     <TableHeaderSorting
                         align="right"
-                        header_name={"Transsdaction"}
+                        header_name={"Transaction"}
                         column={column}
                         icon={false}
                     />

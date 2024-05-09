@@ -13,7 +13,7 @@ import {
     getCoreRowModel,
     getSortedRowModel,
     flexRender,
-    Row,
+    type Row,
 } from "@tanstack/react-table";
 import { useCallback, useState } from "react";
 import { SkeletonTable } from "./SkeletonTable";
