@@ -46,64 +46,54 @@ export const AddressActivityListView: React.FC<
     const columns: ColumnDef<ChainActivityEvent>[] = [
         {
             accessorKey: "label",
+            id: "label",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ChainActivityEvent>
                     align="left"
-                    header_name={"Name"}
+                    header="Chain Name"
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="flex items-center gap-x-1">
-                        <TokenAvatar
-                            is_chain_logo={true}
-                            token_url={row.original.logo_url}
-                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                        />
-                        {row.getValue("label")}
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="flex items-center gap-x-1">
+                    <TokenAvatar
+                        is_chain_logo={true}
+                        token_url={row.original.logo_url}
+                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                    />
+                    {row.getValue("label")}
+                </div>
+            ),
         },
         {
             accessorKey: "last_seen_at",
+            id: "last_seen_at",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ChainActivityEvent>
                     align="left"
-                    header_name={"Last Active"}
+                    header="Last Active"
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const t = (row.getValue("last_seen_at") as string).toString();
-
-                return <div>{timestampParser(t, "relative")}</div>;
-            },
+            cell: ({ row }) =>
+                timestampParser(row.getValue("last_seen_at"), "relative"),
         },
         {
             accessorKey: "is_testnet",
+            id: "is_testnet",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ChainActivityEvent>
                     align="center"
-                    header_name={"Mainnet"}
+                    header="Mainnet"
                     column={column}
                 />
             ),
-
-            cell: ({ row }) => {
-                const t = row.getValue("is_testnet");
-
-                return (
-                    <div className="text-center">
-                        {t ? (
-                            ""
-                        ) : (
-                            <IconWrapper icon_class_name="playlist_add_check" />
-                        )}
-                    </div>
-                );
-            },
+            cell: ({ row }) =>
+                !row.getValue("is_testnet") ? (
+                    <IconWrapper icon_class_name="playlist_add_check" />
+                ) : (
+                    <></>
+                ),
         },
     ];
 

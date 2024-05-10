@@ -35,18 +35,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [pagination, setPagination] = useState<Pagination | null>(null);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
-
-    useEffect(() => {
-        setWindowWidth(window.innerWidth);
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     useEffect(() => {
         updateResult(null);
@@ -86,56 +74,52 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             id: "contract_name",
             accessorKey: "contract_name",
             header: ({ column }) => (
-                <div className="ml-4">
-                    <TableHeaderSorting
-                        align="left"
-                        header_name={"Token"}
-                        column={column}
+                <TableHeaderSorting<TokenV2Volume>
+                    align="left"
+                    header={"Token"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="flex items-center gap-3">
+                    <TokenAvatar
+                        size={GRK_SIZES.EXTRA_SMALL}
+                        token_url={row.original.logo_url}
                     />
+                    <div className="flex flex-col">
+                        {on_token_click ? (
+                            <a
+                                className="cursor-pointer hover:opacity-75"
+                                onClick={() => {
+                                    if (on_token_click) {
+                                        on_token_click(
+                                            row.original.contract_address
+                                        );
+                                    }
+                                }}
+                            >
+                                {row.original.contract_name
+                                    ? row.original.contract_name
+                                    : ""}
+                            </a>
+                        ) : (
+                            <label className="text-base">
+                                {row.original.contract_name
+                                    ? row.original.contract_name
+                                    : ""}
+                            </label>
+                        )}
+                    </div>
                 </div>
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="ml-4 flex items-center gap-3">
-                        <TokenAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            token_url={row.original.logo_url}
-                        />
-                        <div className="flex flex-col">
-                            {on_token_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_token_click) {
-                                            on_token_click(
-                                                row.original.contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {row.original.contract_name
-                                        ? row.original.contract_name
-                                        : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {row.original.contract_name
-                                        ? row.original.contract_name
-                                        : ""}
-                                </label>
-                            )}
-                        </div>
-                    </div>
-                );
-            },
         },
         {
             id: "contract_ticker_symbol",
             accessorKey: "contract_ticker_symbol",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<TokenV2Volume>
                     align="right"
-                    header_name={"Symbol"}
+                    header={"Symbol"}
                     column={column}
                 />
             ),
@@ -151,242 +135,112 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
             id: "total_liquidity_quote",
             accessorKey: "total_liquidity_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<TokenV2Volume>
                     align="right"
-                    header_name={"Liquidity"}
+                    header={"Liquidity"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_liquidity_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.total_liquidity_quote)}
+                </div>
+            ),
         },
         {
             id: "total_volume_24h_quote",
             accessorKey: "total_volume_24h_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<TokenV2Volume>
                     align="right"
-                    header_name={"Volume (24hrs)"}
+                    header={"Volume (24hrs)"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_volume_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.total_volume_24h_quote)}
+                </div>
+            ),
         },
         {
             id: "quote_rate",
             accessorKey: "quote_rate",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<TokenV2Volume>
                     align="right"
-                    header_name={"Quote Rate"}
+                    header={"Quote Rate"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        {" "}
-                        {prettifyCurrency(
-                            row.getValue("quote_rate"),
-                            2,
-                            "USD",
-                            true
-                        )}{" "}
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(
+                        row.getValue("quote_rate"),
+                        2,
+                        "USD",
+                        true
+                    )}{" "}
+                </div>
+            ),
         },
         {
             id: "quote_rate_24h",
             accessorKey: "quote_rate_24h",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<TokenV2Volume>
                     align="right"
-                    header_name={"Price Change (24hrs)"}
+                    header={"Price Change (24hrs)"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <BalancePriceDelta
-                            numerator={row.original.quote_rate_24h}
-                            denominator={row.original.quote_rate}
-                        />{" "}
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <BalancePriceDelta
+                        numerator={row.original.quote_rate_24h}
+                        denominator={row.original.quote_rate}
+                    />
+                </div>
+            ),
         },
         {
             id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_token_click) {
-                                            on_token_click(
-                                                row.original.contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Token
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
-        },
-    ];
-
-    const mobile_columns: ColumnDef<TokenV2Volume>[] = [
-        {
-            id: "contract_name",
-            accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Token"}
-                    column={column}
-                />
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="ml-auto  ">
+                                <span className="sr-only">Open menu</span>
+                                <IconWrapper icon_class_name="expand_more" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    if (on_token_click) {
+                                        on_token_click(
+                                            row.original.contract_address
+                                        );
+                                    }
+                                }}
+                            >
+                                <IconWrapper
+                                    icon_class_name="swap_horiz"
+                                    class_name="mr-2"
+                                />{" "}
+                                View Token
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="flex items-center gap-3">
-                        <TokenAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            token_url={row.original.logo_url}
-                        />
-                        <div className="flex flex-col">
-                            {on_token_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_token_click) {
-                                            on_token_click(
-                                                row.original.contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {row.original.contract_name
-                                        ? row.original.contract_name
-                                        : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {row.original.contract_name
-                                        ? row.original.contract_name
-                                        : ""}
-                                </label>
-                            )}
-                        </div>
-                    </div>
-                );
-            },
-        },
-        {
-            id: "total_liquidity_quote",
-            accessorKey: "total_liquidity_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_liquidity_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "total_volume_24h_quote",
-            accessorKey: "total_volume_24h_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Volume (24hrs)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_volume_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_token_click) {
-                                            on_token_click(
-                                                row.original.contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Token
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
         },
     ];
 
     return (
         <TableList<TokenV2Volume>
-            columns={windowWidth < 700 ? mobile_columns : columns}
+            columns={columns}
             errorMessage={errorMessage}
             maybeData={maybeResult}
             sorting_state={[

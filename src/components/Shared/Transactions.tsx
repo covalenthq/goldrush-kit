@@ -28,9 +28,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "tx_hash",
             accessorKey: "tx_hash",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="left"
-                    header_name={"Transaction Hash"}
+                    header={"Transaction Hash"}
                     column={column}
                 />
             ),
@@ -65,9 +65,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "block_height",
             accessorKey: "block_height",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="left"
-                    header_name={"Block Height"}
+                    header={"Block Height"}
                     column={column}
                 />
             ),
@@ -79,9 +79,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "block_signed_at",
             accessorKey: "block_signed_at",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="left"
-                    header_name={"Age"}
+                    header={"Age"}
                     column={column}
                 />
             ),
@@ -100,9 +100,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "from_address",
             accessorKey: "from_address",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="left"
-                    header_name={"From"}
+                    header={"From"}
                     column={column}
                 />
             ),
@@ -120,9 +120,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "to_address",
             accessorKey: "to_address",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="left"
-                    header_name={"To"}
+                    header={"To"}
                     column={column}
                 />
             ),
@@ -140,9 +140,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "value",
             accessorKey: "value",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="right"
-                    header_name={"Value"}
+                    header={"Value"}
                     column={column}
                 />
             ),
@@ -164,9 +164,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "fees_paid",
             accessorKey: "fees_paid",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Transaction>
                     align="right"
-                    header_name={"Fees Paid"}
+                    header={"Fees Paid"}
                     column={column}
                 />
             ),

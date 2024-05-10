@@ -54,6 +54,10 @@ export const timestampParser = (
             const hoursDifference = currentTime.getHours() - _unix.getHours();
             const minutesDifference =
                 currentTime.getMinutes() - _unix.getMinutes();
+            const secondsDifference =
+                currentTime.getSeconds() - _unix.getSeconds();
+
+            console.log(currentTime, _unix);
 
             if (yearsDifference > 0) {
                 return `${yearsDifference} year${
@@ -72,6 +76,10 @@ export const timestampParser = (
             } else if (minutesDifference > 0) {
                 return `${minutesDifference} minute${
                     minutesDifference > 1 ? "s" : ""
+                } ago`;
+            } else if (secondsDifference > 0) {
+                return `${secondsDifference} second${
+                    secondsDifference > 1 ? "s" : ""
                 } ago`;
             } else {
                 return `just now`;

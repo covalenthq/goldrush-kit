@@ -8,7 +8,7 @@ export const IconWrapper: React.FC<IconWrapperProps> = ({
     icon_type,
 }) => {
     return (
-        <div
+        <span
             role={"presentation"}
             className={`flex items-center justify-center ${class_name ?? ""}`}
             onClick={on_click}
@@ -20,6 +20,6 @@ export const IconWrapper: React.FC<IconWrapperProps> = ({
             >
                 {icon_class_name}
             </span>
-        </div>
+        </span>
     );
 };

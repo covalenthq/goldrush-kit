@@ -1,12 +1,9 @@
 import { IconWrapper } from ".";
 import { type TableHeaderSortingProps } from "@/utils/types/shared.types";
 
-export const TableHeaderSorting: React.FC<TableHeaderSortingProps> = ({
-    header_name,
-    column,
-    align,
-    icon = true,
-}) => {
+export const TableHeaderSorting: <T>(
+    props: TableHeaderSortingProps<T>
+) => React.ReactNode = ({ header, column, align, icon = true }) => {
     const sortedIcon =
         column.getIsSorted() === "asc"
             ? "arrow_drop_up"
@@ -22,9 +19,8 @@ export const TableHeaderSorting: React.FC<TableHeaderSortingProps> = ({
                       ? "justify-center"
                       : ""
             }`}
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            {header_name}
+            {header}
             {icon && (
                 <IconWrapper
                     icon_size={sortedIcon === "sort" ? "text-base" : ""}
