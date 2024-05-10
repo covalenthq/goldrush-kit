@@ -59,13 +59,11 @@ export const XYKWalletPositionsListView: React.FC<
             id: "contract_name",
             accessorKey: "contract_name",
             header: ({ column }) => (
-                <div className="ml-4">
-                    <TableHeaderSorting
-                        align="left"
-                        header_name={"Pool"}
-                        column={column}
-                    />
-                </div>
+                <TableHeaderSorting<UniswapLikeBalanceItem>
+                    align="left"
+                    header={"Pool"}
+                    column={column}
+                />
             ),
             cell: ({ row }) => {
                 const token_0 = row.original.token_0;
@@ -73,7 +71,7 @@ export const XYKWalletPositionsListView: React.FC<
                 const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
 
                 return (
-                    <div className="ml-4 flex items-center gap-3">
+                    <div className="flex items-center gap-3">
                         <div className="relative mr-2 flex">
                             <TokenAvatar
                                 size={GRK_SIZES.EXTRA_SMALL}
@@ -116,26 +114,27 @@ export const XYKWalletPositionsListView: React.FC<
             id: "total_liquidity_quote",
             accessorKey: "total_liquidity_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<UniswapLikeBalanceItem>
                     align="right"
-                    header_name={"Liquidity"}
+                    header={"Liquidity"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.token_0.quote + row.original.token_1.quote
-                );
-                return <div className="text-right">{valueFormatted}</div>;
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(
+                        row.original.token_0.quote + row.original.token_1.quote
+                    )}
+                </div>
+            ),
         },
         {
             id: "token_0",
             accessorKey: "token_0",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<UniswapLikeBalanceItem>
                     align="right"
-                    header_name={"Token amount"}
+                    header={"Token amount"}
                     column={column}
                 />
             ),
@@ -161,9 +160,9 @@ export const XYKWalletPositionsListView: React.FC<
             id: "token_1",
             accessorKey: "token_1",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<UniswapLikeBalanceItem>
                     align="right"
-                    header_name={"Token amount"}
+                    header={"Token amount"}
                     column={column}
                 />
             ),

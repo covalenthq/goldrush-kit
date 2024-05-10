@@ -9,18 +9,14 @@ import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { AddressAvatar } from "../../Atoms";
+import { Address, AddressAvatar } from "../../Atoms";
 import {
     timestampParser,
     truncate,
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type TokenTransfersListViewProps } from "@/utils/types/organisms.types";
 import { useGoldRush } from "@/utils/store";
@@ -80,42 +76,48 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
     const columns: ColumnDef<BlockTransactionWithContractTransfers>[] = [
         {
             accessorKey: "block_signed_at",
+            id: "block_signed_at",
             header: ({ column }) => (
-                <div className="ml-4">
-                    <TableHeaderSorting
-                        align="left"
-                        header_name={"Time"}
-                        column={column}
-                    />
-                </div>
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
+                    align="left"
+                    header={"Signed at"}
+                    column={column}
+                />
             ),
-            cell: ({ row }) => {
-                const t = row.getValue("block_signed_at") as string;
-
-                return (
-                    <div className="ml-4">{timestampParser(t, "relative")}</div>
-                );
-            },
+            cell: ({ row }) =>
+                timestampParser(row.getValue("block_signed_at"), "relative"),
         },
         {
             accessorKey: "from_address",
-            header: "From",
-            cell: ({ row }) => {
-                return (
-                    <div className="flex items-center gap-x-1">
-                        <AddressAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            type="fingerprint"
-                            address={row.getValue("from_address")}
-                        />
-                        {truncate(row.getValue("from_address"))}
-                    </div>
-                );
-            },
+            id: "from_address",
+            header: ({ column }) => (
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
+                    align="left"
+                    header={"From"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="flex items-center gap-x-1">
+                    <AddressAvatar
+                        size={GRK_SIZES.EXTRA_SMALL}
+                        type="fingerprint"
+                        address={row.getValue("from_address")}
+                    />
+                    {truncate(row.getValue("from_address"))}
+                </div>
+            ),
         },
         {
             accessorKey: "to_address",
-            header: "To",
+            id: "to_address",
+            header: ({ column }) => (
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
+                    align="left"
+                    header={"To"}
+                    column={column}
+                />
+            ),
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-x-1">
@@ -131,90 +133,79 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
         },
         {
             accessorKey: "transfer_type",
-            header: "In/Out",
-            cell: ({ row }) => {
-                return <Badge>{row.original.transfers[0].transfer_type}</Badge>;
-            },
+            id: "transfer_type",
+            header: ({ column }) => (
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
+                    align="left"
+                    header={"In/Out"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <Badge>{row.original.transfers[0].transfer_type}</Badge>
+            ),
         },
         {
-            id: "tokenAmount",
             accessorKey: "delta",
+            id: "delta",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
                     align="right"
-                    header_name={"Token Amount"}
+                    header={"Token Amount"}
                     column={column}
                 />
             ),
             cell: ({ row }) => {
                 const transfer = row.original.transfers[0];
-                if (transfer) {
-                    return (
-                        <div className="text-right">
-                            {calculatePrettyBalance(
-                                transfer?.delta ?? 0,
-                                transfer?.contract_decimals
-                            )}{" "}
-                            {transfer?.contract_ticker_symbol}
-                        </div>
-                    );
-                }
-                return null;
+                return transfer ? (
+                    <div className="text-right">
+                        {calculatePrettyBalance(
+                            transfer?.delta ?? 0,
+                            transfer?.contract_decimals
+                        )}{" "}
+                        {transfer?.contract_ticker_symbol}
+                    </div>
+                ) : (
+                    <></>
+                );
             },
         },
         {
-            id: "value",
             accessorKey: "delta_quote",
+            id: "delta_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
                     align="right"
-                    header_name={"Quote"}
+                    header={"Quote"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        {prettifyCurrency(
-                            row.original.transfers[0].delta_quote,
-                            2,
-                            "USD",
-                            true
-                        )}
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(
+                        row.original.transfers[0].delta_quote,
+                        2,
+                        "USD",
+                        true
+                    )}
+                </div>
+            ),
         },
         {
             accessorKey: "tx_hash",
+            id: "tx_hash",
             header: ({ column }) => (
-                <div className="mr-4">
-                    <TableHeaderSorting
-                        align="right"
-                        header_name={"Transaction"}
-                        column={column}
-                        icon={false}
-                    />
+                <TableHeaderSorting<BlockTransactionWithContractTransfers>
+                    align="right"
+                    header={"Transaction Hash"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="flex justify-end">
+                    <Address address={row.getValue("tx_hash")} />
                 </div>
             ),
-            cell: ({ row }) => {
-                const txHash: string = row.getValue("tx_hash");
-                return (
-                    <a
-                        className="mr-4 flex items-center justify-end gap-x-2"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={row.original.transfers[0].explorers[0].url}
-                    >
-                        {truncate(txHash)}
-                        <IconWrapper
-                            icon_class_name="open_in_new"
-                            class_name="h-3 w-3"
-                            icon_size="text-sm text-black dark:text-white"
-                        />
-                    </a>
-                );
-            },
         },
     ];
 

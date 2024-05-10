@@ -34,19 +34,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
     const { covalentClient } = useGoldRush();
     const [maybeResult, setResult] = useState<Option<Pool[]>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
     const [pagination, setPagination] = useState<Pagination | null>(null);
-
-    useEffect(() => {
-        setWindowWidth(window.innerWidth);
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     useEffect(() => {
         updateResult(null);
@@ -85,234 +73,16 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             id: "contract_name",
             accessorKey: "contract_name",
             header: ({ column }) => (
-                <div className="ml-4">
-                    <TableHeaderSorting
-                        align="left"
-                        header_name={"Pool"}
-                        column={column}
-                    />
-                </div>
+                <TableHeaderSorting<Pool>
+                    align="left"
+                    header={"Pool"}
+                    column={column}
+                />
             ),
             cell: ({ row }) => {
                 const token_0 = row.original.token_0;
                 const token_1 = row.original.token_1;
                 const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
-
-                return (
-                    <div className="ml-4 flex items-center gap-3">
-                        <div className="relative mr-2 flex">
-                            <TokenAvatar
-                                size={GRK_SIZES.EXTRA_SMALL}
-                                token_url={token_0.logo_url}
-                            />
-                            <div className="absolute left-4">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    token_url={token_1.logo_url}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col">
-                            {on_pool_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {pool ? pool : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {pool ? pool : ""}
-                                </label>
-                            )}
-                        </div>
-                    </div>
-                );
-            },
-        },
-        {
-            id: "total_liquidity_quote",
-            accessorKey: "total_liquidity_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_liquidity_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "volume_24h_quote",
-            accessorKey: "volume_24h_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Volume (24hrs)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.volume_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "volume_7d_quote",
-            accessorKey: "volume_7d_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Volume (7d)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.volume_7d_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "quote_rate",
-            accessorKey: "quote_rate",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Quote Rate"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        {" "}
-                        {prettifyCurrency(
-                            row.getValue("quote_rate"),
-                            2,
-                            "USD",
-                            true
-                        )}{" "}
-                    </div>
-                );
-            },
-        },
-        {
-            id: "fee_24h_quote",
-            accessorKey: "fee_24h_quote",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"Fees (24hrs)"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.fee_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
-        },
-        {
-            id: "annualized_fee",
-            accessorKey: "annualized_fee",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="right"
-                    header_name={"1y Fees / Liquidity"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const valueFormatted = calculateFeePercentage(
-                    +row.original.annualized_fee
-                );
-
-                return (
-                    <div
-                        className={`text-right ${
-                            parseFloat(row.original.annualized_fee.toString()) >
-                                0 && "text-green-600"
-                        }`}
-                    >
-                        {valueFormatted}
-                    </div>
-                );
-            },
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                    className="cursor-pointer"
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Pool
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
-        },
-    ];
-
-    const mobile_columns: ColumnDef<Pool>[] = [
-        {
-            id: "contract_name",
-            accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting
-                    align="left"
-                    header_name={"Token"}
-                    column={column}
-                />
-            ),
-            cell: ({ row }) => {
-                const token_0 = row.original.token_0;
-                const token_1 = row.original.token_1;
-                const pool = `${token_0.contract_ticker_symbol}/${token_1.contract_ticker_symbol}`;
 
                 return (
                     <div className="flex items-center gap-3">
@@ -357,78 +127,145 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
             id: "total_liquidity_quote",
             accessorKey: "total_liquidity_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Pool>
                     align="right"
-                    header_name={"Liquidity"}
+                    header={"Liquidity"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.total_liquidity_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.total_liquidity_quote)}
+                </div>
+            ),
         },
         {
-            id: "total_volume_24h_quote",
-            accessorKey: "total_volume_24h_quote",
+            id: "volume_24h_quote",
+            accessorKey: "volume_24h_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<Pool>
                     align="right"
-                    header_name={"Volume (24hrs)"}
+                    header={"Volume (24 hours)"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const valueFormatted = prettifyCurrency(
-                    row.original.volume_24h_quote
-                );
-
-                return <div className="text-right">{valueFormatted}</div>;
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.volume_24h_quote)}
+                </div>
+            ),
+        },
+        {
+            id: "volume_7d_quote",
+            accessorKey: "volume_7d_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting<Pool>
+                    align="right"
+                    header={"Volume (7 days)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.volume_7d_quote)}
+                </div>
+            ),
+        },
+        {
+            id: "quote_rate",
+            accessorKey: "quote_rate",
+            header: ({ column }) => (
+                <TableHeaderSorting<Pool>
+                    align="right"
+                    header={"Quote Rate"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(
+                        row.getValue("quote_rate"),
+                        2,
+                        "USD",
+                        true
+                    )}
+                </div>
+            ),
+        },
+        {
+            id: "fee_24h_quote",
+            accessorKey: "fee_24h_quote",
+            header: ({ column }) => (
+                <TableHeaderSorting<Pool>
+                    align="right"
+                    header={"Fees (24 hours)"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {prettifyCurrency(row.original.fee_24h_quote)}
+                </div>
+            ),
+        },
+        {
+            id: "annualized_fee",
+            accessorKey: "annualized_fee",
+            header: ({ column }) => (
+                <TableHeaderSorting<Pool>
+                    align="right"
+                    header={"1 year Fees / Liquidity"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <div
+                    className={`text-right ${
+                        parseFloat(row.original.annualized_fee.toString()) >
+                            0 && "text-green-600"
+                    }`}
+                >
+                    {calculateFeePercentage(+row.original.annualized_fee)}
+                </div>
+            ),
         },
         {
             id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Pool
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="ml-auto  ">
+                                <span className="sr-only">Open menu</span>
+                                <IconWrapper icon_class_name="expand_more" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    if (on_pool_click) {
+                                        on_pool_click(row.original.exchange);
+                                    }
+                                }}
+                                className="cursor-pointer"
+                            >
+                                <IconWrapper
+                                    icon_class_name="swap_horiz"
+                                    class_name="mr-2"
+                                />{" "}
+                                View Pool
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            ),
         },
     ];
 
     return (
         <TableList<Pool>
-            columns={windowWidth < 700 ? mobile_columns : columns}
+            columns={columns}
             errorMessage={errorMessage}
             maybeData={maybeResult}
             sorting_state={[

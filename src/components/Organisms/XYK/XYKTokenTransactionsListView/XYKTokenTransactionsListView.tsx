@@ -64,29 +64,24 @@ export const XYKTokenTransactionsListView: React.FC<
     const columns: ColumnDef<ExchangeTransaction>[] = [
         {
             accessorKey: "block_signed_at",
+            id: "block_signed_at",
             header: ({ column }) => (
-                <div className="ml-4">
-                    <TableHeaderSorting
-                        align="left"
-                        header_name={"Time"}
-                        column={column}
-                    />
-                </div>
+                <TableHeaderSorting<ExchangeTransaction>
+                    align="left"
+                    header={"Signed at"}
+                    column={column}
+                />
             ),
-            cell: ({ row }) => {
-                const t = row.getValue("block_signed_at") as string;
-
-                return (
-                    <div className="ml-4">{timestampParser(t, "relative")}</div>
-                );
-            },
+            cell: ({ row }) =>
+                timestampParser(row.getValue("block_signed_at"), "relative"),
         },
         {
             accessorKey: "act",
+            id: "act",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ExchangeTransaction>
                     align="left"
-                    header_name={"Transaction type"}
+                    header={"Transaction type"}
                     column={column}
                 />
             ),
@@ -159,26 +154,24 @@ export const XYKTokenTransactionsListView: React.FC<
             },
         },
         {
-            id: "total_quote",
             accessorKey: "total_quote",
+            id: "total_quote",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ExchangeTransaction>
                     align="left"
-                    header_name={"Total value"}
+                    header={"Total value"}
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return <>{row.original.pretty_total_quote}</>;
-            },
+            cell: ({ row }) => row.original.pretty_total_quote,
         },
         {
-            id: "amount_0",
             accessorKey: "amount_0",
+            id: "amount_0",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ExchangeTransaction>
                     align="left"
-                    header_name={"Token Amount"}
+                    header={"Token Amount"}
                     column={column}
                 />
             ),
@@ -215,12 +208,12 @@ export const XYKTokenTransactionsListView: React.FC<
             },
         },
         {
-            id: "amount_1",
             accessorKey: "amount_1",
+            id: "amount_1",
             header: ({ column }) => (
-                <TableHeaderSorting
+                <TableHeaderSorting<ExchangeTransaction>
                     align="left"
-                    header_name={"Token Amount"}
+                    header={"Token Amount"}
                     column={column}
                 />
             ),

@@ -22,8 +22,9 @@ export const Address: React.FC<AddressProps> = ({
     };
 
     return (
-        <div className="flex items-center gap-x-2">
-            <p>{truncate(address)}</p>
+        <p className="flex items-center gap-x-2">
+            {truncate(address)}
+
             {show_copy_icon ? (
                 <button
                     className="cursor-pointer"
@@ -49,6 +50,6 @@ export const Address: React.FC<AddressProps> = ({
             ) : (
                 <></>
             )}
-        </div>
+        </p>
     );
 };

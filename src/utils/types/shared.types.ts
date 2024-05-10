@@ -26,7 +26,7 @@ export interface CopyImageProps {
 export interface IconWrapperProps {
     class_name?: string;
     icon_class_name?: string;
-    on_click?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+    on_click?: (e?: React.MouseEvent) => void;
     icon_size?: string;
     icon_type?: string;
 }
@@ -45,9 +45,9 @@ export interface SkeletonTableProps {
     float?: "right" | "left";
 }
 
-export interface TableHeaderSortingProps {
-    header_name: string;
-    column: Column<any, unknown>;
+export interface TableHeaderSortingProps<T> {
+    header: string;
+    column: Column<T, unknown>;
     align: "left" | "right" | "center";
     icon?: boolean;
 }

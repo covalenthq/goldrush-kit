@@ -75,7 +75,15 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                    <TableHead key={header.id}>
+                                    <TableHead
+                                        key={header.id}
+                                        onClick={() =>
+                                            header.column.toggleSorting(
+                                                header.column.getIsSorted() ===
+                                                    "asc"
+                                            )
+                                        }
+                                    >
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
