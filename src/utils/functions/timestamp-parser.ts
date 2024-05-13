@@ -85,9 +85,14 @@ export const timestampParser = (
         }
 
         case "YYYY MM DD": {
-            const year = _unix.getFullYear();
-            const month = String(_unix.getMonth() + 1).padStart(2, "0");
-            const day = String(_unix.getDate()).padStart(2, "0");
+            const offsetMinutes = _unix.getTimezoneOffset();
+            const offsetMilliseconds = offsetMinutes * 60 * 1000;
+            const utcTime = _unix.getTime() + offsetMilliseconds;
+            const _utc_unix: Date = new Date(utcTime);
+
+            const year = _utc_unix.getFullYear();
+            const month = String(_utc_unix.getMonth() + 1).padStart(2, "0");
+            const day = String(_utc_unix.getDate()).padStart(2, "0");
 
             return `${year}-${month}-${day}`;
         }

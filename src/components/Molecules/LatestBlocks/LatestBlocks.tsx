@@ -30,7 +30,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 const { data, ...error } =
                     await covalentClient.BaseService.getBlockHeightsByPage(
                         chain_name,
-                        timestampParser(Date(), "YYYY MM DD"),
+                        timestampParser(new Date(), "YYYY MM DD"),
                         "2100-01-01",
                         {
                             pageSize: limit,
