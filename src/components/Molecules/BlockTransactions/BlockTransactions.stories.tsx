@@ -4,7 +4,7 @@ import { BlockTransactions as BlockTransactionsComponent } from "./BlockTransact
 type Story = StoryObj<typeof BlockTransactionsComponent>;
 
 const meta: Meta<typeof BlockTransactionsComponent> = {
-    title: "Organisms/Block Transactions",
+    title: "Molecules/Block Transactions",
     component: BlockTransactionsComponent,
 };
 

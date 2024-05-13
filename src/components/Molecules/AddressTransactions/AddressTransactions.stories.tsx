@@ -4,7 +4,7 @@ import { AddressTransactions as AddressTransactionsComponent } from "./AddressTr
 type Story = StoryObj<typeof AddressTransactionsComponent>;
 
 const meta: Meta<typeof AddressTransactionsComponent> = {
-    title: "Organisms/Address Transactions",
+    title: "Molecules/Address Transactions",
     component: AddressTransactionsComponent,
 };
 

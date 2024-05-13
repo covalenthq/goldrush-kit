@@ -14,6 +14,7 @@ import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
+import { type TransactionsProps } from "./shared.types";
 
 export interface AccountCardProps {
     name?: string;
@@ -90,17 +91,11 @@ export interface NFTSalesCountProps {
 export interface AddressTransactionsProps {
     chain_name: Chain;
     address: string;
-    on_native_explorer_click?: Function;
-    on_goldrush_receipt_click?: Function;
-    on_transaction_click?: Function;
 }
 
-export interface BlockTransactionsProps {
+export interface BlockTransactionsProps extends TransactionsProps {
     chain_name: Chain;
     block_height: number;
-    on_native_explorer_click?: Function;
-    on_goldrush_receipt_click?: Function;
-    on_transaction_click?: Function;
 }
 
 export interface XYKPoolTimeSeriesProps {
