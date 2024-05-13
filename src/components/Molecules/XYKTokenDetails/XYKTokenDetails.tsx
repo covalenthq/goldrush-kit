@@ -4,7 +4,7 @@ import { useGoldRush } from "@/utils/store";
 import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { CardDetail } from "@/components/Shared";
-import { type XYKTokenInformationProps } from "@/utils/types/molecules.types";
+import { type XYKTokenDetailsProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Card } from "@/components/ui/card";
 import { type CardDetailProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 
-export const XYKTokenInformation: React.FC<XYKTokenInformationProps> = ({
+export const XYKTokenDetails: React.FC<XYKTokenDetailsProps> = ({
     chain_name,
     dex_name,
     token_address,

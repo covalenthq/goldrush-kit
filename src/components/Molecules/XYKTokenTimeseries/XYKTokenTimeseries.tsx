@@ -11,26 +11,27 @@ import {
     PERIOD,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { type XYKOverviewTimeSeriesProps } from "@/utils/types/molecules.types";
+import { type XYKTokenTimeseriesProps } from "@/utils/types/molecules.types";
 import {
-    type LiquidityEcosystemChart,
     prettifyCurrency,
-    type UniswapLikeEcosystemCharts,
+    type PriceTokenTimeseries,
+    type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 
-export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
+export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
     chain_name,
     dex_name,
-    overview_data,
+    token_address,
+    token_data,
     displayMetrics = "both",
 }) => {
     const [maybeResult, setResult] =
-        useState<Option<UniswapLikeEcosystemCharts>>(None);
+        useState<Option<TokenV2VolumeWithChartData>>(None);
     const [chartData, setChartData] =
         useState<Option<{ [key: string]: string | number | Date }[]>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const [timeSeries, setTimeSeries] = useState<string>(
+    const [timeseries, setTimeseries] = useState<string>(
         displayMetrics !== "both" ? displayMetrics : "liquidity"
     );
     const { covalentClient, theme } = useGoldRush();
@@ -39,47 +40,48 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
         maybeResult.match({
             None: () => null,
             Some: (response) => {
-                const chart_key = `${timeSeries}_chart_${period}d`;
+                const chart_key = `${timeseries}_timeseries_${period}d`;
                 const value_key =
-                    timeSeries === "price"
+                    timeseries === "price"
                         ? "price_of_token0_in_token1"
-                        : `${timeSeries}_quote`;
+                        : `${timeseries}_quote`;
+
                 const result = (
                     response[
                         chart_key as keyof typeof response
-                    ] as UniswapLikeEcosystemCharts["liquidity_chart_7d"]
+                    ] as TokenV2VolumeWithChartData["price_timeseries_7d"]
                 ).map((x) => {
                     const dt = timestampParser(x.dt, "DD MMM YY");
                     return {
                         date: dt,
-                        [`${capitalizeFirstLetter(timeSeries)} (USD)`]:
-                            x[value_key as keyof LiquidityEcosystemChart],
+                        [`${capitalizeFirstLetter(timeseries)} (USD)`]:
+                            x[value_key as keyof PriceTokenTimeseries],
                     };
                 });
                 setChartData(new Some(result));
             },
         });
-    }, [maybeResult, period, timeSeries, displayMetrics]);
+    }, [maybeResult, period, timeseries, displayMetrics]);
 
     useEffect(() => {
-        if (overview_data) {
-            setResult(new Some(overview_data));
+        if (token_data) {
+            setResult(new Some(token_data));
             return;
         }
         (async () => {
             setResult(None);
-            const response =
-                await covalentClient.XykService.getEcosystemChartData(
-                    chain_name,
-                    dex_name
-                );
+            const response = await covalentClient.XykService.getLpTokenView(
+                chain_name,
+                dex_name,
+                token_address
+            );
             setResult(new Some(response.data.items[0]));
         })();
-    }, [overview_data, dex_name, chain_name, displayMetrics]);
+    }, [token_data, dex_name, token_address, chain_name, displayMetrics]);
 
     useEffect(() => {
         if (displayMetrics === "both") return;
-        setTimeSeries(displayMetrics);
+        setTimeseries(displayMetrics);
     }, [displayMetrics]);
 
     const body = chartData.match({
@@ -91,7 +93,7 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
             );
         },
         Some: (result) => {
-            if (timeSeries === "liquidity") {
+            if (timeseries === "liquidity") {
                 return (
                     <AreaChart
                         className="mt-2 p-2"
@@ -100,7 +102,7 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
                         valueFormatter={prettifyCurrency}
                         yAxisWidth={100}
                         categories={[
-                            `${capitalizeFirstLetter(timeSeries)} (USD)`,
+                            `${capitalizeFirstLetter(timeseries)} (USD)`,
                         ]}
                         colors={CHART_COLORS[theme.mode]}
                     />
@@ -115,7 +117,7 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
                         valueFormatter={prettifyCurrency}
                         yAxisWidth={100}
                         categories={[
-                            `${capitalizeFirstLetter(timeSeries)} (USD)`,
+                            `${capitalizeFirstLetter(timeseries)} (USD)`,
                         ]}
                         colors={CHART_COLORS[theme.mode]}
                     />
@@ -128,7 +130,7 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
         <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
                 <Heading size={4}>
-                    {`${capitalizeFirstLetter(timeSeries)} (USD)`}
+                    {`${capitalizeFirstLetter(timeseries)} (USD)`}
                 </Heading>
             </div>
 
@@ -138,20 +140,20 @@ export const XYKOverviewTimeSeries: React.FC<XYKOverviewTimeSeriesProps> = ({
                         <Button
                             disabled={!maybeResult.isDefined}
                             variant={
-                                timeSeries === "liquidity"
+                                timeseries === "liquidity"
                                     ? "primary"
                                     : "outline"
                             }
-                            onClick={() => setTimeSeries("liquidity")}
+                            onClick={() => setTimeseries("liquidity")}
                         >
                             Liquidity
                         </Button>
                         <Button
                             disabled={!maybeResult.isDefined}
                             variant={
-                                timeSeries === "volume" ? "primary" : "outline"
+                                timeseries === "volume" ? "primary" : "outline"
                             }
-                            onClick={() => setTimeSeries("volume")}
+                            onClick={() => setTimeseries("volume")}
                         >
                             Volume
                         </Button>

@@ -98,7 +98,7 @@ export interface BlockTransactionsProps extends TransactionsProps {
     block_height: number;
 }
 
-export interface XYKPoolTimeSeriesProps {
+export interface XYKPoolTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
@@ -112,28 +112,28 @@ export interface NFTVolumeProps {
     token_id?: string;
 }
 
-export interface XYKPoolInformationProps {
+export interface XYKPoolDetailsProps {
     pool_address: string;
     chain_name: Chain;
     dex_name: string;
     pool_data?: PoolWithTimeseries | null;
 }
 
-export interface XYKTokenInformationProps {
+export interface XYKTokenDetailsProps {
     token_address: string;
     chain_name: Chain;
     dex_name: string;
     token_data?: TokenV2VolumeWithChartData | null;
 }
 
-export interface XYKOverviewTimeSeriesProps {
+export interface XYKTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
     overview_data?: UniswapLikeEcosystemCharts;
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface XYKTokenTimeSeriesProps {
+export interface XYKTokenTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
@@ -141,7 +141,7 @@ export interface XYKTokenTimeSeriesProps {
     displayMetrics?: "both" | "liquidity" | "volume";
 }
 
-export interface XYKWalletInformationProps {
+export interface XYKWalletDetailsProps {
     wallet_address: string;
     chain_name: Chain;
     dex_name: string;

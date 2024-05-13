@@ -7,13 +7,13 @@ import {
 } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { CardDetail } from "@/components/Shared";
-import { type XYKWalletInformationProps } from "@/utils/types/molecules.types";
+import { type XYKWalletDetailsProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Card } from "@/components/ui/card";
 import { type CardDetailProps } from "@/utils/types/shared.types";
 
-export const XYKWalletInformation: React.FC<XYKWalletInformationProps> = ({
+export const XYKWalletDetails: React.FC<XYKWalletDetailsProps> = ({
     chain_name,
     dex_name,
     wallet_address,

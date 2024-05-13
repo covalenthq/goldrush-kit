@@ -4,7 +4,7 @@ import { useGoldRush } from "@/utils/store";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { useState } from "react";
 import { CardDetail } from "@/components/Shared";
-import { type XYKPoolInformationProps } from "@/utils/types/molecules.types";
+import { type XYKPoolDetailsProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Card } from "@/components/ui/card";
 import { type CardDetailProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
 
-export const XYKPoolInformation: React.FC<XYKPoolInformationProps> = ({
+export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
     chain_name,
     dex_name,
     pool_address,
