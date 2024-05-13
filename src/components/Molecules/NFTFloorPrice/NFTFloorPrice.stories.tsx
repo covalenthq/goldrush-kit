@@ -5,7 +5,7 @@ import { NFT_COLLECTIONS } from "@/utils/constants/shared.constants";
 type Story = StoryObj<typeof NFTFloorPriceComponent>;
 
 const meta: Meta<typeof NFTFloorPriceComponent> = {
-    title: "Molecules/NFTs",
+    title: "Molecules/NFT Floor Price",
     component: NFTFloorPriceComponent,
 };
 
