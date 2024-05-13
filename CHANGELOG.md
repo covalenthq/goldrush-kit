@@ -1,5 +1,22 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.5.6
+
+**Features**
+
+-   Added `LatestTransactions` for a chain
+
+**Fixes**
+
+-   Responsiveness of multiple components
+-   Added visual uniformity
+    -   Created for `CardDetail` for all heading-value based data pairs
+    -   Created `TableList` for all the tables
+    -   Refactored for pagination in `TableList` to improve visual similarity
+-   Fixed build for Storybook
+-   Fixed columns in all the tables
+-   Improved TypeScript support
+
 ## 0.5.5
 
 **Features**
