@@ -1,7 +1,10 @@
 import { Address, TokenAvatar } from "@/components/Atoms";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -22,7 +25,10 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { CardDetail } from "@/components/Shared";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
@@ -34,13 +40,13 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
         Option<{
             balances: BalanceItem[];
             summary: TransactionsSummary;
-        }>
+        } | null>
     >(None);
 
     useEffect(() => {
         (async () => {
             setMaybeResult(None);
-
+            setErrorMessage(null);
             try {
                 const [
                     { data: summaryData, ...summaryError },
@@ -56,11 +62,9 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                     ),
                 ]);
                 if (summaryError.error) {
-                    setErrorMessage(summaryError.error_message);
                     throw summaryError;
                 }
                 if (balancesError.error) {
-                    setErrorMessage(balancesError.error_message);
                     throw balancesError;
                 }
                 const balances = balancesData.items;
@@ -77,7 +81,9 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                         summary: summaryData.items[0],
                     })
                 );
-            } catch (error) {
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -97,18 +103,20 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                             ))}
                     </>
                 ),
-                Some: ({
-                    balances: [native, ...holdings],
-                    summary: {
-                        earliest_transaction,
-                        latest_transaction,
-                        total_count,
-                    },
-                }) =>
-                    errorMessage ? (
-                        <p className="col-span-3">{errorMessage}</p>
-                    ) : (
-                        (
+                Some: (data) => {
+                    if (errorMessage) {
+                        return <p className="col-span-3">{errorMessage}</p>;
+                    } else {
+                        const {
+                            balances: [native, ...holdings],
+                            summary: {
+                                earliest_transaction,
+                                latest_transaction,
+                                total_count,
+                            },
+                        } = data!;
+
+                        return (
                             [
                                 {
                                     heading: `${native.contract_ticker_symbol} BALANCE`,
@@ -202,6 +210,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                             </div>
 
                                                             <CardDetail
+                                                                key={`${contract_display_name} (
+                                                                    ${contract_ticker_symbol})`}
                                                                 heading={`${contract_display_name} (
                                                                     ${contract_ticker_symbol})`}
                                                                 content={
@@ -263,8 +273,9 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                 key={props.heading?.toString()}
                                 {...props}
                             />
-                        ))
-                    ),
+                        ));
+                    }
+                },
             })}
         </Card>
     );

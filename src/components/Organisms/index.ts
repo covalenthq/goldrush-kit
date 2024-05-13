@@ -1,13 +1,13 @@
+export { AddressActivityList as AddressActivityListView } from "./AddressActivityListView/AddressActivityList";
+export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
+export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
 export { NFTCollectionTokenListView } from "./NFTs/NFTCollectionTokenListView/NFTCollectionTokenListView";
 export { NFTDetailView } from "./NFTs/NFTDetailView/NFTDetailView";
 export { NFTWalletCollectionView } from "./NFTs/NFTWalletCollectionView/NFTWalletCollectionView";
 export { NFTWalletTokenListView } from "./NFTs/NFTWalletTokenListView/NFTWalletTokenListView";
-export { AddressActivityListView } from "./AddressActivityListView/AddressActivityListView";
 export { TokenBalancesListView } from "./TokenBalancesListView/TokenBalancesListView";
 export { TokenTransfersListView } from "./TokenTransfersListView/TokenTransfersListView";
 export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";
-export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
-export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
 /**
  * @deprecated This component is deprecated. Please use `AddressTransactions` instead.
  */

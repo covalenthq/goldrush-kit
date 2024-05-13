@@ -29,7 +29,7 @@ export interface NFTCollectionTokenListViewProps {
     page_size?: number;
 }
 
-export interface AddressActivityListViewProps {
+export interface AddressActivityViewProps {
     address: string;
 }
 

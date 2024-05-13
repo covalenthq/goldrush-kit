@@ -29,10 +29,10 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                         chain_name,
                         height.toString()
                     );
-                if (error.error) {
-                    setErrorMessage(error.error_message);
-                    throw error;
-                }
+                // if (error.error) {
+                setErrorMessage("error.error_message");
+                throw "error";
+                // }
                 setResult(new Some(data.items[0]));
             } catch (error) {
                 console.error(error);

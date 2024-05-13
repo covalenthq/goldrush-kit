@@ -1,6 +1,8 @@
 import { type Color } from "@tremor/react";
 import { type GoldRushThemeMode } from "../types/store.types";
 
+export const defaultErrorMessage: string = "Something went wrong!";
+
 export enum GRK_SIZES {
     LARGE = "lg",
     MEDIUM = "md",

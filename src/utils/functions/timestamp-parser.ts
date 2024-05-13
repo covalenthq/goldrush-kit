@@ -57,8 +57,6 @@ export const timestampParser = (
             const secondsDifference =
                 currentTime.getSeconds() - _unix.getSeconds();
 
-            console.log(currentTime, _unix);
-
             if (yearsDifference > 0) {
                 return `${yearsDifference} year${
                     yearsDifference > 1 ? "s" : ""

@@ -35,7 +35,7 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
     const table = useReactTable({
         data: maybeData.match({
             None: () => [],
-            Some: (result) => result,
+            Some: (result) => result ?? [],
         }),
         columns,
         onSortingChange: setSorting,

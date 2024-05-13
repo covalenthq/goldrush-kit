@@ -2,6 +2,7 @@ import { type Option } from "@/utils/option";
 import {
     type Block,
     type Chain,
+    type ChainActivityEvent,
     type ChainItem,
     type ExchangeTransaction,
     type PoolWithTimeseries,
@@ -18,6 +19,19 @@ export interface AccountCardProps {
     name?: string;
     address: string;
     type?: "fingerprint" | "effigy" | "wallet";
+}
+
+export interface AddressActivityDetailsProps {
+    address: string;
+    hide_no_activity?: boolean;
+    maybeResult?: Option<ChainActivityEvent[] | null> | null;
+    errorMessage?: string | null;
+}
+
+export interface AddressActivityListProps {
+    address: string;
+    maybeResult?: Option<ChainActivityEvent[] | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface BlockDetailsProps {

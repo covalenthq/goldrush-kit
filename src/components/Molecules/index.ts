@@ -1,9 +1,7 @@
 export { AccountCard } from "./AccountCard/AccountCard";
+export { AddressActivityDetails } from "./AddressActivityDetails/AddressActivityDetails";
+export { AddressActivityList } from "./AddressActivityList/AddressActivityList";
 export { AddressDetails } from "./AddressDetails/AddressDetails";
-/**
- * @deprecated This component is deprecated. Please use `AddressDetails` instead.
- */
-export { AddressDetails as AddressDetailsView } from "./AddressDetails/AddressDetails";
 export { BlockDetails } from "./BlockDetails/BlockDetails";
 export { ChainSelector } from "./ChainSelector/ChainSelector";
 export { CollectionCard } from "./CollectionCard/CollectionCard";
