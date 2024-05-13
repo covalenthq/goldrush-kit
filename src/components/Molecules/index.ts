@@ -1,4 +1,3 @@
-export { AccountCard } from "./AccountCard/AccountCard";
 export { AddressActivityDetails } from "./AddressActivityDetails/AddressActivityDetails";
 export { AddressActivityList } from "./AddressActivityList/AddressActivityList";
 export { AddressDetails } from "./AddressDetails/AddressDetails";

@@ -4,7 +4,7 @@ import { AccountCard as AccountCardComponent } from "./AccountCard";
 type Story = StoryObj<typeof AccountCardComponent>;
 
 const meta: Meta<typeof AccountCardComponent> = {
-    title: "Molecules/Account Card",
+    title: "Atoms/Account Card",
     component: AccountCardComponent,
 };
 

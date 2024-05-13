@@ -11,7 +11,7 @@ import { useToast } from "../../../utils/hooks";
 import { AddressAvatar } from "../../Atoms";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type AccountCardProps } from "@/utils/types/molecules.types";
+import { type AccountCardProps } from "@/utils/types/atoms.types";
 
 export const AccountCard: React.FC<AccountCardProps> = ({
     address,

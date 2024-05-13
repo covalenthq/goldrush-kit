@@ -1,5 +1,11 @@
 import { type GRK_SIZES } from "../constants/shared.constants";
 
+export interface AccountCardProps {
+    name?: string;
+    address: string;
+    type?: "fingerprint" | "effigy" | "wallet";
+}
+
 export interface AddressProps {
     address: string;
     show_copy_icon?: boolean;

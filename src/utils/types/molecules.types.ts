@@ -16,12 +16,6 @@ import {
 } from "../constants/shared.constants";
 import { type TransactionsProps } from "./shared.types";
 
-export interface AccountCardProps {
-    name?: string;
-    address: string;
-    type?: "fingerprint" | "effigy" | "wallet";
-}
-
 export interface AddressActivityDetailsProps {
     address: string;
     hide_no_activity?: boolean;
