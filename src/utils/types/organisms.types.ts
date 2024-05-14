@@ -1,4 +1,4 @@
-import { type BalanceItem, type Chain } from "@covalenthq/client-sdk";
+import { type Chain } from "@covalenthq/client-sdk";
 
 export interface NFTDetailsViewProps {
     chain_name: Chain;
@@ -72,23 +72,11 @@ export interface XYKWalletTransactionsListViewProps {
     on_goldrush_receipt_click?: Function;
 }
 
-export interface TokenBalancesListViewProps {
-    chain_names: Chain[];
-    address: string;
-    hide_small_balances?: boolean;
-    mask_balances?: boolean;
-    on_transfer_click?: Function;
-}
-
 export interface XYKTokenListViewProps {
     chain_name: Chain;
     dex_name: string;
     on_token_click: Function;
     page_size?: number;
-}
-
-export interface CrossChainBalanceItem extends BalanceItem {
-    chain: Chain;
 }
 
 export interface XYKPoolListViewProps {

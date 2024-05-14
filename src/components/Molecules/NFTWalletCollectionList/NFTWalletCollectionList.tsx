@@ -59,7 +59,7 @@ export const NFTWalletCollectionList: React.FC<
                 }
             }
         })();
-    }, [chain_name, address]);
+    }, [chain_name, address, initialMaybeResult]);
 
     return (
         <div className="flex flex-col gap-8">

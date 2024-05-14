@@ -1,5 +1,6 @@
 import { type Option } from "@/utils/option";
 import {
+    BalanceItem,
     type Block,
     type Chain,
     type ChainActivityEvent,
@@ -131,6 +132,17 @@ export interface NFTVolumeProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
+}
+
+export interface TokenBalancesListProps {
+    chain_names: Chain[];
+    address: string;
+    hide_small_balances?: boolean;
+    mask_balances?: boolean;
+}
+
+export interface CrossChainBalanceItem extends BalanceItem {
+    chain_name: Chain;
 }
 
 export interface XYKPoolDetailsProps {

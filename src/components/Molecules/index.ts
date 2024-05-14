@@ -17,6 +17,7 @@ export { NFTSalesCount } from "./NFTSalesCount/NFTSalesCount";
 export { NFTVolume } from "./NFTVolume/NFTVolume";
 export { NFTWalletCollectionDetails } from "./NFTWalletCollectionDetails/NFTWalletCollectionDetails";
 export { NFTWalletCollectionList } from "./NFTWalletCollectionList/NFTWalletCollectionList";
+export { TokenBalancesList } from "./TokenBalancesList/TokenBalancesList";
 export { TransactionDetails } from "./TransactionDetails/TransactionDetails";
 export { XYKPoolDetails } from "./XYKPoolDetails/XYKPoolDetails";
 export { XYKPoolTimeseries } from "./XYKPoolTimeseries/XYKPoolTimeseries";

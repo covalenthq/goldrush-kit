@@ -66,7 +66,7 @@ export const NFTWalletCollectionDetails: React.FC<
                 }
             }
         })();
-    }, [chain_name, address]);
+    }, [chain_name, address, initialMaybeResult]);
 
     return (
         <Card className="grid w-full grid-cols-1 items-start gap-4 break-all border p-2">
