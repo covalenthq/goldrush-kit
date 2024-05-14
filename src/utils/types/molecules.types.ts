@@ -181,7 +181,14 @@ export interface XYKTokenDetailsProps {
     token_address: string;
     chain_name: Chain;
     dex_name: string;
-    token_data?: TokenV2VolumeWithChartData | null;
+    maybeResult?: Option<TokenV2VolumeWithChartData | null> | null;
+    errorMessage?: string | null;
+}
+
+export interface XYKTokenListProps {
+    chain_name: Chain;
+    dex_name: string;
+    page_size?: number;
 }
 
 export interface XYKTimeseriesProps {
@@ -195,8 +202,8 @@ export interface XYKTokenTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
-    token_data?: TokenV2VolumeWithChartData | null;
-    displayMetrics?: "both" | "liquidity" | "volume";
+    maybeResult?: Option<TokenV2VolumeWithChartData | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface XYKWalletDetailsProps {

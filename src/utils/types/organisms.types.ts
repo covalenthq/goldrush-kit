@@ -56,13 +56,6 @@ export interface XYKWalletTransactionsListViewProps {
     on_goldrush_receipt_click?: Function;
 }
 
-export interface XYKTokenListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    on_token_click: Function;
-    page_size?: number;
-}
-
 export interface XYKTokenPoolListViewProps {
     chain_name: Chain;
     dex_name: string;
@@ -84,7 +77,7 @@ export interface XYKWalletPositionsListViewProps {
     on_pool_click?: Function;
 }
 
-export interface XYKTokenDetailViewProps {
+export interface XYKTokenViewProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;

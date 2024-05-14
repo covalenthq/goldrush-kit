@@ -76,7 +76,7 @@ export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
             {maybeResult.match({
                 None: () => (
                     <>
-                        {Array(5)
+                        {Array(10)
                             .fill(null)
                             .map(() => (
                                 <div key={Math.random()}>
@@ -181,7 +181,7 @@ export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
                                     heading: "SWAP COUNT (24 HOURS)",
                                     content: result.swap_count_24h,
                                 },
-                            ].filter(Boolean) as CardDetailProps[]
+                            ] as CardDetailProps[]
                         ).map((props) => (
                             <CardDetail
                                 key={props.heading?.toString()}

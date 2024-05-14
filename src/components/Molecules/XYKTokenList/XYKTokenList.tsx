@@ -5,34 +5,29 @@ import {
     type Pagination,
 } from "@covalenthq/client-sdk";
 import { useCallback, useEffect, useState } from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
 import {
     BalancePriceDelta,
-    IconWrapper,
     TableHeaderSorting,
     TableList,
 } from "@/components/Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { type XYKTokenListViewProps } from "@/utils/types/organisms.types";
+import { type XYKTokenListProps } from "@/utils/types/molecules.types";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
-export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
+export const XYKTokenList: React.FC<XYKTokenListProps> = ({
     chain_name,
     dex_name,
-    on_token_click,
     page_size = 10,
 }) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] = useState<Option<TokenV2Volume[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<TokenV2Volume[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [pagination, setPagination] = useState<Pagination | null>(null);
 
@@ -43,7 +38,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
     const updateResult = useCallback(
         async (_pagination: Pagination | null) => {
             try {
-                setResult(None);
+                setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getNetworkExchangeTokens(
@@ -55,12 +50,13 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setPagination(data.pagination);
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         },
@@ -90,28 +86,7 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         token_url={row.original.logo_url}
                     />
                     <div className="flex flex-col">
-                        {on_token_click ? (
-                            <a
-                                className="cursor-pointer hover:opacity-75"
-                                onClick={() => {
-                                    if (on_token_click) {
-                                        on_token_click(
-                                            row.original.contract_address
-                                        );
-                                    }
-                                }}
-                            >
-                                {row.original.contract_name
-                                    ? row.original.contract_name
-                                    : ""}
-                            </a>
-                        ) : (
-                            <label className="text-base">
-                                {row.original.contract_name
-                                    ? row.original.contract_name
-                                    : ""}
-                            </label>
-                        )}
+                        {row.original.contract_name}
                     </div>
                 </div>
             ),
@@ -203,39 +178,6 @@ export const XYKTokenListView: React.FC<XYKTokenListViewProps> = ({
                         numerator={row.original.quote_rate_24h}
                         denominator={row.original.quote_rate}
                     />
-                </div>
-            ),
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => (
-                <div className="text-right">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="ml-auto  ">
-                                <span className="sr-only">Open menu</span>
-                                <IconWrapper icon_class_name="expand_more" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    if (on_token_click) {
-                                        on_token_click(
-                                            row.original.contract_address
-                                        );
-                                    }
-                                }}
-                            >
-                                <IconWrapper
-                                    icon_class_name="swap_horiz"
-                                    class_name="mr-2"
-                                />{" "}
-                                View Token
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             ),
         },

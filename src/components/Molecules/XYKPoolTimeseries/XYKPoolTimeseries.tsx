@@ -102,7 +102,7 @@ export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
                 }
             }
         })();
-    }, [initialMaybeResult, dex_name, pool_address, chain_name]);
+    }, [dex_name, pool_address, chain_name, initialMaybeResult]);
 
     return (
         <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">

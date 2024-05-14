@@ -8,10 +8,14 @@ import { useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolListProps } from "@/utils/types/molecules.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolList: React.FC<XYKPoolListProps> = ({
     chain_name,
@@ -19,7 +23,7 @@ export const XYKPoolList: React.FC<XYKPoolListProps> = ({
     page_size = 10,
 }) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] = useState<Option<Pool[]>>(None);
+    const [maybeResult, setMaybeResult] = useState<Option<Pool[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [pagination, setPagination] = useState<Pagination | null>(null);
 
@@ -30,7 +34,7 @@ export const XYKPoolList: React.FC<XYKPoolListProps> = ({
     const updateResult = useCallback(
         async (_pagination: Pagination | null) => {
             try {
-                setResult(None);
+                setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getPools(
@@ -42,12 +46,13 @@ export const XYKPoolList: React.FC<XYKPoolListProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setPagination(data.pagination);
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         },
