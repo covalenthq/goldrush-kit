@@ -38,9 +38,9 @@ export const NFTWalletCollectionList: React.FC<
     useEffect(() => {
         (async () => {
             if (!initialMaybeResult) {
-                setMaybeResult(None);
-                setErrorMessage(null);
                 try {
+                    setMaybeResult(None);
+                    setErrorMessage(null);
                     const { data, ...error } =
                         await covalentClient.NftService.getNftsForAddress(
                             chain_name,
