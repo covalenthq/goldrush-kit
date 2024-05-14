@@ -5,34 +5,15 @@ import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { type XYKPoolTransactionsListViewProps } from "@/utils/types/organisms.types";
+import { type XYKPoolTransactionsListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
-import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 
-export const XYKPoolTransactionsListView: React.FC<
-    XYKPoolTransactionsListViewProps
-> = ({
-    chain_name,
-    dex_name,
-    pool_address,
-    on_transaction_click,
-    on_native_explorer_click,
-    on_goldrush_receipt_click,
-}) => {
+export const XYKPoolTransactionsList: React.FC<
+    XYKPoolTransactionsListProps
+> = ({ chain_name, dex_name, pool_address }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setResult] =
         useState<Option<ExchangeTransaction[]>>(None);
@@ -90,18 +71,7 @@ export const XYKPoolTransactionsListView: React.FC<
 
                 if (row.original.act !== "SWAP") {
                     return (
-                        <div
-                            className={
-                                on_transaction_click
-                                    ? "cursor-pointer hover:opacity-75"
-                                    : ""
-                            }
-                            onClick={() => {
-                                if (on_transaction_click) {
-                                    on_transaction_click(row.original);
-                                }
-                            }}
-                        >
+                        <div>
                             <Badge
                                 className="mr-2"
                                 variant={
@@ -125,18 +95,7 @@ export const XYKPoolTransactionsListView: React.FC<
                         ? token_0
                         : token_1;
                 return (
-                    <div
-                        className={
-                            on_transaction_click
-                                ? "cursor-pointer hover:opacity-75"
-                                : ""
-                        }
-                        onClick={() => {
-                            if (on_transaction_click) {
-                                on_transaction_click(row.original);
-                            }
-                        }}
-                    >
+                    <div>
                         <Badge
                             className="mr-2"
                             variant={
@@ -246,58 +205,6 @@ export const XYKPoolTransactionsListView: React.FC<
                                 .contract_ticker_symbol
                         }
                     </span>
-                );
-            },
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                if (!on_native_explorer_click && !on_goldrush_receipt_click)
-                    return;
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                {on_native_explorer_click && (
-                                    <DropdownMenuItem
-                                        onClick={() => {
-                                            on_native_explorer_click(
-                                                row.original
-                                            );
-                                        }}
-                                    >
-                                        <IconWrapper
-                                            icon_class_name="open_in_new"
-                                            class_name="mr-2"
-                                        />{" "}
-                                        View on explorer
-                                    </DropdownMenuItem>
-                                )}
-                                {on_goldrush_receipt_click && (
-                                    <DropdownMenuItem
-                                        onClick={() => {
-                                            on_goldrush_receipt_click(
-                                                row.original
-                                            );
-                                        }}
-                                    >
-                                        <IconWrapper
-                                            icon_class_name="open_in_new"
-                                            class_name="mr-2"
-                                        />{" "}
-                                        View goldrush receipt
-                                    </DropdownMenuItem>
-                                )}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
                 );
             },
         },

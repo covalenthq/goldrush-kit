@@ -166,6 +166,12 @@ export interface XYKPoolListProps {
     page_size?: number;
 }
 
+export interface XYKPoolTransactionsListProps {
+    chain_name: Chain;
+    dex_name: string;
+    pool_address: string;
+}
+
 export interface XYKTransactionsListProps {
     chain_name: Chain;
     dex_name: string;

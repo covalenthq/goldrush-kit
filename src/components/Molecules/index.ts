@@ -23,6 +23,7 @@ export { TransactionReceipt } from "./TransactionReceipt/TransactionReceipt";
 export { XYKPoolDetails } from "./XYKPoolDetails/XYKPoolDetails";
 export { XYKPoolList } from "./XYKPoolList/XYKPoolList";
 export { XYKPoolTimeseries } from "./XYKPoolTimeseries/XYKPoolTimeseries";
+export { XYKPoolTransactionsList } from "./XYKPoolTransactionsList/XYKPoolTransactionsList";
 export { XYKTimeseries } from "./XYKTimeseries/XYKTimeseries";
 export { XYKTokenDetails } from "./XYKTokenDetails/XYKTokenDetails";
 export { XYKTokenTimeseries } from "./XYKTokenTimeseries/XYKTokenTimeseries";
