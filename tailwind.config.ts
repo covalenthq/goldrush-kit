@@ -160,7 +160,7 @@ const config = {
     safelist: [
         {
             pattern: RegExp(
-                /^(bg|text|shadow|border|stroke|ring|fill)-(background|foreground|secondary)-(light|dark)$/
+                /^(bg|text|shadow|border|stroke|ring|fill)-(background|foreground|primary|secondary)-(light|dark)$/
             ),
             variants: [
                 "dark",
