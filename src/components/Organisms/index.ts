@@ -1,8 +1,7 @@
 export { AddressActivityView } from "./AddressActivityView/AddressActivityView";
 export { NFTCollectionView } from "./NFTCollectionView/NFTCollectionView";
-export { NFTDetailView } from "./NFTDetailView/NFTDetailView";
+export { NFTDetailsView } from "./NFTDetailsView/NFTDetailsView";
 export { NFTWalletCollectionView } from "./NFTWalletCollectionView/NFTWalletCollectionView";
-export { NFTWalletTokenListView } from "./NFTWalletTokenListView/NFTWalletTokenListView";
 export { TokenBalancesListView } from "./TokenBalancesListView/TokenBalancesListView";
 export { TokenTransfersListView } from "./TokenTransfersListView/TokenTransfersListView";
 export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";

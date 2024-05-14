@@ -5,6 +5,7 @@ import {
     type ChainActivityEvent,
     type ChainItem,
     type ExchangeTransaction,
+    type NftTokenContractBalanceItem,
     type PoolWithTimeseries,
     type TokenV2VolumeWithChartData,
     type Transaction,
@@ -92,6 +93,20 @@ export interface NFTSalesCountProps {
     chain_name: Chain;
     collection_address: string;
     token_id?: string;
+}
+
+export interface NFTWalletCollectionDetailsProps {
+    chain_name: Chain;
+    address: string;
+    maybeResult?: Option<NftTokenContractBalanceItem[] | null> | null;
+    errorMessage?: string | null;
+}
+
+export interface NFTWalletCollectionListProps {
+    chain_name: Chain;
+    address: string;
+    maybeResult?: Option<NftTokenContractBalanceItem[] | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface AddressTransactionsProps {

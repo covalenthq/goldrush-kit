@@ -1,182 +1,63 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import {
-    prettifyCurrency,
-    type NftTokenContractBalanceItem,
-} from "@covalenthq/client-sdk";
+import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardTitle,
-} from "@/components/ui/card";
-import { Heading } from "@/components/Shared";
-import { Badge } from "@/components/ui/badge";
 import { AddressCard } from "@/components/Atoms";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGoldRush } from "@/utils/store";
+import { CovalentAPIError } from "@/utils/types/shared.types";
+import {
+    NFTWalletCollectionDetails,
+    NFTWalletCollectionList,
+} from "@/components/Molecules";
 
 export const NFTWalletCollectionView: React.FC<
     NFTWalletCollectionViewProps
 > = ({ chain_name, address }) => {
-    const [maybeResult, setResult] =
-        useState<Option<NftTokenContractBalanceItem[]>>(None);
     const { covalentClient } = useGoldRush();
+    const [maybeResult, setMaybeResult] =
+        useState<Option<NftTokenContractBalanceItem[] | null>>(None);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        async function getData() {
-            const response = await covalentClient.NftService.getNftsForAddress(
-                chain_name,
-                address
-            );
-
-            setResult(new Some(response.data.items));
-        }
-        getData();
+        (async () => {
+            setMaybeResult(None);
+            setErrorMessage(null);
+            try {
+                const { data, ...error } =
+                    await covalentClient.NftService.getNftsForAddress(
+                        chain_name,
+                        address
+                    );
+                if (error.error) {
+                    throw error;
+                }
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
+                console.error(error);
+            }
+        })();
     }, [chain_name, address]);
 
-    return maybeResult.match({
-        None: () => <>Loading</>,
-        Some: (result) => {
-            const body = result.map((items, i) => {
-                return (
-                    <div className="" key={i}>
-                        <div className="mb-2">
-                            <Heading size={3}>
-                                <div className="flex items-center gap-x-2">
-                                    {items.contract_name}{" "}
-                                    <Badge>
-                                        {" "}
-                                        {items.nft_data.length} items{" "}
-                                    </Badge>{" "}
-                                </div>
-                            </Heading>
-                        </div>
+    return (
+        <div className="space-y-4">
+            <AddressCard address={address} />
 
-                        <div className="flex flex-wrap gap-4">
-                            {items.nft_data.map((it, j) => {
-                                return (
-                                    <Card
-                                        key={j}
-                                        className="w-[230px] rounded border "
-                                    >
-                                        <CardContent>
-                                            <img
-                                                className={`block h-[10rem] w-full rounded-t ${
-                                                    it.external_data
-                                                        ? "object-cover"
-                                                        : "p-2"
-                                                }`}
-                                                src={
-                                                    it.external_data
-                                                        ? it.external_data
-                                                              .image_512
-                                                        : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
-                                                }
-                                                onError={(e) => {
-                                                    e.currentTarget.classList.remove(
-                                                        "object-cover"
-                                                    );
-                                                    e.currentTarget.classList.add(
-                                                        "p-2"
-                                                    );
-                                                    e.currentTarget.src =
-                                                        "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                }}
-                                            />
-                                        </CardContent>
-                                        <div className="p-4">
-                                            <CardDescription>
-                                                {" "}
-                                                {items.contract_name}
-                                            </CardDescription>
-                                            <CardTitle className="truncate">
-                                                #{it.token_id?.toString()}
-                                            </CardTitle>
-                                            <div className="mt-2">
-                                                <small className="text-secondary-light dark:text-secondary-dark">
-                                                    Est. Value
-                                                </small>
-                                                <p>
-                                                    {" "}
-                                                    {
-                                                        items.pretty_floor_price_quote
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                );
-                            })}
-                        </div>
-                    </div>
-                );
-            });
+            <NFTWalletCollectionDetails
+                address={address}
+                chain_name={chain_name}
+                maybeResult={maybeResult}
+                errorMessage={errorMessage}
+            />
 
-            return (
-                <div className="space-y-4 ">
-                    <div className="flex flex-wrap place-content-between gap-2">
-                        <AddressCard address={address} />
-
-                        <div className="w-full rounded border border-secondary-light p-2 dark:border-secondary-dark md:w-min lg:w-min">
-                            <h2 className="text-base font-semibold text-secondary-light dark:text-secondary-dark">
-                                Total Quote
-                            </h2>
-                            <div className="flex items-end gap-2">
-                                <span className="text-base">
-                                    {maybeResult.match({
-                                        None: () => (
-                                            <Skeleton size={GRK_SIZES.MEDIUM} />
-                                        ),
-                                        Some: (result) => {
-                                            let totalFloorPriceQuote: number = 0;
-                                            result.forEach(
-                                                ({ floor_price_quote }) =>
-                                                    (totalFloorPriceQuote +=
-                                                        floor_price_quote)
-                                            );
-                                            return (
-                                                <span>
-                                                    {prettifyCurrency(
-                                                        totalFloorPriceQuote,
-                                                        2,
-                                                        "USD",
-                                                        true
-                                                    )}
-                                                </span>
-                                            );
-                                        },
-                                    })}
-                                </span>
-                                <div className="flex gap-1 text-sm text-secondary-light dark:text-secondary-dark">
-                                    <span className="">
-                                        {" "}
-                                        (
-                                        {maybeResult.match({
-                                            None: () => (
-                                                <Skeleton
-                                                    size={
-                                                        GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                    }
-                                                />
-                                            ),
-                                            Some: (result) => {
-                                                return (
-                                                    <span>{result.length}</span>
-                                                );
-                                            },
-                                        })}{" "}
-                                    </span>
-                                    NFTs)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-8">{body}</div>
-                </div>
-            );
-        },
-    });
+            <NFTWalletCollectionList
+                address={address}
+                chain_name={chain_name}
+                maybeResult={maybeResult}
+                errorMessage={errorMessage}
+            />
+        </div>
+    );
 };
