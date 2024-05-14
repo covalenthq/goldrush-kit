@@ -114,11 +114,6 @@ export interface XYKOverviewTransactionsListViewProps {
     on_goldrush_receipt_click?: Function;
 }
 
-export interface TransactionReceiptViewProps {
-    chain_name: Chain;
-    tx_hash: string;
-}
-
 export interface AddressDetailsViewProps {
     address: string;
     chain_name: Chain;

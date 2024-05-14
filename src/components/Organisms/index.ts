@@ -2,7 +2,6 @@ export { AddressActivityView } from "./AddressActivityView/AddressActivityView";
 export { NFTCollectionView } from "./NFTCollectionView/NFTCollectionView";
 export { NFTDetailsView } from "./NFTDetailsView/NFTDetailsView";
 export { NFTWalletCollectionView } from "./NFTWalletCollectionView/NFTWalletCollectionView";
-export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";
 export { XYKOverviewTransactionsListView } from "./XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
 export { XYKPoolDetailView } from "./XYKPoolDetailView/XYKPoolDetailView";
 export { XYKPoolListView } from "./XYKPoolListView/XYKPoolListView";

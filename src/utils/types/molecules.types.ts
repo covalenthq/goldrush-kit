@@ -188,14 +188,6 @@ export interface XYKWalletDetailsProps {
     wallet_data?: ExchangeTransaction[];
 }
 
-export interface DecodedTransactionProps {
-    chain_name: Chain;
-    tx_hash: string;
-    setTxMetadata?: React.Dispatch<
-        React.SetStateAction<Option<DecodedTransactionMetadata | null>>
-    >;
-}
-
 export interface TransactionDetailsProps {
     chain_name: Chain;
     tx_hash: string;
@@ -250,3 +242,15 @@ export type DecodedTransactionMetadata = Omit<
     | "lending_details"
     | "safe_details"
 >;
+
+export interface DecodedTransactionType {
+    success: boolean;
+    message?: string;
+    events?: DecodedEventType[];
+    tx_metadata: DecodedTransactionMetadata | null;
+}
+
+export interface TransactionReceiptProps {
+    chain_name: Chain;
+    tx_hash: string;
+}

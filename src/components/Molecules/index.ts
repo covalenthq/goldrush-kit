@@ -5,7 +5,6 @@ export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
 export { BlockDetails } from "./BlockDetails/BlockDetails";
 export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
 export { ChainSelector } from "./ChainSelector/ChainSelector";
-export { DecodedTransaction } from "./DecodedTransaction/DecodedTransaction";
 export { GasCard } from "./GasCard/GasCard";
 export { LatestBlocks } from "./LatestBlocks/LatestBlocks";
 export { LatestPrice } from "./LatestPrice/LatestPrice";
@@ -20,6 +19,7 @@ export { NFTWalletCollectionList } from "./NFTWalletCollectionList/NFTWalletColl
 export { TokenBalancesList } from "./TokenBalancesList/TokenBalancesList";
 export { TokenTransfersList } from "./TokenTransfersList/TokenTransfersList";
 export { TransactionDetails } from "./TransactionDetails/TransactionDetails";
+export { TransactionReceipt } from "./TransactionReceipt/TransactionReceipt";
 export { XYKPoolDetails } from "./XYKPoolDetails/XYKPoolDetails";
 export { XYKPoolTimeseries } from "./XYKPoolTimeseries/XYKPoolTimeseries";
 export { XYKTimeseries } from "./XYKTimeseries/XYKTimeseries";

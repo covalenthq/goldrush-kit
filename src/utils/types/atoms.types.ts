@@ -18,7 +18,7 @@ export interface AddressProps {
 export interface NFTProps {
     collection_name?: string | null;
     token_id?: string | number | bigint | null;
-    src: string;
+    src: string | null;
     attributes?: NftCollectionAttribute[];
     children?: React.ReactNode;
     chain_name?: Chain;
