@@ -25,7 +25,7 @@ export interface NFTProps {
 }
 
 export interface TimestampProps {
-    timestamp: string | Date ;
+    timestamp: string | Date;
     defaultType?: "relative" | "descriptive";
 }
 

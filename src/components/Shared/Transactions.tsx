@@ -14,7 +14,7 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Timestamp } from "../Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const Transactions: React.FC<TransactionsProps> = ({
     on_goldrush_receipt_click,

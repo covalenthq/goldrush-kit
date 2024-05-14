@@ -92,7 +92,11 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 },
                                 {
                                     heading: "SIGNED AT",
-                                    content: <Timestamp timestamp={result.block_signed_at} />,
+                                    content: (
+                                        <Timestamp
+                                            timestamp={result.block_signed_at}
+                                        />
+                                    ),
                                 },
                                 {
                                     heading: "BLOCK HASH",

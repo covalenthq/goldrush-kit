@@ -13,10 +13,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Address, AddressAvatar } from "@/components/Atoms";
-import {
-    truncate,
-    calculateTimeSeriesGroup,
-} from "@/utils/functions";
+import { truncate, calculateTimeSeriesGroup } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";

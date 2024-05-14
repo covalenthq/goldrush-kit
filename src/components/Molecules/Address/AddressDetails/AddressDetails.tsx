@@ -244,7 +244,13 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                             address={latest_transaction.tx_hash}
                                         />
                                     ),
-                                    subtext: <Timestamp timestamp={latest_transaction.block_signed_at} />,
+                                    subtext: (
+                                        <Timestamp
+                                            timestamp={
+                                                latest_transaction.block_signed_at
+                                            }
+                                        />
+                                    ),
                                 },
                                 {
                                     heading: "EARLIEST TRANSACTION",
@@ -255,7 +261,13 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                             }
                                         />
                                     ),
-                                    subtext: <Timestamp timestamp={earliest_transaction.block_signed_at} />,
+                                    subtext: (
+                                        <Timestamp
+                                            timestamp={
+                                                earliest_transaction.block_signed_at
+                                            }
+                                        />
+                                    ),
                                 },
                                 {
                                     heading: "TOTAL COUNT",

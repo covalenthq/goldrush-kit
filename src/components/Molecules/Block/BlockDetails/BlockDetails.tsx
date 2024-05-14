@@ -73,7 +73,11 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                 },
                                 {
                                     heading: "SIGNED AT",
-                                    content: <Timestamp timestamp={block.signed_at} />,
+                                    content: (
+                                        <Timestamp
+                                            timestamp={block.signed_at}
+                                        />
+                                    ),
                                 },
                                 {
                                     heading: "BLOCK HASH",

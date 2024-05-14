@@ -57,11 +57,12 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) =>
+            cell: ({ row }) => (
                 <Timestamp
                     timestamp={row.getValue("block_signed_at")}
                     defaultType="relative"
-                />,
+                />
+            ),
         },
         {
             accessorKey: "act",

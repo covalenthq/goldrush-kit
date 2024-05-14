@@ -57,11 +57,12 @@ export const XYKWalletTransactionsList: React.FC<
                     column={column}
                 />
             ),
-            cell: ({ row }) =>
+            cell: ({ row }) => (
                 <Timestamp
                     timestamp={row.getValue("block_signed_at")}
                     defaultType="relative"
-                />,
+                />
+            ),
         },
         {
             id: "act",
