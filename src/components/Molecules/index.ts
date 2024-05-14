@@ -33,5 +33,5 @@ export { XYKWalletDetails } from "./XYK/Wallet/XYKWalletDetails/XYKWalletDetails
 export { XYKWalletPoolList } from "./XYK/Wallet/XYKWalletPoolList/XYKWalletPoolList";
 export { XYKWalletPositionsList } from "./XYK/Wallet/XYKWalletPositionsList/XYKWalletPositionsList";
 export { XYKWalletTransactionsList } from "./XYK/Wallet/XYKWalletTransactionsList/XYKWalletTransactionsList";
-export { XYKTimeseries } from "./XYKTimeseries/XYKTimeseries";
-export { XYKTransactionsList } from "./XYKTransactionsList/XYKTransactionsList";
+export { XYKTimeseries } from "./XYK/XYKTimeseries/XYKTimeseries";
+export { XYKTransactionsList } from "./XYK/XYKTransactionsList/XYKTransactionsList";

@@ -4,7 +4,7 @@ import { XYKTimeseries as XYKTimeseriesComponent } from "./XYKTimeseries";
 type Story = StoryObj<typeof XYKTimeseriesComponent>;
 
 const meta: Meta<typeof XYKTimeseriesComponent> = {
-    title: "Molecules/XYK Timeseries",
+    title: "Molecules/XYK/XYK Timeseries",
     component: XYKTimeseriesComponent,
 };
 

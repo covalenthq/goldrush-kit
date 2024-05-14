@@ -4,7 +4,7 @@ import { XYKTransactionsList as XYKTransactionsListComponent } from "./XYKTransa
 type Story = StoryObj<typeof XYKTransactionsListComponent>;
 
 const meta: Meta<typeof XYKTransactionsListComponent> = {
-    title: "Molecules/XYK Transactions List",
+    title: "Molecules/XYK/XYK Transactions List",
     component: XYKTransactionsListComponent,
 };
 
