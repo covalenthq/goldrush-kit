@@ -5,7 +5,7 @@ import { GRK_SIZES, defaultErrorNFT } from "@/utils/constants/shared.constants";
 import { CardDetail } from "@/components/Shared";
 import { TokenAvatar } from "../TokenAvatar/TokenAvatar";
 import { useGoldRush } from "@/utils/store";
-import { ChainItem } from "@covalenthq/client-sdk";
+import { type ChainItem } from "@covalenthq/client-sdk";
 import { useMemo } from "react";
 
 export const NFT: React.FC<NFTProps> = ({

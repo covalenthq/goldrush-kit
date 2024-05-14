@@ -5,7 +5,10 @@ import {
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
-import { type TIME_SERIES_GROUP } from "@/utils/constants/shared.constants";
+import {
+    defaultErrorMessage,
+    type TIME_SERIES_GROUP,
+} from "@/utils/constants/shared.constants";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -20,6 +23,7 @@ import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     chain_name,
@@ -30,8 +34,8 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     const { covalentClient } = useGoldRush();
 
     const [pagination, setPagination] = useState<Pagination | null>(null);
-    const [maybeResult, setResult] =
-        useState<Option<BlockTransactionWithContractTransfers[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<BlockTransactionWithContractTransfers[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [_, setLastTimeSeries] = useState<[]>([]);
 
@@ -46,7 +50,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     const updateResult = useCallback(
         async (_pagination: Pagination | null) => {
             try {
-                setResult(None);
+                setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
@@ -59,12 +63,13 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setPagination(data.pagination);
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         },

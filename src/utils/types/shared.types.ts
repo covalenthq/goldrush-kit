@@ -41,7 +41,7 @@ export interface TransactionsProps {
     on_native_explorer_click?: Function;
     on_goldrush_receipt_click?: Function;
     on_transaction_click?: Function;
-    maybeResult: Option<Transaction[]>;
+    maybeResult: Option<Transaction[] | null>;
     errorMessage: string | null;
 }
 

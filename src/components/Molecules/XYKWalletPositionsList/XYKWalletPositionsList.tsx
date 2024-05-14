@@ -14,7 +14,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKWalletPositionsListProps } from "@/utils/types/molecules.types";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKWalletPositionsList: React.FC<XYKWalletPositionsListProps> = ({
     chain_name,
@@ -38,7 +38,6 @@ export const XYKWalletPositionsList: React.FC<XYKWalletPositionsListProps> = ({
                         wallet_address
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));

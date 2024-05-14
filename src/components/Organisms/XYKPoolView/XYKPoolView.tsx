@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 import { XYKPoolDetails, XYKPoolTimeseries } from "@/components/Molecules";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolView: React.FC<XYKPoolViewProps> = ({
     chain_name,

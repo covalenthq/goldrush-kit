@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { type BlockTransactionsProps } from "@/utils/types/molecules.types";
 import { Transactions } from "@/components/Shared";
 import { useGoldRush } from "@/utils/store";
+import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
     chain_name,
@@ -12,12 +14,13 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
 }) => {
     const { covalentClient } = useGoldRush();
 
-    const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<Transaction[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -31,12 +34,13 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (exception) {
-                console.error(exception);
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
+                console.error(error);
             }
         })();
     }, [chain_name, block_height]);

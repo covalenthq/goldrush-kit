@@ -8,7 +8,7 @@ import {
 } from "@/components/Molecules";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityViewProps } from "@/utils/types/organisms.types";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 
 export const AddressActivityView: React.FC<AddressActivityViewProps> = ({

@@ -13,7 +13,7 @@ export const SkeletonNFT: React.FC = () => {
             {Array(2)
                 .fill(null)
                 .map(() => (
-                    <Skeleton size={GRK_SIZES.LARGE} />
+                    <Skeleton key={Math.random()} size={GRK_SIZES.LARGE} />
                 ))}
         </div>
     );

@@ -13,7 +13,7 @@ import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKWalletTransactionsList: React.FC<
     XYKWalletTransactionsListProps
@@ -35,7 +35,6 @@ export const XYKWalletTransactionsList: React.FC<
                         wallet_address.trim()
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));

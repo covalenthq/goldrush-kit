@@ -8,7 +8,7 @@ import {
     allowedCacheChains,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { NFT } from "@/components/Atoms";
 import { SkeletonNFT } from "@/components/Shared";
 

@@ -9,31 +9,31 @@ import { useState } from "react";
 import { CardDetail } from "@/components/Shared";
 import { type XYKWalletDetailsProps } from "@/utils/types/molecules.types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { Card } from "@/components/ui/card";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    type CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 
 export const XYKWalletDetails: React.FC<XYKWalletDetailsProps> = ({
     chain_name,
     dex_name,
     wallet_address,
-    wallet_data,
 }) => {
-    const [maybeResult, setResult] =
-        useState<Option<ExchangeTransaction[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<ExchangeTransaction[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
-            if (wallet_data) {
-                setResult(new Some(wallet_data));
-                return;
-            }
-
-            setResult(None);
-            setErrorMessage(null);
             try {
+                setMaybeResult(None);
+                setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getTransactionsForAccountAddress(
                         chain_name,
@@ -41,15 +41,16 @@ export const XYKWalletDetails: React.FC<XYKWalletDetailsProps> = ({
                         wallet_address
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
-    }, [chain_name, dex_name, wallet_address, wallet_data]);
+    }, [chain_name, dex_name, wallet_address]);
 
     return (
         <Card className="grid w-full grid-cols-1 items-center gap-4 break-all p-2 md:grid-cols-2">
@@ -68,7 +69,7 @@ export const XYKWalletDetails: React.FC<XYKWalletDetailsProps> = ({
                 Some: (result) =>
                     errorMessage ? (
                         <p className="col-span-4">{errorMessage}</p>
-                    ) : (
+                    ) : result ? (
                         (
                             [
                                 {
@@ -94,6 +95,8 @@ export const XYKWalletDetails: React.FC<XYKWalletDetailsProps> = ({
                                 {...props}
                             />
                         ))
+                    ) : (
+                        <></>
                     ),
             })}
         </Card>

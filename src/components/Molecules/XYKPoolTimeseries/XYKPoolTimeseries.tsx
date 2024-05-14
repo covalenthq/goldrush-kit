@@ -19,7 +19,7 @@ import {
     type LiquidityTimeseries,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
     chain_name,

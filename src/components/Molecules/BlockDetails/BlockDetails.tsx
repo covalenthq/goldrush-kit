@@ -11,7 +11,7 @@ import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlockDetailsProps } from "@/utils/types/molecules.types";
 import {
-    CovalentAPIError,
+    type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
 import { type Block } from "@covalenthq/client-sdk";

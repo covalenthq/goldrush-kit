@@ -13,7 +13,7 @@ import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
     chain_name,

@@ -11,7 +11,7 @@ import { useGoldRush } from "@/utils/store";
 import { type AddressActivityDetailsProps } from "@/utils/types/molecules.types";
 import { Card } from "@/components/ui/card";
 import {
-    CovalentAPIError,
+    type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
 

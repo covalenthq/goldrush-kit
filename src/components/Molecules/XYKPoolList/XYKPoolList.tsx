@@ -15,7 +15,7 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolListProps } from "@/utils/types/molecules.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolList: React.FC<XYKPoolListProps> = ({
     chain_name,

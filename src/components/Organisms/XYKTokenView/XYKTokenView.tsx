@@ -4,20 +4,22 @@ import { type XYKTokenViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
 import { XYKTokenDetails, XYKTokenTimeseries } from "@/components/Molecules";
 import { type TokenV2VolumeWithChartData } from "@covalenthq/client-sdk";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 
 export const XYKTokenView: React.FC<XYKTokenViewProps> = ({
     chain_name,
     dex_name,
     token_address,
 }) => {
-    const [maybeResult, setResult] =
-        useState<Option<TokenV2VolumeWithChartData>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<TokenV2VolumeWithChartData | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -26,13 +28,14 @@ export const XYKTokenView: React.FC<XYKTokenViewProps> = ({
                         dex_name,
                         token_address
                     );
-                setResult(new Some(data.items[0]));
+                setMaybeResult(new Some(data.items[0]));
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-            } catch (exception) {
-                console.error(exception);
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
+                console.error(error);
             }
         })();
     }, [chain_name, dex_name, token_address]);

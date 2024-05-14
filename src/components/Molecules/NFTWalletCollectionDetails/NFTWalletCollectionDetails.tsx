@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { CardDetail } from "@/components/Shared";
 import { type NFTWalletCollectionDetailsProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
-import { CardDetailProps, CovalentAPIError } from "@/utils/types/shared.types";
+import {
+    type CardDetailProps,
+    type CovalentAPIError,
+} from "@/utils/types/shared.types";
 import {
     GRK_SIZES,
     defaultErrorMessage,

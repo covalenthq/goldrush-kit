@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { AddressCard } from "@/components/Atoms";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
 import { useGoldRush } from "@/utils/store";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     NFTWalletCollectionDetails,
     NFTWalletCollectionList,

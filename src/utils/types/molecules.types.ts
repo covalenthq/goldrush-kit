@@ -5,7 +5,6 @@ import {
     type Chain,
     type ChainActivityEvent,
     type ChainItem,
-    type ExchangeTransaction,
     type NftTokenContractBalanceItem,
     type PoolWithTimeseries,
     type TokenV2VolumeWithChartData,
@@ -222,7 +221,6 @@ export interface XYKWalletDetailsProps {
     wallet_address: string;
     chain_name: Chain;
     dex_name: string;
-    wallet_data?: ExchangeTransaction[];
 }
 
 export interface XYKWalletTransactionsListProps {

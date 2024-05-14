@@ -4,7 +4,7 @@ import { Address, NFT, TokenAvatar } from "@/components/Atoms";
 import { AddressCard } from "@/components/Atoms";
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { type Option, None, Some } from "@/utils/option";
-import { DecodedTransactionType } from "@/utils/types/molecules.types";
+import { type DecodedTransactionType } from "@/utils/types/molecules.types";
 import { timestampParser } from "@/utils/functions";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";

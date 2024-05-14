@@ -1,6 +1,9 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ExchangeTransaction } from "@covalenthq/client-sdk";
-import { POOL_TRANSACTION_MAP } from "@/utils/constants/shared.constants";
+import {
+    POOL_TRANSACTION_MAP,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { timestampParser } from "@/utils/functions";
@@ -10,18 +13,19 @@ import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolTransactionsList: React.FC<
     XYKPoolTransactionsListProps
 > = ({ chain_name, dex_name, pool_address }) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] =
-        useState<Option<ExchangeTransaction[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<ExchangeTransaction[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -31,11 +35,12 @@ export const XYKPoolTransactionsList: React.FC<
                         pool_address.trim()
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();

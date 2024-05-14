@@ -19,7 +19,7 @@ import {
     type TokenV2VolumeWithChartData,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
     chain_name,

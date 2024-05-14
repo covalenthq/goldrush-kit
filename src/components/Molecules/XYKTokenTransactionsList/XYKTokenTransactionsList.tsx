@@ -14,7 +14,7 @@ import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amoun
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKTokenTransactionsList: React.FC<
     XYKTokenTransactionsListProps

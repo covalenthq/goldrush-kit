@@ -18,7 +18,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenListProps } from "@/utils/types/molecules.types";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKTokenList: React.FC<XYKTokenListProps> = ({
     chain_name,

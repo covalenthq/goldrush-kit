@@ -26,7 +26,7 @@ import {
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { CardDetail } from "@/components/Shared";
 import {
-    CovalentAPIError,
+    type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
 

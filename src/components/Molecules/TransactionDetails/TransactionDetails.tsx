@@ -2,12 +2,18 @@ import { Address } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionDetailsProps } from "@/utils/types/molecules.types";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    type CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
@@ -20,11 +26,12 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [maybeResult, setResult] = useState<Option<Transaction>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<Transaction | null>>(None);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -41,11 +48,12 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items[0]));
-            } catch (error) {
+                setMaybeResult(new Some(data.items[0]));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -65,78 +73,84 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                             ))}
                     </>
                 ),
-                Some: (tx) =>
+                Some: (result) =>
                     errorMessage ? (
                         <p className="col-span-3">{errorMessage}</p>
-                    ) : (
+                    ) : result ? (
                         (
                             [
                                 {
                                     heading: "TX HASH",
-                                    content: <Address address={tx.tx_hash} />,
+                                    content: (
+                                        <Address address={result.tx_hash} />
+                                    ),
                                 },
                                 {
                                     heading: "BLOCK",
-                                    content: tx.block_height.toLocaleString(),
+                                    content:
+                                        result.block_height.toLocaleString(),
                                 },
                                 {
                                     heading: "SIGNED AT",
                                     content: timestampParser(
-                                        tx.block_signed_at,
+                                        result.block_signed_at,
                                         "descriptive"
                                     ),
                                     subtext: `(${timestampParser(
-                                        tx.block_signed_at,
+                                        result.block_signed_at,
                                         "relative"
                                     )})`,
                                 },
                                 {
                                     heading: "BLOCK HASH",
                                     content: (
-                                        <Address address={tx.block_hash} />
+                                        <Address address={result.block_hash} />
                                     ),
                                 },
                                 {
                                     heading: "FROM",
                                     content: (
-                                        <Address address={tx.from_address} />
+                                        <Address
+                                            address={result.from_address}
+                                        />
                                     ),
                                 },
                                 {
                                     heading: "TO",
                                     content: (
-                                        <Address address={tx.to_address} />
+                                        <Address address={result.to_address} />
                                     ),
                                 },
                                 {
                                     heading: "VALUE",
                                     content: `${
-                                        Number(tx.value) /
+                                        Number(result.value) /
                                         Math.pow(
                                             10,
-                                            tx.gas_metadata.contract_decimals
+                                            result.gas_metadata
+                                                .contract_decimals
                                         )
-                                    } ${tx.gas_metadata.contract_ticker_symbol}`,
-                                    subtext: tx.pretty_value_quote,
+                                    } ${result.gas_metadata.contract_ticker_symbol}`,
+                                    subtext: result.pretty_value_quote,
                                 },
                                 {
                                     heading: "TX FEE",
                                     content: `${calculatePrettyBalance(
-                                        BigInt(tx.fees_paid || 0)!,
-                                        tx.gas_metadata.contract_decimals,
+                                        BigInt(result.fees_paid || 0)!,
+                                        result.gas_metadata.contract_decimals,
                                         true,
                                         4
-                                    )} ${tx.gas_metadata.contract_ticker_symbol}`,
-                                    subtext: tx.pretty_gas_quote,
+                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
+                                    subtext: result.pretty_gas_quote,
                                 },
                                 {
                                     heading: "GAS PRICE",
                                     content: `${calculatePrettyBalance(
-                                        BigInt(tx.gas_price),
-                                        tx.gas_metadata.contract_decimals,
+                                        BigInt(result.gas_price),
+                                        result.gas_metadata.contract_decimals,
                                         true,
                                         10
-                                    )} ${tx.gas_metadata.contract_ticker_symbol}`,
+                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
                                 },
                             ] as CardDetailProps[]
                         ).map((props) => (
@@ -145,6 +159,8 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 {...props}
                             />
                         ))
+                    ) : (
+                        <></>
                     ),
             })}
         </Card>

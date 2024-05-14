@@ -12,7 +12,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { Card } from "@/components/ui/card";
 import {
-    CovalentAPIError,
+    type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
 import { Address, TokenAvatar } from "@/components/Atoms";
@@ -56,7 +56,6 @@ export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
                             pool_address
                         );
                     if (error.error) {
-                        setErrorMessage(error.error_message);
                         throw error;
                     }
                     setMaybeResult(new Some(data.items[0]));

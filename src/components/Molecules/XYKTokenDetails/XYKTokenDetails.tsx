@@ -56,7 +56,6 @@ export const XYKTokenDetails: React.FC<XYKTokenDetailsProps> = ({
                             token_address
                         );
                     if (error.error) {
-                        setErrorMessage(error.error_message);
                         throw error;
                     }
                     setMaybeResult(new Some(data.items[0]));

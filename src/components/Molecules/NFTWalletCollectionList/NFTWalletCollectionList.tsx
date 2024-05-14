@@ -5,7 +5,7 @@ import { CardDetail, Heading, SkeletonNFT } from "@/components/Shared";
 import { Address, NFT } from "@/components/Atoms";
 import { type NFTWalletCollectionListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
-import { CovalentAPIError } from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 
 export const NFTWalletCollectionList: React.FC<
@@ -69,7 +69,7 @@ export const NFTWalletCollectionList: React.FC<
                         {Array(4)
                             .fill(null)
                             .map(() => (
-                                <SkeletonNFT />
+                                <SkeletonNFT key={Math.random()} />
                             ))}
                     </>
                 ),

@@ -3,7 +3,7 @@ import {
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { NftTokenContract, type Pagination } from "@covalenthq/client-sdk";
+import { type NftTokenContract, type Pagination } from "@covalenthq/client-sdk";
 import { useCallback, useEffect, useState } from "react";
 import { useGoldRush } from "@/utils/store";
 import { type NFTCollectionTokensListProps } from "@/utils/types/molecules.types";
@@ -67,7 +67,7 @@ export const NFTCollectionTokensList: React.FC<
                         {Array(page_size)
                             .fill(null)
                             .map(() => (
-                                <SkeletonNFT />
+                                <SkeletonNFT key={Math.random()} />
                             ))}
                     </>
                 ),

@@ -3,12 +3,18 @@ import { CardDetail } from "@/components/Shared";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestBlocksProps } from "@/utils/types/molecules.types";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    type CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 import { type Block } from "@covalenthq/client-sdk";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
@@ -20,11 +26,12 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [maybeResult, setResult] = useState<Option<Block[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<Block[] | null>>(None);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -37,11 +44,12 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -58,7 +66,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
         Some: (blocks) =>
             errorMessage ? (
                 <p className="col-span-5">{errorMessage}</p>
-            ) : (
+            ) : blocks ? (
                 blocks.map((block) => (
                     <Card
                         key={block.height}
@@ -120,6 +128,8 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                         )}
                     </Card>
                 ))
+            ) : (
+                <></>
             ),
     });
 };
