@@ -212,6 +212,12 @@ export interface XYKTokenTimeseriesProps {
     errorMessage?: string | null;
 }
 
+export interface XYKTokenTransactionsListProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+}
+
 export interface XYKWalletDetailsProps {
     wallet_address: string;
     chain_name: Chain;

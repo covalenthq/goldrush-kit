@@ -38,15 +38,6 @@ export interface TokenTransferMeta {
     logo_url: string;
 }
 
-export interface XYKTokenTransactionsListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    token_address: string;
-    on_transaction_click?: Function;
-    on_native_explorer_click?: Function;
-    on_goldrush_receipt_click?: Function;
-}
-
 export interface XYKWalletTransactionsListViewProps {
     chain_name: Chain;
     dex_name: string;

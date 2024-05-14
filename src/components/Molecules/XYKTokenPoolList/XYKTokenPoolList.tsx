@@ -28,9 +28,9 @@ export const XYKTokenPoolList: React.FC<XYKTokenPoolListProps> = ({
 
     useEffect(() => {
         (async () => {
-            setMaybeResult(None);
-            setErrorMessage(null);
             try {
+                setMaybeResult(None);
+                setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getPoolsForTokenAddress(
                         chain_name,
