@@ -4,7 +4,7 @@ import { NFTCollectionTokenListView } from "./NFTCollectionTokenListView";
 type Story = StoryObj<typeof NFTCollectionTokenListView>;
 
 const meta: Meta<typeof NFTCollectionTokenListView> = {
-    title: "Organisms/NFTs",
+    title: "Organisms",
     component: NFTCollectionTokenListView,
 };
 

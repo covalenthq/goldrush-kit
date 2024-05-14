@@ -4,7 +4,7 @@ import { XYKPoolListView } from "./XYKPoolListView";
 type Story = StoryObj<typeof XYKPoolListView>;
 
 const meta: Meta<typeof XYKPoolListView> = {
-    title: "Organisms/XYK/Pool",
+    title: "Organisms",
     component: XYKPoolListView,
 };
 

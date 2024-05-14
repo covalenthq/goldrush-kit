@@ -4,7 +4,7 @@ import { XYKOverviewTransactionsListView } from "./XYKOverviewTransactionsListVi
 type Story = StoryObj<typeof XYKOverviewTransactionsListView>;
 
 const meta: Meta<typeof XYKOverviewTransactionsListView> = {
-    title: "Organisms/XYK",
+    title: "Organisms",
     component: XYKOverviewTransactionsListView,
 };
 

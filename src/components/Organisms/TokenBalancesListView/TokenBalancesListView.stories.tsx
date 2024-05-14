@@ -8,7 +8,7 @@ import { type TokenBalancesListViewProps } from "@/utils/types/organisms.types";
 type Story = StoryObj<typeof TokenBalancesListView>;
 
 const meta: Meta<typeof TokenBalancesListView> = {
-    title: "Organisms/Token Balances",
+    title: "Organisms",
     component: TokenBalancesListView,
 };
 

@@ -4,7 +4,7 @@ import { XYKWalletPositionsListView } from "./XYKWalletPositionsListView";
 type Story = StoryObj<typeof XYKWalletPositionsListView>;
 
 const meta: Meta<typeof XYKWalletPositionsListView> = {
-    title: "Organisms/XYK/Wallet",
+    title: "Organisms",
     component: XYKWalletPositionsListView,
 };
 

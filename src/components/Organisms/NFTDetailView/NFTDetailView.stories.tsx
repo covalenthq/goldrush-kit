@@ -4,7 +4,7 @@ import { NFTDetailView } from "./NFTDetailView";
 type Story = StoryObj<typeof NFTDetailView>;
 
 const meta: Meta<typeof NFTDetailView> = {
-    title: "Organisms/NFTs",
+    title: "Organisms",
     component: NFTDetailView,
 };
 

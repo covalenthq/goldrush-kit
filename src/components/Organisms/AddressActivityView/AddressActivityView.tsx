@@ -1,8 +1,8 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
+import { AccountCard } from "@/components/Atoms";
 import {
-    AccountCard,
     AddressActivityDetails,
     AddressActivityList,
 } from "@/components/Molecules";

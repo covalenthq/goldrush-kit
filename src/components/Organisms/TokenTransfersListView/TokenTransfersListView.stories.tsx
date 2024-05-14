@@ -4,7 +4,7 @@ import { TokenTransfersListView } from "./TokenTransfersListView";
 type Story = StoryObj<typeof TokenTransfersListView>;
 
 const meta: Meta<typeof TokenTransfersListView> = {
-    title: "Organisms/Token Transfers",
+    title: "Organisms",
     component: TokenTransfersListView,
 };
 

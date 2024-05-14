@@ -4,7 +4,7 @@ import { NFTWalletTokenListView } from "./NFTWalletTokenListView";
 type Story = StoryObj<typeof NFTWalletTokenListView>;
 
 const meta: Meta<typeof NFTWalletTokenListView> = {
-    title: "Organisms/NFTs",
+    title: "Organisms",
     component: NFTWalletTokenListView,
 };
 
