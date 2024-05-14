@@ -23,7 +23,7 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     chain_name,

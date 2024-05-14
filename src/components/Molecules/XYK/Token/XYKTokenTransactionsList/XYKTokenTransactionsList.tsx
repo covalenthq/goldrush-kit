@@ -14,7 +14,7 @@ import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const XYKTokenTransactionsList: React.FC<
     XYKTokenTransactionsListProps

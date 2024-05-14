@@ -1,5 +1,5 @@
 import { Address } from "@/components/Atoms";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

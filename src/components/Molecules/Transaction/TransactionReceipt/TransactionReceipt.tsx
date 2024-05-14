@@ -8,14 +8,13 @@ import { type DecodedTransactionType } from "@/utils/types/molecules.types";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useGoldRush } from "@/utils/store";
-import { ClockIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,

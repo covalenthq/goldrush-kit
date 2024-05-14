@@ -12,7 +12,7 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const AddressActivityList: React.FC<AddressActivityListProps> = ({
     address,

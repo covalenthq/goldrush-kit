@@ -28,7 +28,7 @@ import {
     type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
+import { Timestamp } from "@/components/Atoms";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
