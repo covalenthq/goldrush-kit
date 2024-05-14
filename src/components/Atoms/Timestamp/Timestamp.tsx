@@ -12,7 +12,7 @@ export const Timestamp: React.FC<TimestampProps> = ({
     );
 
     return (
-        <span className="inline-flex items-center gap-x-1 text-foreground-light dark:text-foreground-light">
+        <span className="inline-flex items-center gap-x-1 text-foreground-light dark:text-foreground-dark">
             {timestampParser(
                 timestamp,
                 relativeTime ? "relative" : "descriptive"
