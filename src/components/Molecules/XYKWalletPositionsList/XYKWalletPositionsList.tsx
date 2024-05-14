@@ -5,38 +5,32 @@ import {
     calculatePrettyBalance,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { type XYKWalletPositionsListViewProps } from "@/utils/types/organisms.types";
+import { type XYKWalletPositionsListProps } from "@/utils/types/molecules.types";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
-export const XYKWalletPositionsListView: React.FC<
-    XYKWalletPositionsListViewProps
-> = ({ chain_name, dex_name, on_pool_click, wallet_address }) => {
+export const XYKWalletPositionsList: React.FC<XYKWalletPositionsListProps> = ({
+    chain_name,
+    dex_name,
+    wallet_address,
+}) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] =
-        useState<Option<UniswapLikeBalanceItem[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<UniswapLikeBalanceItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
-            setErrorMessage(null);
             try {
+                setMaybeResult(None);
+                setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getAddressExchangeBalances(
                         chain_name,
@@ -47,8 +41,10 @@ export const XYKWalletPositionsListView: React.FC<
                     setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -85,27 +81,7 @@ export const XYKWalletPositionsListView: React.FC<
                             </div>
                         </div>
 
-                        <div className="flex flex-col">
-                            {on_pool_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.pool_token
-                                                    .contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {pool ? pool : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {pool ? pool : ""}
-                                </label>
-                            )}
-                        </div>
+                        <div className="flex flex-col">{pool}</div>
                     </div>
                 );
             },
@@ -184,57 +160,19 @@ export const XYKWalletPositionsListView: React.FC<
                 );
             },
         },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.pool_token
-                                                    .contract_address
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <IconWrapper
-                                        icon_class_name="swap_horiz"
-                                        class_name="mr-2"
-                                    />{" "}
-                                    View Pool
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                );
-            },
-        },
     ];
 
     return (
-        <div className="space-y-4">
-            <TableList<UniswapLikeBalanceItem>
-                columns={columns}
-                errorMessage={errorMessage}
-                maybeData={maybeResult}
-                sorting_state={[
-                    {
-                        id: "total_liquidity_quote",
-                        desc: true,
-                    },
-                ]}
-            />
-        </div>
+        <TableList<UniswapLikeBalanceItem>
+            columns={columns}
+            errorMessage={errorMessage}
+            maybeData={maybeResult}
+            sorting_state={[
+                {
+                    id: "total_liquidity_quote",
+                    desc: true,
+                },
+            ]}
+        />
     );
 };

@@ -4,6 +4,3 @@ export { NFTDetailsView } from "./NFTDetailsView/NFTDetailsView";
 export { NFTWalletCollectionView } from "./NFTWalletCollectionView/NFTWalletCollectionView";
 export { XYKPoolView } from "./XYKPoolView/XYKPoolView";
 export { XYKTokenView } from "./XYKTokenView/XYKTokenView";
-export { XYKWalletPoolListView } from "./XYKWalletPoolListView/XYKWalletPoolListView";
-export { XYKWalletPositionsListView } from "./XYKWalletPositionsListView/XYKWalletPositionsListView";
-export { XYKWalletTransactionsListView } from "./XYKWalletTransactionsListView/XYKWalletTransactionsListView";

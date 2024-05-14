@@ -1,11 +1,11 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { XYKWalletPoolListView } from "./XYKWalletPoolListView";
+import { XYKWalletPoolList as XYKWalletPoolListComponent } from "./XYKWalletPoolList";
 
-type Story = StoryObj<typeof XYKWalletPoolListView>;
+type Story = StoryObj<typeof XYKWalletPoolListComponent>;
 
-const meta: Meta<typeof XYKWalletPoolListView> = {
-    title: "Organisms",
-    component: XYKWalletPoolListView,
+const meta: Meta<typeof XYKWalletPoolListComponent> = {
+    title: "Molecules/XYK Wallet Pool List",
+    component: XYKWalletPoolListComponent,
 };
 
 export default meta;

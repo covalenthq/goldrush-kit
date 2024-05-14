@@ -32,35 +32,6 @@ export interface AddressActivityViewProps {
     address: string;
 }
 
-export interface TokenTransferMeta {
-    chain_name: string;
-    contract_ticker_symbol: string;
-    logo_url: string;
-}
-
-export interface XYKWalletTransactionsListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    on_transaction_click?: Function;
-    on_native_explorer_click?: Function;
-    on_goldrush_receipt_click?: Function;
-}
-
-export interface XYKWalletPoolListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    on_pool_click?: Function;
-}
-
-export interface XYKWalletPositionsListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    on_pool_click?: Function;
-}
-
 export interface XYKTokenViewProps {
     chain_name: Chain;
     dex_name: string;

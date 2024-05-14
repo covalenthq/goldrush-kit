@@ -225,6 +225,24 @@ export interface XYKWalletDetailsProps {
     wallet_data?: ExchangeTransaction[];
 }
 
+export interface XYKWalletTransactionsListProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
+export interface XYKWalletPoolListProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
+export interface XYKWalletPositionsListProps {
+    chain_name: Chain;
+    dex_name: string;
+    wallet_address: string;
+}
+
 export interface TransactionDetailsProps {
     chain_name: Chain;
     tx_hash: string;
