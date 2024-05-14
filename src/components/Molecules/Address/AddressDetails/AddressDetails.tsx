@@ -5,7 +5,6 @@ import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressDetailsProps } from "@/utils/types/molecules.types";
@@ -29,6 +28,7 @@ import {
     type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
+import { Timestamp } from "@/components/Atoms";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
@@ -244,9 +244,12 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                             address={latest_transaction.tx_hash}
                                         />
                                     ),
-                                    subtext: timestampParser(
-                                        latest_transaction.block_signed_at,
-                                        "relative"
+                                    subtext: (
+                                        <Timestamp
+                                            timestamp={
+                                                latest_transaction.block_signed_at
+                                            }
+                                        />
                                     ),
                                 },
                                 {
@@ -258,9 +261,12 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                             }
                                         />
                                     ),
-                                    subtext: timestampParser(
-                                        earliest_transaction.block_signed_at,
-                                        "relative"
+                                    subtext: (
+                                        <Timestamp
+                                            timestamp={
+                                                earliest_transaction.block_signed_at
+                                            }
+                                        />
                                     ),
                                 },
                                 {

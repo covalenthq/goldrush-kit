@@ -5,17 +5,16 @@ import { AddressCard } from "@/components/Atoms";
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { type Option, None, Some } from "@/utils/option";
 import { type DecodedTransactionType } from "@/utils/types/molecules.types";
-import { timestampParser } from "@/utils/functions";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useGoldRush } from "@/utils/store";
-import { ClockIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Timestamp } from "@/components/Atoms";
 
 export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,
@@ -156,23 +155,12 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
 
                                     <CardDescription>
                                         Transaction Time:{" "}
-                                        <span className="inline-flex items-center gap-x-1 text-black dark:text-slate-50">
-                                            {timestampParser(
-                                                result.tx_metadata.block_signed_at.toString(),
-                                                relativeTime
-                                                    ? "relative"
-                                                    : "descriptive"
-                                            )}
-                                            <button
-                                                onClick={() =>
-                                                    setRelativeTime(
-                                                        !relativeTime
-                                                    )
-                                                }
-                                            >
-                                                <ClockIcon />
-                                            </button>
-                                        </span>
+                                        <Timestamp
+                                            timestamp={
+                                                result.tx_metadata
+                                                    .block_signed_at
+                                            }
+                                        />
                                     </CardDescription>
                                 </div>
 
@@ -439,6 +427,13 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                                         "address" ? (
                                                                             <Address
                                                                                 address={
+                                                                                    value
+                                                                                }
+                                                                            />
+                                                                        ) : type ===
+                                                                          "timestamp" ? (
+                                                                            <Timestamp
+                                                                                timestamp={
                                                                                     value
                                                                                 }
                                                                             />

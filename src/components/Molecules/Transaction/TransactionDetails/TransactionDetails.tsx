@@ -1,4 +1,5 @@
 import { Address } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -6,7 +7,6 @@ import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionDetailsProps } from "@/utils/types/molecules.types";
@@ -92,14 +92,11 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 },
                                 {
                                     heading: "SIGNED AT",
-                                    content: timestampParser(
-                                        result.block_signed_at,
-                                        "descriptive"
+                                    content: (
+                                        <Timestamp
+                                            timestamp={result.block_signed_at}
+                                        />
                                     ),
-                                    subtext: `(${timestampParser(
-                                        result.block_signed_at,
-                                        "relative"
-                                    )})`,
                                 },
                                 {
                                     heading: "BLOCK HASH",

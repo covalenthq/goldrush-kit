@@ -1,4 +1,5 @@
 import { Address } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -80,9 +81,11 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                                 },
                                 {
                                     heading: "SIGNED AT",
-                                    content: timestampParser(
-                                        block.signed_at,
-                                        "relative"
+                                    content: (
+                                        <Timestamp
+                                            timestamp={block.signed_at}
+                                            defaultType="relative"
+                                        />
                                     ),
                                 },
                                 {

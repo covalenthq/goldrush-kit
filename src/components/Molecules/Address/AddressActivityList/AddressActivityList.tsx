@@ -2,7 +2,6 @@ import { type Option, None, Some } from "@/utils/option";
 import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { timestampParser } from "@/utils/functions";
 import { TokenAvatar } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
@@ -13,6 +12,7 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Timestamp } from "@/components/Atoms";
 
 export const AddressActivityList: React.FC<AddressActivityListProps> = ({
     address,
@@ -98,8 +98,12 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) =>
-                timestampParser(row.getValue("last_seen_at"), "relative"),
+            cell: ({ row }) => (
+                <Timestamp
+                    timestamp={row.getValue("last_seen_at")}
+                    defaultType="relative"
+                />
+            ),
         },
         {
             accessorKey: "is_testnet",

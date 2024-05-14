@@ -24,6 +24,11 @@ export interface NFTProps {
     chain_name?: Chain;
 }
 
+export interface TimestampProps {
+    timestamp: string | Date;
+    defaultType?: "relative" | "descriptive";
+}
+
 export interface AddressAvatarProps {
     address: string;
     type: "fingerprint" | "effigy" | "wallet" | "nft";
