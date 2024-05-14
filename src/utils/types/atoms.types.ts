@@ -1,3 +1,4 @@
+import { type NftCollectionAttribute } from "@covalenthq/client-sdk";
 import { type GRK_SIZES } from "../constants/shared.constants";
 
 export interface AddressCardProps {
@@ -9,6 +10,13 @@ export interface AddressCardProps {
 export interface AddressProps {
     address: string;
     show_copy_icon?: boolean;
+}
+
+export interface NFTProps {
+    collection_name?: string | null;
+    token_id?: string | number | bigint | null;
+    src: string;
+    attributes?: NftCollectionAttribute[];
 }
 
 export interface AddressAvatarProps {

@@ -76,6 +76,12 @@ export interface NFTCollectionTokensListProps {
     page_size?: number;
 }
 
+export interface NFTDetailsProps {
+    chain_name: Chain;
+    collection_address: string;
+    token_id: string;
+}
+
 export interface NFTFloorPriceProps {
     chain_name: Chain;
     collection_address: string;

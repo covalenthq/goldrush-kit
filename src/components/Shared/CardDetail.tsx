@@ -7,7 +7,7 @@ export const CardDetail: React.FC<CardDetailProps> = ({
     subtext = null,
     wrapperClassName = "",
 }) => {
-    return (
+    return content || heading || subtext ? (
         <div className={wrapperClassName}>
             <CardDescription>{heading}</CardDescription>
 
@@ -16,5 +16,7 @@ export const CardDetail: React.FC<CardDetailProps> = ({
                 {subtext ? <CardDescription>{subtext}</CardDescription> : <></>}
             </CardContent>
         </div>
+    ) : (
+        <></>
     );
 };

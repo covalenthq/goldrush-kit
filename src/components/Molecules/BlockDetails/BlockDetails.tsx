@@ -2,12 +2,18 @@ import { Address } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlockDetailsProps } from "@/utils/types/molecules.types";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 import { type Block } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
@@ -17,11 +23,11 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [maybeResult, setResult] = useState<Option<Block>>(None);
+    const [maybeResult, setMaybeResult] = useState<Option<Block | null>>(None);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -29,12 +35,13 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                         chain_name,
                         height.toString()
                     );
-                // if (error.error) {
-                setErrorMessage("error.error_message");
-                throw "error";
-                // }
-                setResult(new Some(data.items[0]));
-            } catch (error) {
+                if (error.error) {
+                    throw error;
+                }
+                setMaybeResult(new Some(data.items[0]));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -57,7 +64,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                 Some: (block) =>
                     errorMessage ? (
                         <p className="col-span-3">{errorMessage}</p>
-                    ) : (
+                    ) : block ? (
                         (
                             [
                                 {
@@ -116,6 +123,8 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                 {...props}
                             />
                         ))
+                    ) : (
+                        <></>
                     ),
             })}
         </Card>
