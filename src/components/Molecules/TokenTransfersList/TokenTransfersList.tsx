@@ -18,10 +18,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type TokenTransfersListViewProps } from "@/utils/types/organisms.types";
+import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 
-export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
+export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     chain_name,
     address,
     contract_address,

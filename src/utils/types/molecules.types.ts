@@ -141,6 +141,13 @@ export interface TokenBalancesListProps {
     mask_balances?: boolean;
 }
 
+export interface TokenTransfersListProps {
+    chain_name: Chain;
+    address: string;
+    contract_address: string;
+    page_size?: number;
+}
+
 export interface CrossChainBalanceItem extends BalanceItem {
     chain_name: Chain;
 }

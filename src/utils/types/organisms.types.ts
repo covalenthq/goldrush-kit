@@ -38,13 +38,6 @@ export interface TokenTransferMeta {
     logo_url: string;
 }
 
-export interface TokenTransfersListViewProps {
-    chain_name: Chain;
-    address: string;
-    contract_address: string;
-    page_size?: number;
-}
-
 export interface XYKPoolTransactionsListViewProps {
     chain_name: Chain;
     dex_name: string;
