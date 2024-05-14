@@ -43,30 +43,33 @@ export const TokenTransfersListView: React.FC<TokenTransfersListViewProps> = ({
         updateResult(null);
     }, [address, contract_address, chain_name, page_size]);
 
-    const updateResult = useCallback(async (_pagination: Pagination | null) => {
-        try {
-            setResult(None);
-            setErrorMessage(null);
-            const { data, ...error } =
-                await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
-                    chain_name,
-                    address.trim(),
-                    {
-                        contractAddress: contract_address.trim(),
-                        pageNumber: _pagination?.page_number ?? 0,
-                        pageSize: _pagination?.page_size ?? page_size,
-                    }
-                );
-            if (error.error) {
-                setErrorMessage(error.error_message);
-                throw error;
+    const updateResult = useCallback(
+        async (_pagination: Pagination | null) => {
+            try {
+                setResult(None);
+                setErrorMessage(null);
+                const { data, ...error } =
+                    await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
+                        chain_name,
+                        address.trim(),
+                        {
+                            contractAddress: contract_address.trim(),
+                            pageNumber: _pagination?.page_number ?? 0,
+                            pageSize: _pagination?.page_size ?? page_size,
+                        }
+                    );
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
+                }
+                setPagination(data.pagination);
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
             }
-            setPagination(data.pagination);
-            setResult(new Some(data.items));
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
+        },
+        [chain_name, address]
+    );
 
     const handleOnChangePagination = (updatedPagination: Pagination) => {
         setPagination(updatedPagination);

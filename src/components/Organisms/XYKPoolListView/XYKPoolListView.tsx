@@ -40,28 +40,32 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
         updateResult(null);
     }, [chain_name, dex_name, page_size]);
 
-    const updateResult = useCallback(async (_pagination: Pagination | null) => {
-        try {
-            setResult(None);
-            setErrorMessage(null);
-            const { data, ...error } = await covalentClient.XykService.getPools(
-                chain_name,
-                dex_name,
-                {
-                    pageNumber: _pagination?.page_number ?? 0,
-                    pageSize: _pagination?.page_size ?? page_size,
+    const updateResult = useCallback(
+        async (_pagination: Pagination | null) => {
+            try {
+                setResult(None);
+                setErrorMessage(null);
+                const { data, ...error } =
+                    await covalentClient.XykService.getPools(
+                        chain_name,
+                        dex_name,
+                        {
+                            pageNumber: _pagination?.page_number ?? 0,
+                            pageSize: _pagination?.page_size ?? page_size,
+                        }
+                    );
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
                 }
-            );
-            if (error.error) {
-                setErrorMessage(error.error_message);
-                throw error;
+                setPagination(data.pagination);
+                setResult(new Some(data.items));
+            } catch (error) {
+                console.error(error);
             }
-            setPagination(data.pagination);
-            setResult(new Some(data.items));
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
+        },
+        [chain_name, dex_name]
+    );
 
     const handleOnChangePagination = (updatedPagination: Pagination) => {
         setPagination(updatedPagination);
