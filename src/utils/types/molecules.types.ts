@@ -191,6 +191,12 @@ export interface XYKTokenListProps {
     page_size?: number;
 }
 
+export interface XYKTokenPoolListProps {
+    chain_name: Chain;
+    dex_name: string;
+    token_address: string;
+}
+
 export interface XYKTimeseriesProps {
     chain_name: Chain;
     dex_name: string;

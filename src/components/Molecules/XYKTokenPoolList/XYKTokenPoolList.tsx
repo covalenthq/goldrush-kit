@@ -4,40 +4,31 @@ import {
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { type ColumnDef } from "@tanstack/react-table";
-
 import { TokenAvatar } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { type XYKTokenPoolListViewProps } from "@/utils/types/organisms.types";
+import { type XYKTokenPoolListProps } from "@/utils/types/molecules.types";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
-export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
+export const XYKTokenPoolList: React.FC<XYKTokenPoolListProps> = ({
     chain_name,
     dex_name,
-    on_pool_click,
+
     token_address,
 }) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] = useState<Option<PoolsDexDataItem[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<PoolsDexDataItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -50,26 +41,16 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
                         }
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
     }, [chain_name, dex_name]);
-
-    useEffect(() => {
-        setWindowWidth(window.innerWidth);
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     const columns: ColumnDef<PoolsDexDataItem>[] = [
         {
@@ -102,26 +83,7 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
                             </div>
                         </div>
 
-                        <div className="flex flex-col">
-                            {on_pool_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {pool ? pool : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {pool ? pool : ""}
-                                </label>
-                            )}
-                        </div>
+                        <div className="flex flex-col">{pool}</div>
                     </div>
                 );
             },
@@ -208,37 +170,6 @@ export const XYKTokenPoolListView: React.FC<XYKTokenPoolListViewProps> = ({
             cell: ({ row }) => (
                 <div className="text-right">
                     {prettifyCurrency(row.original.fee_24h_quote)}
-                </div>
-            ),
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => (
-                <div className="text-right">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="ml-auto  ">
-                                <span className="sr-only">Open menu</span>
-                                <IconWrapper icon_class_name="expand_more" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    if (on_pool_click) {
-                                        on_pool_click(row.original.exchange);
-                                    }
-                                }}
-                            >
-                                <IconWrapper
-                                    icon_class_name="swap_horiz"
-                                    class_name="mr-2"
-                                />{" "}
-                                View Pool
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             ),
         },

@@ -26,6 +26,7 @@ export { XYKPoolTimeseries } from "./XYKPoolTimeseries/XYKPoolTimeseries";
 export { XYKPoolTransactionsList } from "./XYKPoolTransactionsList/XYKPoolTransactionsList";
 export { XYKTimeseries } from "./XYKTimeseries/XYKTimeseries";
 export { XYKTokenDetails } from "./XYKTokenDetails/XYKTokenDetails";
+export { XYKTokenPoolList } from "./XYKTokenPoolList/XYKTokenPoolList";
 export { XYKTokenTimeseries } from "./XYKTokenTimeseries/XYKTokenTimeseries";
 export { XYKTransactionsList } from "./XYKTransactionsList/XYKTransactionsList";
 export { XYKWalletDetails } from "./XYKWalletDetails/XYKWalletDetails";
