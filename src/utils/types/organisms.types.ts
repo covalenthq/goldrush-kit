@@ -22,10 +22,9 @@ export interface NFTWalletTokenListViewProps {
     address: string;
 }
 
-export interface NFTCollectionTokenListViewProps {
+export interface NFTCollectionViewProps {
     chain_name: Chain;
     collection_address: string;
-    on_nft_click: Function;
     page_size?: number;
 }
 

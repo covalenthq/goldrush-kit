@@ -65,9 +65,15 @@ export interface ChainSelectorProps {
     onChangeChain?: (chain: ChainItem) => unknown;
 }
 
-export interface CollectionCardProps {
+export interface NFTCollectionDetailsProps {
     chain_name: Chain;
     collection_address: string;
+}
+
+export interface NFTCollectionTokensListProps {
+    chain_name: Chain;
+    collection_address: string;
+    page_size?: number;
 }
 
 export interface NFTFloorPriceProps {

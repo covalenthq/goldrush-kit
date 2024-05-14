@@ -1,25 +1,19 @@
-export { AddressActivityList as AddressActivityListView } from "./AddressActivityListView/AddressActivityList";
-export { AddressTransactions } from "./AddressTransactions/AddressTransactions";
-export { BlockTransactions } from "./BlockTransactions/BlockTransactions";
-export { NFTCollectionTokenListView } from "./NFTs/NFTCollectionTokenListView/NFTCollectionTokenListView";
-export { NFTDetailView } from "./NFTs/NFTDetailView/NFTDetailView";
-export { NFTWalletCollectionView } from "./NFTs/NFTWalletCollectionView/NFTWalletCollectionView";
-export { NFTWalletTokenListView } from "./NFTs/NFTWalletTokenListView/NFTWalletTokenListView";
+export { AddressActivityView } from "./AddressActivityView/AddressActivityView";
+export { NFTCollectionView } from "./NFTCollectionView/NFTCollectionView";
+export { NFTDetailView } from "./NFTDetailView/NFTDetailView";
+export { NFTWalletCollectionView } from "./NFTWalletCollectionView/NFTWalletCollectionView";
+export { NFTWalletTokenListView } from "./NFTWalletTokenListView/NFTWalletTokenListView";
 export { TokenBalancesListView } from "./TokenBalancesListView/TokenBalancesListView";
 export { TokenTransfersListView } from "./TokenTransfersListView/TokenTransfersListView";
 export { TransactionReceiptView } from "./TransactionReceiptView/TransactionReceiptView";
-/**
- * @deprecated This component is deprecated. Please use `AddressTransactions` instead.
- */
-export { AddressTransactions as TransactionsList } from "./AddressTransactions/AddressTransactions";
-export { XYKOverviewTransactionsListView } from "./XYK/XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
-export { XYKPoolDetailView } from "./XYK/XYKPoolDetailView/XYKPoolDetailView";
-export { XYKPoolListView } from "./XYK/XYKPoolListView/XYKPoolListView";
-export { XYKPoolTransactionsListView } from "./XYK/XYKPoolTransactionsListView/XYKPoolTransactionsListView";
-export { XYKTokenDetailView } from "./XYK/XYKTokenDetailView/XYKTokenDetailView";
-export { XYKTokenListView } from "./XYK/XYKTokenListView/XYKTokenListView";
-export { XYKTokenPoolListView } from "./XYK/XYKTokenPoolListView/XYKTokenPoolListView";
-export { XYKTokenTransactionsListView } from "./XYK/XYKTokenTransactionsListView/XYKTokenTransactionsListView";
-export { XYKWalletPoolListView } from "./XYK/XYKWalletPoolListView/XYKWalletPoolListView";
-export { XYKWalletPositionsListView } from "./XYK/XYKWalletPositionsListView/XYKWalletPositionsListView";
-export { XYKWalletTransactionsListView } from "./XYK/XYKWalletTransactionsListView/XYKWalletTransactionsListView";
+export { XYKOverviewTransactionsListView } from "./XYKOverviewTransactionsListView/XYKOverviewTransactionsListView";
+export { XYKPoolDetailView } from "./XYKPoolDetailView/XYKPoolDetailView";
+export { XYKPoolListView } from "./XYKPoolListView/XYKPoolListView";
+export { XYKPoolTransactionsListView } from "./XYKPoolTransactionsListView/XYKPoolTransactionsListView";
+export { XYKTokenDetailView } from "./XYKTokenDetailView/XYKTokenDetailView";
+export { XYKTokenListView } from "./XYKTokenListView/XYKTokenListView";
+export { XYKTokenPoolListView } from "./XYKTokenPoolListView/XYKTokenPoolListView";
+export { XYKTokenTransactionsListView } from "./XYKTokenTransactionsListView/XYKTokenTransactionsListView";
+export { XYKWalletPoolListView } from "./XYKWalletPoolListView/XYKWalletPoolListView";
+export { XYKWalletPositionsListView } from "./XYKWalletPositionsListView/XYKWalletPositionsListView";
+export { XYKWalletTransactionsListView } from "./XYKWalletTransactionsListView/XYKWalletTransactionsListView";

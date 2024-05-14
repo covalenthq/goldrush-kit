@@ -3,6 +3,9 @@ import { type GoldRushThemeMode } from "../types/store.types";
 
 export const defaultErrorMessage: string = "Something went wrong!";
 
+export const defaultErrorNFT: string =
+    "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+
 export enum GRK_SIZES {
     LARGE = "lg",
     MEDIUM = "md",
