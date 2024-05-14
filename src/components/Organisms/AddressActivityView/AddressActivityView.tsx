@@ -1,7 +1,7 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ChainActivityEvent } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import { AccountCard } from "@/components/Atoms";
+import { AddressCard } from "@/components/Atoms";
 import {
     AddressActivityDetails,
     AddressActivityList,
@@ -45,7 +45,7 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
 
     return (
         <div className="space-y-4">
-            <AccountCard address={address} />
+            <AddressCard address={address} />
 
             <AddressActivityDetails
                 address={address}

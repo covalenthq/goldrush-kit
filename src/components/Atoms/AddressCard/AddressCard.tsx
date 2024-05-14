@@ -11,9 +11,9 @@ import { useToast } from "../../../utils/hooks";
 import { AddressAvatar } from "../../Atoms";
 import { IconWrapper } from "../../Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type AccountCardProps } from "@/utils/types/atoms.types";
+import { type AddressCardProps } from "@/utils/types/atoms.types";
 
-export const AccountCard: React.FC<AccountCardProps> = ({
+export const AddressCard: React.FC<AddressCardProps> = ({
     address,
     type = "effigy",
     name = "Unnamed Wallet",

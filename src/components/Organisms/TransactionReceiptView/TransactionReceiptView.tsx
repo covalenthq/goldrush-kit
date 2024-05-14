@@ -1,7 +1,8 @@
 import { type TransactionReceiptViewProps } from "@/utils/types/organisms.types";
 import { Heading } from "@/components/Shared";
 import { Address } from "@/components/Atoms";
-import { AccountCard, DecodedTransaction } from "@/components/Molecules";
+import { AddressCard } from "@/components/Atoms";
+import { DecodedTransaction } from "@/components/Molecules";
 import { useMemo, useState } from "react";
 import { type Option, None } from "@/utils/option";
 import { type DecodedTransactionMetadata } from "@/utils/types/molecules.types";
@@ -92,7 +93,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                         <CardDescription>
                                             Address
                                         </CardDescription>
-                                        <AccountCard
+                                        <AddressCard
                                             address={metadata.from_address}
                                             name={metadata.from_address_label}
                                         />
@@ -102,7 +103,7 @@ export const TransactionReceiptView: React.FC<TransactionReceiptViewProps> = ({
                                         <CardDescription>
                                             Interacted with
                                         </CardDescription>
-                                        <AccountCard
+                                        <AddressCard
                                             address={metadata.to_address}
                                             name={metadata.to_address_label}
                                         />

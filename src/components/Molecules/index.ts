@@ -3,7 +3,6 @@ export { AddressActivityList } from "./AddressActivityList/AddressActivityList";
 export { AddressDetails } from "./AddressDetails/AddressDetails";
 export { BlockDetails } from "./BlockDetails/BlockDetails";
 export { ChainSelector } from "./ChainSelector/ChainSelector";
-export { CollectionCard } from "./CollectionCard/CollectionCard";
 export { DecodedTransaction } from "./DecodedTransaction/DecodedTransaction";
 export { GasCard } from "./GasCard/GasCard";
 export { LatestBlocks } from "./LatestBlocks/LatestBlocks";
