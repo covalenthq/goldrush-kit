@@ -159,6 +159,11 @@ export interface XYKPoolDetailsProps {
     pool_data?: PoolWithTimeseries | null;
 }
 
+export interface XYKTransactionsListProps {
+    chain_name: Chain;
+    dex_name: string;
+}
+
 export interface XYKTokenDetailsProps {
     token_address: string;
     chain_name: Chain;

@@ -1,46 +1,33 @@
 import { type Option, None, Some } from "@/utils/option";
 import { type ExchangeTransaction } from "@covalenthq/client-sdk";
-import { POOL_TRANSACTION_MAP } from "@/utils/constants/shared.constants";
+import {
+    POOL_TRANSACTION_MAP,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
-import { type XYKOverviewTransactionsListViewProps } from "@/utils/types/organisms.types";
+import { type XYKTransactionsListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amount";
 import { handleExchangeType } from "@/utils/functions/exchange-type";
-import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
-export const XYKOverviewTransactionsListView: React.FC<
-    XYKOverviewTransactionsListViewProps
-> = ({
+export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
     chain_name,
     dex_name,
-    on_transaction_click,
-    on_native_explorer_click,
-    on_goldrush_receipt_click,
 }) => {
     const { covalentClient } = useGoldRush();
-    const [maybeResult, setResult] =
-        useState<Option<ExchangeTransaction[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<ExchangeTransaction[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             try {
-                setResult(None);
+                setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
                     await covalentClient.XykService.getTransactionsForDex(
@@ -48,11 +35,12 @@ export const XYKOverviewTransactionsListView: React.FC<
                         dex_name
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data.items));
-            } catch (error) {
+                setMaybeResult(new Some(data.items));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -88,18 +76,7 @@ export const XYKOverviewTransactionsListView: React.FC<
 
                 if (row.original.act !== "SWAP") {
                     return (
-                        <div
-                            className={
-                                on_transaction_click
-                                    ? "cursor-pointer hover:opacity-75"
-                                    : ""
-                            }
-                            onClick={() => {
-                                if (on_transaction_click) {
-                                    on_transaction_click(row.original);
-                                }
-                            }}
-                        >
+                        <div>
                             <Badge
                                 className="mr-2"
                                 variant={
@@ -123,18 +100,7 @@ export const XYKOverviewTransactionsListView: React.FC<
                         ? token_0
                         : token_1;
                 return (
-                    <div
-                        className={
-                            on_transaction_click
-                                ? "cursor-pointer hover:opacity-75"
-                                : ""
-                        }
-                        onClick={() => {
-                            if (on_transaction_click) {
-                                on_transaction_click(row.original);
-                            }
-                        }}
-                    >
+                    <div>
                         <Badge
                             className="mr-2"
                             variant={
@@ -244,58 +210,6 @@ export const XYKOverviewTransactionsListView: React.FC<
                                 .contract_ticker_symbol
                         }
                     </span>
-                );
-            },
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => {
-                if (!on_native_explorer_click && !on_goldrush_receipt_click)
-                    return;
-                return (
-                    <div className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="ml-auto  ">
-                                    <span className="sr-only">Open menu</span>
-                                    <IconWrapper icon_class_name="expand_more" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                {on_native_explorer_click && (
-                                    <DropdownMenuItem
-                                        onClick={() => {
-                                            on_native_explorer_click(
-                                                row.original
-                                            );
-                                        }}
-                                    >
-                                        <IconWrapper
-                                            icon_class_name="open_in_new"
-                                            class_name="mr-2"
-                                        />{" "}
-                                        View on explorer
-                                    </DropdownMenuItem>
-                                )}
-                                {on_goldrush_receipt_click && (
-                                    <DropdownMenuItem
-                                        onClick={() => {
-                                            on_goldrush_receipt_click(
-                                                row.original
-                                            );
-                                        }}
-                                    >
-                                        <IconWrapper
-                                            icon_class_name="open_in_new"
-                                            class_name="mr-2"
-                                        />{" "}
-                                        View goldrush receipt
-                                    </DropdownMenuItem>
-                                )}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
                 );
             },
         },
