@@ -9,6 +9,7 @@ import {
     CHART_COLORS,
     GRK_SIZES,
     PERIOD,
+    defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolTimeseriesProps } from "@/utils/types/molecules.types";
@@ -18,146 +19,121 @@ import {
     type LiquidityTimeseries,
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
+import { CovalentAPIError } from "@/utils/types/shared.types";
 
 export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
     chain_name,
     dex_name,
     pool_address,
-    pool_data,
-    displayMetrics = "both",
+    maybeResult: initialMaybeResult = null,
+    errorMessage: initialErrorMessage = null,
 }) => {
-    const [maybeResult, setResult] = useState<Option<PoolWithTimeseries>>(None);
+    const { covalentClient, theme } = useGoldRush();
+    const [maybeResult, setMaybeResult] =
+        useState<Option<PoolWithTimeseries | null>>(None);
     const [chartData, setChartData] =
         useState<Option<{ [key: string]: string | number | Date }[]>>(None);
     const [period, setPeriod] = useState<PERIOD>(PERIOD.DAYS_7);
-    const [timeseries, setTimeseries] = useState<string>(
-        displayMetrics !== "both" ? displayMetrics : "liquidity"
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [activeChart, setActiveChart] = useState<"liquidity" | "volume">(
+        "liquidity"
     );
-    const { covalentClient, theme } = useGoldRush();
+
+    useEffect(() => {
+        if (initialErrorMessage) {
+            setErrorMessage(initialErrorMessage);
+        }
+    }, [initialErrorMessage]);
+
+    useEffect(() => {
+        if (initialMaybeResult) {
+            setMaybeResult(initialMaybeResult);
+        }
+    }, [initialMaybeResult]);
 
     useEffect(() => {
         maybeResult.match({
             None: () => null,
             Some: (response) => {
-                const chart_key = `${timeseries}_timeseries_${period}d`;
-                const value_key =
-                    timeseries === "price"
-                        ? "price_of_token0_in_token1"
-                        : `${timeseries}_quote`;
+                if (response) {
+                    const chart_key = `${activeChart}_timeseries_${period}d`;
+                    const value_key = `${activeChart}_quote`;
 
-                const result = (
-                    response[
-                        chart_key as keyof typeof response
-                    ] as PoolWithTimeseries["liquidity_timeseries_7d"]
-                ).map((x) => {
-                    const dt = timestampParser(x.dt, "DD MMM YY");
-                    return {
-                        date: dt,
-                        [`${capitalizeFirstLetter(timeseries)} (USD)`]:
-                            x[value_key as keyof LiquidityTimeseries],
-                    };
-                });
-                setChartData(new Some(result));
+                    const result = (
+                        response[
+                            chart_key as keyof typeof response
+                        ] as PoolWithTimeseries["liquidity_timeseries_7d"]
+                    ).map((x) => {
+                        const dt = timestampParser(x.dt, "DD MMM YY");
+                        return {
+                            date: dt,
+                            [`${capitalizeFirstLetter(activeChart)} (USD)`]:
+                                x[value_key as keyof LiquidityTimeseries],
+                        };
+                    });
+                    setChartData(new Some(result));
+                }
             },
         });
-    }, [maybeResult, period, timeseries, displayMetrics]);
+    }, [maybeResult, period, activeChart]);
 
     useEffect(() => {
-        if (pool_data) {
-            setResult(new Some(pool_data));
-            return;
-        }
         (async () => {
-            setResult(None);
-            const response = await covalentClient.XykService.getPoolByAddress(
-                chain_name,
-                dex_name,
-                pool_address
-            );
-            setResult(new Some(response.data.items[0]));
-        })();
-    }, [pool_data, dex_name, pool_address, chain_name, displayMetrics]);
-
-    useEffect(() => {
-        if (displayMetrics === "both") return;
-        setTimeseries(displayMetrics);
-    }, [displayMetrics]);
-
-    const body = chartData.match({
-        None: () => {
-            return (
-                <div className="mt-8">
-                    <Skeleton size={GRK_SIZES.LARGE} />
-                </div>
-            );
-        },
-        Some: (result) => {
-            if (timeseries === "liquidity") {
-                return (
-                    <AreaChart
-                        className="mt-2 p-2"
-                        data={result}
-                        index="date"
-                        valueFormatter={prettifyCurrency}
-                        yAxisWidth={100}
-                        categories={[
-                            `${capitalizeFirstLetter(timeseries)} (USD)`,
-                        ]}
-                        colors={CHART_COLORS[theme.mode]}
-                    />
-                );
+            if (!initialMaybeResult) {
+                try {
+                    setMaybeResult(None);
+                    setErrorMessage(null);
+                    const { data, ...error } =
+                        await covalentClient.XykService.getPoolByAddress(
+                            chain_name,
+                            dex_name,
+                            pool_address
+                        );
+                    if (error.error) {
+                        throw error;
+                    }
+                    setMaybeResult(new Some(data.items[0]));
+                } catch (error: CovalentAPIError | any) {
+                    setErrorMessage(
+                        error?.error_message ?? defaultErrorMessage
+                    );
+                    setMaybeResult(new Some(null));
+                    console.error(error);
+                }
             }
-            return (
-                <div>
-                    <BarChart
-                        className="mt-2 p-2"
-                        data={result}
-                        index="date"
-                        valueFormatter={prettifyCurrency}
-                        yAxisWidth={100}
-                        categories={[
-                            `${capitalizeFirstLetter(timeseries)} (USD)`,
-                        ]}
-                        colors={CHART_COLORS[theme.mode]}
-                    />
-                </div>
-            );
-        },
-    });
+        })();
+    }, [initialMaybeResult, dex_name, pool_address, chain_name]);
 
     return (
         <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
             <div className="pb-4">
                 <Heading size={4}>
-                    {`${capitalizeFirstLetter(timeseries)} (USD)`}
+                    {`${capitalizeFirstLetter(activeChart)} (USD)`}
                 </Heading>
             </div>
 
             <div className="flex justify-between">
-                {displayMetrics === "both" && (
-                    <div className="flex gap-2">
-                        <Button
-                            disabled={!maybeResult.isDefined}
-                            variant={
-                                timeseries === "liquidity"
-                                    ? "primary"
-                                    : "outline"
-                            }
-                            onClick={() => setTimeseries("liquidity")}
-                        >
-                            Liquidity
-                        </Button>
-                        <Button
-                            disabled={!maybeResult.isDefined}
-                            variant={
-                                timeseries === "volume" ? "primary" : "outline"
-                            }
-                            onClick={() => setTimeseries("volume")}
-                        >
-                            Volume
-                        </Button>
-                    </div>
-                )}
+                <div className="flex gap-2">
+                    <Button
+                        disabled={!maybeResult.isDefined}
+                        variant={
+                            activeChart === "liquidity" ? "primary" : "outline"
+                        }
+                        onClick={() => setActiveChart("liquidity")}
+                    >
+                        Liquidity
+                    </Button>
+                    <Button
+                        disabled={!maybeResult.isDefined}
+                        variant={
+                            activeChart === "volume" ? "primary" : "outline"
+                        }
+                        onClick={() => setActiveChart("volume")}
+                    >
+                        Volume
+                    </Button>
+                </div>
+
                 <div className="flex gap-2">
                     <Button
                         disabled={!maybeResult.isDefined}
@@ -180,7 +156,50 @@ export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
                 </div>
             </div>
 
-            {body}
+            {chartData.match({
+                None: () => {
+                    return (
+                        <div className="mt-8">
+                            <Skeleton size={GRK_SIZES.LARGE} />
+                        </div>
+                    );
+                },
+                Some: (result) => {
+                    if (errorMessage) {
+                        return <p>{errorMessage}</p>;
+                    }
+
+                    if (activeChart === "liquidity") {
+                        return (
+                            <AreaChart
+                                className="mt-2 p-2"
+                                data={result}
+                                index="date"
+                                valueFormatter={prettifyCurrency}
+                                yAxisWidth={100}
+                                categories={[
+                                    `${capitalizeFirstLetter(activeChart)} (USD)`,
+                                ]}
+                                colors={CHART_COLORS[theme.mode]}
+                            />
+                        );
+                    } else if (activeChart === "volume") {
+                        return (
+                            <BarChart
+                                className="mt-2 p-2"
+                                data={result}
+                                index="date"
+                                valueFormatter={prettifyCurrency}
+                                yAxisWidth={100}
+                                categories={[
+                                    `${capitalizeFirstLetter(activeChart)} (USD)`,
+                                ]}
+                                colors={CHART_COLORS[theme.mode]}
+                            />
+                        );
+                    }
+                },
+            })}
         </div>
     );
 };

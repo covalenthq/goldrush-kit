@@ -1,7 +1,7 @@
 import { type Option, Some, None } from "@/utils/option";
 import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
-import { CardDetail, SkeletonNFT } from "@/components/Shared";
+import { CardDetail, Heading, SkeletonNFT } from "@/components/Shared";
 import { Address, NFT } from "@/components/Atoms";
 import { type NFTWalletCollectionListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
@@ -85,16 +85,19 @@ export const NFTWalletCollectionList: React.FC<
                                 pretty_floor_price_quote,
                             }) => (
                                 <div key={contract_address}>
-                                    <CardDetail
-                                        content={contract_name}
-                                        subtext={`${nft_data.length} item${nft_data.length > 1 ? "s" : ""}`}
-                                        heading={
-                                            <Address
-                                                address={contract_address}
-                                            />
-                                        }
-                                        wrapperClassName="text-xl mb-2 flex items-center flex-row-reverse w-fit gap-4"
-                                    />
+                                    <div className="mb-2 flex items-center gap-4">
+                                        <Heading size={4}>
+                                            {contract_name}
+                                        </Heading>
+                                        <CardDetail
+                                            content={`${nft_data.length} item${nft_data.length > 1 ? "s" : ""}`}
+                                            subtext={
+                                                <Address
+                                                    address={contract_address}
+                                                />
+                                            }
+                                        />
+                                    </div>
 
                                     <div className="flex flex-wrap gap-4">
                                         {nft_data.map(

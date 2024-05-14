@@ -1,6 +1,6 @@
 import { type Option } from "@/utils/option";
 import {
-    BalanceItem,
+    type BalanceItem,
     type Block,
     type Chain,
     type ChainActivityEvent,
@@ -124,8 +124,8 @@ export interface XYKPoolTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
-    pool_data?: PoolWithTimeseries | null;
-    displayMetrics?: "both" | "liquidity" | "volume";
+    maybeResult?: Option<PoolWithTimeseries | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface NFTVolumeProps {
@@ -156,7 +156,8 @@ export interface XYKPoolDetailsProps {
     pool_address: string;
     chain_name: Chain;
     dex_name: string;
-    pool_data?: PoolWithTimeseries | null;
+    maybeResult?: Option<PoolWithTimeseries | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface XYKTransactionsListProps {

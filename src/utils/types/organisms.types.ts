@@ -6,7 +6,7 @@ export interface NFTDetailsViewProps {
     token_id: string;
 }
 
-export interface XYKPoolDetailViewProps {
+export interface XYKPoolViewProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
