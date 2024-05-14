@@ -4,7 +4,7 @@ import { NFTWalletCollectionView as NFTWalletCollectionViewComponent } from "./N
 type Story = StoryObj<typeof NFTWalletCollectionViewComponent>;
 
 const meta: Meta<typeof NFTWalletCollectionViewComponent> = {
-    title: "Organisms",
+    title: "Organisms/NFT Wallet Collection View",
     component: NFTWalletCollectionViewComponent,
 };
 
