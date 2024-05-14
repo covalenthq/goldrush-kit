@@ -3,12 +3,18 @@ import { CardDetail } from "@/components/Shared";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
-import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    type CovalentAPIError,
+    type CardDetailProps,
+} from "@/utils/types/shared.types";
 import { type Transaction } from "@covalenthq/client-sdk";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
@@ -20,11 +26,12 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [maybeResult, setResult] = useState<Option<Transaction[]>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<Transaction[] | null>>(None);
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data: blockData, ...blockError } =
@@ -55,8 +62,10 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                     setErrorMessage(txError.error_message);
                     throw txError;
                 }
-                setResult(new Some(txData.items.slice(-limit)));
-            } catch (error) {
+                setMaybeResult(new Some(txData.items.slice(-limit)));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -70,11 +79,11 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 ))}
             </>
         ),
-        Some: (txs) =>
+        Some: (result) =>
             errorMessage ? (
                 <p className="col-span-5">{errorMessage}</p>
-            ) : (
-                txs.map((tx) => (
+            ) : result ? (
+                result.map((tx) => (
                     <Card
                         key={tx.tx_hash}
                         className="flex w-full flex-col rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white"
@@ -135,6 +144,8 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                         )}
                     </Card>
                 ))
+            ) : (
+                <></>
             ),
     });
 };

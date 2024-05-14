@@ -199,8 +199,8 @@ export interface XYKTokenPoolListProps {
 export interface XYKTimeseriesProps {
     chain_name: Chain;
     dex_name: string;
-    overview_data?: UniswapLikeEcosystemCharts;
-    displayMetrics?: "both" | "liquidity" | "volume";
+    maybeResult?: Option<UniswapLikeEcosystemCharts | null> | null;
+    errorMessage?: string | null;
 }
 
 export interface XYKTokenTimeseriesProps {

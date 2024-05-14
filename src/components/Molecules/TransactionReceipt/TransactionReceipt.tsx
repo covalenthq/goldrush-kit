@@ -11,7 +11,11 @@ import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
 import { useGoldRush } from "@/utils/store";
 import { ClockIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,
@@ -19,10 +23,9 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
 }) => {
     const { apikey, chains } = useGoldRush();
 
-    const [maybeResult, setResult] =
+    const [maybeResult, setMaybeResult] =
         useState<Option<DecodedTransactionType | null>>(None);
     const [relativeTime, setRelativeTime] = useState<boolean>(false);
-
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const CHAIN = useMemo<ChainItem | null>(() => {
@@ -32,7 +35,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     useEffect(() => {
         (async () => {
             try {
-                setResult(None);
+                setMaybeResult(None);
                 setErrorMessage(null);
                 const response = await fetch(
                     "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
@@ -50,13 +53,13 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                 );
                 const data = (await response.json()) as DecodedTransactionType;
                 if (!data.success) {
-                    setErrorMessage(data.message as string);
-                    throw Error(data.message);
+                    throw { error_message: data.message };
                 }
-                setResult(new Some(data));
-            } catch (exception) {
-                console.error(exception);
-                setResult(new Some(null));
+                setMaybeResult(new Some(data));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
+                console.error(error);
             }
         })();
     }, [chain_name, tx_hash]);
@@ -139,7 +142,9 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                         </>
                     ),
                     Some: (result) =>
-                        result?.tx_metadata && result?.events ? (
+                        errorMessage ? (
+                            <p>{errorMessage}</p>
+                        ) : result?.tx_metadata && result?.events ? (
                             <>
                                 <div className="flex flex-col gap-y-1">
                                     <CardDescription>
