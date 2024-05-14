@@ -5,7 +5,7 @@ import { AddressActivityView } from "@/components/Organisms";
 import { TransactionReceipt } from "../";
 import { ChainSelector } from "../ChainSelector/ChainSelector";
 import { useGoldRush } from "@/utils/store";
-import { BlockDetails } from "../BlockDetails/BlockDetails";
+import { BlockDetails } from "../Block/BlockDetails/BlockDetails";
 import { type Chain } from "@covalenthq/client-sdk";
 import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
 import { Button } from "@/components/ui/button";
