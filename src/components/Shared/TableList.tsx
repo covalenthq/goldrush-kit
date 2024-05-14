@@ -35,7 +35,7 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
     const table = useReactTable({
         data: maybeData.match({
             None: () => [],
-            Some: (result) => result,
+            Some: (result) => result ?? [],
         }),
         columns,
         onSortingChange: setSorting,
@@ -135,28 +135,18 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                 </TableBody>
             </Table>
 
-            {pagination &&
-                onChangePaginationHandler &&
-                maybeData.match({
-                    None: () => (
-                        <PaginationFooter
-                            disabled
-                            pagination={pagination}
-                            onChangePaginationHandler={
-                                onChangePaginationHandler
-                            }
-                        />
-                    ),
-                    Some: (data) => (
-                        <PaginationFooter
-                            disabled={data?.length ? false : true}
-                            pagination={pagination}
-                            onChangePaginationHandler={
-                                onChangePaginationHandler
-                            }
-                        />
-                    ),
-                })}
+            {pagination && onChangePaginationHandler && (
+                <PaginationFooter
+                    disabled={
+                        maybeData.isDefined &&
+                        maybeData.getOrElse(() => [])?.length
+                            ? false
+                            : true
+                    }
+                    pagination={pagination}
+                    onChangePaginationHandler={onChangePaginationHandler}
+                />
+            )}
         </div>
     );
 };

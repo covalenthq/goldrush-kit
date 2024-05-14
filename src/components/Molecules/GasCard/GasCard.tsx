@@ -5,16 +5,21 @@ import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
 import { type GasPricesResponse } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
-    const [maybeResult, setResult] = useState<Option<GasPricesResponse>>(None);
+    const [maybeResult, setMaybeResult] =
+        useState<Option<GasPricesResponse | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
-            setResult(None);
+            setMaybeResult(None);
             setErrorMessage(null);
             try {
                 const { data, ...error } =
@@ -23,11 +28,12 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                         event_type
                     );
                 if (error.error) {
-                    setErrorMessage(error.error_message);
                     throw error;
                 }
-                setResult(new Some(data));
-            } catch (error) {
+                setMaybeResult(new Some(data));
+            } catch (error: CovalentAPIError | any) {
+                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
@@ -64,13 +70,18 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                         <Skeleton size={GRK_SIZES.LARGE} />
                     </div>
                 ),
-                Some: ({ base_fee }) => (
-                    <p className="text-center text-xl">
-                        ⛽ Base Fee:{" "}
-                        {Math.round((Number(base_fee) ?? 0) / Math.pow(10, 9))}{" "}
-                        Gwei
-                    </p>
-                ),
+                Some: (result) =>
+                    result ? (
+                        <p className="text-center text-xl">
+                            ⛽ Base Fee:{" "}
+                            {Math.round(
+                                (Number(result.base_fee) ?? 0) / Math.pow(10, 9)
+                            )}{" "}
+                            Gwei
+                        </p>
+                    ) : (
+                        <></>
+                    ),
             })}
 
             <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
@@ -83,11 +94,11 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                     <Skeleton size={GRK_SIZES.LARGE} />
                                 </div>
                             )),
-                    Some: ({ items }) =>
+                    Some: (result) =>
                         errorMessage ? (
                             <p className="mt-4">{errorMessage}</p>
-                        ) : (
-                            items
+                        ) : result ? (
+                            result.items
                                 .sort(
                                     (a, b) =>
                                         parseInt(a.gas_price) -
@@ -130,6 +141,8 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                                         </div>
                                     )
                                 )
+                        ) : (
+                            <></>
                         ),
                 })}
             </div>

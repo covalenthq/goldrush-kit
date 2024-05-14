@@ -1,8 +1,27 @@
+import {
+    type Chain,
+    type NftCollectionAttribute,
+} from "@covalenthq/client-sdk";
 import { type GRK_SIZES } from "../constants/shared.constants";
+
+export interface AddressCardProps {
+    name?: string;
+    address: string;
+    type?: "fingerprint" | "effigy" | "wallet";
+}
 
 export interface AddressProps {
     address: string;
     show_copy_icon?: boolean;
+}
+
+export interface NFTProps {
+    collection_name?: string | null;
+    token_id?: string | number | bigint | null;
+    src: string | null;
+    attributes?: NftCollectionAttribute[];
+    children?: React.ReactNode;
+    chain_name?: Chain;
 }
 
 export interface AddressAvatarProps {

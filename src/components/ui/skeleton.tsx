@@ -4,7 +4,7 @@ import { cn } from "@/utils/functions";
 
 function Skeleton({
     className,
-    isNFT,
+    isNFT = false,
     size,
     ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
@@ -12,6 +12,9 @@ function Skeleton({
     size: GRK_SIZES;
 }) {
     const sizeClass = useCallback((): string => {
+        if (isNFT) {
+            return "w-64 h-64";
+        }
         switch (size) {
             case "lg":
                 return "w-28 h-8";
@@ -26,13 +29,13 @@ function Skeleton({
             default:
                 return "w-28 h-5";
         }
-    }, []);
+    }, [isNFT]);
 
     return (
         <div
             className={cn(
                 "animate-pulse rounded border bg-secondary-light dark:bg-secondary-dark",
-                isNFT ? "h-[280px] w-[230px]" : sizeClass(),
+                sizeClass(),
                 className
             )}
             {...props}

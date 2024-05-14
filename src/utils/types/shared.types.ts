@@ -7,6 +7,12 @@ import {
     type SortingState,
 } from "@tanstack/react-table";
 
+export interface CovalentAPIError {
+    error?: boolean;
+    error_code?: number | string;
+    error_message?: string;
+}
+
 export interface BalancePriceDeltaProps {
     numerator: number;
     denominator: number;
@@ -35,7 +41,7 @@ export interface TransactionsProps {
     on_native_explorer_click?: Function;
     on_goldrush_receipt_click?: Function;
     on_transaction_click?: Function;
-    maybeResult: Option<Transaction[]>;
+    maybeResult: Option<Transaction[] | null>;
     errorMessage: string | null;
 }
 
@@ -53,7 +59,7 @@ export interface TableHeaderSortingProps<T> {
 }
 
 export interface TableListProps<T> extends Partial<PaginationFooterProps> {
-    maybeData: Option<T[]>;
+    maybeData: Option<T[] | null>;
     columns: ColumnDef<T>[];
     row_selection_state?: Record<string, boolean>;
     sorting_state?: SortingState;
