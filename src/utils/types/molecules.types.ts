@@ -160,6 +160,12 @@ export interface XYKPoolDetailsProps {
     errorMessage?: string | null;
 }
 
+export interface XYKPoolListProps {
+    chain_name: Chain;
+    dex_name: string;
+    page_size?: number;
+}
+
 export interface XYKTransactionsListProps {
     chain_name: Chain;
     dex_name: string;

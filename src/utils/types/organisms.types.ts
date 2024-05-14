@@ -72,13 +72,6 @@ export interface XYKTokenListViewProps {
     page_size?: number;
 }
 
-export interface XYKPoolListViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    on_pool_click?: Function;
-    page_size?: number;
-}
-
 export interface XYKTokenPoolListViewProps {
     chain_name: Chain;
     dex_name: string;

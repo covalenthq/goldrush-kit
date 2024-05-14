@@ -21,6 +21,7 @@ export { TokenTransfersList } from "./TokenTransfersList/TokenTransfersList";
 export { TransactionDetails } from "./TransactionDetails/TransactionDetails";
 export { TransactionReceipt } from "./TransactionReceipt/TransactionReceipt";
 export { XYKPoolDetails } from "./XYKPoolDetails/XYKPoolDetails";
+export { XYKPoolList } from "./XYKPoolList/XYKPoolList";
 export { XYKPoolTimeseries } from "./XYKPoolTimeseries/XYKPoolTimeseries";
 export { XYKTimeseries } from "./XYKTimeseries/XYKTimeseries";
 export { XYKTokenDetails } from "./XYKTokenDetails/XYKTokenDetails";

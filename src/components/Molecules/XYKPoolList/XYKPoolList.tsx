@@ -5,30 +5,17 @@ import {
     type Pagination,
 } from "@covalenthq/client-sdk";
 import { useCallback, useEffect, useState } from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
-import {
-    IconWrapper,
-    TableHeaderSorting,
-    TableList,
-} from "@/components/Shared";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
-import { type XYKPoolListViewProps } from "@/utils/types/organisms.types";
+import { type XYKPoolListProps } from "@/utils/types/molecules.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
 
-export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
+export const XYKPoolList: React.FC<XYKPoolListProps> = ({
     chain_name,
     dex_name,
-    on_pool_click,
     page_size = 10,
 }) => {
     const { covalentClient } = useGoldRush();
@@ -103,26 +90,7 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                             </div>
                         </div>
 
-                        <div className="flex flex-col">
-                            {on_pool_click ? (
-                                <a
-                                    className="cursor-pointer hover:opacity-75"
-                                    onClick={() => {
-                                        if (on_pool_click) {
-                                            on_pool_click(
-                                                row.original.exchange
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {pool ? pool : ""}
-                                </a>
-                            ) : (
-                                <label className="text-base">
-                                    {pool ? pool : ""}
-                                </label>
-                            )}
-                        </div>
+                        <div className="flex flex-col">{pool}</div>
                     </div>
                 );
             },
@@ -230,38 +198,6 @@ export const XYKPoolListView: React.FC<XYKPoolListViewProps> = ({
                     }`}
                 >
                     {calculateFeePercentage(+row.original.annualized_fee)}
-                </div>
-            ),
-        },
-        {
-            id: "actions",
-            cell: ({ row }) => (
-                <div className="text-right">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="ml-auto  ">
-                                <span className="sr-only">Open menu</span>
-                                <IconWrapper icon_class_name="expand_more" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    if (on_pool_click) {
-                                        on_pool_click(row.original.exchange);
-                                    }
-                                }}
-                                className="cursor-pointer"
-                            >
-                                <IconWrapper
-                                    icon_class_name="swap_horiz"
-                                    class_name="mr-2"
-                                />{" "}
-                                View Pool
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             ),
         },
