@@ -14,7 +14,6 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Address, AddressAvatar } from "@/components/Atoms";
 import {
-    timestampParser,
     truncate,
     calculateTimeSeriesGroup,
 } from "@/utils/functions";
@@ -24,6 +23,7 @@ import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
 
 export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     chain_name,
@@ -92,8 +92,12 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) =>
-                timestampParser(row.getValue("block_signed_at"), "relative"),
+            cell: ({ row }) => (
+                <Timestamp
+                    timestamp={row.getValue("block_signed_at")}
+                    defaultType="relative"
+                />
+            ),
         },
         {
             accessorKey: "from_address",

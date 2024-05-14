@@ -1,4 +1,5 @@
 import { Address } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
 import { CardDetail } from "@/components/Shared";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -6,7 +7,6 @@ import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlockDetailsProps } from "@/utils/types/molecules.types";
@@ -73,10 +73,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                 },
                                 {
                                     heading: "SIGNED AT",
-                                    content: timestampParser(
-                                        block.signed_at,
-                                        "descriptive"
-                                    ),
+                                    content: <Timestamp timestamp={block.signed_at} />,
                                 },
                                 {
                                     heading: "BLOCK HASH",

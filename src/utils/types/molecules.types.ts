@@ -249,7 +249,7 @@ export interface TransactionDetailsProps {
 export type EventDetails = {
     heading: string;
     value: string;
-    type: "address" | "text";
+    type: "address" | "text" | "timestamp";
 }[];
 
 export type EventNFTs = {

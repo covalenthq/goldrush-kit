@@ -3,7 +3,6 @@ import {
     type Transaction,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
-import { timestampParser } from "@/utils/functions";
 import { IconWrapper, TableHeaderSorting, TableList } from ".";
 import { type TransactionsProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
@@ -15,6 +14,7 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Timestamp } from "../Atoms/Timestamp/Timestamp";
 
 export const Transactions: React.FC<TransactionsProps> = ({
     on_goldrush_receipt_click,
@@ -81,18 +81,16 @@ export const Transactions: React.FC<TransactionsProps> = ({
             header: ({ column }) => (
                 <TableHeaderSorting<Transaction>
                     align="left"
-                    header={"Age"}
+                    header={"Signed At"}
                     column={column}
                 />
             ),
             cell: ({ row }) => {
                 return (
-                    <p>
-                        {timestampParser(
-                            row.original.block_signed_at.toString(),
-                            "relative"
-                        )}
-                    </p>
+                    <Timestamp
+                        timestamp={row.original.block_signed_at}
+                        defaultType="relative"
+                    />
                 );
             },
         },

@@ -6,7 +6,6 @@ import {
 } from "@/utils/constants/shared.constants";
 import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
-import { timestampParser } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { type XYKTokenTransactionsListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
@@ -15,6 +14,7 @@ import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Timestamp } from "@/components/Atoms/Timestamp/Timestamp";
 
 export const XYKTokenTransactionsList: React.FC<
     XYKTokenTransactionsListProps
@@ -58,8 +58,12 @@ export const XYKTokenTransactionsList: React.FC<
                     column={column}
                 />
             ),
-            cell: ({ row }) =>
-                timestampParser(row.getValue("block_signed_at"), "relative"),
+            cell: ({ row }) => (
+                <Timestamp
+                    timestamp={row.getValue("block_signed_at")}
+                    defaultType="relative"
+                />
+            ),
         },
         {
             accessorKey: "act",
