@@ -1,5 +1,18 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.0
+
+**Features**
+
+-   All the Organisms have been broken down to properly grouped molecules
+-   Added `Timestamp` Atom
+
+**Fixes**
+
+-   Responsiveness of multiple components
+-   Visual uniformity
+-   DRY Code
+
 ## 0.5.6
 
 **Features**
