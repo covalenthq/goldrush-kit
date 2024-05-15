@@ -1,6 +1,6 @@
 {
     "name": "@covalenthq/goldrush-kit",
-    "version": "0.5.6",
+    "version": "0.6.0",
     "description": "Beautifully designed React components for web3 dApp frontend. Easily fetch data from 200+ blockchains. Open-source. Customizable.",
     "exports": {
         ".": {
