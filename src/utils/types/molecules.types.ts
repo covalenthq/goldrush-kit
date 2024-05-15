@@ -4,6 +4,7 @@ import {
     type Block,
     type Chain,
     type ChainActivityEvent,
+    type ChainID,
     type ChainItem,
     type NftTokenContractBalanceItem,
     type PoolWithTimeseries,
@@ -62,7 +63,7 @@ export interface AddressDetailsProps {
 }
 
 export interface ChainSelectorProps {
-    chain_options?: Chain[];
+    chain_options?: (Chain | ChainID)[];
     onChangeChain?: (chain: ChainItem) => unknown;
 }
 

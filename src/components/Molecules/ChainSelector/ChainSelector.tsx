@@ -15,7 +15,7 @@ import { useMemo, useState } from "react";
 import { CheckIcon, DoubleArrowDownIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { type ChainSelectorProps } from "@/utils/types/molecules.types";
-import { type ChainItem, type Chain } from "@covalenthq/client-sdk";
+import { type ChainItem } from "@covalenthq/client-sdk";
 import { CommandLoading } from "cmdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
@@ -31,12 +31,19 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
         if (!chains) {
             return null;
         }
-        const chainOptionsSet = new Set(chain_options);
-        if (chainOptionsSet.size === 0) {
-            return chains;
-        }
 
-        return chains.filter(({ name }) => chainOptionsSet.has(name as Chain));
+        return chain_options.reduce((acc: ChainItem[], nameOrId) => {
+            const foundChain: ChainItem | null =
+                chains.find(
+                    ({ name, chain_id }) =>
+                        name === nameOrId ||
+                        chain_id.toString() === nameOrId.toString()
+                ) ?? null;
+            if (foundChain) {
+                acc.push(foundChain);
+            }
+            return acc;
+        }, []);
     }, [chains, chain_options]);
 
     return (
