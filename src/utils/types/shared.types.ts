@@ -1,10 +1,9 @@
 import { type Option } from "@/utils/option";
-import {
+import type {
     NftApprovalsItem,
     TokensApprovalItem,
-    type Pagination,
-    type Transaction,
 } from "@covalenthq/client-sdk";
+import { type Pagination, type Transaction } from "@covalenthq/client-sdk";
 import {
     type Column,
     type ColumnDef,

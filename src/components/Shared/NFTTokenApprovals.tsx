@@ -87,7 +87,10 @@ export const NFTApprovalsTable: React.FC<NFTApprovalsTableProps> = ({
                             spender.spender_address_label ? (
                                 spender.spender_address_label
                             ) : (
-                                <Address address={spender.spender_address} />
+                                <Address
+                                    address={spender.spender_address}
+                                    key={spender.spender_address}
+                                />
                             )
                         )}
                     </p>

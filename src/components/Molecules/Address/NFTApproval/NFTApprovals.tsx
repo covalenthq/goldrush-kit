@@ -1,5 +1,6 @@
 import { type Option, None, Some } from "@/utils/option";
-import { NftApprovalsItem, type TokensApprovalItem } from "@covalenthq/client-sdk";
+import type { NftApprovalsItem } from "@covalenthq/client-sdk";
+import { type TokensApprovalItem } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import { type NFTApprovalsProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
