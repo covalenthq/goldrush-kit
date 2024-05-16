@@ -78,14 +78,12 @@ export const TokenApprovalsTable: React.FC<TokenApprovalsTableProps> = ({
             ),
             cell: ({ row }) => {
                 return (
-                    <div className="flex flex-col">
-                        <p>
-                            {row.original.pretty_value_at_risk_quote
-                                ? row.original.pretty_value_at_risk_quote
-                                : Number(row.original.value_at_risk) /
-                                  Math.pow(10, row.original.contract_decimals)}
-                        </p>
-                    </div>
+                    <p>
+                        {row.original.pretty_value_at_risk_quote
+                            ? row.original.pretty_value_at_risk_quote
+                            : Number(row.original.value_at_risk) /
+                              Math.pow(10, row.original.contract_decimals)}
+                    </p>
                 );
             },
         },
