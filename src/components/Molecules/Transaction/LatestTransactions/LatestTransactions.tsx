@@ -132,9 +132,10 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                         <CardDetail
                                             heading={<div>TO</div>}
                                             content={
-                                                <Address 
-                                                label={to_address_label}
-                                                address={to_address} />
+                                                <Address
+                                                    label={to_address_label}
+                                                    address={to_address}
+                                                />
                                             }
                                             wrapperClassName="flex gap-x-2"
                                         />

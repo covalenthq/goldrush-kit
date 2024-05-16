@@ -45,42 +45,42 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                     {label}
                 </h2>
                 <div className="flex gap-1">
-                <Address
-                    address={address}
-                    label={null}
-                    show_copy_icon={show_copy_icon}
-                />
-                {show_qr_code && (
-                    <Dialog>
-                        <DialogTrigger>
-                            <div className="h-5 w-5 items-center justify-center rounded-full">
-                                <IconWrapper
-                                    icon_class_name="qr_code_2"
-                                    icon_size="text-sm"
-                                    class_name="text-secondary-light dark:text-secondary-dark"
-                                />
-                            </div>
-                        </DialogTrigger>
+                    <Address
+                        address={address}
+                        label={null}
+                        show_copy_icon={show_copy_icon}
+                    />
+                    {show_qr_code && (
+                        <Dialog>
+                            <DialogTrigger>
+                                <div className="h-5 w-5 items-center justify-center rounded-full">
+                                    <IconWrapper
+                                        icon_class_name="qr_code_2"
+                                        icon_size="text-sm"
+                                        class_name="text-secondary-light dark:text-secondary-dark"
+                                    />
+                                </div>
+                            </DialogTrigger>
 
-                        <DialogContent className="flex aspect-square flex-col items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
-                            <DialogHeader>
-                                <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
-                                    QR Code
+                            <DialogContent className="flex aspect-square flex-col items-center justify-center rounded border-0 bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
+                                <DialogHeader>
+                                    <p className="pb-4 text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
+                                        QR Code
+                                    </p>
+                                </DialogHeader>
+                                <div className="border-border dark:border-x-border-dark flex items-center justify-center rounded border-2 bg-white p-6">
+                                    <QRCode
+                                        value={address}
+                                        viewBox="0 0 30 30"
+                                        className="bg-white"
+                                    />
+                                </div>
+                                <p className="p-2 text-xs text-secondary-light dark:text-secondary-dark">
+                                    {address}
                                 </p>
-                            </DialogHeader>
-                            <div className="border-border dark:border-x-border-dark flex items-center justify-center rounded border-2 bg-white p-6">
-                                <QRCode
-                                    value={address}
-                                    viewBox="0 0 30 30"
-                                    className="bg-white"
-                                />
-                            </div>
-                            <p className="p-2 text-xs text-secondary-light dark:text-secondary-dark">
-                                {address}
-                            </p>
-                        </DialogContent>
-                    </Dialog>
-                )}
+                            </DialogContent>
+                        </Dialog>
+                    )}
                 </div>
             </div>
         </div>
