@@ -173,7 +173,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                             address={
                                                 result.tx_metadata.from_address
                                             }
-                                            name={
+                                            label={
                                                 result.tx_metadata
                                                     .from_address_label
                                             }
@@ -188,7 +188,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                             address={
                                                 result.tx_metadata.to_address
                                             }
-                                            name={
+                                            label={
                                                 result.tx_metadata
                                                     .to_address_label
                                             }
