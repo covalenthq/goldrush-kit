@@ -1,5 +1,20 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.1
+
+**Features**
+
+-   Added `TokenApprovalList` and `NFTApprovalList` Molecules
+-   Added `BlocksList` and `TransactionsList` Molecules
+-   `ChainSelector` now accepts ChainsIDs alongside ChainNames
+-   Updated UI for `LatestBlocks` and `LatestTransactions`
+
+**Fixes**
+
+-   TransactionList misaligned props
+-   `Timestamp` UI
+-   `Address` and `AddressCard` utilization
+
 ## 0.6.0
 
 **Features**
