@@ -1,7 +1,6 @@
 import { type Option } from "@/utils/option";
 import {
     type BalanceItem,
-    type Block,
     type Chain,
     type ChainActivityEvent,
     type ChainID,
@@ -35,20 +34,26 @@ export interface BlockDetailsProps {
     height: number;
 }
 
-export interface LatestBlocksProps {
+export interface BlocksListProps {
     chain_name: Chain;
-    limit?: number;
-    on_view_details?: (block: Block) => void;
+    page_size?: number;
 }
 
-export interface LatestPriceProps {
+export interface LatestBlocksProps {
+    chain_name: Chain;
+    page_size?: number;
+}
+
+export interface TransactionsListProps {
     chain_name: Chain;
 }
 
 export interface LatestTransactionsProps {
     chain_name: Chain;
-    limit?: number;
-    on_view_details?: (block: Transaction) => void;
+}
+
+export interface LatestPriceProps {
+    chain_name: Chain;
 }
 
 export interface GasCardProps {

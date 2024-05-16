@@ -4,6 +4,7 @@ export { AddressDetails } from "./Address/AddressDetails/AddressDetails";
 export { AddressTransactions } from "./Address/AddressTransactions/AddressTransactions";
 export { BlockDetails } from "./Block/BlockDetails/BlockDetails";
 export { BlockTransactions } from "./Block/BlockTransactions/BlockTransactions";
+export { BlocksList } from "./Block/BlocksList/BlocksList";
 export { LatestBlocks } from "./Block/LatestBlocks/LatestBlocks";
 export { ChainSelector } from "./ChainSelector/ChainSelector";
 export { GasCard } from "./GasCard/GasCard";
@@ -20,6 +21,7 @@ export { TokenTransfersList } from "./Token/TokenTransfersList/TokenTransfersLis
 export { LatestTransactions } from "./Transaction/LatestTransactions/LatestTransactions";
 export { TransactionDetails } from "./Transaction/TransactionDetails/TransactionDetails";
 export { TransactionReceipt } from "./Transaction/TransactionReceipt/TransactionReceipt";
+export { TransactionsList } from "./Transaction/TransactionsList/TransactionsList";
 export { XYKPoolDetails } from "./XYK/Pool/XYKPoolDetails/XYKPoolDetails";
 export { XYKPoolList } from "./XYK/Pool/XYKPoolList/XYKPoolList";
 export { XYKPoolTimeseries } from "./XYK/Pool/XYKPoolTimeseries/XYKPoolTimeseries";

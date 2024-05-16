@@ -1,6 +1,5 @@
-import { Address } from "@/components/Atoms";
+import { Address, Timestamp } from "@/components/Atoms";
 import { CardDetail } from "@/components/Shared";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -11,18 +10,12 @@ import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
-import {
-    type CovalentAPIError,
-    type CardDetailProps,
-} from "@/utils/types/shared.types";
+import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { type Transaction } from "@covalenthq/client-sdk";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 
 export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     chain_name,
-    limit = 5,
-    on_view_details,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -31,9 +24,9 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
 
     useEffect(() => {
         (async () => {
-            setMaybeResult(None);
-            setErrorMessage(null);
             try {
+                setMaybeResult(None);
+                setErrorMessage(null);
                 const { data: blockData, ...blockError } =
                     await covalentClient.BaseService.getBlockHeightsByPage(
                         chain_name,
@@ -62,90 +55,104 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                     setErrorMessage(txError.error_message);
                     throw txError;
                 }
-                setMaybeResult(new Some(txData.items.slice(-limit)));
+                setMaybeResult(new Some(txData.items.slice(-5)));
             } catch (error: CovalentAPIError | any) {
                 setErrorMessage(error?.error_message ?? defaultErrorMessage);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
-    }, [chain_name, limit]);
+    }, [chain_name]);
 
-    return maybeResult.match({
-        None: () => (
-            <>
-                {new Array(limit).fill(null).map(() => (
-                    <Skeleton key={Math.random()} size={GRK_SIZES.LARGE} />
-                ))}
-            </>
-        ),
-        Some: (result) =>
-            errorMessage ? (
-                <p className="col-span-5">{errorMessage}</p>
-            ) : result ? (
-                result.map((tx) => (
-                    <Card
-                        key={tx.tx_hash}
-                        className="flex w-full flex-col rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white"
-                    >
-                        {(
-                            [
-                                {
-                                    heading: "TRANSACTION HASH",
-                                    content: <Address address={tx.tx_hash} />,
-                                },
-                                {
-                                    heading: "BLOCK HEIGHT",
-                                    content: tx.block_height.toLocaleString(),
-                                },
-                                {
-                                    heading: "FROM",
-                                    content: (
-                                        <Address address={tx.from_address} />
-                                    ),
-                                },
-                                {
-                                    heading: "TO",
-                                    content: (
-                                        <Address address={tx.to_address} />
-                                    ),
-                                },
-                                {
-                                    heading: "VALUE",
-                                    content: `${
-                                        Number(tx.value) /
-                                        Math.pow(
-                                            10,
-                                            tx.gas_metadata.contract_decimals
-                                        )
-                                    } ${tx.gas_metadata.contract_ticker_symbol}`,
-                                    subtext: tx.pretty_value_quote,
-                                },
-                            ] as CardDetailProps[]
-                        ).map((props) => (
-                            <CardDetail
-                                key={props.heading?.toString()}
-                                wrapperClassName="flex justify-between"
-                                {...props}
-                            />
-                        ))}
+    return (
+        <Card className="flex w-full flex-col rounded border border-secondary-light px-4 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
+            {maybeResult.match({
+                None: () =>
+                    new Array(5).fill(null).map(() => (
+                        <div
+                            key={Math.random()}
+                            className="grid grid-cols-3 border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
+                        >
+                            {Array(3)
+                                .fill(null)
+                                .map(() => (
+                                    <Skeleton
+                                        key={Math.random()}
+                                        size={GRK_SIZES.LARGE}
+                                    />
+                                ))}
+                        </div>
+                    )),
+                Some: (txs) =>
+                    errorMessage ? (
+                        <p className="col-span-5">{errorMessage}</p>
+                    ) : txs ? (
+                        txs.map(
+                            ({
+                                block_signed_at,
+                                tx_hash,
+                                from_address,
+                                to_address,
+                                value,
+                                gas_metadata,
+                                pretty_value_quote,
+                            }) => (
+                                <div
+                                    key={tx_hash}
+                                    className="grid grid-cols-3 items-center border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
+                                >
+                                    <CardDetail
+                                        content={
+                                            <p className="text-base">
+                                                <Address address={tx_hash} />
+                                            </p>
+                                        }
+                                        heading={
+                                            <Timestamp
+                                                timestamp={block_signed_at}
+                                                defaultType="relative"
+                                            />
+                                        }
+                                        wrapperClassName="flex flex-col-reverse"
+                                    />
 
-                        {on_view_details ? (
-                            <Button
-                                variant="ghost"
-                                className="mx-auto mb-2 mt-4 flex items-center justify-center gap-x-2 text-sm"
-                                onClick={() => on_view_details(tx)}
-                            >
-                                View Transaction Details
-                                <ExternalLinkIcon />
-                            </Button>
-                        ) : (
-                            <></>
-                        )}
-                    </Card>
-                ))
-            ) : (
-                <></>
-            ),
-    });
+                                    <div>
+                                        <CardDetail
+                                            heading={<div>FROM</div>}
+                                            content={
+                                                <Address
+                                                    address={from_address}
+                                                />
+                                            }
+                                            wrapperClassName="flex gap-x-2"
+                                        />
+                                        <CardDetail
+                                            heading={<div>TO</div>}
+                                            content={
+                                                <Address address={to_address} />
+                                            }
+                                            wrapperClassName="flex gap-x-2"
+                                        />
+                                    </div>
+
+                                    <CardDetail
+                                        content={`${
+                                            Number(value) /
+                                            Math.pow(
+                                                10,
+                                                gas_metadata.contract_decimals
+                                            )
+                                        } ${gas_metadata.contract_ticker_symbol}`}
+                                        heading={pretty_value_quote}
+                                        wrapperClassName="flex flex-col-reverse"
+                                    />
+                                </div>
+                            )
+                        )
+                    ) : (
+                        <></>
+                    ),
+            })}
+        </Card>
+    );
 };
