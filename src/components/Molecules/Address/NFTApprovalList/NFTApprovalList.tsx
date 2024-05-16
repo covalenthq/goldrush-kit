@@ -6,7 +6,7 @@ import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 

@@ -1,7 +1,9 @@
 import { type Option } from "@/utils/option";
-import {
+import type {
     NftApprovalsItem,
     TokensApprovalItem,
+} from "@covalenthq/client-sdk";
+import {
     type BalanceItem,
     type Block,
     type Chain,

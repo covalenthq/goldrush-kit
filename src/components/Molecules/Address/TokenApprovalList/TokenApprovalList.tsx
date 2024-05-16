@@ -9,7 +9,7 @@ import {
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { CardDetail, TableHeaderSorting, TableList } from "@/components/Shared";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Address, TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 
