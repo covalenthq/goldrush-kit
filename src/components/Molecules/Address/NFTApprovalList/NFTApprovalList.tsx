@@ -8,11 +8,12 @@ import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
+import { Button } from "@/components/ui/button";
 
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
     address,
-    ...props
+    on_revoke_approval,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -80,19 +81,24 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                     column={column}
                 />
             ),
+            cell: ({ row }) => row.original.token_balances.length,
+        },
+        {
+            id: "token_id",
+            accessorKey: "token_id",
+            header: ({ column }) => (
+                <TableHeaderSorting<NftApprovalsItem>
+                    align="left"
+                    header={"Token ID"}
+                    column={column}
+                />
+            ),
             cell: ({ row }) => {
+                const token_ids = row.original.token_balances.map(
+                    (balance) => balance.token_id
+                );
                 return (
-                    <div className="flex flex-col">
-                        <p>{row.original.token_balances.length}</p>
-                        <p className="text-xs opacity-80">
-                            ID:{" "}
-                            {row.original.token_balances.map((balance) => (
-                                <span key={balance.token_id}>
-                                    {balance.token_id?.toString()}
-                                </span>
-                            )) || "N/A"}
-                        </p>
-                    </div>
+                    <p className="max-w-40 break-all">{token_ids.join(", ")}</p>
                 );
             },
         },
@@ -150,6 +156,21 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             },
         },
     ];
+
+    if (on_revoke_approval) {
+        columns.push({
+            id: "revoke",
+            accessorKey: "revoke",
+            header: () => <div className="w-12"></div>,
+            cell: ({ row }) => {
+                return (
+                    <Button onClick={() => on_revoke_approval(row.original)}>
+                        Revoke
+                    </Button>
+                );
+            },
+        });
+    }
 
     return (
         <TableList<NftApprovalsItem>

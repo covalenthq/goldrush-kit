@@ -1,16 +1,16 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { TokenApprovals as TokenApprovalsComponent } from "./TokenApprovalList";
+import { TokenApprovalList as TokenApprovalListComponent } from "./TokenApprovalList";
 
-type Story = StoryObj<typeof TokenApprovalsComponent>;
+type Story = StoryObj<typeof TokenApprovalListComponent>;
 
-const meta: Meta<typeof TokenApprovalsComponent> = {
-    title: "Molecules/Address/Approval",
-    component: TokenApprovalsComponent,
+const meta: Meta<typeof TokenApprovalListComponent> = {
+    title: "Molecules/Address/Approval/Token Approval List",
+    component: TokenApprovalListComponent,
 };
 
 export default meta;
 
-export const TokenApprovals: Story = {
+export const TokenApprovalList: Story = {
     args: {
         chain_name: "eth-mainnet",
         address: "demo.eth",

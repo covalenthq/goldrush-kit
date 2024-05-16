@@ -5,14 +5,15 @@ import { type TokenApprovalListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
-import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { CardDetail, TableHeaderSorting, TableList } from "@/components/Shared";
 import { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
+import { Button } from "@/components/ui/button";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     chain_name,
     address,
-    ...props
+    on_revoke_approval,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -56,22 +57,30 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-1">
-                            <img
-                                src={
-                                    row.original.logo_url ||
-                                    "https://goldrush.vercel.app/icons/token.svg"
-                                }
-                                alt={row.original.ticker_symbol}
-                                className="h-6 w-6"
-                            />
-                            {row.original.ticker_symbol || (
+                        <CardDetail
+                            content={
+                                <div className="flex items-center gap-1">
+                                    <img
+                                        src={
+                                            row.original.logo_url ||
+                                            "https://goldrush.vercel.app/icons/token.svg"
+                                        }
+                                        alt={row.original.ticker_symbol}
+                                        className="h-6 w-6"
+                                    />
+                                    {row.original.ticker_symbol || (
+                                        <Address
+                                            address={row.original.token_address}
+                                        />
+                                    )}
+                                </div>
+                            }
+                        />
+                        <CardDetail
+                            subtext={
                                 <Address address={row.original.token_address} />
-                            )}
-                        </div>
-                        <p className="text-xs opacity-80">
-                            <Address address={row.original.token_address} />
-                        </p>
+                            }
+                        />
                     </div>
                 );
             },
@@ -89,13 +98,13 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
-                        <p>
-                            {Number(row.original.balance) /
-                                Math.pow(10, row.original.contract_decimals)}
-                        </p>
-                        <p className="text-xs opacity-80">
-                            {row.original.pretty_balance_quote}
-                        </p>
+                        <CardDetail
+                            content={
+                                Number(row.original.balance) /
+                                Math.pow(10, row.original.contract_decimals)
+                            }
+                        />
+                        <CardDetail subtext={row.original.pretty_balance_quote}/>
                     </div>
                 );
             },
@@ -177,6 +186,21 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             },
         },
     ];
+
+    if (on_revoke_approval) {
+        columns.push({
+            id: "revoke",
+            accessorKey: "revoke",
+            header: () => <div className="w-12"></div>,
+            cell: ({ row }) => {
+                return (
+                    <Button onClick={() => on_revoke_approval(row.original)}>
+                        Revoke
+                    </Button>
+                );
+            },
+        });
+    }
 
     return (
         <TableList<TokensApprovalItem>

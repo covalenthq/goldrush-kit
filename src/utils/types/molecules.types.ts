@@ -1,5 +1,7 @@
 import { type Option } from "@/utils/option";
 import {
+    NftApprovalsItem,
+    TokensApprovalItem,
     type BalanceItem,
     type Block,
     type Chain,
@@ -33,11 +35,13 @@ export interface AddressActivityListProps {
 export interface NFTApprovalListProps {
     chain_name: Chain;
     address: string;
+    on_revoke_approval?: (approval: NftApprovalsItem) => void;
 }
 
 export interface TokenApprovalListProps {
     chain_name: Chain;
     address: string;
+    on_revoke_approval?: (approval: TokensApprovalItem) => void;
 }
 
 export interface BlockDetailsProps {
