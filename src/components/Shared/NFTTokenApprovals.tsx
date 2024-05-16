@@ -23,14 +23,6 @@ export const NFTApprovalsTable: React.FC<NFTApprovalsTableProps> = ({
                 return (
                     <div className="flex flex-col">
                         <div className="flex items-center gap-1">
-                            {/* <img
-                                src={
-                                    row.original.logo_url ||
-                                    "https://goldrush.vercel.app/icons/token.svg"
-                                }
-                                alt={row.original.contract_ticker_symbol}
-                                className="h-6 w-6"
-                            /> */}
                             {row.original.contract_ticker_symbol || (
                                 <Address
                                     address={row.original.contract_address}
