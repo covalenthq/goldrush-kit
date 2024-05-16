@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { type TokenApprovalListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    defaultErrorMessage,
+} from "@/utils/constants/shared.constants";
 import { CardDetail, TableHeaderSorting, TableList } from "@/components/Shared";
 import { ColumnDef } from "@tanstack/react-table";
-import { Address } from "@/components/Atoms";
+import { Address, TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
@@ -60,13 +63,9 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                         <CardDetail
                             content={
                                 <div className="flex items-center gap-1">
-                                    <img
-                                        src={
-                                            row.original.logo_url ||
-                                            "https://goldrush.vercel.app/icons/token.svg"
-                                        }
-                                        alt={row.original.ticker_symbol}
-                                        className="h-6 w-6"
+                                    <TokenAvatar
+                                        token_url={row.original.logo_url}
+                                        size={GRK_SIZES.EXTRA_SMALL}
                                     />
                                     {row.original.ticker_symbol || (
                                         <Address
@@ -104,7 +103,9 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                                 Math.pow(10, row.original.contract_decimals)
                             }
                         />
-                        <CardDetail subtext={row.original.pretty_balance_quote}/>
+                        <CardDetail
+                            subtext={row.original.pretty_balance_quote}
+                        />
                     </div>
                 );
             },
