@@ -12,7 +12,7 @@ type Story = StoryObj<typeof TimestampComponent>;
 
 export const Timestamp: Story = {
     args: {
-        timestamp: "November 15 2023 15:31:59",
+        timestamp: new Date(),
         defaultType: "descriptive",
     },
 };

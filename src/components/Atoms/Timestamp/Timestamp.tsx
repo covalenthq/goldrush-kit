@@ -17,7 +17,10 @@ export const Timestamp: React.FC<TimestampProps> = ({
                 timestamp,
                 relativeTime ? "relative" : "descriptive"
             )}
-            <button onClick={() => setRelativeTime(!relativeTime)}>
+            <button
+                onClick={() => setRelativeTime(!relativeTime)}
+                className="text-secondary-light dark:text-secondary-dark"
+            >
                 <ClockIcon />
             </button>
         </span>
