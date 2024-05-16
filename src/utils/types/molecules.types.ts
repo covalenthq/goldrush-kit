@@ -16,7 +16,6 @@ import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
-import { type TransactionsProps } from "./shared.types";
 
 export interface AddressActivityDetailsProps {
     address: string;
@@ -115,7 +114,7 @@ export interface AddressTransactionsProps {
     address: string;
 }
 
-export interface BlockTransactionsProps extends TransactionsProps {
+export interface BlockTransactionsProps {
     chain_name: Chain;
     block_height: number;
 }
