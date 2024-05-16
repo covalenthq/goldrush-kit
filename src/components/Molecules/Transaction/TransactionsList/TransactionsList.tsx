@@ -10,7 +10,7 @@ import {
     calculatePrettyBalance,
     type Transaction,
 } from "@covalenthq/client-sdk";
-import { ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
 export const TransactionsList: React.FC<TransactionsListProps> = ({

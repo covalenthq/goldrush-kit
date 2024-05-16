@@ -19,7 +19,7 @@ export const Timestamp: React.FC<TimestampProps> = ({
             )}
             <button
                 onClick={() => setRelativeTime(!relativeTime)}
-                className="text-secondary-light dark:text-secondary-dark"
+                className="text-foreground-light opacity-75 dark:text-foreground-dark"
             >
                 <ClockIcon />
             </button>

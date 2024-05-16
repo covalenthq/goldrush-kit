@@ -8,7 +8,7 @@ import { useGoldRush } from "@/utils/store";
 import { type BlocksListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { type Pagination, type Block } from "@covalenthq/client-sdk";
-import { ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 
 export const BlocksList: React.FC<BlocksListProps> = ({
