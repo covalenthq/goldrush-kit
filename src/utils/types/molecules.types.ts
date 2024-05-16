@@ -5,9 +5,9 @@ import type {
 } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
-    type Block,
     type Chain,
     type ChainActivityEvent,
+    type ChainID,
     type ChainItem,
     type NftTokenContractBalanceItem,
     type PoolWithTimeseries,
@@ -19,7 +19,6 @@ import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
-import { type TransactionsProps } from "./shared.types";
 
 export interface AddressActivityDetailsProps {
     address: string;
@@ -51,20 +50,26 @@ export interface BlockDetailsProps {
     height: number;
 }
 
-export interface LatestBlocksProps {
+export interface BlocksListProps {
     chain_name: Chain;
-    limit?: number;
-    on_view_details?: (block: Block) => void;
+    page_size?: number;
 }
 
-export interface LatestPriceProps {
+export interface LatestBlocksProps {
+    chain_name: Chain;
+    page_size?: number;
+}
+
+export interface TransactionsListProps {
     chain_name: Chain;
 }
 
 export interface LatestTransactionsProps {
     chain_name: Chain;
-    limit?: number;
-    on_view_details?: (block: Transaction) => void;
+}
+
+export interface LatestPriceProps {
+    chain_name: Chain;
 }
 
 export interface GasCardProps {
@@ -78,7 +83,7 @@ export interface AddressDetailsProps {
 }
 
 export interface ChainSelectorProps {
-    chain_options?: Chain[];
+    chain_options?: (Chain | ChainID)[];
     onChangeChain?: (chain: ChainItem) => unknown;
 }
 
@@ -130,7 +135,7 @@ export interface AddressTransactionsProps {
     address: string;
 }
 
-export interface BlockTransactionsProps extends TransactionsProps {
+export interface BlockTransactionsProps {
     chain_name: Chain;
     block_height: number;
 }

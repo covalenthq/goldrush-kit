@@ -12,12 +12,15 @@ export const Timestamp: React.FC<TimestampProps> = ({
     );
 
     return (
-        <span className="inline-flex items-center gap-x-1 text-foreground-light dark:text-foreground-dark">
+        <span className="inline-flex items-center gap-x-1">
             {timestampParser(
                 timestamp,
                 relativeTime ? "relative" : "descriptive"
             )}
-            <button onClick={() => setRelativeTime(!relativeTime)}>
+            <button
+                onClick={() => setRelativeTime(!relativeTime)}
+                className="text-foreground-light opacity-75 dark:text-foreground-dark"
+            >
                 <ClockIcon />
             </button>
         </span>

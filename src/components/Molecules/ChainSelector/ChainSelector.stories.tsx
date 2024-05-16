@@ -12,11 +12,6 @@ export default meta;
 
 export const ChainSelector: Story = {
     args: {
-        chain_options: [
-            "eth-mainnet",
-            "matic-mainnet",
-            "arbitrum-mainnet",
-            "solana-mainnet",
-        ],
+        chain_options: [1, 10, "arbitrum-mainnet", "solana-mainnet"],
     },
 };
