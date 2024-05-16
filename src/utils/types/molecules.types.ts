@@ -30,6 +30,16 @@ export interface AddressActivityListProps {
     errorMessage?: string | null;
 }
 
+export interface NFTApprovalsProps {
+    chain_name: Chain;
+    address: string;
+}
+
+export interface TokenApprovalsProps {
+    chain_name: Chain;
+    address: string;
+}
+
 export interface BlockDetailsProps {
     chain_name: Chain;
     height: number;
