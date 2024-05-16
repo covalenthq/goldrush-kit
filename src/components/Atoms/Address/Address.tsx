@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export const Address: React.FC<AddressProps> = ({
     address,
+    label = null,
     show_copy_icon = true,
 }) => {
     const [showCopy, setShowCopy] = useState(false);
@@ -23,9 +24,9 @@ export const Address: React.FC<AddressProps> = ({
 
     return (
         <p className="flex items-center gap-x-2">
-            {truncate(address)}
+            {label?.trim() || truncate(address)}
 
-            {show_copy_icon ? (
+            {show_copy_icon && (
                 <button
                     className="cursor-pointer"
                     onClick={() => {
@@ -36,19 +37,17 @@ export const Address: React.FC<AddressProps> = ({
                         <IconWrapper
                             icon_class_name="done"
                             icon_size="text-sm"
-                            class_name="text-secondary-light dark:text-secondary-dark"
+                            class_name="text-foreground-light dark:text-foreground-dark opacity-75"
                         />
                     ) : (
                         <IconWrapper
                             icon_class_name="content_copy"
                             icon_size="text-sm"
-                            class_name="text-secondary-light dark:text-secondary-dark"
+                            class_name="text-foreground-light dark:text-foreground-dark opacity-75"
                             on_click={() => handleCopyClick()}
                         />
                     )}
                 </button>
-            ) : (
-                <></>
             )}
         </p>
     );

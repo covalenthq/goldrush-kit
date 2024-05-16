@@ -108,6 +108,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                     heading: "FROM",
                                     content: (
                                         <Address
+                                            label={result.from_address_label}
                                             address={result.from_address}
                                         />
                                     ),
@@ -115,7 +116,10 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 {
                                     heading: "TO",
                                     content: (
-                                        <Address address={result.to_address} />
+                                        <Address
+                                            label={result.to_address_label}
+                                            address={result.to_address}
+                                        />
                                     ),
                                 },
                                 {

@@ -1,4 +1,8 @@
-import { copyToClipboard, truncate } from "@/utils/functions";
+import { useState } from "react";
+import { useToast } from "../../../utils/hooks";
+import { Address, AddressAvatar } from "../../Atoms";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { type AddressCardProps } from "@/utils/types/atoms.types";
 import {
     Dialog,
     DialogContent,
@@ -6,17 +10,14 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import QRCode from "react-qr-code";
-import { useState } from "react";
-import { useToast } from "../../../utils/hooks";
-import { AddressAvatar } from "../../Atoms";
-import { IconWrapper } from "../../Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { type AddressCardProps } from "@/utils/types/atoms.types";
+import { IconWrapper } from "@/components/Shared";
 
 export const AddressCard: React.FC<AddressCardProps> = ({
     address,
     type = "effigy",
-    name = "Unnamed Wallet",
+    label = "Unnamed Wallet",
+    show_copy_icon = true,
+    show_qr_code = true,
 }) => {
     const [showCopy, setShowCopy] = useState(false);
     const { toast } = useToast();
@@ -41,30 +42,15 @@ export const AddressCard: React.FC<AddressCardProps> = ({
             />
             <div className="flex h-full flex-col justify-center">
                 <h2 className="text-base font-semibold text-primary-light dark:text-primary-dark">
-                    {name}
+                    {label}
                 </h2>
-                <div className="flex items-center gap-x-2">
-                    <p className="text-base">{truncate(address)}</p>
-                    <div
-                        className="duration-400 h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all"
-                        onClick={() => copyToClipboard(address)}
-                    >
-                        {showCopy ? (
-                            <IconWrapper
-                                icon_class_name="done"
-                                icon_size="text-sm"
-                                class_name="text-secondary-light dark:text-secondary-dark"
-                            />
-                        ) : (
-                            <IconWrapper
-                                icon_class_name="content_copy"
-                                icon_size="text-sm"
-                                class_name="text-secondary-light dark:text-secondary-dark"
-                                on_click={() => handleCopyClick()}
-                            />
-                        )}
-                    </div>
-
+                <div className="flex gap-1">
+                <Address
+                    address={address}
+                    label={null}
+                    show_copy_icon={show_copy_icon}
+                />
+                {show_qr_code && (
                     <Dialog>
                         <DialogTrigger>
                             <div className="h-5 w-5 items-center justify-center rounded-full">
@@ -94,6 +80,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                             </p>
                         </DialogContent>
                     </Dialog>
+                )}
                 </div>
             </div>
         </div>

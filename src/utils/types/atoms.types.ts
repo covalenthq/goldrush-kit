@@ -5,13 +5,16 @@ import {
 import { type GRK_SIZES } from "../constants/shared.constants";
 
 export interface AddressCardProps {
-    name?: string;
+    label?: string | null;
     address: string;
     type?: "fingerprint" | "effigy" | "wallet";
+    show_copy_icon?: boolean;
+    show_qr_code?: boolean;
 }
 
 export interface AddressProps {
     address: string;
+    label?: string | null;
     show_copy_icon?: boolean;
 }
 

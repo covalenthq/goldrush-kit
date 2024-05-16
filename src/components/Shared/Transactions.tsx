@@ -70,15 +70,12 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <p>
-                        {row.original.from_address_label || (
-                            <Address address={row.original.from_address} />
-                        )}
-                    </p>
-                );
-            },
+            cell: ({ row }) => (
+                <Address
+                    label={row.original.from_address_label}
+                    address={row.original.from_address}
+                />
+            ),
         },
         {
             id: "to_address",
@@ -90,15 +87,12 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return (
-                    <p>
-                        {row.original.to_address_label || (
-                            <Address address={row.original.to_address} />
-                        )}
-                    </p>
-                );
-            },
+            cell: ({ row }) => (
+                <Address
+                    label={row.original.to_address_label}
+                    address={row.original.to_address}
+                />
+            ),
         },
         {
             id: "value",

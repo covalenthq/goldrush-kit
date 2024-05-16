@@ -92,6 +92,8 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                 block_signed_at,
                                 tx_hash,
                                 from_address,
+                                from_address_label,
+                                to_address_label,
                                 to_address,
                                 value,
                                 gas_metadata,
@@ -121,6 +123,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                             heading={<div>FROM</div>}
                                             content={
                                                 <Address
+                                                    label={from_address_label}
                                                     address={from_address}
                                                 />
                                             }
@@ -129,7 +132,9 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                         <CardDetail
                                             heading={<div>TO</div>}
                                             content={
-                                                <Address address={to_address} />
+                                                <Address 
+                                                label={to_address_label}
+                                                address={to_address} />
                                             }
                                             wrapperClassName="flex gap-x-2"
                                         />
