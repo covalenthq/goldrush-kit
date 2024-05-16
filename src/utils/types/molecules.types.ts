@@ -30,12 +30,12 @@ export interface AddressActivityListProps {
     errorMessage?: string | null;
 }
 
-export interface NFTApprovalsProps {
+export interface NFTApprovalListProps {
     chain_name: Chain;
     address: string;
 }
 
-export interface TokenApprovalsProps {
+export interface TokenApprovalListProps {
     chain_name: Chain;
     address: string;
 }

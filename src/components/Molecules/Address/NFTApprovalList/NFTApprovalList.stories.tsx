@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { NFTApprovals as NFTApprovalsComponent } from "./NFTApprovals";
+import { NFTApprovals as NFTApprovalsComponent } from "./NFTApprovalList";
 
 type Story = StoryObj<typeof NFTApprovalsComponent>;
 

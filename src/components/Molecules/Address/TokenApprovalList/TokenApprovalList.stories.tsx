@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/react";
-import { TokenApprovals as TokenApprovalsComponent } from "./TokenApprovals";
+import { TokenApprovals as TokenApprovalsComponent } from "./TokenApprovalList";
 
 type Story = StoryObj<typeof TokenApprovalsComponent>;
 
