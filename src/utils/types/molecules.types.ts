@@ -1,4 +1,8 @@
 import { type Option } from "@/utils/option";
+import type {
+    NftApprovalsItem,
+    TokensApprovalItem,
+} from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
     type Block,
@@ -28,6 +32,18 @@ export interface AddressActivityListProps {
     address: string;
     maybeResult?: Option<ChainActivityEvent[] | null> | null;
     errorMessage?: string | null;
+}
+
+export interface NFTApprovalListProps {
+    chain_name: Chain;
+    address: string;
+    on_revoke_approval?: (approval: NftApprovalsItem) => void;
+}
+
+export interface TokenApprovalListProps {
+    chain_name: Chain;
+    address: string;
+    on_revoke_approval?: (approval: TokensApprovalItem) => void;
 }
 
 export interface BlockDetailsProps {

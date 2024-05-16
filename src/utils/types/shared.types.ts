@@ -1,4 +1,8 @@
 import { type Option } from "@/utils/option";
+import type {
+    NftApprovalsItem,
+    TokensApprovalItem,
+} from "@covalenthq/client-sdk";
 import { type Pagination, type Transaction } from "@covalenthq/client-sdk";
 import {
     type Column,
@@ -42,6 +46,16 @@ export interface TransactionsProps {
     on_goldrush_receipt_click?: Function;
     on_transaction_click?: Function;
     maybeResult: Option<Transaction[] | null>;
+    errorMessage: string | null;
+}
+
+export interface TokenApprovalsTableProps {
+    maybeResult: Option<TokensApprovalItem[] | null>;
+    errorMessage: string | null;
+}
+
+export interface NFTApprovalsTableProps {
+    maybeResult: Option<NftApprovalsItem[] | null>;
     errorMessage: string | null;
 }
 

@@ -8,6 +8,8 @@ export { LatestBlocks } from "./Block/LatestBlocks/LatestBlocks";
 export { ChainSelector } from "./ChainSelector/ChainSelector";
 export { GasCard } from "./GasCard/GasCard";
 export { LatestPrice } from "./LatestPrice/LatestPrice";
+export { TokenApprovalList } from "./Address/TokenApprovalList/TokenApprovalList";
+export { NFTApprovalList } from "./Address/NFTApprovalList/NFTApprovalList";
 export { NFTCollectionDetails } from "./NFT/NFTCollectionDetails/NFTCollectionDetails";
 export { NFTCollectionTokensList } from "./NFT/NFTCollectionTokensList/NFTCollectionTokensList";
 export { NFTFloorPrice } from "./NFT/NFTFloorPrice/NFTFloorPrice";
