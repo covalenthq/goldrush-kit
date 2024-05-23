@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { BlockTransactions as BlockTransactionsComponent } from "./BlockTransactions";
+import { fn } from "@storybook/test";
 
 type Story = StoryObj<typeof BlockTransactionsComponent>;
 
@@ -14,5 +15,13 @@ export const BlockTransactions: Story = {
     args: {
         chain_name: "eth-mainnet",
         block_height: 19575410,
+        actionable_transaction: (tx_hash) => ({
+            parent: "button",
+            parentProps: {
+                onClick: fn(() => {
+                    console.log(tx_hash);
+                }),
+            },
+        }),
     },
 };

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useToast } from "../../../utils/hooks";
 import { Address, AddressAvatar } from "../../Atoms";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type AddressCardProps } from "@/utils/types/atoms.types";
@@ -18,20 +16,8 @@ export const AddressCard: React.FC<AddressCardProps> = ({
     label = "Unnamed Wallet",
     show_copy_icon = true,
     show_qr_code = true,
+    actionable_address,
 }) => {
-    const [showCopy, setShowCopy] = useState(false);
-    const { toast } = useToast();
-
-    const handleCopyClick = () => {
-        toast({
-            description: "Address copied!",
-        });
-        setShowCopy(true);
-        setTimeout(() => {
-            setShowCopy(false);
-        }, 3000);
-    };
-
     return (
         <div className="flex items-center gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
             <AddressAvatar
@@ -49,6 +35,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                         address={address}
                         label={null}
                         show_copy_icon={show_copy_icon}
+                        actionable_address={actionable_address}
                     />
                     {show_qr_code && (
                         <Dialog>

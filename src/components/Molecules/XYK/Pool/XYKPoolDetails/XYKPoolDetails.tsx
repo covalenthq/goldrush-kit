@@ -15,7 +15,7 @@ import {
     type CovalentAPIError,
     type CardDetailProps,
 } from "@/utils/types/shared.types";
-import { Address, TokenAvatar } from "@/components/Atoms";
+import { Address, Pool } from "@/components/Atoms";
 
 export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
     chain_name,
@@ -23,6 +23,9 @@ export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
     pool_address,
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
+    actionable_address,
+    actionable_token_0,
+    actionable_token_1,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -92,76 +95,87 @@ export const XYKPoolDetails: React.FC<XYKPoolDetailsProps> = ({
                             [
                                 {
                                     content: (
-                                        <div className="mr-2 flex items-center">
-                                            <TokenAvatar
-                                                size={GRK_SIZES.EXTRA_SMALL}
-                                                token_url={
-                                                    result.token_0.logo_url
-                                                }
-                                            />
-                                            <div className="-translate-x-1/2">
-                                                <TokenAvatar
-                                                    size={GRK_SIZES.EXTRA_SMALL}
-                                                    token_url={
-                                                        result.token_1.logo_url
-                                                    }
-                                                />
-                                            </div>
-                                            {
+                                        <Pool
+                                            pool_address={result.exchange}
+                                            token_0_logo_url={
+                                                result.token_0?.logo_url
+                                            }
+                                            token_0_ticker_symbol={
                                                 result.token_0
                                                     .contract_ticker_symbol
                                             }
-                                            -
-                                            {
+                                            token_1_logo_url={
+                                                result.token_1?.logo_url
+                                            }
+                                            token_1_ticker_symbol={
                                                 result.token_1
                                                     .contract_ticker_symbol
                                             }
-                                        </div>
+                                        />
                                     ),
                                 },
                                 {
-                                    heading: `${result.token_0.contract_ticker_symbol} ADDRESS`,
+                                    heading: `${result.token_0?.contract_ticker_symbol} ADDRESS`,
                                     content: (
                                         <Address
                                             address={
-                                                result.token_0.contract_address
+                                                result.token_0?.contract_address
+                                            }
+                                            label={
+                                                result.token_0?.contract_name
+                                            }
+                                            actionable_address={
+                                                actionable_token_0
                                             }
                                         />
                                     ),
                                 },
                                 {
-                                    heading: `${result.token_1.contract_ticker_symbol} ADDRESS`,
+                                    heading: `${result.token_1?.contract_ticker_symbol} ADDRESS`,
                                     content: (
                                         <Address
                                             address={
-                                                result.token_1.contract_address
+                                                result.token_1?.contract_address
+                                            }
+                                            label={
+                                                result.token_1?.contract_name
+                                            }
+                                            actionable_address={
+                                                actionable_token_1
                                             }
                                         />
                                     ),
                                 },
                                 {
-                                    heading: `${result.token_0.contract_ticker_symbol} RESERVE`,
+                                    heading: `${result.token_0?.contract_ticker_symbol} RESERVE`,
                                     content: `${(
-                                        +result.token_0.reserve /
+                                        +result.token_0?.reserve /
                                         Math.pow(
                                             10,
-                                            +result.token_0.contract_decimals
+                                            +result.token_0?.contract_decimals
                                         )
-                                    ).toLocaleString()} ${result.token_0.contract_ticker_symbol}`,
+                                    ).toLocaleString()} ${result.token_0?.contract_ticker_symbol}`,
                                 },
                                 {
-                                    heading: `${result.token_1.contract_ticker_symbol} RESERVE`,
+                                    heading: `${result.token_1?.contract_ticker_symbol} RESERVE`,
                                     content: `${(
-                                        +result.token_1.reserve /
+                                        +result.token_1?.reserve /
                                         Math.pow(
                                             10,
-                                            +result.token_1.contract_decimals
+                                            +result.token_1?.contract_decimals
                                         )
-                                    ).toLocaleString()} ${result.token_1.contract_ticker_symbol}`,
+                                    ).toLocaleString()} ${result.token_1?.contract_ticker_symbol}`,
                                 },
                                 {
                                     heading: "PAIR ADDRESS",
-                                    content: <Address address={pool_address} />,
+                                    content: (
+                                        <Address
+                                            address={pool_address}
+                                            actionable_address={
+                                                actionable_address
+                                            }
+                                        />
+                                    ),
                                 },
                                 {
                                     heading: "TOTAL LIQUIDITY",

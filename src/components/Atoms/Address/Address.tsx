@@ -1,4 +1,8 @@
-import { copyToClipboard, truncate } from "@/utils/functions";
+import {
+    actionableWrapper,
+    copyToClipboard,
+    truncate,
+} from "@/utils/functions";
 import { IconWrapper } from "@/components/Shared";
 import { type AddressProps } from "@/utils/types/atoms.types";
 import { useToast } from "@/utils/hooks";
@@ -8,8 +12,9 @@ export const Address: React.FC<AddressProps> = ({
     address,
     label = null,
     show_copy_icon = true,
+    actionable_address = () => null,
 }) => {
-    const [showCopy, setShowCopy] = useState(false);
+    const [showCopy, setShowCopy] = useState<boolean>(false);
     const { toast } = useToast();
 
     const handleCopyClick = () => {
@@ -24,7 +29,10 @@ export const Address: React.FC<AddressProps> = ({
 
     return (
         <p className="flex items-center gap-x-2">
-            {label?.trim() || truncate(address)}
+            {actionableWrapper(
+                actionable_address(address),
+                label?.trim() || truncate(address)
+            )}
 
             {show_copy_icon && (
                 <button

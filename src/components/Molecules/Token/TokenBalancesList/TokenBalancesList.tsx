@@ -23,12 +23,14 @@ import {
     type CrossChainBalanceItem,
     type TokenBalancesListProps,
 } from "@/utils/types/molecules.types";
+import { actionableWrapper } from "@/utils/functions";
 
 export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
     chain_names,
     address,
     mask_balances,
     hide_small_balances,
+    actionable_token = () => null,
 }) => {
     const { covalentClient, chains } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -118,14 +120,15 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                             token_url={row.original.logo_urls.token_logo_url}
                         />
                         <div className="flex flex-col">
-                            <div style={{ color: chainColor }}>
+                            <p style={{ color: chainColor }}>
                                 {chain?.label.replace(" Mainnet", "")}
-                            </div>
-                            <label className="text-base">
-                                {row.original.contract_display_name
-                                    ? row.original.contract_display_name
-                                    : ""}
-                            </label>
+                            </p>
+                            {actionableWrapper(
+                                actionable_token(row.original),
+                                <p className="text-base">
+                                    {row.original.contract_display_name}
+                                </p>
+                            )}
                         </div>
                     </div>
                 );

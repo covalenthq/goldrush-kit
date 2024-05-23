@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { XYKWalletPoolList as XYKWalletPoolListComponent } from "./XYKWalletPoolList";
+import { fn } from "@storybook/test";
 
 type Story = StoryObj<typeof XYKWalletPoolListComponent>;
 
@@ -15,5 +16,14 @@ export const XYKWalletPoolList: Story = {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
         wallet_address: "0xfC43f5F9dd45258b3AFf31Bdbe6561D97e8B71de",
+        actionable_pool: (address: string) => ({
+            parent: "button",
+            parentProps: {
+                onClick: fn(() => {
+                    console.log(address);
+                }),
+                className: "hover:underline",
+            },
+        }),
     },
 };

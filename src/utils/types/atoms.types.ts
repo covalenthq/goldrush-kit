@@ -3,6 +3,14 @@ import {
     type NftCollectionAttribute,
 } from "@covalenthq/client-sdk";
 import { type GRK_SIZES } from "../constants/shared.constants";
+import { type ActionableType } from "./shared.types";
+
+export interface AddressProps {
+    address: string;
+    label?: string | null;
+    show_copy_icon?: boolean;
+    actionable_address?: (address: string) => ActionableType;
+}
 
 export interface AddressCardProps {
     label?: string | null;
@@ -10,12 +18,7 @@ export interface AddressCardProps {
     type?: "fingerprint" | "effigy" | "wallet";
     show_copy_icon?: boolean;
     show_qr_code?: boolean;
-}
-
-export interface AddressProps {
-    address: string;
-    label?: string | null;
-    show_copy_icon?: boolean;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface NFTProps {
@@ -42,26 +45,13 @@ export interface AddressAvatarProps {
     custom_avatar?: string;
 }
 
-export interface BalancePriceDeltaProps {
-    numerator: number;
-    denominator: number;
-}
-
-export interface CopyImageProps {
-    url: string;
-}
-
-export interface IconWrapperPropsType {
-    class_name?: string;
-    icon_class_name?: string;
-    on_click?: (e?: React.MouseEvent<HTMLDivElement>) => void;
-    icon_size?: string;
-    icon_type?: string;
-}
-
-export interface NetPriceDeltaProps {
-    numerator: number;
-    denominator: number;
+export interface PoolProps {
+    pool_address: string;
+    token_0_ticker_symbol: string;
+    token_1_ticker_symbol: string;
+    token_0_logo_url: string;
+    token_1_logo_url: string;
+    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface TokenAvatarProps {

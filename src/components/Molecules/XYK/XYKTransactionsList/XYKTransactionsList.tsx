@@ -13,11 +13,15 @@ import { handleTokenTransactions } from "@/utils/functions/pretty-exchange-amoun
 import { handleExchangeType } from "@/utils/functions/exchange-type";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms";
+import { Address, Timestamp } from "@/components/Atoms";
+import { actionableWrapper } from "@/utils/functions";
 
 export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
     chain_name,
     dex_name,
+    actionable_transaction,
+    actionable_token_0 = () => null,
+    actionable_token_1 = () => null,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -47,6 +51,23 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
     }, [dex_name, chain_name]);
 
     const columns: ColumnDef<ExchangeTransaction>[] = [
+        {
+            id: "tx_hash",
+            accessorKey: "tx_hash",
+            header: ({ column }) => (
+                <TableHeaderSorting<ExchangeTransaction>
+                    align="left"
+                    header={"Transaction Hash"}
+                    column={column}
+                />
+            ),
+            cell: ({ row }) => (
+                <Address
+                    address={row.original.tx_hash}
+                    actionable_address={actionable_transaction}
+                />
+            ),
+        },
         {
             accessorKey: "block_signed_at",
             id: "block_signed_at",
@@ -89,9 +110,15 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
                             >
                                 {POOL_TRANSACTION_MAP[row.original.act].name}
                             </Badge>{" "}
-                            {token_0.contract_ticker_symbol}{" "}
+                            {actionableWrapper(
+                                actionable_token_0(token_0?.contract_address),
+                                token_0?.contract_ticker_symbol
+                            )}{" "}
                             {row.original.act === "SWAP" ? "for" : "and"}{" "}
-                            {token_1.contract_ticker_symbol}
+                            {actionableWrapper(
+                                actionable_token_1(token_1?.contract_address),
+                                token_1?.contract_ticker_symbol
+                            )}
                         </div>
                     );
                 }
@@ -113,9 +140,15 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
                         >
                             {POOL_TRANSACTION_MAP[row.original.act].name}
                         </Badge>{" "}
-                        {token_in.contract_ticker_symbol}{" "}
+                        {actionableWrapper(
+                            actionable_token_0(token_in?.contract_address),
+                            token_in?.contract_ticker_symbol
+                        )}{" "}
                         {row.original.act === "SWAP" ? "for" : "and"}{" "}
-                        {token_out.contract_ticker_symbol}
+                        {actionableWrapper(
+                            actionable_token_1(token_out?.contract_address),
+                            token_out?.contract_ticker_symbol
+                        )}
                     </div>
                 );
             },
@@ -150,9 +183,9 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
                                 row.original.act,
                                 "0",
                                 row.original,
-                                row.original.token_0.contract_decimals
+                                row.original.token_0?.contract_decimals
                             )}{" "}
-                            {row.original.token_0.contract_ticker_symbol}
+                            {row.original.token_0?.contract_ticker_symbol}
                         </span>
                     );
                 }
@@ -192,9 +225,9 @@ export const XYKTransactionsList: React.FC<XYKTransactionsListProps> = ({
                                 row.original.act,
                                 "1",
                                 row.original,
-                                row.original.token_1.contract_decimals
+                                row.original.token_1?.contract_decimals
                             )}{" "}
-                            {row.original.token_1.contract_ticker_symbol}
+                            {row.original.token_1?.contract_ticker_symbol}
                         </span>
                     );
                 }

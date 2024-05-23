@@ -14,6 +14,8 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
     address,
     on_revoke_approval,
+    actionable_spender,
+    actionable_token,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -57,15 +59,14 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-1">
-                            {row.original.contract_ticker_symbol || (
-                                <Address
-                                    address={row.original.contract_address}
-                                />
-                            )}
-                        </div>
+                        <p className="flex items-center gap-1">
+                            {row.original.contract_ticker_symbol}
+                        </p>
                         <p className="text-xs opacity-80">
-                            <Address address={row.original.contract_address} />
+                            <Address
+                                address={row.original.contract_address}
+                                actionable_address={actionable_token}
+                            />
                         </p>
                     </div>
                 );
@@ -108,23 +109,21 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             header: ({ column }) => (
                 <TableHeaderSorting<NftApprovalsItem>
                     align="left"
-                    header={"Spender"}
+                    header={"Spender(s)"}
                     column={column}
                 />
             ),
             cell: ({ row }) => {
                 return (
                     <p className="flex flex-col">
-                        {row.original.spenders.map((spender) =>
-                            spender.spender_address_label ? (
-                                spender.spender_address_label
-                            ) : (
-                                <Address
-                                    address={spender.spender_address}
-                                    key={spender.spender_address}
-                                />
-                            )
-                        )}
+                        {row.original.spenders.map((spender) => (
+                            <Address
+                                address={spender.spender_address}
+                                label={spender.spender_address_label}
+                                key={spender.spender_address}
+                                actionable_address={actionable_spender}
+                            />
+                        ))}
                     </p>
                 );
             },

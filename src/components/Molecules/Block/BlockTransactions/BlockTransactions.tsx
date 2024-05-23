@@ -10,6 +10,7 @@ import { type CovalentAPIError } from "@/utils/types/shared.types";
 export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
     chain_name,
     block_height,
+    actionable_transaction,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -45,6 +46,10 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
     }, [chain_name, block_height]);
 
     return (
-        <Transactions errorMessage={errorMessage} maybeResult={maybeResult} />
+        <Transactions
+            errorMessage={errorMessage}
+            maybeResult={maybeResult}
+            actionable_transaction={actionable_transaction}
+        />
     );
 };

@@ -1,5 +1,6 @@
 import { type Option } from "@/utils/option";
 import type {
+    Block,
     NftApprovalsItem,
     TokensApprovalItem,
 } from "@covalenthq/client-sdk";
@@ -19,6 +20,7 @@ import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
+import { type ActionableType, type TransactionsProps } from "./shared.types";
 
 export interface AddressActivityDetailsProps {
     address: string;
@@ -37,12 +39,16 @@ export interface NFTApprovalListProps {
     chain_name: Chain;
     address: string;
     on_revoke_approval?: (approval: NftApprovalsItem) => void;
+    actionable_spender?: (address: string) => ActionableType;
+    actionable_token?: (address: string) => ActionableType;
 }
 
 export interface TokenApprovalListProps {
     chain_name: Chain;
     address: string;
-    on_revoke_approval?: (approval: TokensApprovalItem) => void;
+    on_revoke_approval?: (address: TokensApprovalItem) => void;
+    actionable_spender?: (address: string) => ActionableType;
+    actionable_token?: (address: string) => ActionableType;
 }
 
 export interface BlockDetailsProps {
@@ -58,14 +64,22 @@ export interface BlocksListProps {
 export interface LatestBlocksProps {
     chain_name: Chain;
     page_size?: number;
+    actionable_block?: (block: Block) => ActionableType;
 }
 
 export interface TransactionsListProps {
     chain_name: Chain;
+    actionable_block?: (block: number) => ActionableType;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_from?: (address: string) => ActionableType;
+    actionable_to?: (address: string) => ActionableType;
 }
 
 export interface LatestTransactionsProps {
     chain_name: Chain;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_from?: (address: string) => ActionableType;
+    actionable_to?: (address: string) => ActionableType;
 }
 
 export interface LatestPriceProps {
@@ -128,14 +142,15 @@ export interface NFTWalletCollectionListProps {
     address: string;
     maybeResult?: Option<NftTokenContractBalanceItem[] | null> | null;
     errorMessage?: string | null;
+    actionable_contract?: (address: string) => ActionableType;
 }
 
-export interface AddressTransactionsProps {
+export interface AddressTransactionsProps extends TransactionsProps {
     chain_name: Chain;
     address: string;
 }
 
-export interface BlockTransactionsProps {
+export interface BlockTransactionsProps extends TransactionsProps {
     chain_name: Chain;
     block_height: number;
 }
@@ -159,6 +174,7 @@ export interface TokenBalancesListProps {
     address: string;
     hide_small_balances?: boolean;
     mask_balances?: boolean;
+    actionable_token?: (token: CrossChainBalanceItem) => ActionableType;
 }
 
 export interface TokenTransfersListProps {
@@ -166,6 +182,8 @@ export interface TokenTransfersListProps {
     address: string;
     contract_address: string;
     page_size?: number;
+    actionable_from?: (address: string) => ActionableType;
+    actionable_to?: (address: string) => ActionableType;
 }
 
 export interface CrossChainBalanceItem extends BalanceItem {
@@ -178,23 +196,33 @@ export interface XYKPoolDetailsProps {
     dex_name: string;
     maybeResult?: Option<PoolWithTimeseries | null> | null;
     errorMessage?: string | null;
+    actionable_token_0?: (address: string) => ActionableType;
+    actionable_token_1?: (address: string) => ActionableType;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface XYKPoolListProps {
     chain_name: Chain;
     dex_name: string;
     page_size?: number;
+    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface XYKPoolTransactionsListProps {
     chain_name: Chain;
     dex_name: string;
     pool_address: string;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_token_0?: (address: string) => ActionableType;
+    actionable_token_1?: (address: string) => ActionableType;
 }
 
 export interface XYKTransactionsListProps {
     chain_name: Chain;
     dex_name: string;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_token_0?: (address: string) => ActionableType;
+    actionable_token_1?: (address: string) => ActionableType;
 }
 
 export interface XYKTokenDetailsProps {
@@ -203,18 +231,21 @@ export interface XYKTokenDetailsProps {
     dex_name: string;
     maybeResult?: Option<TokenV2VolumeWithChartData | null> | null;
     errorMessage?: string | null;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface XYKTokenListProps {
     chain_name: Chain;
     dex_name: string;
     page_size?: number;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface XYKTokenPoolListProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
+    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface XYKTimeseriesProps {
@@ -236,6 +267,9 @@ export interface XYKTokenTransactionsListProps {
     chain_name: Chain;
     dex_name: string;
     token_address: string;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_token_0?: (address: string) => ActionableType;
+    actionable_token_1?: (address: string) => ActionableType;
 }
 
 export interface XYKWalletDetailsProps {
@@ -248,23 +282,32 @@ export interface XYKWalletTransactionsListProps {
     chain_name: Chain;
     dex_name: string;
     wallet_address: string;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_token_0?: (address: string) => ActionableType;
+    actionable_token_1?: (address: string) => ActionableType;
 }
 
 export interface XYKWalletPoolListProps {
     chain_name: Chain;
     dex_name: string;
     wallet_address: string;
+    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface XYKWalletPositionsListProps {
     chain_name: Chain;
     dex_name: string;
     wallet_address: string;
+    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface TransactionDetailsProps {
     chain_name: Chain;
     tx_hash: string;
+    actionable_block?: (block: number) => ActionableType;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_from?: (address: string) => ActionableType;
+    actionable_to?: (address: string) => ActionableType;
 }
 
 export type EventDetails = {
@@ -327,4 +370,7 @@ export interface DecodedTransactionType {
 export interface TransactionReceiptProps {
     chain_name: Chain;
     tx_hash: string;
+    actionable_transaction?: (address: string) => ActionableType;
+    actionable_from?: (address: string) => ActionableType;
+    actionable_to?: (address: string) => ActionableType;
 }
