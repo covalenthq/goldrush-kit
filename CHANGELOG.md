@@ -1,5 +1,11 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.2
+
+**Features**
+
+-   Added actions for interlinking components
+
 ## 0.6.1
 
 **Features**
