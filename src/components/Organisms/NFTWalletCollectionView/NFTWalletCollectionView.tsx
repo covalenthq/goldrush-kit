@@ -13,7 +13,7 @@ import {
 
 export const NFTWalletCollectionView: React.FC<
     NFTWalletCollectionViewProps
-> = ({ chain_name, address }) => {
+> = ({ chain_name, address, actionable_address }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContractBalanceItem[] | null>>(None);
@@ -43,7 +43,10 @@ export const NFTWalletCollectionView: React.FC<
 
     return (
         <div className="space-y-4">
-            <AddressCard address={address} />
+            <AddressCard
+                address={address}
+                actionable_address={actionable_address}
+            />
 
             <NFTWalletCollectionDetails
                 address={address}

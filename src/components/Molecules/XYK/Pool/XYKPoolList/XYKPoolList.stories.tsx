@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { XYKPoolList as XYKPoolListComponent } from "./XYKPoolList";
-import { fn } from "@storybook/test";
+import { storyAction } from "@/utils/functions";
 
 type Story = StoryObj<typeof XYKPoolListComponent>;
 
@@ -15,14 +15,6 @@ export const XYKPoolList: Story = {
     args: {
         chain_name: "eth-mainnet",
         dex_name: "uniswap_v2",
-        actionable_pool: (address: string) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(address);
-                }),
-                className: "hover:underline",
-            },
-        }),
+        actionable_pool: (address: string) => storyAction(address),
     },
 };

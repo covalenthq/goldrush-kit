@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { TransactionReceipt as TransactionReceiptComponent } from "./TransactionReceipt";
-import { fn } from "@storybook/test";
+import { storyAction } from "@/utils/functions";
 
 type Story = StoryObj<typeof TransactionReceiptComponent>;
 
@@ -16,32 +16,8 @@ export const TransactionReceipt: Story = {
         chain_name: "eth-mainnet",
         tx_hash:
             "0x7a038d2f5be4d196a3ff389497f8d61a639e4a32d353758b4f062cafbc5d475c",
-        actionable_transaction: (address) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(address);
-                }),
-                className: "hover:underline",
-            },
-        }),
-        actionable_from: (address) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(address);
-                }),
-                className: "hover:underline",
-            },
-        }),
-        actionable_to: (address) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(address);
-                }),
-                className: "hover:underline",
-            },
-        }),
+        actionable_transaction: (address) => storyAction(address),
+        actionable_from: (address) => storyAction(address),
+        actionable_to: (address) => storyAction(address),
     },
 };
