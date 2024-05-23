@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { AddressCard as AddressCardComponent } from "./AddressCard";
+import { fn } from "@storybook/test";
 
 type Story = StoryObj<typeof AddressCardComponent>;
 
@@ -14,5 +15,14 @@ export const AddressCard: Story = {
     args: {
         address: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         type: "effigy",
+        actionable_address: (address: string) => ({
+            parent: "button",
+            parentProps: {
+                onClick: fn(() => {
+                    console.log(address);
+                }),
+                className: "hover:underline",
+            },
+        }),
     },
 };
