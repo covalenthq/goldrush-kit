@@ -19,11 +19,13 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { actionableWrapper } from "@/utils/functions";
 
 export const XYKTokenList: React.FC<XYKTokenListProps> = ({
     chain_name,
     dex_name,
     page_size = 10,
+    actionable_address = () => null,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -85,9 +87,11 @@ export const XYKTokenList: React.FC<XYKTokenListProps> = ({
                         size={GRK_SIZES.EXTRA_SMALL}
                         token_url={row.original.logo_url}
                     />
-                    <div className="flex flex-col">
-                        {row.original.contract_name}
-                    </div>
+
+                    {actionableWrapper(
+                        actionable_address(row.original.contract_address),
+                        row.original.contract_name
+                    )}
                 </div>
             ),
         },

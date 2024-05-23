@@ -6,7 +6,7 @@ import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
+import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestBlocksProps } from "@/utils/types/molecules.types";
@@ -14,7 +14,10 @@ import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { type Block } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
-export const LatestBlocks: React.FC<LatestBlocksProps> = ({ chain_name }) => {
+export const LatestBlocks: React.FC<LatestBlocksProps> = ({
+    chain_name,
+    actionable_block = () => null,
+}) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
@@ -69,38 +72,37 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({ chain_name }) => {
                     errorMessage ? (
                         <p className="col-span-5">{errorMessage}</p>
                     ) : blocks ? (
-                        blocks.map(
-                            ({ gas_limit, gas_used, height, signed_at }) => (
-                                <div
-                                    key={height}
-                                    className="grid grid-cols-2 items-center border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
-                                >
-                                    <CardDetail
-                                        heading={
-                                            <Timestamp
-                                                timestamp={signed_at}
-                                                defaultType="relative"
-                                            />
-                                        }
-                                        content={
-                                            <p className="text-base">
-                                                {height.toLocaleString()}
-                                            </p>
-                                        }
-                                        wrapperClassName="flex flex-col-reverse"
-                                    />
+                        blocks.map((block) => (
+                            <div
+                                key={block.height}
+                                className="grid grid-cols-2 items-center border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
+                            >
+                                <CardDetail
+                                    heading={
+                                        <Timestamp
+                                            timestamp={block.signed_at}
+                                            defaultType="relative"
+                                        />
+                                    }
+                                    content={actionableWrapper(
+                                        actionable_block(block),
+                                        <p className="text-base">
+                                            {block.height.toLocaleString()}
+                                        </p>
+                                    )}
+                                    wrapperClassName="flex flex-col-reverse"
+                                />
 
-                                    <CardDetail
-                                        heading={"GAS USED"}
-                                        content={`${(
-                                            (gas_used / gas_limit) *
-                                            100
-                                        ).toFixed(2)}%`}
-                                        subtext={`of ${gas_limit.toLocaleString()}`}
-                                    />
-                                </div>
-                            )
-                        )
+                                <CardDetail
+                                    heading={"GAS USED"}
+                                    content={`${(
+                                        (block.gas_used / block.gas_limit) *
+                                        100
+                                    ).toFixed(2)}%`}
+                                    subtext={`of ${block.gas_limit.toLocaleString()}`}
+                                />
+                            </div>
+                        ))
                     ) : (
                         <></>
                     ),

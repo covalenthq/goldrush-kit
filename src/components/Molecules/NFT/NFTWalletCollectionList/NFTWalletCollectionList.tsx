@@ -15,6 +15,7 @@ export const NFTWalletCollectionList: React.FC<
     address,
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
+    actionable_contract,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -94,6 +95,9 @@ export const NFTWalletCollectionList: React.FC<
                                             subtext={
                                                 <Address
                                                     address={contract_address}
+                                                    actionable_address={
+                                                        actionable_contract
+                                                    }
                                                 />
                                             }
                                         />

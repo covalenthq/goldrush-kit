@@ -13,7 +13,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Address, AddressAvatar } from "@/components/Atoms";
-import { truncate, calculateTimeSeriesGroup } from "@/utils/functions";
+import { calculateTimeSeriesGroup } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
@@ -27,6 +27,8 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     address,
     contract_address,
     page_size = 10,
+    actionable_from,
+    actionable_to,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -107,13 +109,17 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center gap-x-2">
                     <AddressAvatar
                         size={GRK_SIZES.EXTRA_SMALL}
                         type="fingerprint"
                         address={row.getValue("from_address")}
                     />
-                    {truncate(row.getValue("from_address"))}
+                    <Address
+                        address={row.original.from_address}
+                        label={row.original.from_address_label}
+                        actionable_address={actionable_from}
+                    />
                 </div>
             ),
         },
@@ -135,7 +141,11 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                             type="fingerprint"
                             address={row.getValue("to_address")}
                         />
-                        {truncate(row.getValue("to_address"))}
+                        <Address
+                            address={row.original.to_address}
+                            label={row.original.to_address_label}
+                            actionable_address={actionable_to}
+                        />
                     </div>
                 );
             },

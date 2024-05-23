@@ -13,6 +13,7 @@ import { Some } from "@/utils/option";
 export const Transactions: React.FC<TransactionsProps> = ({
     errorMessage = null,
     maybeResult = new Some(null),
+    actionable_transaction,
 }) => {
     const columns: ColumnDef<Transaction>[] = [
         {
@@ -25,7 +26,12 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => <Address address={row.original.tx_hash} />,
+            cell: ({ row }) => (
+                <Address
+                    address={row.original.tx_hash}
+                    actionable_address={actionable_transaction}
+                />
+            ),
         },
         {
             id: "block_height",

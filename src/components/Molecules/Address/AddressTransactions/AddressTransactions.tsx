@@ -10,6 +10,7 @@ import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
     chain_name,
     address,
+    actionable_transaction,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -45,6 +46,10 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
     }, [chain_name, address]);
 
     return (
-        <Transactions errorMessage={errorMessage} maybeResult={maybeResult} />
+        <Transactions
+            errorMessage={errorMessage}
+            maybeResult={maybeResult}
+            actionable_transaction={actionable_transaction}
+        />
     );
 };

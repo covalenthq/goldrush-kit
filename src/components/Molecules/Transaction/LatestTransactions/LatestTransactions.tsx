@@ -16,6 +16,9 @@ import { useEffect, useState } from "react";
 
 export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     chain_name,
+    actionable_from,
+    actionable_to,
+    actionable_transaction,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -106,7 +109,12 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                     <CardDetail
                                         content={
                                             <p className="text-base">
-                                                <Address address={tx_hash} />
+                                                <Address
+                                                    address={tx_hash}
+                                                    actionable_address={
+                                                        actionable_transaction
+                                                    }
+                                                />
                                             </p>
                                         }
                                         heading={
@@ -125,6 +133,9 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                                 <Address
                                                     label={from_address_label}
                                                     address={from_address}
+                                                    actionable_address={
+                                                        actionable_from
+                                                    }
                                                 />
                                             }
                                             wrapperClassName="flex gap-x-2"
@@ -135,6 +146,9 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                                 <Address
                                                     label={to_address_label}
                                                     address={to_address}
+                                                    actionable_address={
+                                                        actionable_to
+                                                    }
                                                 />
                                             }
                                             wrapperClassName="flex gap-x-2"

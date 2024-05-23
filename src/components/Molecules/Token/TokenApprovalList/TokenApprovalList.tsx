@@ -17,6 +17,8 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     chain_name,
     address,
     on_revoke_approval,
+    actionable_spender,
+    actionable_token,
 }) => {
     const { covalentClient } = useGoldRush();
 
@@ -67,17 +69,16 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                                         token_url={row.original.logo_url}
                                         size={GRK_SIZES.EXTRA_SMALL}
                                     />
-                                    {row.original.ticker_symbol || (
-                                        <Address
-                                            address={row.original.token_address}
-                                        />
-                                    )}
+                                    {row.original.ticker_symbol}
                                 </div>
                             }
                         />
                         <CardDetail
                             subtext={
-                                <Address address={row.original.token_address} />
+                                <Address
+                                    address={row.original.token_address}
+                                    actionable_address={actionable_token}
+                                />
                             }
                         />
                     </div>
@@ -144,16 +145,14 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <p className="flex flex-col">
-                        {row.original.spenders.map((spender) =>
-                            spender.spender_address_label ? (
-                                spender.spender_address_label
-                            ) : (
-                                <Address
-                                    address={spender.spender_address}
-                                    key={spender.spender_address}
-                                />
-                            )
-                        )}
+                        {row.original.spenders.map((spender) => (
+                            <Address
+                                address={spender.spender_address}
+                                label={spender.spender_address_label}
+                                key={spender.spender_address}
+                                actionable_address={actionable_spender}
+                            />
+                        ))}
                     </p>
                 );
             },

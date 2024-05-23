@@ -23,6 +23,7 @@ export const XYKTokenDetails: React.FC<XYKTokenDetailsProps> = ({
     token_address,
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
+    actionable_address,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -111,7 +112,12 @@ export const XYKTokenDetails: React.FC<XYKTokenDetailsProps> = ({
                                 {
                                     heading: "ADDRESS",
                                     content: (
-                                        <Address address={token_address} />
+                                        <Address
+                                            address={token_address}
+                                            actionable_address={
+                                                actionable_address
+                                            }
+                                        />
                                     ),
                                 },
                                 {

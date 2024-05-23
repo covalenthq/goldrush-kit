@@ -5,12 +5,9 @@ import {
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
-import { TokenAvatar } from "@/components/Atoms";
+import { Pool } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import {
-    GRK_SIZES,
-    defaultErrorMessage,
-} from "@/utils/constants/shared.constants";
+import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenPoolListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
@@ -18,8 +15,8 @@ import { type CovalentAPIError } from "@/utils/types/shared.types";
 export const XYKTokenPoolList: React.FC<XYKTokenPoolListProps> = ({
     chain_name,
     dex_name,
-
     token_address,
+    actionable_pool,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -63,30 +60,20 @@ export const XYKTokenPoolList: React.FC<XYKTokenPoolListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                const token_0 = row.original.token_0;
-                const token_1 = row.original.token_1;
-                const pool = `${token_0.contract_ticker_symbol}-${token_1.contract_ticker_symbol}`;
-
-                return (
-                    <div className="flex items-center gap-3">
-                        <div className="relative mr-2 flex">
-                            <TokenAvatar
-                                size={GRK_SIZES.EXTRA_SMALL}
-                                token_url={token_0.logo_url}
-                            />
-                            <div className="absolute left-4">
-                                <TokenAvatar
-                                    size={GRK_SIZES.EXTRA_SMALL}
-                                    token_url={token_1.logo_url}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col">{pool}</div>
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <Pool
+                    pool_address={row.original.exchange}
+                    token_0_logo_url={row.original.token_0?.logo_url}
+                    token_0_ticker_symbol={
+                        row.original.token_0?.contract_ticker_symbol
+                    }
+                    token_1_logo_url={row.original.token_1?.logo_url}
+                    token_1_ticker_symbol={
+                        row.original.token_1?.contract_ticker_symbol
+                    }
+                    actionable_pool={actionable_pool}
+                />
+            ),
         },
         {
             id: "total_liquidity_quote",

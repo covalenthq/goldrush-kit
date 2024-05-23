@@ -1,7 +1,7 @@
 import { Address, Timestamp } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
+import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionsListProps } from "@/utils/types/molecules.types";
@@ -15,6 +15,10 @@ import { useEffect, useState } from "react";
 
 export const TransactionsList: React.FC<TransactionsListProps> = ({
     chain_name,
+    actionable_block = () => null,
+    actionable_transaction,
+    actionable_from,
+    actionable_to,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -68,7 +72,12 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             accessorKey: "tx_hash",
             id: "tx_hash",
             header: "Transaction Hash",
-            cell: ({ row }) => <Address address={row.original.tx_hash} />,
+            cell: ({ row }) => (
+                <Address
+                    address={row.original.tx_hash}
+                    actionable_address={actionable_transaction}
+                />
+            ),
         },
         {
             accessorKey: "block_signed_at",
@@ -97,19 +106,33 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => row.original.block_height.toLocaleString(),
+            cell: ({ row }) =>
+                actionableWrapper(
+                    actionable_block(row.original.block_height),
+                    row.original.block_height.toLocaleString()
+                ),
         },
         {
             accessorKey: "from",
             id: "from",
             header: "From",
-            cell: ({ row }) => <Address address={row.original.from_address} />,
+            cell: ({ row }) => (
+                <Address
+                    address={row.original.from_address}
+                    actionable_address={actionable_from}
+                />
+            ),
         },
         {
             accessorKey: "to",
             id: "to",
             header: "To",
-            cell: ({ row }) => <Address address={row.original.to_address} />,
+            cell: ({ row }) => (
+                <Address
+                    address={row.original.to_address}
+                    actionable_address={actionable_to}
+                />
+            ),
         },
         {
             accessorKey: "value",

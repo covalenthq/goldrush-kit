@@ -19,12 +19,14 @@ import { Timestamp } from "@/components/Atoms";
 export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,
     tx_hash,
+    actionable_transaction,
+    actionable_from,
+    actionable_to,
 }) => {
     const { apikey, chains } = useGoldRush();
 
     const [maybeResult, setMaybeResult] =
         useState<Option<DecodedTransactionType | null>>(None);
-    const [relativeTime, setRelativeTime] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const CHAIN = useMemo<ChainItem | null>(() => {
@@ -86,7 +88,10 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                 <header className="flex flex-col gap-y-1">
                     <Heading size={4}>Transaction Receipt</Heading>
                     <div className="text-sm text-secondary-light dark:text-secondary-dark">
-                        <Address address={tx_hash} />
+                        <Address
+                            address={tx_hash}
+                            actionable_address={actionable_transaction}
+                        />
                     </div>
                 </header>
 
@@ -177,6 +182,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 result.tx_metadata
                                                     .from_address_label
                                             }
+                                            actionable_address={actionable_from}
                                         />
                                     </div>
 
@@ -192,6 +198,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 result.tx_metadata
                                                     .to_address_label
                                             }
+                                            actionable_address={actionable_to}
                                         />
                                     </div>
                                 </div>
