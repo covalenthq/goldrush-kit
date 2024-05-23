@@ -13,6 +13,7 @@ import { defaultErrorMessage } from "@/utils/constants/shared.constants";
 
 export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
     address,
+    actionable_address,
 }) => {
     const { covalentClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
@@ -45,7 +46,10 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
 
     return (
         <div className="space-y-4">
-            <AddressCard address={address} />
+            <AddressCard
+                address={address}
+                actionable_address={actionable_address}
+            />
 
             <AddressActivityDetails
                 address={address}

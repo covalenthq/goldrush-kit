@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { TokenApprovalList as TokenApprovalListComponent } from "./TokenApprovalList";
-import { fn } from "@storybook/test";
+import { storyAction } from "@/utils/functions";
 
 type Story = StoryObj<typeof TokenApprovalListComponent>;
 
@@ -15,21 +15,7 @@ export const TokenApprovalList: Story = {
     args: {
         chain_name: "eth-mainnet",
         address: "demo.eth",
-        actionable_token: (approval) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(approval);
-                }),
-            },
-        }),
-        actionable_spender: (approval) => ({
-            parent: "button",
-            parentProps: {
-                onClick: fn(() => {
-                    console.log(approval);
-                }),
-            },
-        }),
+        actionable_token: (approval) => storyAction(approval),
+        actionable_spender: (approval) => storyAction(approval),
     },
 };
