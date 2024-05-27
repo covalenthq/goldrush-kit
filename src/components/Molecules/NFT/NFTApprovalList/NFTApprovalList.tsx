@@ -9,6 +9,7 @@ import { TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
+import { TableHeader } from "@/components/ui/table";
 
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
@@ -49,13 +50,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "token_details",
             accessorKey: "token_details",
-            header: ({ column }) => (
-                <TableHeaderSorting<NftApprovalsItem>
-                    align="left"
-                    header={"Token"}
-                    column={column}
-                />
-            ),
+            header: () => <TableHeader>Token</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
@@ -74,7 +69,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         },
         {
             id: "token_balance",
-            accessorKey: "token_balance",
+            accessorKey: "token_balances",
             header: ({ column }) => (
                 <TableHeaderSorting<NftApprovalsItem>
                     align="left"
@@ -87,13 +82,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "token_id",
             accessorKey: "token_id",
-            header: ({ column }) => (
-                <TableHeaderSorting<NftApprovalsItem>
-                    align="left"
-                    header={"Token ID"}
-                    column={column}
-                />
-            ),
+            header: () => <TableHeader>Token ID</TableHeader>,
             cell: ({ row }) => {
                 const token_ids = row.original.token_balances.map(
                     (balance) => balance.token_id
@@ -106,13 +95,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "spender_address_label",
             accessorKey: "spender_address_label",
-            header: ({ column }) => (
-                <TableHeaderSorting<NftApprovalsItem>
-                    align="left"
-                    header={"Spender(s)"}
-                    column={column}
-                />
-            ),
+            header: () => <TableHeader>Spender Address Label</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <p className="flex flex-col">
@@ -131,13 +114,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "risk_factor",
             accessorKey: "risk_factor",
-            header: ({ column }) => (
-                <TableHeaderSorting<NftApprovalsItem>
-                    align="left"
-                    header={"Risk Factor"}
-                    column={column}
-                />
-            ),
+            header: () => <TableHeader>Risk Factor</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <span
