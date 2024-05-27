@@ -53,7 +53,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "token_details",
             accessorKey: "token_details",
-            header: ({ column }) => <TableHeader>Token</TableHeader>,
+            header: () => <TableHeader>Token</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
@@ -130,7 +130,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "spender_address_label",
             accessorKey: "spender_address_label",
-            header: ({ column }) => <TableHeader>Spender(s)</TableHeader>,
+            header: () => <TableHeader>Spender(s)</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <p className="flex flex-col">
@@ -149,7 +149,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "risk_factor",
             accessorKey: "risk_factor",
-            header: ({ column }) => <TableHeader>Risk Factor</TableHeader>,
+            header: () => <TableHeader>Risk Factor</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <span
