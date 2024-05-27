@@ -12,6 +12,7 @@ import { CardDetail, TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Address, TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
+import { TableHeader } from "@/components/ui/table";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     chain_name,
@@ -52,13 +53,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "token_details",
             accessorKey: "token_details",
-            header: ({ column }) => (
-                <TableHeaderSorting<TokensApprovalItem>
-                    align="left"
-                    header={"Token"}
-                    column={column}
-                />
-            ),
+            header: ({ column }) => <TableHeader>Token</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
@@ -135,13 +130,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "spender_address_label",
             accessorKey: "spender_address_label",
-            header: ({ column }) => (
-                <TableHeaderSorting<TokensApprovalItem>
-                    align="left"
-                    header={"Spender(s)"}
-                    column={column}
-                />
-            ),
+            header: ({ column }) => <TableHeader>Spender(s)</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <p className="flex flex-col">
@@ -160,13 +149,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "risk_factor",
             accessorKey: "risk_factor",
-            header: ({ column }) => (
-                <TableHeaderSorting<TokensApprovalItem>
-                    align="left"
-                    header={"Risk Factor"}
-                    column={column}
-                />
-            ),
+            header: ({ column }) => <TableHeader>Risk Factor</TableHeader>,
             cell: ({ row }) => {
                 return (
                     <span
