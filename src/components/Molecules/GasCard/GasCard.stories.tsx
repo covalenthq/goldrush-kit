@@ -13,6 +13,5 @@ export default meta;
 export const GasCard: Story = {
     args: {
         chain_name: "eth-mainnet",
-        event_type: "erc20",
     },
 };

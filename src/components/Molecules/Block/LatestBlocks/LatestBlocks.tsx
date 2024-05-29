@@ -85,7 +85,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                                         />
                                     }
                                     content={actionableWrapper(
-                                        actionable_block(block),
+                                        actionable_block(block.height),
                                         <p className="text-base">
                                             {block.height.toLocaleString()}
                                         </p>

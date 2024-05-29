@@ -10,10 +10,16 @@ import {
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Button } from "@/components/ui/button";
 
-export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
-    const [maybeResult, setMaybeResult] =
-        useState<Option<GasPricesResponse | null>>(None);
+export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
+    const [isErc20, setIsErc20] = useState<boolean>(false);
+    const [maybeResult, setMaybeResult] = useState<
+        Option<{
+            erc: GasPricesResponse;
+            native: GasPricesResponse;
+        } | null>
+    >(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { covalentClient } = useGoldRush();
 
@@ -22,22 +28,38 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
             setMaybeResult(None);
             setErrorMessage(null);
             try {
-                const { data, ...error } =
+                const [
+                    { data: ercData, ...ercError },
+                    { data: nativeData, ...nativeError },
+                ] = await Promise.all([
+                    covalentClient.BaseService.getGasPrices(
+                        chain_name,
+                        "erc20"
+                    ),
                     await covalentClient.BaseService.getGasPrices(
                         chain_name,
-                        event_type
-                    );
-                if (error.error) {
-                    throw error;
+                        "nativetokens"
+                    ),
+                ]);
+                if (ercError.error) {
+                    throw ercError;
                 }
-                setMaybeResult(new Some(data));
+                if (nativeError.error) {
+                    throw nativeError;
+                }
+                setMaybeResult(
+                    new Some({
+                        erc: ercData,
+                        native: nativeData,
+                    })
+                );
             } catch (error: CovalentAPIError | any) {
                 setErrorMessage(error?.error_message ?? defaultErrorMessage);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
         })();
-    }, [chain_name, event_type]);
+    }, [chain_name]);
 
     const copy = useMemo<
         {
@@ -66,31 +88,56 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
         <div className="flex w-full flex-col gap-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
             {maybeResult.match({
                 None: () => (
-                    <div className="mx-auto">
+                    <div className="flex items-center justify-between">
+                        <Skeleton size={GRK_SIZES.LARGE} />
                         <Skeleton size={GRK_SIZES.LARGE} />
                     </div>
                 ),
                 Some: (result) =>
                     result ? (
-                        <p className="text-center text-xl">
-                            ⛽ Base Fee:{" "}
-                            {Math.round(
-                                (Number(result.base_fee) ?? 0) / Math.pow(10, 9)
-                            )}{" "}
-                            Gwei
-                        </p>
+                        <div className="flex items-center justify-between">
+                            <p className="text-lg">
+                                Base Fee:{" "}
+                                {Math.round(
+                                    (Number(
+                                        result?.[isErc20 ? "erc" : "native"]
+                                            .base_fee
+                                    ) ?? 0) / Math.pow(10, 9)
+                                )}{" "}
+                                Gwei ⛽
+                            </p>
+
+                            <div className="flex gap-2">
+                                <Button
+                                    disabled={!maybeResult.isDefined}
+                                    variant={isErc20 ? "primary" : "outline"}
+                                    onClick={() => setIsErc20(true)}
+                                    size={"sm"}
+                                >
+                                    ERC20
+                                </Button>
+                                <Button
+                                    disabled={!maybeResult.isDefined}
+                                    variant={!isErc20 ? "primary" : "outline"}
+                                    onClick={() => setIsErc20(false)}
+                                    size={"sm"}
+                                >
+                                    Native Tokens
+                                </Button>
+                            </div>
+                        </div>
                     ) : (
                         <></>
                     ),
             })}
 
-            <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
+            <div className="mt-4 flex flex-col items-center justify-between gap-4 md:flex-row">
                 {maybeResult.match({
                     None: () =>
                         Array(3)
                             .fill(null)
                             .map(() => (
-                                <div key={Math.random()} className="mx-auto">
+                                <div key={Math.random()}>
                                     <Skeleton size={GRK_SIZES.LARGE} />
                                 </div>
                             )),
@@ -98,7 +145,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name, event_type }) => {
                         errorMessage ? (
                             <p className="mt-4">{errorMessage}</p>
                         ) : result ? (
-                            result.items
+                            result[isErc20 ? "erc" : "native"].items
                                 .sort(
                                     (a, b) =>
                                         parseInt(a.gas_price) -

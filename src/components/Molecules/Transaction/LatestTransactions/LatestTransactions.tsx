@@ -11,7 +11,10 @@ import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { type Transaction } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    type Transaction,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
 export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
@@ -156,13 +159,10 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                     </div>
 
                                     <CardDetail
-                                        content={`${
-                                            Number(value) /
-                                            Math.pow(
-                                                10,
-                                                gas_metadata.contract_decimals
-                                            )
-                                        } ${gas_metadata.contract_ticker_symbol}`}
+                                        content={`${calculatePrettyBalance(
+                                            Number(value),
+                                            gas_metadata.contract_decimals
+                                        )} ${gas_metadata.contract_ticker_symbol}`}
                                         heading={pretty_value_quote}
                                         wrapperClassName="flex flex-col-reverse"
                                     />

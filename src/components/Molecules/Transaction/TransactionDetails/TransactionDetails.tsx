@@ -138,14 +138,10 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 },
                                 {
                                     heading: "VALUE",
-                                    content: `${
-                                        Number(result.value) /
-                                        Math.pow(
-                                            10,
-                                            result.gas_metadata
-                                                .contract_decimals
-                                        )
-                                    } ${result.gas_metadata.contract_ticker_symbol}`,
+                                    content: `${calculatePrettyBalance(
+                                        Number(result.value),
+                                        result.gas_metadata.contract_decimals
+                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
                                     subtext: result.pretty_value_quote,
                                 },
                                 {

@@ -13,6 +13,6 @@ type Story = StoryObj<typeof TimestampComponent>;
 export const Timestamp: Story = {
     args: {
         timestamp: new Date(),
-        defaultType: "descriptive",
+        defaultType: "relative",
     },
 };
