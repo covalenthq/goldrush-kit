@@ -33,6 +33,7 @@ export interface NFTProps {
 export interface TimestampProps {
     timestamp: string | Date;
     defaultType?: "relative" | "descriptive";
+    dynamic?: boolean;
 }
 
 export interface AddressAvatarProps {

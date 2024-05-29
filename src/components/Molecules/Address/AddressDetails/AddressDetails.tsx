@@ -149,12 +149,11 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                 {
                                     heading: `${native.contract_ticker_symbol} VALUE`,
                                     content: prettifyCurrency(
-                                        (Number(native.balance) /
-                                            Math.pow(
-                                                10,
-                                                native.contract_decimals
-                                            )) *
-                                            native.quote_rate
+                                        calculatePrettyBalance(
+                                            Number(native.balance) *
+                                                native.quote_rate,
+                                            native.contract_decimals
+                                        )
                                     ),
                                     subtext: `@${prettifyCurrency(
                                         native.quote_rate

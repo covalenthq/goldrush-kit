@@ -1,6 +1,5 @@
 import { type Option } from "@/utils/option";
 import type {
-    Block,
     NftApprovalsItem,
     TokensApprovalItem,
 } from "@covalenthq/client-sdk";
@@ -59,18 +58,19 @@ export interface BlockDetailsProps {
 export interface BlocksListProps {
     chain_name: Chain;
     page_size?: number;
+    actionable_block?: (block: number) => ActionableType;
 }
 
 export interface LatestBlocksProps {
     chain_name: Chain;
     page_size?: number;
-    actionable_block?: (block: Block) => ActionableType;
+    actionable_block?: (block: number) => ActionableType;
 }
 
 export interface TransactionsListProps {
     chain_name: Chain;
     actionable_block?: (block: number) => ActionableType;
-    actionable_transaction?: (address: string) => ActionableType;
+    actionable_transaction?: (tx: string) => ActionableType;
     actionable_from?: (address: string) => ActionableType;
     actionable_to?: (address: string) => ActionableType;
 }
@@ -88,7 +88,6 @@ export interface LatestPriceProps {
 
 export interface GasCardProps {
     chain_name: Chain;
-    event_type: "erc20" | "nativetokens";
 }
 
 export interface AddressDetailsProps {
@@ -145,12 +144,12 @@ export interface NFTWalletCollectionListProps {
     actionable_contract?: (address: string) => ActionableType;
 }
 
-export interface AddressTransactionsProps extends TransactionsProps {
+export interface AddressTransactionsProps extends Partial<TransactionsProps> {
     chain_name: Chain;
     address: string;
 }
 
-export interface BlockTransactionsProps extends TransactionsProps {
+export interface BlockTransactionsProps extends Partial<TransactionsProps> {
     chain_name: Chain;
     block_height: number;
 }

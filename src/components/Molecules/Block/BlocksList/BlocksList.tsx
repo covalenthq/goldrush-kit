@@ -2,7 +2,7 @@ import { Address } from "@/components/Atoms";
 import { Timestamp } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { defaultErrorMessage } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
+import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlocksListProps } from "@/utils/types/molecules.types";
@@ -14,6 +14,7 @@ import { useCallback, useEffect, useState } from "react";
 export const BlocksList: React.FC<BlocksListProps> = ({
     chain_name,
     page_size = 10,
+    actionable_block = () => null,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -70,7 +71,11 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => row.original.height.toLocaleString(),
+            cell: ({ row }) =>
+                actionableWrapper(
+                    actionable_block(row.original.height),
+                    row.original.height.toLocaleString()
+                ),
         },
         {
             accessorKey: "signed_at",

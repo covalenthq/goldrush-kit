@@ -15,6 +15,6 @@ export default meta;
 export const LatestBlocks: Story = {
     args: {
         chain_name: "eth-mainnet",
-        actionable_block: (block: Block) => storyAction(block),
+        actionable_block: (block: number) => storyAction(block),
     },
 };
