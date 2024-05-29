@@ -14,6 +14,7 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type NFTVolumeProps } from "@/utils/types/molecules.types";
 import { prettifyCurrency } from "@covalenthq/client-sdk";
+import { Card } from "@/components/ui/card";
 
 export const NFTVolume: React.FC<NFTVolumeProps> = ({
     chain_name,
@@ -100,7 +101,7 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
     });
 
     return (
-        <div className="rounded border border-secondary-light p-4 dark:border-secondary-dark">
+        <Card className="min-h-80 w-full p-4">
             <div className="pb-4">
                 <Heading size={4}>Volume</Heading>
             </div>
@@ -175,6 +176,6 @@ export const NFTVolume: React.FC<NFTVolumeProps> = ({
             </div>
 
             {body}
-        </div>
+        </Card>
     );
 };

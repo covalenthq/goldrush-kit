@@ -11,6 +11,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
     const [isErc20, setIsErc20] = useState<boolean>(false);
@@ -85,7 +86,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
     );
 
     return (
-        <div className="flex w-full flex-col gap-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
+        <Card className="flex w-full flex-col gap-4 p-4">
             {maybeResult.match({
                 None: () => (
                     <div className="flex items-center justify-between">
@@ -193,6 +194,6 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                         ),
                 })}
             </div>
-        </div>
+        </Card>
     );
 };

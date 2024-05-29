@@ -71,7 +71,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     }, [chain_name]);
 
     return (
-        <Card className="flex w-full flex-col rounded border border-secondary-light px-4 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
+        <Card className="flex w-full flex-col px-4">
             {maybeResult.match({
                 None: () =>
                     new Array(5).fill(null).map(() => (

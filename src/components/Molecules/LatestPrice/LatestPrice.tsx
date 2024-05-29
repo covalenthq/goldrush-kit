@@ -44,7 +44,7 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
     }, [chain_name]);
 
     return (
-        <Card className="flex w-full flex-col items-start gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark dark:bg-background-dark dark:text-white">
+        <Card className="flex w-full flex-col items-start gap-x-4 p-2">
             {maybeResult.match({
                 None: () => (
                     <>

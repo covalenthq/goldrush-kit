@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import QRCode from "react-qr-code";
 import { IconWrapper } from "@/components/Shared";
+import { Card } from "@/components/ui/card";
 
 export const AddressCard: React.FC<AddressCardProps> = ({
     address,
@@ -19,7 +20,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
     actionable_address,
 }) => {
     return (
-        <div className="flex items-center gap-x-4 rounded border border-secondary-light p-2 dark:border-secondary-dark">
+        <Card className="flex items-center gap-x-4 p-2">
             <AddressAvatar
                 type={type}
                 address={address}
@@ -70,6 +71,6 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                     )}
                 </div>
             </div>
-        </div>
+        </Card>
     );
 };
