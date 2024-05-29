@@ -1,5 +1,18 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.3
+
+**Features**
+
+-   Added `dynamic` property to `Timestamp`
+-   Updated `GasCard` UI
+
+**Fixes**
+
+-   Removed Table Header Sorting for Approvals List
+-   Value calculation in multiple places
+-   `actions` for `BlocksList` and `LatestBlocks`
+
 ## 0.6.2
 
 **Features**
