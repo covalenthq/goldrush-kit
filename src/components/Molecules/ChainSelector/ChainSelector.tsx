@@ -32,6 +32,10 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
             return null;
         }
 
+        if (!chain_options.length) {
+            return chains;
+        }
+
         return chain_options.reduce((acc: ChainItem[], nameOrId) => {
             const foundChain: ChainItem | null =
                 chains.find(

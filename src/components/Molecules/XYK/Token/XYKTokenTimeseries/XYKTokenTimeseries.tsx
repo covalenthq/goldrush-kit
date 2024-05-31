@@ -20,6 +20,7 @@ import {
 } from "@covalenthq/client-sdk";
 import { capitalizeFirstLetter } from "@/utils/functions/capitalize";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Card } from "@/components/ui/card";
 
 export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
     chain_name,
@@ -105,13 +106,12 @@ export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
     }, [dex_name, token_address, chain_name, initialMaybeResult]);
 
     return (
-        <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
+        <Card className="min-h-80 w-full p-4">
             <div className="pb-4">
                 <Heading size={4}>
                     {`${capitalizeFirstLetter(activeChart)} (USD)`}
                 </Heading>
             </div>
-
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     <Button
@@ -155,7 +155,6 @@ export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
                     </Button>
                 </div>
             </div>
-
             {chartData.match({
                 None: () => {
                     return (
@@ -200,6 +199,6 @@ export const XYKTokenTimeseries: React.FC<XYKTokenTimeseriesProps> = ({
                     }
                 },
             })}
-        </div>
+        </Card>
     );
 };

@@ -13,6 +13,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Address, TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 import { TableHeader } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     chain_name,
@@ -152,19 +153,19 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             header: () => <TableHeader>Risk Factor</TableHeader>,
             cell: ({ row }) => {
                 return (
-                    <span
-                        className={`${
+                    <Badge
+                        variant={
                             row.original.spenders[0].risk_factor ===
                             "CONSIDER REVOKING"
-                                ? "bg-red-500"
-                                : "bg-green-500"
-                        } rounded px-2 py-1 text-white`}
+                                ? "danger"
+                                : "success"
+                        }
                     >
                         {row.original.spenders[0].risk_factor ===
                         "CONSIDER REVOKING"
                             ? "High"
                             : "Low"}
-                    </span>
+                    </Badge>
                 );
             },
         },

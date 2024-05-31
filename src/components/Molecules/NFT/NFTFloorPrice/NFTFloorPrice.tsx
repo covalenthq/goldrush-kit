@@ -17,6 +17,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTFloorPriceProps } from "@/utils/types/molecules.types";
+import { Card } from "@/components/ui/card";
 
 export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     chain_name,
@@ -110,7 +111,7 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
     });
 
     return (
-        <div className="min-h-96 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
+        <Card className="min-h-96 w-full p-4">
             <div className="pb-4">
                 <Heading size={4}>Floor Price</Heading>
             </div>
@@ -185,6 +186,6 @@ export const NFTFloorPrice: React.FC<NFTFloorPriceProps> = ({
             </div>
 
             {body}
-        </div>
+        </Card>
     );
 };

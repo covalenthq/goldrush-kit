@@ -12,6 +12,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type NFTSalesCountProps } from "@/utils/types/molecules.types";
+import { Card } from "@/components/ui/card";
 
 export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
     chain_name,
@@ -76,7 +77,7 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
     });
 
     return (
-        <div className="min-h-80 w-full rounded border border-secondary-light p-4 dark:border-secondary-dark">
+        <Card className="min-h-80 w-full p-4">
             <div className="pb-4">
                 <Heading size={4}>Sales History</Heading>
             </div>
@@ -115,6 +116,6 @@ export const NFTSalesCount: React.FC<NFTSalesCountProps> = ({
             </div>
 
             {body}
-        </div>
+        </Card>
     );
 };

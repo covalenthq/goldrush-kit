@@ -82,7 +82,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     );
 
     return (
-        <Card className="overflow-hidden rounded border border-secondary-light dark:border-secondary-dark">
+        <Card className="overflow-hidden">
             <figure className="h-10 w-full bg-primary-light dark:bg-primary-dark" />
             <main className="flex h-full w-full flex-col gap-y-4 p-4">
                 <header className="flex flex-col gap-y-1">
