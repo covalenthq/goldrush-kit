@@ -12,7 +12,7 @@ export const TableHeaderSorting: <T>(
               : "sort";
     return (
         <div
-            className={`flex cursor-pointer items-center gap-1 whitespace-nowrap ${
+            className={`group flex cursor-pointer items-center gap-1 whitespace-nowrap ${
                 align === "right"
                     ? "justify-end"
                     : align === "center"
@@ -20,7 +20,10 @@ export const TableHeaderSorting: <T>(
                       : ""
             }`}
         >
-            {header}
+            <span className="transition-all group-hover:underline">
+                {header}
+            </span>
+
             {icon && (
                 <IconWrapper
                     icon_size={sortedIcon === "sort" ? "text-base" : ""}

@@ -10,6 +10,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
 import { TableHeader } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
@@ -117,17 +118,19 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             header: () => <TableHeader>Risk Factor</TableHeader>,
             cell: ({ row }) => {
                 return (
-                    <span
-                        className={`${
-                            row.original.spenders[0].allowance === "Unlimited"
-                                ? "bg-red-500"
-                                : "bg-green-500"
-                        } rounded px-2 py-1 text-white`}
+                    <Badge
+                        variant={
+                            row.original.spenders[0].allowance ===
+                            "CONSIDER REVOKING"
+                                ? "danger"
+                                : "success"
+                        }
                     >
-                        {row.original.spenders[0].allowance === "Unlimited"
+                        {row.original.spenders[0].allowance ===
+                        "CONSIDER REVOKING"
                             ? "High"
                             : "Low"}
-                    </span>
+                    </Badge>
                 );
             },
         },

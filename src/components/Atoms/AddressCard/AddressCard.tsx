@@ -28,7 +28,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                 size={GRK_SIZES.SMALL}
             />
             <div className="flex h-full flex-col justify-center">
-                <h2 className="text-base font-semibold text-primary-light dark:text-primary-dark">
+                <h2 className="text-base font-semibold text-foreground-light dark:text-foreground-dark">
                     {label}
                 </h2>
                 <div className="flex gap-1">

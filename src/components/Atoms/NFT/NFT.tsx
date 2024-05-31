@@ -1,6 +1,5 @@
 import { type NFTProps } from "@/utils/types/atoms.types";
-import { Card } from "@tremor/react";
-import { CardContent, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { GRK_SIZES, defaultErrorNFT } from "@/utils/constants/shared.constants";
 import { CardDetail } from "@/components/Shared";
 import { TokenAvatar } from "../TokenAvatar/TokenAvatar";

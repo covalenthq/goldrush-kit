@@ -46,7 +46,7 @@ export enum PERIOD {
 
 export const POOL_TRANSACTION_MAP: Record<
     string,
-    { name: string; color: "default" | "secondary" | "destructive" | "outline" }
+    { name: string; color: "default" | "secondary" | "danger" | "outline" }
 > = {
     SWAP: {
         name: "SWAP",
@@ -54,7 +54,7 @@ export const POOL_TRANSACTION_MAP: Record<
     },
     REMOVE_LIQUIDITY: {
         name: "REMOVE",
-        color: "destructive",
+        color: "danger",
     },
     ADD_LIQUIDITY: {
         name: "ADD",

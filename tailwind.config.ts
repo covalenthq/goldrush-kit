@@ -7,18 +7,10 @@ const config = {
         "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        container: {
-            center: true,
-            padding: "2rem",
-            screens: {
-                "2xl": "1400px",
-            },
-        },
         extend: {
             colors: {
-                danger: "hsl(var(--grk-destructive))",
-                success: "hsl(var(--grk-success))",
-
+                danger: "#FA3D1D",
+                success: "#4BD17E",
                 primary: {
                     dark: {
                         DEFAULT: "var(--grk-primary-dark-DEFAULT)",
