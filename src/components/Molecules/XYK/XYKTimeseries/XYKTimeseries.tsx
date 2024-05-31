@@ -106,6 +106,7 @@ export const XYKTimeseries: React.FC<XYKTimeseriesProps> = ({
                     {`${capitalizeFirstLetter(activeChart)} (USD)`}
                 </Heading>
             </div>
+
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     <Button
@@ -149,6 +150,7 @@ export const XYKTimeseries: React.FC<XYKTimeseriesProps> = ({
                     </Button>
                 </div>
             </div>
+
             {chartData.match({
                 None: () => {
                     return (

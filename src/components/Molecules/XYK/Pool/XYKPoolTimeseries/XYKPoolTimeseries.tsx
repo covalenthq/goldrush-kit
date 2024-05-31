@@ -107,12 +107,12 @@ export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
 
     return (
         <Card className="min-h-80 w-full p-4">
-            {" "}
             <div className="pb-4">
                 <Heading size={4}>
                     {`${capitalizeFirstLetter(activeChart)} (USD)`}
                 </Heading>
             </div>
+
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     <Button
@@ -156,6 +156,7 @@ export const XYKPoolTimeseries: React.FC<XYKPoolTimeseriesProps> = ({
                     </Button>
                 </div>
             </div>
+
             {chartData.match({
                 None: () => {
                     return (
