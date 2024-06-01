@@ -51,8 +51,6 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
         }, []);
     }, [chains, chain_options]);
 
-    console.log("dropdownChains", dropdownChains);
-
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>

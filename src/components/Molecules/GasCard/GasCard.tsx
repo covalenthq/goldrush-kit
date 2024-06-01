@@ -131,7 +131,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                 ),
                 Some: (result) =>
                     errorMessage ? (
-                        <p className="mt-4">{errorMessage}</p>
+                        <p>{errorMessage}</p>
                     ) : result ? (
                         <>
                             <div
