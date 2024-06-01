@@ -17,10 +17,28 @@ export const AddressCard: React.FC<AddressCardProps> = ({
     label = "Unnamed Wallet",
     show_copy_icon = true,
     show_qr_code = true,
+    minified = false,
     actionable_address,
 }) => {
+    if (minified) {
+        return (
+            <div className="flex items-center gap-x-2">
+                <AddressAvatar
+                    size={GRK_SIZES.EXTRA_SMALL}
+                    type="fingerprint"
+                    address={address}
+                />
+                <Address
+                    address={address}
+                    label={label}
+                    actionable_address={actionable_address}
+                />
+            </div>
+        );
+    }
+
     return (
-        <Card className="flex items-center gap-x-4 p-2">
+        <Card className="flex items-center gap-x-2 p-2">
             <AddressAvatar
                 type={type}
                 address={address}

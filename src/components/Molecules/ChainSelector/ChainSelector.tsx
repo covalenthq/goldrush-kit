@@ -19,6 +19,7 @@ import { type ChainItem } from "@covalenthq/client-sdk";
 import { CommandLoading } from "cmdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { TokenAvatar } from "@/components/Atoms";
 
 export const ChainSelector: React.FC<ChainSelectorProps> = ({
     chain_options = [],
@@ -50,6 +51,8 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
         }, []);
     }, [chains, chain_options]);
 
+    console.log("dropdownChains", dropdownChains);
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -59,7 +62,19 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                     aria-expanded={open}
                     className="flex w-72 items-center justify-between"
                 >
-                    {!selectedChain ? "Select a chain..." : selectedChain.label}
+                    {!selectedChain ? (
+                        "Select a chain..."
+                    ) : (
+                        <div className="flex items-center gap-x-1">
+                            <TokenAvatar
+                                is_chain_logo
+                                size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                chain_color={selectedChain.color_theme.hex}
+                                token_url={selectedChain.logo_url}
+                            />
+                            {selectedChain.label}
+                        </div>
+                    )}
                     <DoubleArrowDownIcon />
                 </Button>
             </PopoverTrigger>
@@ -82,7 +97,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                                 <CommandItem
                                     key={chain.name}
                                     value={chain.name}
-                                    className="cursor-pointer bg-background-light dark:bg-background-dark"
+                                    className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
                                     onSelect={() => {
                                         setSelectedChain(chain);
                                         setOpen(false);
@@ -91,6 +106,12 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                                         }
                                     }}
                                 >
+                                    <TokenAvatar
+                                        is_chain_logo
+                                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                        chain_color={chain.color_theme.hex}
+                                        token_url={chain.logo_url}
+                                    />
                                     {chain.label}
                                     <CheckIcon
                                         className={`w-4" ml-auto h-4 ${

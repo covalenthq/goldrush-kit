@@ -18,6 +18,7 @@ export interface AddressCardProps {
     type?: "fingerprint" | "effigy" | "wallet";
     show_copy_icon?: boolean;
     show_qr_code?: boolean;
+    minified?: boolean;
     actionable_address?: (address: string) => ActionableType;
 }
 
