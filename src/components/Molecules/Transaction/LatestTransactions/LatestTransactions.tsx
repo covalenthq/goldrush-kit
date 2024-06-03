@@ -77,7 +77,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                     new Array(5).fill(null).map(() => (
                         <div
                             key={Math.random()}
-                            className="grid grid-cols-3 border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
+                            className="grid grid-cols-2 border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark sm:grid-cols-3"
                         >
                             {Array(3)
                                 .fill(null)
@@ -107,7 +107,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                             }) => (
                                 <div
                                     key={tx_hash}
-                                    className="grid grid-cols-3 items-center border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark"
+                                    className="grid grid-cols-2 items-center border-b border-secondary-light py-4 last:border-b-0 dark:border-secondary-dark sm:grid-cols-3"
                                 >
                                     <CardDetail
                                         content={
@@ -164,7 +164,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                             gas_metadata.contract_decimals
                                         )} ${gas_metadata.contract_ticker_symbol}`}
                                         heading={pretty_value_quote}
-                                        wrapperClassName="flex flex-col-reverse"
+                                        wrapperClassName="flex flex-col-reverse hidden sm:block"
                                     />
                                 </div>
                             )
