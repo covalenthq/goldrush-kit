@@ -9,13 +9,12 @@ import { TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
-import { TableHeader } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
     address,
-    on_revoke_approval,
+    on_revoke_approval = () => {},
     actionable_spender,
     actionable_token,
 }) => {
@@ -51,14 +50,14 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "token_details",
             accessorKey: "token_details",
-            header: () => <TableHeader>Token</TableHeader>,
+            header: () => "Token",
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
                         <p className="flex items-center gap-1">
                             {row.original.contract_ticker_symbol}
                         </p>
-                        <p className="text-xs opacity-80">
+                        <p className="text-xs opacity-75">
                             <Address
                                 address={row.original.contract_address}
                                 actionable_address={actionable_token}
@@ -83,7 +82,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
         {
             id: "token_id",
             accessorKey: "token_id",
-            header: () => <TableHeader>Token ID</TableHeader>,
+            header: () => "Token ID",
             cell: ({ row }) => {
                 const token_ids = row.original.token_balances.map(
                     (balance) => balance.token_id
@@ -94,62 +93,77 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             },
         },
         {
-            id: "spender_address_label",
-            accessorKey: "spender_address_label",
-            header: () => <TableHeader>Spender Address Label</TableHeader>,
+            id: "risk_factor",
+            accessorKey: "risk_factor",
+            header: () => <p className="text-center">Risk Factor</p>,
             cell: ({ row }) => {
                 return (
-                    <p className="flex flex-col">
-                        {row.original.spenders.map((spender) => (
-                            <Address
-                                address={spender.spender_address}
-                                label={spender.spender_address_label}
-                                key={spender.spender_address}
-                                actionable_address={actionable_spender}
-                            />
-                        ))}
-                    </p>
+                    <div className="flex items-center justify-center">
+                        <Badge
+                            variant={
+                                row.original.spenders[0].allowance ===
+                                "CONSIDER REVOKING"
+                                    ? "danger"
+                                    : "success"
+                            }
+                        >
+                            {row.original.spenders[0].allowance ===
+                            "CONSIDER REVOKING"
+                                ? "High"
+                                : "Low"}
+                        </Badge>
+                    </div>
                 );
             },
         },
         {
-            id: "risk_factor",
-            accessorKey: "risk_factor",
-            header: () => <TableHeader>Risk Factor</TableHeader>,
+            id: "spender_address_label",
+            accessorKey: "spender_address_label",
+            header: () => <p className="text-center">Spender(s)</p>,
             cell: ({ row }) => {
                 return (
-                    <Badge
-                        variant={
-                            row.original.spenders[0].allowance ===
-                            "CONSIDER REVOKING"
-                                ? "danger"
-                                : "success"
-                        }
-                    >
-                        {row.original.spenders[0].allowance ===
-                        "CONSIDER REVOKING"
-                            ? "High"
-                            : "Low"}
-                    </Badge>
+                    <div className="flex flex-col gap-4">
+                        {row.original.spenders.map((spender) => (
+                            <div
+                                key={spender.spender_address}
+                                className="grid grid-cols-3 items-center gap-x-8 gap-y-4"
+                            >
+                                <div
+                                    className={
+                                        !on_revoke_approval
+                                            ? "col-span-3"
+                                            : "col-span-2"
+                                    }
+                                >
+                                    <Address
+                                        key={spender.spender_address}
+                                        address={spender.spender_address}
+                                        label={spender.spender_address_label}
+                                        actionable_address={actionable_spender}
+                                    />
+                                </div>
+
+                                {on_revoke_approval && (
+                                    <Button
+                                        onClick={() =>
+                                            on_revoke_approval(
+                                                spender,
+                                                row.original.contract_address
+                                            )
+                                        }
+                                        size={"sm"}
+                                        className="flex w-fit"
+                                    >
+                                        Revoke
+                                    </Button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 );
             },
         },
     ];
-
-    if (on_revoke_approval) {
-        columns.push({
-            id: "revoke",
-            accessorKey: "revoke",
-            header: () => <div className="w-12"></div>,
-            cell: ({ row }) => {
-                return (
-                    <Button onClick={() => on_revoke_approval(row.original)}>
-                        Revoke
-                    </Button>
-                );
-            },
-        });
-    }
 
     return (
         <TableList<NftApprovalsItem>
