@@ -30,3 +30,9 @@
     width: 5px;
     height: 5px;
 }
+
+.tableScrollbar {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 #32353b;
+}
