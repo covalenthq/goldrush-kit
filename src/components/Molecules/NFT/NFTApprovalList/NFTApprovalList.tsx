@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
     address,
-    on_revoke_approval = () => {},
+    on_revoke_approval,
     actionable_spender,
     actionable_token,
 }) => {
