@@ -116,7 +116,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
     );
 
     return (
-        <Card className="mt-4 flex w-full flex-col items-center justify-between gap-4 p-4 md:flex-row">
+        <Card className="flex w-full flex-col items-start justify-between gap-4 p-4 md:flex-row md:items-center">
             {maybeResult.match({
                 None: () => (
                     <>
