@@ -31,8 +31,54 @@
     height: 5px;
 }
 
-.table-scrollbar {
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: #e2e8f0 #32353b;
+*::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: var(--grk-secondary-light-DEFAULT);
+}
+
+*::-webkit-scrollbar-track:hover {
+    background-color: var(--grk-primary-light-DEFAULT);
+}
+
+*::-webkit-scrollbar-track:active {
+    background-color: var(--grk-primary-light-DEFAULT);
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 14px;
+    background-color: var(--grk-secondary-light-DEFAULT);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--grk-primary-ligh-DEFAULT);
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: var(--grk-primary-light-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: var(--grk-secondary-dark-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-track:hover {
+    background-color: var(--grk-primary-dark-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-track:active {
+    background-color: var(--grk-primary-dark-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-thumb {
+    border-radius: 14px;
+    background-color: var(--grk-secondary-dark-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--grk-primary-dark-DEFAULT);
+}
+
+body.dark *::-webkit-scrollbar-thumb:active {
+    background-color: var(--grk-primary-dark-DEFAULT);
 }
