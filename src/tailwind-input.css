@@ -31,7 +31,7 @@
     height: 5px;
 }
 
-.tableScrollbar {
+.table-scrollbar {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: #e2e8f0 #32353b;
