@@ -109,10 +109,10 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <AddressCard
+                <Address
                     address={row.original.from_address}
                     label={row.original.from_address_label}
-                    minified={true}
+                    show_avatar={true}
                     actionable_address={actionable_from}
                 />
             ),
@@ -129,10 +129,10 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
             ),
             cell: ({ row }) => {
                 return (
-                    <AddressCard
+                    <Address
                         address={row.original.to_address}
                         label={row.original.to_address_label}
-                        minified={true}
+                        show_avatar={true}
                         actionable_address={actionable_to}
                     />
                 );

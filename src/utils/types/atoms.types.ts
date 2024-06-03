@@ -9,6 +9,7 @@ export interface AddressProps {
     address: string;
     label?: string | null;
     show_copy_icon?: boolean;
+    show_avatar?: boolean;
     actionable_address?: (address: string) => ActionableType;
 }
 
@@ -18,7 +19,6 @@ export interface AddressCardProps {
     type?: "fingerprint" | "effigy" | "wallet";
     show_copy_icon?: boolean;
     show_qr_code?: boolean;
-    minified?: boolean;
     actionable_address?: (address: string) => ActionableType;
 }
 

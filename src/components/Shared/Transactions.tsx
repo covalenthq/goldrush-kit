@@ -79,6 +79,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
             cell: ({ row }) => (
                 <Address
                     label={row.original.from_address_label}
+                    show_avatar
                     address={row.original.from_address}
                 />
             ),
@@ -96,6 +97,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
             cell: ({ row }) => (
                 <Address
                     label={row.original.to_address_label}
+                    show_avatar
                     address={row.original.to_address}
                 />
             ),
