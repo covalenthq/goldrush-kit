@@ -136,15 +136,14 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                         <Badge
                             variant={
                                 row.original.spenders[0].risk_factor ===
-                                "CONSIDER REVOKING"
-                                    ? "danger"
-                                    : "success"
+                                "LOW RISK"
+                                    ? "success"
+                                    : "danger"
                             }
                         >
-                            {row.original.spenders[0].risk_factor ===
-                            "CONSIDER REVOKING"
-                                ? "High"
-                                : "Low"}
+                            {row.original.spenders[0].risk_factor === "LOW RISK"
+                                ? "Low"
+                                : "High"}
                         </Badge>
                     </div>
                 );

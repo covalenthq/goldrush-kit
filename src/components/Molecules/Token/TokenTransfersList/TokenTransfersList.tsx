@@ -101,13 +101,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
         {
             accessorKey: "from_address",
             id: "from_address",
-            header: ({ column }) => (
-                <TableHeaderSorting<BlockTransactionWithContractTransfers>
-                    align="left"
-                    header={"From"}
-                    column={column}
-                />
-            ),
+            header: "From",
             cell: ({ row }) => (
                 <div className="flex items-center gap-x-2">
                     <AddressAvatar
@@ -126,13 +120,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
         {
             accessorKey: "to_address",
             id: "to_address",
-            header: ({ column }) => (
-                <TableHeaderSorting<BlockTransactionWithContractTransfers>
-                    align="left"
-                    header={"To"}
-                    column={column}
-                />
-            ),
+            header: "To",
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-x-1">

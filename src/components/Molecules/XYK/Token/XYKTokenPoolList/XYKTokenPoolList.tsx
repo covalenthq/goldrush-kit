@@ -53,13 +53,7 @@ export const XYKTokenPoolList: React.FC<XYKTokenPoolListProps> = ({
         {
             id: "contract_name",
             accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting<PoolsDexDataItem>
-                    align="left"
-                    header={"Pool"}
-                    column={column}
-                />
-            ),
+            header: "Pool",
             cell: ({ row }) => (
                 <Pool
                     pool_address={row.original.exchange}
