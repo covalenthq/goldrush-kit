@@ -1,7 +1,7 @@
 import { type Option } from "@/utils/option";
 import type {
-    NftApprovalsItem,
-    TokensApprovalItem,
+    NftApprovalSpender,
+    TokenSpenderItem,
 } from "@covalenthq/client-sdk";
 import {
     type BalanceItem,
@@ -37,7 +37,10 @@ export interface AddressActivityListProps {
 export interface NFTApprovalListProps {
     chain_name: Chain;
     address: string;
-    on_revoke_approval?: (approval: NftApprovalsItem) => void;
+    on_revoke_approval?: (
+        spender: NftApprovalSpender,
+        contract_address: string
+    ) => void;
     actionable_spender?: (address: string) => ActionableType;
     actionable_token?: (address: string) => ActionableType;
 }
@@ -45,7 +48,10 @@ export interface NFTApprovalListProps {
 export interface TokenApprovalListProps {
     chain_name: Chain;
     address: string;
-    on_revoke_approval?: (address: TokensApprovalItem) => void;
+    on_revoke_approval?: (
+        spender: TokenSpenderItem,
+        token_address: string
+    ) => void;
     actionable_spender?: (address: string) => ActionableType;
     actionable_token?: (address: string) => ActionableType;
 }

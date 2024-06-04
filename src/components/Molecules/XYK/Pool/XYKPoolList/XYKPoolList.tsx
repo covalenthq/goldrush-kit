@@ -67,13 +67,7 @@ export const XYKPoolList: React.FC<XYKPoolListProps> = ({
         {
             id: "contract_name",
             accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting<PoolType>
-                    align="left"
-                    header={"Pool"}
-                    column={column}
-                />
-            ),
+            header: "Pool",
             cell: ({ row }) => (
                 <Pool
                     pool_address={row.original.exchange}

@@ -51,13 +51,7 @@ export const XYKWalletPositionsList: React.FC<XYKWalletPositionsListProps> = ({
         {
             id: "contract_name",
             accessorKey: "contract_name",
-            header: ({ column }) => (
-                <TableHeaderSorting<UniswapLikeBalanceItem>
-                    align="left"
-                    header={"Pool"}
-                    column={column}
-                />
-            ),
+            header: "Pool",
             cell: ({ row }) => (
                 <Pool
                     pool_address={row.original.pool_token.contract_address}

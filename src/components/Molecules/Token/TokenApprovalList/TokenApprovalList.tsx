@@ -1,5 +1,8 @@
 import { type Option, None, Some } from "@/utils/option";
-import { type TokensApprovalItem } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    type TokensApprovalItem,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import { type TokenApprovalListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
@@ -8,11 +11,10 @@ import {
     GRK_SIZES,
     defaultErrorMessage,
 } from "@/utils/constants/shared.constants";
-import { CardDetail, TableHeaderSorting, TableList } from "@/components/Shared";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Address, TokenAvatar } from "@/components/Atoms";
 import { Button } from "@/components/ui/button";
-import { TableHeader } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
@@ -54,29 +56,24 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "token_details",
             accessorKey: "token_details",
-            header: () => <TableHeader>Token</TableHeader>,
+            header: () => "Token",
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
-                        <CardDetail
-                            content={
-                                <div className="flex items-center gap-1">
-                                    <TokenAvatar
-                                        token_url={row.original.logo_url}
-                                        size={GRK_SIZES.EXTRA_SMALL}
-                                    />
-                                    {row.original.ticker_symbol}
-                                </div>
-                            }
-                        />
-                        <CardDetail
-                            subtext={
-                                <Address
-                                    address={row.original.token_address}
-                                    actionable_address={actionable_token}
-                                />
-                            }
-                        />
+                        <div className="flex items-center gap-1">
+                            <TokenAvatar
+                                token_url={row.original.logo_url}
+                                size={GRK_SIZES.EXTRA_SMALL}
+                            />
+                            {row.original.ticker_symbol}
+                        </div>
+
+                        <p className="text-xs opacity-75">
+                            <Address
+                                address={row.original.token_address}
+                                actionable_address={actionable_token}
+                            />
+                        </p>
                     </div>
                 );
             },
@@ -94,15 +91,14 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col">
-                        <CardDetail
-                            content={
-                                Number(row.original.balance) /
-                                Math.pow(10, row.original.contract_decimals)
-                            }
-                        />
-                        <CardDetail
-                            subtext={row.original.pretty_balance_quote}
-                        />
+                        {calculatePrettyBalance(
+                            Number(row.original.balance),
+                            row.original.contract_decimals
+                        )}
+
+                        <p className="text-xs opacity-75">
+                            {row.original.pretty_balance_quote}
+                        </p>
                     </div>
                 );
             },
@@ -122,27 +118,10 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                     <p>
                         {row.original.pretty_value_at_risk_quote
                             ? row.original.pretty_value_at_risk_quote
-                            : Number(row.original.value_at_risk) /
-                              Math.pow(10, row.original.contract_decimals)}
-                    </p>
-                );
-            },
-        },
-        {
-            id: "spender_address_label",
-            accessorKey: "spender_address_label",
-            header: () => <TableHeader>Spender(s)</TableHeader>,
-            cell: ({ row }) => {
-                return (
-                    <p className="flex flex-col">
-                        {row.original.spenders.map((spender) => (
-                            <Address
-                                address={spender.spender_address}
-                                label={spender.spender_address_label}
-                                key={spender.spender_address}
-                                actionable_address={actionable_spender}
-                            />
-                        ))}
+                            : calculatePrettyBalance(
+                                  Number(row.original.balance),
+                                  row.original.contract_decimals
+                              )}
                     </p>
                 );
             },
@@ -150,41 +129,74 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
         {
             id: "risk_factor",
             accessorKey: "risk_factor",
-            header: () => <TableHeader>Risk Factor</TableHeader>,
+            header: () => <p className="text-center">Risk Factor</p>,
             cell: ({ row }) => {
                 return (
-                    <Badge
-                        variant={
-                            row.original.spenders[0].risk_factor ===
-                            "CONSIDER REVOKING"
-                                ? "danger"
-                                : "success"
-                        }
-                    >
-                        {row.original.spenders[0].risk_factor ===
-                        "CONSIDER REVOKING"
-                            ? "High"
-                            : "Low"}
-                    </Badge>
+                    <div className="flex items-center justify-center">
+                        <Badge
+                            variant={
+                                row.original.spenders[0].risk_factor ===
+                                "LOW RISK"
+                                    ? "success"
+                                    : "danger"
+                            }
+                        >
+                            {row.original.spenders[0].risk_factor === "LOW RISK"
+                                ? "Low"
+                                : "High"}
+                        </Badge>
+                    </div>
+                );
+            },
+        },
+        {
+            id: "spender_address_label",
+            accessorKey: "spender_address_label",
+            header: () => <p className="text-center">Spender(s)</p>,
+            cell: ({ row }) => {
+                return (
+                    <div className="flex flex-col gap-4">
+                        {row.original.spenders.map((spender) => (
+                            <div
+                                key={spender.spender_address}
+                                className="grid grid-cols-3 items-center gap-x-8 gap-y-4"
+                            >
+                                <div
+                                    className={
+                                        !on_revoke_approval
+                                            ? "col-span-3"
+                                            : "col-span-2"
+                                    }
+                                >
+                                    <Address
+                                        key={spender.spender_address}
+                                        address={spender.spender_address}
+                                        label={spender.spender_address_label}
+                                        actionable_address={actionable_spender}
+                                    />
+                                </div>
+
+                                {on_revoke_approval && (
+                                    <Button
+                                        onClick={() =>
+                                            on_revoke_approval(
+                                                spender,
+                                                row.original.token_address
+                                            )
+                                        }
+                                        size={"sm"}
+                                        className="flex w-fit"
+                                    >
+                                        Revoke
+                                    </Button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 );
             },
         },
     ];
-
-    if (on_revoke_approval) {
-        columns.push({
-            id: "revoke",
-            accessorKey: "revoke",
-            header: () => <div className="w-12"></div>,
-            cell: ({ row }) => {
-                return (
-                    <Button onClick={() => on_revoke_approval(row.original)}>
-                        Revoke
-                    </Button>
-                );
-            },
-        });
-    }
 
     return (
         <TableList<TokensApprovalItem>

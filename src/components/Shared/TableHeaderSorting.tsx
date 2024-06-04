@@ -11,7 +11,7 @@ export const TableHeaderSorting: <T>(
               ? "arrow_drop_down"
               : "sort";
     return (
-        <div
+        <span
             className={`group flex cursor-pointer items-center gap-1 whitespace-nowrap ${
                 align === "right"
                     ? "justify-end"
@@ -27,10 +27,10 @@ export const TableHeaderSorting: <T>(
             {icon && (
                 <IconWrapper
                     icon_size={sortedIcon === "sort" ? "text-base" : ""}
-                    class_name="transition-all "
+                    class_name="transition-all"
                     icon_class_name={sortedIcon}
                 />
             )}
-        </div>
+        </span>
     );
 };
