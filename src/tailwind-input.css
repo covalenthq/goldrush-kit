@@ -9,24 +9,61 @@
     body {
         @apply bg-background-light text-foreground-light dark:bg-background-dark dark:text-foreground-dark;
     }
-}
 
-.searchResultScrollbar {
-    max-height: 250px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #e2e8f0 #32353b;
-}
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
 
-.searchResultScrollbar::-webkit-scrollbar-thumb {
-    background-color: #32353b;
-}
+    *::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background-color: var(--grk-secondary-light-DEFAULT);
+    }
 
-.searchResultScrollbar::-webkit-scrollbar-track {
-    background-color: #e2e8f0;
-}
+    *::-webkit-scrollbar-track:hover {
+        background-color: var(--grk-primary-light-DEFAULT);
+    }
 
-::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    *::-webkit-scrollbar-track:active {
+        background-color: var(--grk-primary-light-DEFAULT);
+    }
+
+    *::-webkit-scrollbar-thumb {
+        border-radius: 14px;
+        background-color: var(--grk-secondary-light-DEFAULT);
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--grk-primary-ligh-DEFAULT);
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+        background-color: var(--grk-primary-light-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background-color: var(--grk-secondary-dark-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-track:hover {
+        background-color: var(--grk-primary-dark-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-track:active {
+        background-color: var(--grk-primary-dark-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-thumb {
+        border-radius: 14px;
+        background-color: var(--grk-secondary-dark-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--grk-primary-dark-DEFAULT);
+    }
+
+    body.dark *::-webkit-scrollbar-thumb:active {
+        background-color: var(--grk-primary-dark-DEFAULT);
+    }
 }

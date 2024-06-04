@@ -119,6 +119,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             cell: ({ row }) => (
                 <Address
                     address={row.original.from_address}
+                    show_avatar
                     actionable_address={actionable_from}
                 />
             ),
@@ -130,6 +131,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             cell: ({ row }) => (
                 <Address
                     address={row.original.to_address}
+                    show_avatar
                     actionable_address={actionable_to}
                 />
             ),

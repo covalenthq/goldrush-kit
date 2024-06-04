@@ -120,7 +120,7 @@ const CommandItem = forwardRef<
     <CommandPrimitive.Item
         ref={ref}
         className={cn(
-            "aria-selected:text-accent-foreground relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-primary-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:aria-selected:bg-primary-dark",
+            "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-primary-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-primary-dark",
             className
         )}
         {...props}

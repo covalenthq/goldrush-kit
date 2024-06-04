@@ -20,7 +20,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
     actionable_address,
 }) => {
     return (
-        <Card className="flex items-center gap-x-4 p-2">
+        <Card className="flex items-center gap-x-2 p-2">
             <AddressAvatar
                 type={type}
                 address={address}

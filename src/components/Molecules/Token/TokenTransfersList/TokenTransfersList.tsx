@@ -12,7 +12,7 @@ import {
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Address, AddressAvatar } from "@/components/Atoms";
+import { Address, AddressAvatar, AddressCard } from "@/components/Atoms";
 import { calculateTimeSeriesGroup } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
@@ -109,18 +109,12 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <div className="flex items-center gap-x-2">
-                    <AddressAvatar
-                        size={GRK_SIZES.EXTRA_SMALL}
-                        type="fingerprint"
-                        address={row.getValue("from_address")}
-                    />
-                    <Address
-                        address={row.original.from_address}
-                        label={row.original.from_address_label}
-                        actionable_address={actionable_from}
-                    />
-                </div>
+                <Address
+                    address={row.original.from_address}
+                    label={row.original.from_address_label}
+                    show_avatar={true}
+                    actionable_address={actionable_from}
+                />
             ),
         },
         {
@@ -135,18 +129,12 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
             ),
             cell: ({ row }) => {
                 return (
-                    <div className="flex items-center gap-x-1">
-                        <AddressAvatar
-                            size={GRK_SIZES.EXTRA_SMALL}
-                            type="fingerprint"
-                            address={row.getValue("to_address")}
-                        />
-                        <Address
-                            address={row.original.to_address}
-                            label={row.original.to_address_label}
-                            actionable_address={actionable_to}
-                        />
-                    </div>
+                    <Address
+                        address={row.original.to_address}
+                        label={row.original.to_address_label}
+                        show_avatar={true}
+                        actionable_address={actionable_to}
+                    />
                 );
             },
         },
