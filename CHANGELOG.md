@@ -1,5 +1,24 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.4
+
+**Features**
+
+-   Updated `GasCard` UI
+-   Added optional `TokenAvatar` to `Address`
+-   Added Chain logo to `ChainSelector`
+-   Revoke functionality for Approvals list
+
+**Fixes**
+
+-   Default theme colors
+-   Misc UI/UX involving usage of Cards, padding, borders, colors, Badges
+-   Dynamic `Timestamp` lag on switch
+-   Empty `chain_options` for `ChainSelector`
+-   Theme based Scrollbar CSS
+-   Unnecessary element nesting in tables
+-   Misc responsiveness
+
 ## 0.6.3
 
 **Features**
