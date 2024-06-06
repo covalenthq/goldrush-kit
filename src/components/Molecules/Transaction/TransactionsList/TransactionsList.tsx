@@ -148,11 +148,12 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             ),
             cell: ({ row }) => (
                 <div>
-                    {Number(row.original.value) /
-                        Math.pow(
-                            10,
-                            row.original.gas_metadata.contract_decimals
-                        )}{" "}
+                    {calculatePrettyBalance(
+                        row.original.value ?? 0,
+                        row.original.gas_metadata.contract_decimals,
+                        true,
+                        4
+                    )}{" "}
                     {row.original.gas_metadata.contract_ticker_symbol}
                     <p className="text-xs opacity-80">
                         {row.original.pretty_value_quote}

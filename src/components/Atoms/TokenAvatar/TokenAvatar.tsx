@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { type TokenAvatarProps } from "@/utils/types/atoms.types";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { useGoldRush } from "@/utils/store";
 
 const svgCache = new Map();
 
@@ -69,11 +70,7 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                 ).documentElement;
 
                 const paths = svg.querySelectorAll("path");
-                const fillColor = document.documentElement.classList.contains(
-                    "dark"
-                )
-                    ? "white"
-                    : "black";
+                const fillColor = "currentColor";
                 paths.forEach((path) => {
                     path.style.fill = fillColor;
                 });
