@@ -97,7 +97,9 @@ export const XYKTokenDetails: React.FC<XYKTokenDetailsProps> = ({
                                             <div className="mr-2 flex items-center">
                                                 <TokenAvatar
                                                     size={GRK_SIZES.EXTRA_SMALL}
-                                                    token_url={result.logo_url}
+                                                    primary_url={
+                                                        result.logo_url
+                                                    }
                                                 />
                                             </div>
 

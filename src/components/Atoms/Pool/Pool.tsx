@@ -15,12 +15,14 @@ export const Pool: React.FC<PoolProps> = ({
         <div className="flex items-center gap-2">
             <TokenAvatar
                 size={GRK_SIZES.EXTRA_SMALL}
-                token_url={token_0_logo_url}
+                primary_url={token_0_logo_url}
+                only_primary
             />
             <div className="-ml-6">
                 <TokenAvatar
                     size={GRK_SIZES.EXTRA_SMALL}
-                    token_url={token_1_logo_url}
+                    primary_url={token_1_logo_url}
+                    only_primary
                 />
             </div>
 

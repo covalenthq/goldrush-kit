@@ -126,7 +126,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                 size={
                                                     GRK_SIZES.EXTRA_EXTRA_SMALL
                                                 }
-                                                token_url={
+                                                primary_url={
                                                     native.logo_urls
                                                         .chain_logo_url
                                                 }
@@ -134,7 +134,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                     selectedChain?.color_theme
                                                         .hex
                                                 }
-                                                is_chain_logo
+                                                only_primary
                                             />
                                             {calculatePrettyBalance(
                                                 native.balance ?? 0,
@@ -197,7 +197,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                                     size={
                                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                                     }
-                                                                    token_url={
+                                                                    primary_url={
                                                                         logo_urls.token_logo_url
                                                                     }
                                                                     chain_color={

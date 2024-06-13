@@ -80,9 +80,10 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
             cell: ({ row }) => (
                 <div className="flex items-center gap-x-1">
                     <TokenAvatar
-                        is_chain_logo={true}
-                        token_url={row.original.logo_url}
+                        only_primary={true}
+                        primary_url={row.original.logo_url}
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                        chain_color={row.original.color_theme.hex}
                     />
                     {row.getValue("label")}
                 </div>

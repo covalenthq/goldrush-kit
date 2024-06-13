@@ -370,16 +370,11 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                                                         ?.color_theme
                                                                                         .hex
                                                                                 }
-                                                                                token_url={
+                                                                                primary_url={
                                                                                     ticker_logo ||
                                                                                     CHAIN?.logo_url
                                                                                 }
-                                                                                is_chain_logo={
-                                                                                    extension ===
-                                                                                    "svg"
-                                                                                        ? true
-                                                                                        : false
-                                                                                }
+                                                                                only_primary
                                                                             />
                                                                         </figure>
                                                                     </CardContent>

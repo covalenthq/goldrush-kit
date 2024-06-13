@@ -39,10 +39,9 @@ export interface TimestampProps {
 
 export interface AddressAvatarProps {
     address: string;
-    type: "fingerprint" | "effigy" | "wallet" | "nft";
+    type: "fingerprint" | "effigy" | "wallet";
     size: GRK_SIZES;
     rounded?: boolean;
-    fallback?: string;
     class_name?: string;
     custom_avatar?: string;
 }
@@ -57,9 +56,10 @@ export interface PoolProps {
 }
 
 export interface TokenAvatarProps {
-    token_url?: string | null;
-    sub_url?: string | null;
+    primary_url?: string | null;
+    secondary_url?: string | null;
     size: GRK_SIZES;
-    is_chain_logo?: boolean;
+    only_primary?: boolean;
     chain_color?: string | null;
+    rounded?: boolean;
 }

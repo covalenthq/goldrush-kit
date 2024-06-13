@@ -116,8 +116,10 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                         <TokenAvatar
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
-                            sub_url={row.original.logo_urls.protocol_logo_url}
-                            token_url={row.original.logo_urls.token_logo_url}
+                            secondary_url={
+                                row.original.logo_urls.chain_logo_url
+                            }
+                            primary_url={row.original.logo_urls.token_logo_url}
                         />
                         <div className="flex flex-col">
                             <p style={{ color: chainColor }}>
@@ -125,7 +127,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                             </p>
                             {actionableWrapper(
                                 actionable_token(row.original),
-                                <p className="text-base">
+                                <p className="w-fit text-base">
                                     {row.original.contract_display_name}
                                 </p>
                             )}

@@ -62,8 +62,9 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                     <div className="flex flex-col">
                         <div className="flex items-center gap-1">
                             <TokenAvatar
-                                token_url={row.original.logo_url}
+                                primary_url={row.original.logo_url}
                                 size={GRK_SIZES.EXTRA_SMALL}
+                                only_primary
                             />
                             {row.original.ticker_symbol}
                         </div>

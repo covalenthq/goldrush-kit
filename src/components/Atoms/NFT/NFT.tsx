@@ -34,18 +34,12 @@ export const NFT: React.FC<NFTProps> = ({
                 />
 
                 {chain ? (
-                    <div
-                        className="absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] bg-background-light p-1 dark:bg-background-dark"
-                        style={{
-                            border: `2px solid `,
-                            borderColor: `${chain.color_theme.hex}`,
-                        }}
-                    >
+                    <div className="absolute -bottom-4 right-2 flex">
                         <TokenAvatar
-                            is_chain_logo
+                            only_primary
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chain.color_theme.hex}
-                            token_url={chain?.logo_url}
+                            primary_url={chain?.logo_url}
                         />
                     </div>
                 ) : (

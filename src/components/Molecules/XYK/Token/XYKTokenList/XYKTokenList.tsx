@@ -85,7 +85,7 @@ export const XYKTokenList: React.FC<XYKTokenListProps> = ({
                 <div className="flex items-center gap-3">
                     <TokenAvatar
                         size={GRK_SIZES.EXTRA_SMALL}
-                        token_url={row.original.logo_url}
+                        primary_url={row.original.logo_url}
                     />
 
                     {actionableWrapper(
