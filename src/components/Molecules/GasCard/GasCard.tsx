@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
-    const [isErc20, setIsErc20] = useState<boolean>(false);
+    const [isErc20, setIsErc20] = useState<boolean>(true);
     const [maybeResult, setMaybeResult] = useState<
         Option<{
             erc: GasPricesResponse;
