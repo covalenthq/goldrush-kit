@@ -6,17 +6,16 @@ import {
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
 import {
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
     type TIME_SERIES_GROUP,
 } from "@/utils/constants/shared.constants";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Address, AddressAvatar, AddressCard } from "@/components/Atoms";
+import { Address } from "@/components/Atoms";
 import { calculateTimeSeriesGroup } from "@/utils/functions";
 import { Badge } from "@/components/ui/badge";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
@@ -67,7 +66,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -106,7 +105,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 <Address
                     address={row.original.from_address}
                     label={row.original.from_address_label}
-                    show_avatar={true}
+                    avatar={{}}
                     actionable_address={actionable_from}
                 />
             ),
@@ -120,7 +119,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                     <Address
                         address={row.original.to_address}
                         label={row.original.to_address_label}
-                        show_avatar={true}
+                        avatar={{}}
                         actionable_address={actionable_to}
                     />
                 );

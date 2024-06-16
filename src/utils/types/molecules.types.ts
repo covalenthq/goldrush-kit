@@ -64,28 +64,26 @@ export interface BlockDetailsProps {
 export interface BlocksListProps {
     chain_name: Chain;
     page_size?: number;
-    actionable_block?: (block: number) => ActionableType;
+    actionable_block?: (block_height: number) => ActionableType;
 }
 
 export interface LatestBlocksProps {
     chain_name: Chain;
     page_size?: number;
-    actionable_block?: (block: number) => ActionableType;
+    actionable_block?: (block_height: number) => ActionableType;
 }
 
 export interface TransactionsListProps {
     chain_name: Chain;
-    actionable_block?: (block: number) => ActionableType;
-    actionable_transaction?: (tx: string) => ActionableType;
-    actionable_from?: (address: string) => ActionableType;
-    actionable_to?: (address: string) => ActionableType;
+    actionable_block?: (block_height: number) => ActionableType;
+    actionable_transaction?: (tx_hash: string) => ActionableType;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface LatestTransactionsProps {
     chain_name: Chain;
     actionable_transaction?: (address: string) => ActionableType;
-    actionable_from?: (address: string) => ActionableType;
-    actionable_to?: (address: string) => ActionableType;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface LatestPriceProps {
@@ -99,6 +97,7 @@ export interface GasCardProps {
 export interface AddressDetailsProps {
     address: string;
     chain_name: Chain;
+    actionable_transaction?: (tx_hash: string) => ActionableType;
 }
 
 export interface ChainSelectorProps {
@@ -179,7 +178,7 @@ export interface TokenBalancesListProps {
     address: string;
     hide_small_balances?: boolean;
     mask_balances?: boolean;
-    actionable_token?: (token: CrossChainBalanceItem) => ActionableType;
+    actionable_token?: (token_address: string) => ActionableType;
 }
 
 export interface TokenTransfersListProps {

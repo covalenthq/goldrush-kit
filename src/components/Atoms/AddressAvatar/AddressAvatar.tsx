@@ -4,12 +4,15 @@ import { stringToColor } from "@/utils/functions";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { type AddressAvatarProps } from "@/utils/types/atoms.types";
 import { useMemo } from "react";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import {
+    ADDRESS_AVATAR_TYPE,
+    GRK_SIZES,
+} from "@/utils/constants/shared.constants";
 import { Address } from "..";
 
 export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     address,
-    type = "fingerprint",
+    type = ADDRESS_AVATAR_TYPE.FINGERPRINT,
     size = GRK_SIZES.SMALL,
     rounded = false,
     class_name = "",
@@ -22,11 +25,11 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
             return custom_avatar;
         }
         switch (type) {
-            case "effigy":
+            case ADDRESS_AVATAR_TYPE.EFFIGY:
                 return `https://effigy.im/a/${address}.png`;
-            case "wallet":
+            case ADDRESS_AVATAR_TYPE.WALLET:
                 return AvatarWallet;
-            case "fingerprint":
+            case ADDRESS_AVATAR_TYPE.FINGERPRINT:
                 return AvatarFingerprint;
         }
     }, [type, address, rounded, custom_avatar]);

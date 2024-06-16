@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
@@ -42,7 +42,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

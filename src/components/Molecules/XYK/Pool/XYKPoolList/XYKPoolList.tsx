@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { Pool } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKPoolListProps } from "@/utils/types/molecules.types";
 import { calculateFeePercentage } from "@/utils/functions/calculate-fees-percentage";
@@ -50,7 +50,7 @@ export const XYKPoolList: React.FC<XYKPoolListProps> = ({
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

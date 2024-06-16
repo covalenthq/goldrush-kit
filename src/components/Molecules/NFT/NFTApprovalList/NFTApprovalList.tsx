@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { type NFTApprovalListProps } from "@/utils/types/molecules.types";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
@@ -39,7 +39,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

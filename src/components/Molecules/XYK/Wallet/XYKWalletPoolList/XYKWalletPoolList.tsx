@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { Pool } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKWalletPoolListProps } from "@/utils/types/molecules.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
@@ -42,7 +42,7 @@ export const XYKWalletPoolList: React.FC<XYKWalletPoolListProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

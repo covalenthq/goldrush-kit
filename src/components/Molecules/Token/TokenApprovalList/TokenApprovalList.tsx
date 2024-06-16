@@ -9,7 +9,7 @@ import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -45,7 +45,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

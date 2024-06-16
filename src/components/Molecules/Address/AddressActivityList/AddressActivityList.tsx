@@ -7,7 +7,7 @@ import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListProps } from "@/utils/types/molecules.types";
@@ -57,7 +57,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                     setMaybeResult(new Some(data.items));
                 } catch (error: CovalentAPIError | any) {
                     setErrorMessage(
-                        error?.error_message ?? defaultErrorMessage
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);
@@ -118,7 +118,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
             ),
             cell: ({ row }) =>
                 !row.getValue("is_testnet") ? (
-                    <IconWrapper icon_class_name="playlist_add_check" />
+                    <IconWrapper icon_class_name="check_circle" />
                 ) : (
                     <></>
                 ),

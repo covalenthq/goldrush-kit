@@ -2,21 +2,24 @@ import {
     type Chain,
     type NftCollectionAttribute,
 } from "@covalenthq/client-sdk";
-import { type GRK_SIZES } from "../constants/shared.constants";
+import {
+    ADDRESS_AVATAR_TYPE,
+    type GRK_SIZES,
+} from "../constants/shared.constants";
 import { type ActionableType } from "./shared.types";
 
 export interface AddressProps {
     address: string;
     label?: string | null;
     show_copy_icon?: boolean;
-    show_avatar?: boolean;
+    avatar?: Omit<AddressAvatarProps, "address">;
     actionable_address?: (address: string) => ActionableType;
 }
 
 export interface AddressCardProps {
     label?: string | null;
     address: string;
-    type?: "fingerprint" | "effigy" | "wallet";
+    avatar: Omit<AddressAvatarProps, "address">;
     show_copy_icon?: boolean;
     show_qr_code?: boolean;
     actionable_address?: (address: string) => ActionableType;
@@ -24,11 +27,13 @@ export interface AddressCardProps {
 
 export interface NFTProps {
     collection_name?: string | null;
+    collection_address?: string | null;
     token_id?: string | number | bigint | null;
     src: string | null;
     attributes?: NftCollectionAttribute[];
     children?: React.ReactNode;
     chain_name?: Chain;
+    actionable_contract?: (contract_address: string) => ActionableType;
 }
 
 export interface TimestampProps {
@@ -39,8 +44,8 @@ export interface TimestampProps {
 
 export interface AddressAvatarProps {
     address: string;
-    type: "fingerprint" | "effigy" | "wallet";
-    size: GRK_SIZES;
+    type?: ADDRESS_AVATAR_TYPE;
+    size?: GRK_SIZES;
     rounded?: boolean;
     class_name?: string;
     custom_avatar?: string;

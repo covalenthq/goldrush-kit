@@ -15,7 +15,6 @@ export const LatestTransactions: Story = {
     args: {
         chain_name: "eth-mainnet",
         actionable_transaction: (address) => storyAction(address),
-        actionable_from: (address) => storyAction(address),
-        actionable_to: (address) => storyAction(address),
+        actionable_address: (address) => storyAction(address),
     },
 };

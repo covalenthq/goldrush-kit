@@ -11,7 +11,7 @@ import { useGoldRush } from "@/utils/store";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { Timestamp } from "@/components/Atoms";
@@ -58,7 +58,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                 }
                 setMaybeResult(new Some(data));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -183,6 +183,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                     .from_address_label
                                             }
                                             actionable_address={actionable_from}
+                                            avatar={{}}
                                         />
                                     </div>
 
@@ -199,6 +200,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                     .to_address_label
                                             }
                                             actionable_address={actionable_to}
+                                            avatar={{}}
                                         />
                                     </div>
                                 </div>

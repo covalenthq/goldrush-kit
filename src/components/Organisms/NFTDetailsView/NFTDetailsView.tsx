@@ -5,8 +5,8 @@ import { type NFTDetailsViewProps } from "@/utils/types/organisms.types";
 import { type NftTokenContract } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 import {
-    allowedCacheChains,
-    defaultErrorMessage,
+    ALLOWED_CACHE_CHAINS,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { NFT } from "@/components/Atoms";
@@ -32,7 +32,7 @@ export const NFTDetailsView: React.FC<NFTDetailsViewProps> = ({
                         token_id,
                         {
                             withUncached:
-                                !allowedCacheChains.includes(chain_name),
+                                !ALLOWED_CACHE_CHAINS.includes(chain_name),
                         }
                     );
                 if (error.error) {
@@ -40,7 +40,7 @@ export const NFTDetailsView: React.FC<NFTDetailsViewProps> = ({
                 }
                 setMaybeResult(new Some(data.items[0]));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

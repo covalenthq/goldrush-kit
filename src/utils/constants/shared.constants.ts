@@ -1,10 +1,16 @@
 import { type Color } from "@tremor/react";
 import { type GoldRushThemeMode } from "../types/store.types";
 
-export const defaultErrorMessage: string = "Something went wrong!";
+export const DEFAULT_ERROR_MESSAGE: string = "Something went wrong!";
 
-export const defaultErrorNFT: string =
+export const DEFAULT_ERROR_NFT: string =
     "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+
+export enum ADDRESS_AVATAR_TYPE {
+    FINGERPRINT = "fingerprint",
+    EFFIGY = "effigy",
+    WALLET = "wallet",
+}
 
 export enum GRK_SIZES {
     LARGE = "lg",
@@ -67,7 +73,7 @@ export enum CURRENCY {
     NATIVE,
 }
 
-export const allowedCacheChains = [
+export const ALLOWED_CACHE_CHAINS = [
     "bsc-mainnet",
     "eth-mainnet",
     "bsc-testnet",

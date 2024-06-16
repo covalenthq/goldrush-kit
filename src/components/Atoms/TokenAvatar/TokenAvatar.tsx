@@ -6,7 +6,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { themedSvg } from "@/utils/functions";
 
 export const TokenAvatar: React.FC<TokenAvatarProps> = ({
-    primary_url = "https://logos.covalenthq.com/tokens/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+    primary_url,
     secondary_url,
     size = GRK_SIZES.SMALL,
     only_primary = false,

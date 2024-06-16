@@ -14,6 +14,7 @@ export const NFTCollectionView: React.FC<NFTCollectionViewProps> = ({
     return (
         <div className="space-y-4">
             <AddressCard
+                avatar={{}}
                 address={collection_address}
                 actionable_address={actionable_address}
             />

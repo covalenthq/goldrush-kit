@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { NFT as NFTComponent } from "./NFT";
+import { storyAction } from "@/utils/functions";
 
 const meta: Meta<typeof NFTComponent> = {
     title: "Atoms/NFT",
@@ -51,5 +52,6 @@ export const NFT: Story = {
                 value: "Passion Red",
             },
         ],
+        actionable_contract: (address: string) => storyAction(address),
     },
 };

@@ -1,4 +1,4 @@
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ export const NFTWalletCollectionView: React.FC<
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -44,6 +44,7 @@ export const NFTWalletCollectionView: React.FC<
     return (
         <div className="space-y-4">
             <AddressCard
+                avatar={{}}
                 address={address}
                 actionable_address={actionable_address}
             />

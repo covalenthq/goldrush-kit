@@ -15,7 +15,7 @@ import {
 } from "@/components/Shared";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
@@ -60,7 +60,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                         }));
                     } catch (error: CovalentAPIError | any) {
                         setErrorMessage(
-                            error?.error_message ?? defaultErrorMessage
+                            error?.error_message ?? DEFAULT_ERROR_MESSAGE
                         );
                         setMaybeResult(new Some(null));
                         console.error(error);
@@ -126,7 +126,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                                 {chain?.label.replace(" Mainnet", "")}
                             </p>
                             {actionableWrapper(
-                                actionable_token(row.original),
+                                actionable_token(row.original.contract_address),
                                 <p className="w-fit text-base">
                                     {row.original.contract_display_name}
                                 </p>
