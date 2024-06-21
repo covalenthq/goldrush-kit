@@ -8,6 +8,7 @@ import { type AddressProps } from "@/utils/types/atoms.types";
 import { useToast } from "@/utils/hooks";
 import { useState } from "react";
 import { AddressAvatar } from "../AddressAvatar/AddressAvatar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const Address: React.FC<AddressProps> = ({
     address,
@@ -21,7 +22,8 @@ export const Address: React.FC<AddressProps> = ({
 
     const handleCopyClick = () => {
         toast({
-            description: "Address copied!",
+            title: "Copied to clipboard!",
+            description: address,
         });
         setShowCopy(true);
         setTimeout(() => {
@@ -31,6 +33,7 @@ export const Address: React.FC<AddressProps> = ({
 
     return (
         <p className="flex items-center gap-x-2">
+            <Toaster />
             {avatar && <AddressAvatar {...avatar} address={address} />}
 
             {actionableWrapper(
