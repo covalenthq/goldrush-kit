@@ -49,7 +49,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 const { data: txData, ...txError } =
                     await covalentClient.TransactionService.getTransactionsForBlock(
                         chain_name,
-                        latestBlock.height - 2,
+                        latestBlock.height - 4,
                         {
                             noLogs: true,
                             quoteCurrency: "USD",
