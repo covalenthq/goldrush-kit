@@ -3,7 +3,7 @@ import {
     type NftCollectionAttribute,
 } from "@covalenthq/client-sdk";
 import {
-    ADDRESS_AVATAR_TYPE,
+    type ADDRESS_AVATAR_TYPE,
     type GRK_SIZES,
 } from "../constants/shared.constants";
 import { type ActionableType } from "./shared.types";
