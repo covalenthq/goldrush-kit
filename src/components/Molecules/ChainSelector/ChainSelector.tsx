@@ -107,7 +107,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                                     <TokenAvatar
                                         only_primary
                                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        chain_color={chain.color_theme.hex}
+                                        chain_color={chain.color_theme?.hex}
                                         primary_url={chain.logo_url}
                                     />
                                     {chain.label}
