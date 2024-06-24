@@ -1,4 +1,4 @@
-import { StorybookConfig } from "@storybook/react-vite";
+import { type StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
     stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -15,5 +15,6 @@ const config: StorybookConfig = {
         reactDocgen: "react-docgen-typescript",
     },
     staticDirs: ["../src/static"],
+    docs: {},
 };
 export default config;

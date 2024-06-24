@@ -1,5 +1,5 @@
 import React from "react";
-import { Preview } from "@storybook/react";
+import { type Preview } from "@storybook/react";
 import "../src/tailwind-output.css";
 import { GoldRushProvider } from "../src/utils/store";
 import { defaultTheme } from "./manager";
@@ -29,6 +29,7 @@ const preview: Preview = {
             </GoldRushProvider>
         ),
     ],
+    tags: ["autodocs"],
 };
 
 export default preview;
