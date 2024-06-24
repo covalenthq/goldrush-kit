@@ -1,49 +1,73 @@
-export const themedSvg = async (
-    url: string | null,
-    fallback: string,
-    fill: string
-) => {
-    let data: string | null = null;
-    let isSvg = url?.toLowerCase().endsWith(".svg") || false;
-
-    if (isSvg) {
-        try {
-            data = await (await fetch(url || "")).text();
-        } catch (err) {
-            console.error(err);
-            try {
-                data = await (await fetch(fallback)).text();
-            } catch (fallbackErr) {
-                console.error(fallbackErr);
-                throw new Error(
-                    "Failed to fetch both primary and fallback images."
-                );
-            }
-        }
+const svgData = async (src: string): Promise<HTMLOrSVGImageElement | null> => {
+    const isSvg = src?.toLowerCase().endsWith(".svg") || false;
+    if (!isSvg) {
+        return null;
     }
 
-    if (isSvg && data) {
+    try {
+        const data = await (await fetch(src)).text();
+
         const svg = new DOMParser().parseFromString(
             data,
             "image/svg+xml"
         ).documentElement;
 
+        const parserError = svg.getElementsByTagName("parsererror");
+        if (parserError.length > 0) {
+            throw Error(`Error parsing SVG", ${parserError[0].textContent}`);
+        }
+
         const paths = svg.querySelectorAll("path");
         paths.forEach((path) => {
-            path.style.fill = fill;
+            path.style.fill = "currentColor";
         });
 
         svg.removeAttribute("width");
         svg.removeAttribute("height");
 
-        return svg;
+        return svg as HTMLOrSVGImageElement;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+
+export const themedSvg = async (
+    parentRef: React.RefObject<HTMLSpanElement>,
+    src: string | null,
+    fallback: string
+): Promise<void> => {
+    const _src = src || "";
+
+    const svg = await svgData(_src);
+    if (svg) {
+        if (parentRef?.current) {
+            parentRef.current.innerHTML = svg.outerHTML;
+        }
     } else {
         const img = document.createElement("img");
-        img.src = url || fallback;
-        img.alt = "Image";
-        img.onerror = () => {
-            img.src = fallback;
-        };
-        return img;
+        img.src = _src;
+        img.alt = "GoldRush Block Explorer - powered by Covalent";
+
+        img.addEventListener("error", async () => {
+            const fallBackSvg = await svgData(fallback);
+
+            if (fallBackSvg) {
+                if (parentRef?.current) {
+                    parentRef.current.innerHTML = fallBackSvg.outerHTML;
+                }
+            } else {
+                const fallbackImg = document.createElement("img");
+                fallbackImg.src = _src;
+                fallbackImg.alt =
+                    "GoldRush Block Explorer - powered by Covalent";
+                if (parentRef?.current) {
+                    parentRef.current.innerHTML = fallbackImg.outerHTML;
+                }
+            }
+        });
+        if (parentRef?.current) {
+            parentRef.current.innerHTML = img.outerHTML;
+        }
     }
 };

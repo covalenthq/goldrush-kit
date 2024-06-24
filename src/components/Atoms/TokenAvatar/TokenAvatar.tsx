@@ -48,35 +48,30 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
 
     useEffect(() => {
         (async () => {
-            const svg = await themedSvg(
+            await themedSvg(
+                primaryRef,
                 primary_url || "",
-                DefaultToken.toString(),
-                "currentColor"
+                DefaultToken.toString()
             );
-
-            if (primaryRef.current) {
-                primaryRef.current.innerHTML = svg.outerHTML;
-            }
         })();
     }, [primary_url, primaryRef]);
 
     useEffect(() => {
         (async () => {
-            const svg = await themedSvg(
-                secondary_url || "",
-                DefaultToken.toString(),
-                "currentColor"
-            );
-
-            if (secondaryRef.current) {
-                secondaryRef.current.innerHTML = svg.outerHTML;
+            if (!only_primary) {
+                await themedSvg(
+                    secondaryRef,
+                    secondary_url || "",
+                    DefaultToken.toString()
+                );
             }
         })();
-    }, [secondary_url, secondaryRef]);
+    }, [secondary_url, secondaryRef, only_primary]);
 
     return (
         <figure className="relative h-fit w-fit">
             <Avatar
+                ref={primaryRef}
                 className={`${PRIMARY_SIZE} ${
                     rounded ? "rounded-full" : "rounded"
                 } ${
@@ -85,7 +80,6 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                 style={{
                     borderColor: chain_color ? chain_color : "inherit",
                 }}
-                ref={primaryRef}
             />
 
             {!only_primary && (

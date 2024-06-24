@@ -67,4 +67,5 @@ export interface TokenAvatarProps {
     only_primary?: boolean;
     chain_color?: string | null;
     rounded?: boolean;
+    border?: boolean;
 }
