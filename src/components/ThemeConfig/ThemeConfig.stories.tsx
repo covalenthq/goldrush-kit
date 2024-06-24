@@ -10,4 +10,6 @@ export default meta;
 
 type Story = StoryObj<typeof ThemeConfigComponent>;
 
-export const ThemeConfig: Story = {};
+export const ThemeConfig: Story = {
+    tags: ["!autodocs"],
+};
