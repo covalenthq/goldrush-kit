@@ -1,5 +1,28 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.6.5
+
+**Features**
+
+-   Exported types of the entire project
+-   Removed deprecated exports
+-   Update `AddressAvatar` render options for its usage
+-   Update `TokenAvatar` for clearer usage
+-   Update `NFTWalletCollectionList` UI
+-   Added `autodocs` for stories
+
+**Fixes**
+
+-   Fix value parsing in multiple places
+-   Fix theme colors in `TokenAvatar`
+-   Fix table wrapping
+-   Fix toasts
+-   Create `AddressAvatar` types enum
+-   `actionables` of multiple components
+-   Misc DX fixes
+-   Misc HTML element nesting
+-   Prune unnecessary static assets
+
 ## 0.6.4
 
 **Features**
