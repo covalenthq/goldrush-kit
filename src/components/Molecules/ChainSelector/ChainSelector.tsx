@@ -65,10 +65,10 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                     ) : (
                         <div className="flex items-center gap-x-1">
                             <TokenAvatar
-                                is_chain_logo
+                                only_primary
                                 size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                                 chain_color={selectedChain.color_theme.hex}
-                                token_url={selectedChain.logo_url}
+                                primary_url={selectedChain.logo_url}
                             />
                             {selectedChain.label}
                         </div>
@@ -105,10 +105,10 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                                     }}
                                 >
                                     <TokenAvatar
-                                        is_chain_logo
+                                        only_primary
                                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        chain_color={chain.color_theme.hex}
-                                        token_url={chain.logo_url}
+                                        chain_color={chain.color_theme?.hex}
+                                        primary_url={chain.logo_url}
                                     />
                                     {chain.label}
                                     <CheckIcon

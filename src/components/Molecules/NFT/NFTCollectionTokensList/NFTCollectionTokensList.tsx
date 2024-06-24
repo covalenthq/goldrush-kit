@@ -1,6 +1,6 @@
 import {
-    allowedCacheChains,
-    defaultErrorMessage,
+    ALLOWED_CACHE_CHAINS,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { type NftTokenContract, type Pagination } from "@covalenthq/client-sdk";
@@ -37,7 +37,7 @@ export const NFTCollectionTokensList: React.FC<
                             pageNumber: _pagination?.page_number ?? 0,
                             pageSize: _pagination?.page_size ?? page_size,
                             withUncached:
-                                !allowedCacheChains.includes(chain_name),
+                                !ALLOWED_CACHE_CHAINS.includes(chain_name),
                         }
                     );
                 if (error.error) {
@@ -46,7 +46,7 @@ export const NFTCollectionTokensList: React.FC<
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

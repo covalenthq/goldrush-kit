@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
@@ -19,8 +19,7 @@ import { useEffect, useState } from "react";
 
 export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     chain_name,
-    actionable_from,
-    actionable_to,
+    actionable_address,
     actionable_transaction,
 }) => {
     const { covalentClient } = useGoldRush();
@@ -50,7 +49,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 const { data: txData, ...txError } =
                     await covalentClient.TransactionService.getTransactionsForBlock(
                         chain_name,
-                        latestBlock.height - 2,
+                        latestBlock.height - 4,
                         {
                             noLogs: true,
                             quoteCurrency: "USD",
@@ -63,7 +62,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 }
                 setMaybeResult(new Some(txData.items.slice(-5)));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -137,7 +136,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                                     label={from_address_label}
                                                     address={from_address}
                                                     actionable_address={
-                                                        actionable_from
+                                                        actionable_address
                                                     }
                                                 />
                                             }
@@ -150,7 +149,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                                     label={to_address_label}
                                                     address={to_address}
                                                     actionable_address={
-                                                        actionable_to
+                                                        actionable_address
                                                     }
                                                 />
                                             }

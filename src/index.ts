@@ -10,3 +10,6 @@ export * from "./utils/types/molecules.types";
 export * from "./utils/types/organisms.types";
 export * from "./utils/types/shared.types";
 export * from "./utils/types/store.types";
+
+// * INFO: constants
+export * from "./utils/constants/shared.constants";

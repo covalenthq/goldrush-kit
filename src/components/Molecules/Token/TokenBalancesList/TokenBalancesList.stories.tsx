@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { TokenBalancesList as TokenBalancesListComponent } from "./TokenBalancesList";
-import { type CrossChainBalanceItem } from "@/utils/types/molecules.types";
 import { storyAction } from "@/utils/functions";
 
 type Story = StoryObj<typeof TokenBalancesListComponent>;
@@ -18,6 +17,6 @@ export const TokenBalancesList: Story = {
         address: "0xf8cb94cda3552a427b87d8beb04729beb93dac5c",
         mask_balances: false,
         hide_small_balances: false,
-        actionable_token: (token: CrossChainBalanceItem) => storyAction(token),
+        actionable_token: (token) => storyAction(token),
     },
 };

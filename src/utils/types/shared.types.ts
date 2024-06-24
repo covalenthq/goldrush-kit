@@ -44,7 +44,9 @@ export interface IconWrapperProps {
 export interface TransactionsProps {
     maybeResult: Option<Transaction[] | null>;
     errorMessage: string | null;
-    actionable_transaction?: (address: string) => ActionableType;
+    actionable_transaction?: (tx_hash: string) => ActionableType;
+    actionable_block?: (block_height: number) => ActionableType;
+    actionable_address?: (address: string) => ActionableType;
 }
 
 export interface TokenApprovalsTableProps {
@@ -99,7 +101,9 @@ export interface HeadingProps
 export type ActionableType<
     T extends
         | keyof JSX.IntrinsicElements
-        | React.ComponentType<unknown> = keyof JSX.IntrinsicElements,
-> = T extends keyof JSX.IntrinsicElements
-    ? { parent: T; parentProps: JSX.IntrinsicElements[T] }
-    : { parent: T; parentProps: React.ComponentProps<T> };
+        | React.ComponentType<any> = React.ComponentType<any>,
+> =
+    | (T extends keyof JSX.IntrinsicElements
+          ? { parent: T; parentProps: JSX.IntrinsicElements[T] }
+          : { parent: T; parentProps: React.ComponentProps<T> })
+    | null;

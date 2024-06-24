@@ -14,7 +14,7 @@ import {
 } from "@/components/Shared";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTokenListProps } from "@/utils/types/molecules.types";
@@ -57,7 +57,7 @@ export const XYKTokenList: React.FC<XYKTokenListProps> = ({
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -85,7 +85,7 @@ export const XYKTokenList: React.FC<XYKTokenListProps> = ({
                 <div className="flex items-center gap-3">
                     <TokenAvatar
                         size={GRK_SIZES.EXTRA_SMALL}
-                        token_url={row.original.logo_url}
+                        primary_url={row.original.logo_url}
                     />
 
                     {actionableWrapper(

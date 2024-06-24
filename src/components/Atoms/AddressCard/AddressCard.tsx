@@ -1,5 +1,4 @@
 import { Address, AddressAvatar } from "../../Atoms";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type AddressCardProps } from "@/utils/types/atoms.types";
 import {
     Dialog,
@@ -13,7 +12,7 @@ import { Card } from "@/components/ui/card";
 
 export const AddressCard: React.FC<AddressCardProps> = ({
     address,
-    type = "effigy",
+    avatar,
     label = "Unnamed Wallet",
     show_copy_icon = true,
     show_qr_code = true,
@@ -21,12 +20,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
 }) => {
     return (
         <Card className="flex items-center gap-x-2 p-2">
-            <AddressAvatar
-                type={type}
-                address={address}
-                rounded
-                size={GRK_SIZES.SMALL}
-            />
+            <AddressAvatar {...avatar} address={address} />
             <div className="flex h-full flex-col justify-center">
                 <h2 className="text-base font-semibold text-foreground-light dark:text-foreground-dark">
                     {label}

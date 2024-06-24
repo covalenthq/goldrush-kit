@@ -8,13 +8,13 @@ import { type AddressProps } from "@/utils/types/atoms.types";
 import { useToast } from "@/utils/hooks";
 import { useState } from "react";
 import { AddressAvatar } from "../AddressAvatar/AddressAvatar";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { Toaster } from "@/components/ui/toaster";
 
 export const Address: React.FC<AddressProps> = ({
     address,
     label = null,
     show_copy_icon = true,
-    show_avatar = false,
+    avatar = null,
     actionable_address = () => null,
 }) => {
     const [showCopy, setShowCopy] = useState<boolean>(false);
@@ -22,7 +22,8 @@ export const Address: React.FC<AddressProps> = ({
 
     const handleCopyClick = () => {
         toast({
-            description: "Address copied!",
+            title: "Copied to clipboard!",
+            description: address,
         });
         setShowCopy(true);
         setTimeout(() => {
@@ -32,14 +33,9 @@ export const Address: React.FC<AddressProps> = ({
 
     return (
         <p className="flex items-center gap-x-2">
-            {show_avatar && (
-                <AddressAvatar
-                    address={address}
-                    type="fingerprint"
-                    size={GRK_SIZES.EXTRA_SMALL}
-                    rounded
-                />
-            )}
+            <Toaster />
+            {avatar && <AddressAvatar {...avatar} address={address} />}
+
             {actionableWrapper(
                 actionable_address(address),
                 label?.trim() || truncate(address)

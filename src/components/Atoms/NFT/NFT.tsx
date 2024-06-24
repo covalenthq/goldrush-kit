@@ -1,19 +1,25 @@
 import { type NFTProps } from "@/utils/types/atoms.types";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
-import { GRK_SIZES, defaultErrorNFT } from "@/utils/constants/shared.constants";
+import {
+    GRK_SIZES,
+    DEFAULT_ERROR_NFT,
+} from "@/utils/constants/shared.constants";
 import { CardDetail } from "@/components/Shared";
 import { TokenAvatar } from "../TokenAvatar/TokenAvatar";
 import { useGoldRush } from "@/utils/store";
 import { type ChainItem } from "@covalenthq/client-sdk";
 import { useMemo } from "react";
+import { actionableWrapper } from "@/utils/functions";
 
 export const NFT: React.FC<NFTProps> = ({
     collection_name,
+    collection_address,
     token_id,
     attributes = [],
     src,
     children = null,
     chain_name = null,
+    actionable_contract = () => null,
 }) => {
     const { chains } = useGoldRush();
 
@@ -27,25 +33,19 @@ export const NFT: React.FC<NFTProps> = ({
             <CardContent className="relative rounded transition-all">
                 <img
                     className="block h-64 w-64 object-cover"
-                    src={src || defaultErrorNFT}
+                    src={src || DEFAULT_ERROR_NFT}
                     onError={(e) => {
-                        e.currentTarget.src = defaultErrorNFT;
+                        e.currentTarget.src = DEFAULT_ERROR_NFT;
                     }}
                 />
 
                 {chain ? (
-                    <div
-                        className="absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] bg-background-light p-1 dark:bg-background-dark"
-                        style={{
-                            border: `2px solid `,
-                            borderColor: `${chain.color_theme.hex}`,
-                        }}
-                    >
+                    <div className="absolute bottom-1 right-1 flex">
                         <TokenAvatar
-                            is_chain_logo
+                            only_primary
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chain.color_theme.hex}
-                            token_url={chain?.logo_url}
+                            primary_url={chain?.logo_url}
                         />
                     </div>
                 ) : (
@@ -54,9 +54,12 @@ export const NFT: React.FC<NFTProps> = ({
             </CardContent>
 
             <CardDetail
-                heading={collection_name?.toUpperCase() ?? null}
+                heading={actionableWrapper(
+                    actionable_contract(collection_address || ""),
+                    collection_name?.toUpperCase() ?? null
+                )}
                 content={token_id ? `#${token_id}` : null}
-                wrapperClassName="p-2"
+                wrapperClassName="p-2 !text-left"
             />
 
             {children}

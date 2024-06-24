@@ -14,9 +14,8 @@ export default meta;
 export const TransactionsList: Story = {
     args: {
         chain_name: "eth-mainnet",
-        actionable_block: (block: number) => storyAction(block),
-        actionable_transaction: (address: string) => storyAction(address),
-        actionable_from: (address) => storyAction(address),
-        actionable_to: (address) => storyAction(address),
+        actionable_block: (block) => storyAction(block),
+        actionable_transaction: (address) => storyAction(address),
+        actionable_address: (address) => storyAction(address),
     },
 };

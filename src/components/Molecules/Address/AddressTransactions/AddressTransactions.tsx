@@ -5,7 +5,7 @@ import { type AddressTransactionsProps } from "@/utils/types/molecules.types";
 import { Transactions } from "@/components/Shared";
 import { useGoldRush } from "@/utils/store";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 
 export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
     chain_name,
@@ -38,7 +38,7 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

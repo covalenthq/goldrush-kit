@@ -1,6 +1,6 @@
 import { Address, Timestamp } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -17,8 +17,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
     chain_name,
     actionable_block = () => null,
     actionable_transaction,
-    actionable_from,
-    actionable_to,
+    actionable_address,
 }) => {
     const { covalentClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -60,7 +59,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
                 }
                 setMaybeResult(new Some(txData.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -119,8 +118,8 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             cell: ({ row }) => (
                 <Address
                     address={row.original.from_address}
-                    show_avatar
-                    actionable_address={actionable_from}
+                    avatar={{}}
+                    actionable_address={actionable_address}
                 />
             ),
         },
@@ -131,8 +130,8 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
             cell: ({ row }) => (
                 <Address
                     address={row.original.to_address}
-                    show_avatar
-                    actionable_address={actionable_to}
+                    avatar={{}}
+                    actionable_address={actionable_address}
                 />
             ),
         },

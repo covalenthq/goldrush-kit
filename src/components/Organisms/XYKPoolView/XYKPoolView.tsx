@@ -2,7 +2,7 @@ import { useGoldRush } from "@/utils/store";
 import { type Option, Some, None } from "@/utils/option";
 import { type XYKPoolViewProps } from "@/utils/types/organisms.types";
 import { useEffect, useState } from "react";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 import { XYKPoolDetails, XYKPoolTimeseries } from "@/components/Molecules";
 import { type PoolWithTimeseries } from "@covalenthq/client-sdk";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
@@ -33,7 +33,7 @@ export const XYKPoolView: React.FC<XYKPoolViewProps> = ({
                 }
                 setMaybeResult(new Some(data.items[0]));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

@@ -7,14 +7,14 @@ import { type GasPricesResponse } from "@covalenthq/client-sdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
-    const [isErc20, setIsErc20] = useState<boolean>(false);
+    const [isErc20, setIsErc20] = useState<boolean>(true);
     const [maybeResult, setMaybeResult] = useState<
         Option<{
             erc: GasPricesResponse;
@@ -55,7 +55,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                     })
                 );
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }

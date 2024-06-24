@@ -9,7 +9,7 @@ import {
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityViewProps } from "@/utils/types/organisms.types";
 import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { defaultErrorMessage } from "@/utils/constants/shared.constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
 
 export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
     address,
@@ -37,7 +37,7 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: CovalentAPIError | any) {
-                setErrorMessage(error?.error_message ?? defaultErrorMessage);
+                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);
             }
@@ -47,6 +47,7 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
     return (
         <div className="space-y-4">
             <AddressCard
+                avatar={{}}
                 address={address}
                 actionable_address={actionable_address}
             />

@@ -5,7 +5,7 @@ import { ClockIcon } from "@radix-ui/react-icons";
 
 export const Timestamp: React.FC<TimestampProps> = ({
     timestamp,
-    defaultType = "descriptive",
+    defaultType = "relative",
     dynamic = true,
 }) => {
     const [relativeTime, setRelativeTime] = useState<boolean>(
@@ -44,14 +44,15 @@ export const Timestamp: React.FC<TimestampProps> = ({
     }, []);
 
     return (
-        <span className="inline-flex items-center gap-x-1">
+        <button
+            className="inline-flex items-center gap-x-1"
+            onClick={() => handleToggle(relativeTime)}
+        >
             {parsedTime}
-            <button
-                onClick={() => handleToggle(relativeTime)}
-                className="text-foreground-light opacity-75 dark:text-foreground-dark"
-            >
+
+            <span className="text-foreground-light opacity-75 dark:text-foreground-dark">
                 <ClockIcon />
-            </button>
-        </span>
+            </span>
+        </button>
     );
 };

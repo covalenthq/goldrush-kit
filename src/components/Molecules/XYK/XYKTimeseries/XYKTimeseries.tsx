@@ -9,7 +9,7 @@ import {
     CHART_COLORS,
     GRK_SIZES,
     PERIOD,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type XYKTimeseriesProps } from "@/utils/types/molecules.types";
@@ -90,7 +90,7 @@ export const XYKTimeseries: React.FC<XYKTimeseriesProps> = ({
                     setMaybeResult(new Some(response.data.items[0]));
                 } catch (error: CovalentAPIError | any) {
                     setErrorMessage(
-                        error?.error_message ?? defaultErrorMessage
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);

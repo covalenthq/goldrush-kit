@@ -13,7 +13,7 @@ import {
 } from "@/utils/types/shared.types";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -62,7 +62,7 @@ export const NFTWalletCollectionDetails: React.FC<
                     setMaybeResult(new Some(data.items));
                 } catch (error: CovalentAPIError | any) {
                     setErrorMessage(
-                        error?.error_message ?? defaultErrorMessage
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);

@@ -7,7 +7,7 @@ import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
 import {
     GRK_SIZES,
-    defaultErrorMessage,
+    DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListProps } from "@/utils/types/molecules.types";
@@ -57,7 +57,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                     setMaybeResult(new Some(data.items));
                 } catch (error: CovalentAPIError | any) {
                     setErrorMessage(
-                        error?.error_message ?? defaultErrorMessage
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);
@@ -80,9 +80,10 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
             cell: ({ row }) => (
                 <div className="flex items-center gap-x-1">
                     <TokenAvatar
-                        is_chain_logo={true}
-                        token_url={row.original.logo_url}
+                        only_primary={true}
+                        primary_url={row.original.logo_url}
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                        chain_color={row.original.color_theme.hex}
                     />
                     {row.getValue("label")}
                 </div>
@@ -117,7 +118,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
             ),
             cell: ({ row }) =>
                 !row.getValue("is_testnet") ? (
-                    <IconWrapper icon_class_name="playlist_add_check" />
+                    <IconWrapper icon_class_name="check_circle" />
                 ) : (
                     <></>
                 ),

@@ -1,18 +1,21 @@
-import Fingerprint from "@/static/avatar/fingerprint.svg";
-import WalletRound from "@/static/avatar/wallet-round.svg";
-import WalletSquare from "@/static/avatar/wallet-square.svg";
+import AvatarFingerprint from "@/static/avatar/avatar-fingerprint.svg";
+import AvatarWallet from "@/static/avatar/avatar-wallet.svg";
 import { stringToColor } from "@/utils/functions";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { type AddressAvatarProps } from "@/utils/types/atoms.types";
 import { useMemo } from "react";
+import {
+    ADDRESS_AVATAR_TYPE,
+    GRK_SIZES,
+} from "@/utils/constants/shared.constants";
+import { Address } from "..";
 
 export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     address,
-    type,
-    size,
-    fallback,
+    type = ADDRESS_AVATAR_TYPE.FINGERPRINT,
+    size = GRK_SIZES.SMALL,
     rounded = false,
-    class_name,
+    class_name = "",
     custom_avatar,
 }) => {
     const SRC = useMemo<
@@ -22,55 +25,48 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
             return custom_avatar;
         }
         switch (type) {
-            case "effigy":
+            case ADDRESS_AVATAR_TYPE.EFFIGY:
                 return `https://effigy.im/a/${address}.png`;
-
-            case "nft":
-                return address;
-
-            case "fingerprint":
-                return Fingerprint;
-
-            case "wallet":
-                return rounded ? WalletRound : WalletSquare;
-
-            default:
-                return Fingerprint;
+            case ADDRESS_AVATAR_TYPE.WALLET:
+                return AvatarWallet;
+            case ADDRESS_AVATAR_TYPE.FINGERPRINT:
+                return AvatarFingerprint;
         }
     }, [type, address, rounded, custom_avatar]);
 
     const SIZE_CLASS = useMemo<string>(() => {
         switch (size) {
-            case "xxs":
+            case GRK_SIZES.EXTRA_EXTRA_SMALL:
                 return "w-6 h-6";
-            case "xs":
+            case GRK_SIZES.EXTRA_SMALL:
                 return "w-8 h-8";
-            case "sm":
+            case GRK_SIZES.SMALL:
                 return "w-10 h-10";
-            case "md":
+            case GRK_SIZES.MEDIUM:
                 return "w-20 h-20";
-            case "lg":
+            case GRK_SIZES.LARGE:
                 return "w-24 h-24";
-            default:
-                return "w-12 h-12";
         }
     }, [size]);
 
-    const BG_COLOR = useMemo<React.CSSProperties>(
-        () => ({
-            backgroundColor: stringToColor(address),
-        }),
+    const BG_COLOR = useMemo<React.CSSProperties["backgroundColor"]>(
+        () => stringToColor(address),
         [address]
     );
 
     return (
         <Avatar
             className={`${SIZE_CLASS} ${rounded ? "rounded-full" : "rounded"} ${
-                class_name || ""
+                class_name
             }`}
         >
-            <AvatarImage style={BG_COLOR} src={SRC as string} />
-            <AvatarFallback style={BG_COLOR}>{fallback}</AvatarFallback>
+            <AvatarImage
+                style={{ backgroundColor: BG_COLOR }}
+                src={SRC as string}
+            />
+            <AvatarFallback style={{ backgroundColor: BG_COLOR }}>
+                <Address address={address} />
+            </AvatarFallback>
         </Avatar>
     );
 };

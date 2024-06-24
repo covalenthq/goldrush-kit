@@ -6,13 +6,15 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { TableHeaderSorting, TableList } from ".";
 import { type TransactionsProps } from "@/utils/types/shared.types";
 import { Address } from "@/components/Atoms";
-
+import { actionableWrapper } from "@/utils/functions";
 import { Timestamp } from "@/components/Atoms";
 import { Some } from "@/utils/option";
 
 export const Transactions: React.FC<TransactionsProps> = ({
     errorMessage = null,
     maybeResult = new Some(null),
+    actionable_address,
+    actionable_block = () => null,
     actionable_transaction,
 }) => {
     const columns: ColumnDef<Transaction>[] = [
@@ -44,7 +46,14 @@ export const Transactions: React.FC<TransactionsProps> = ({
                 />
             ),
             cell: ({ row }) => {
-                return <p>{row.original.block_height}</p>;
+                return (
+                    <p>
+                        {actionableWrapper(
+                            actionable_block(row.original.block_height),
+                            row.original.block_height.toLocaleString()
+                        )}
+                    </p>
+                );
             },
         },
         {
@@ -79,8 +88,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             cell: ({ row }) => (
                 <Address
                     label={row.original.from_address_label}
-                    show_avatar
+                    avatar={{}}
                     address={row.original.from_address}
+                    actionable_address={actionable_address}
                 />
             ),
         },
@@ -97,8 +107,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
             cell: ({ row }) => (
                 <Address
                     label={row.original.to_address_label}
-                    show_avatar
+                    avatar={{}}
                     address={row.original.to_address}
+                    actionable_address={actionable_address}
                 />
             ),
         },
