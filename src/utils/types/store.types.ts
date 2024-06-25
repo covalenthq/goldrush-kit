@@ -42,7 +42,6 @@ export type GoldRushThemeMode = "dark" | "light";
 
 export interface GoldRushThemeType {
     mode: GoldRushThemeMode;
-    style: "classic" | "neo";
     borderRadius: number;
     colors: Partial<{
         dark: Partial<GoldRushThemeColorType>;
