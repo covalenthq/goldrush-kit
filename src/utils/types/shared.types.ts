@@ -101,7 +101,7 @@ export interface HeadingProps
 export type ActionableType<
     T extends
         | keyof JSX.IntrinsicElements
-        | React.ComponentType<any> = React.ComponentType<any>,
+        | React.ComponentType<any> = keyof JSX.IntrinsicElements,
 > =
     | (T extends keyof JSX.IntrinsicElements
           ? { parent: T; parentProps: JSX.IntrinsicElements[T] }
