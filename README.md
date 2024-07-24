@@ -104,8 +104,24 @@ const GoldRushExample = () => {
         <main className="">
             <GoldRushProvider
                 apikey={process.env.NEXT_PUBLIC_API_KEY}
-                mode="dark"
-                color="emerald"
+                theme={{
+                    borderRadius: 6,
+                    colors: {
+                        dark: {
+                            primary: "#FF4C8B",
+                            background: "#000426",
+                            foreground: "#FFFFFF",
+                            secondary: "#868E96",
+                        },
+                        light: {
+                            primary: "#00D8D5",
+                            background: "#FFFFFF",
+                            foreground: "#1C2024",
+                            secondary: "#868E96",
+                        },
+                    },
+                    mode: "dark",
+                }}
             >
                 <TokenBalancesList
                     chain_names={[

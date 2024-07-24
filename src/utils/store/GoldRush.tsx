@@ -23,7 +23,7 @@ const GoldRushContext = createContext<GoldRushContextType>(
 export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     children,
     apikey,
-    newTheme,
+    theme: initialTheme,
 }) => {
     const covalentClient = useMemo<CovalentClient>(
         () => new CovalentClient(apikey, {}, "GoldRush"),
@@ -57,7 +57,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     const [theme, setTheme] = useState<GoldRushThemeType>(
         defaultsDeep(
             JSON.parse(localStorage.getItem("goldrush_theme") || "null") ?? {},
-            defaultsDeep(newTheme, defaultTheme)
+            defaultsDeep(initialTheme, defaultTheme)
         )
     );
 
