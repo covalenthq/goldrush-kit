@@ -20,8 +20,8 @@ const preview: Preview = {
     decorators: [
         (storyFn) => (
             <GoldRushProvider
-                apikey={import.meta.env.STORYBOOK_COVALENT_API_KEY}
-                newTheme={{
+                apikey={import.meta.env.STORYBOOK_GOLDRUSH_API_KEY}
+                theme={{
                     borderRadius: 10,
                 }}
             >

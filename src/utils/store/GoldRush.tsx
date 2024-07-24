@@ -23,7 +23,7 @@ const GoldRushContext = createContext<GoldRushContextType>(
 export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     children,
     apikey,
-    newTheme,
+    theme: initialTheme,
 }) => {
     const covalentClient = useMemo<CovalentClient>(
         () => new CovalentClient(apikey, {}, "GoldRush"),
@@ -48,7 +48,6 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 },
             },
             mode: "light",
-            style: "classic",
         }),
         []
     );
@@ -58,7 +57,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     const [theme, setTheme] = useState<GoldRushThemeType>(
         defaultsDeep(
             JSON.parse(localStorage.getItem("goldrush_theme") || "null") ?? {},
-            defaultsDeep(newTheme, defaultTheme)
+            defaultsDeep(initialTheme, defaultTheme)
         )
     );
 
@@ -78,7 +77,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
 
     useEffect(() => {
         localStorage.setItem("goldrush_theme", JSON.stringify(theme));
-        const { borderRadius, colors, mode, style } = theme;
+        const { borderRadius, colors, mode } = theme;
 
         const body = document.body;
         const root = document.documentElement;
@@ -92,19 +91,6 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
             case "light": {
                 body.classList.remove("dark");
                 root.classList.remove("dark");
-                break;
-            }
-        }
-
-        switch (style) {
-            case "neo": {
-                body.classList.add("neo");
-                root.classList.add("neo");
-                break;
-            }
-            case "classic": {
-                body.classList.remove("neo");
-                root.classList.remove("neo");
                 break;
             }
         }

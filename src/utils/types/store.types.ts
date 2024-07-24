@@ -42,7 +42,6 @@ export type GoldRushThemeMode = "dark" | "light";
 
 export interface GoldRushThemeType {
     mode: GoldRushThemeMode;
-    style: "classic" | "neo";
     borderRadius: number;
     colors: Partial<{
         dark: Partial<GoldRushThemeColorType>;
@@ -53,5 +52,10 @@ export interface GoldRushThemeType {
 export interface GoldRushProviderProps {
     children: React.ReactNode;
     apikey: string;
+    /**
+     * @deprecated Please use `theme` going forward!
+     * This prop will be removed after Aug 30, 2024.
+     */
     newTheme?: Partial<GoldRushThemeType>;
+    theme?: Partial<GoldRushThemeType>;
 }
