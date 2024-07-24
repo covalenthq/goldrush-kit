@@ -1,6 +1,6 @@
 <div align="center">
-  <a href="https://www.covalenthq.com/products/goldrush/" target="_blank">
-    <img alt="GoldRush Kit Logo" src="https://raw.githubusercontent.com/covalenthq/goldrush-kit/main/src/static/grk-kit-banner.png" style="max-width: 100%;"/>
+  <a href="https://goldrush.dev/products/goldrush/"  target="_blank" rel="noopener noreferrer">
+    <img alt="GoldRush Kit Logo" src="./src/static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
 </div>
 
@@ -16,14 +16,19 @@
   <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
 </p>
 
-<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
+<h1 align="center">
+    Beautifully designed React components for your dApp frontend.
+</h1>
 
 <div align="center">
-200+ Chains. Open-source. Customizable.
+    200+ Chains. Open-source. Customizable.
 </div>
+
 <p align="center">
     <br />
-    <a href="https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow"><strong>Explore the docs »</strong></a>
+    <a href="https://goldrush.dev/docs/unified-api/goldrush/kit/gold-rush-provider/" rel="dofollow">
+        <strong>Explore the docs »</strong>
+    </a>
     <br />
 </p>
 
@@ -50,7 +55,8 @@ import { GoldRushProvider } from "@covalenthq/goldrush-kit";
 ```
 
 2. Wrap `GoldRushProvider` around the application.
-3. Configure the provider and add it to the `apikey` props with your Covalent API key. You can register for a free key on [Covalent's website](https://www.covalenthq.com/platform/auth/register/).
+3. Configure the provider and add it to the `apikey` props with your GoldRush API key. You can register for a free key on [GoldRush's website](https://goldrush.dev/platform/auth/register/).
+    > **Note:** You should always keep your API key private, never put it directly into your code, especially front end code. Instead, use an environment variable to inject the key into your code.
 
 ```tsx
 <GoldRushProvider apikey="<YOUR_API_KEY>">{children}</GoldRushProvider>
@@ -62,38 +68,38 @@ import { GoldRushProvider } from "@covalenthq/goldrush-kit";
 import "@covalenthq/goldrush-kit/styles.css";
 ```
 
-5. Add desired components. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules. Visit GoldRush's [component documentation](https://www.covalenthq.com/docs/unified-api/goldrush/kit/gold-rush-provider/) for more information.
+5. Add desired components.
+    > **Note:** If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules. Visit GoldRush's [component documentation](https://goldrush.dev/docs/unified-api/goldrush/kit/gold-rush-provider/) for more information.
 
 ```tsx
 import {
     GoldRushProvider,
-    NFTWalletTokenListView,
-    TokenBalancesListView,
-    TokenTransfersListView,
-    AddressActivityListView,
+    NFTWalletCollectionList,
+    TokenBalancesList,
+    TokenTransfersList,
+    AddressActivityList,
 } from "@covalenthq/goldrush-kit";
 ```
 
 ## Ready-to-go React Component example
 
-Here's a full example to get you started. If you're using `next.js` versions `^13.0` and are using `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules.
+Here's a full example to get you started.
 
-**Note:** You should always keep your API key private, never put it directly into your code, especially front end code. Instead, use an environment variable to inject the key into your code.
-
-Be sure to secure your key to prevent unauthorized use in the Covalent platform by restricting usage to specific URLs.
+Be sure to secure your key to prevent unauthorized use in the GoldRush platform by restricting usage to specific URLs.
 
 ```tsx
 "use client";
+
 import "@covalenthq/goldrush-kit/styles.css";
 import {
     GoldRushProvider,
-    NFTWalletTokenListView,
-    TokenBalancesListView,
-    TokenTransfersListView,
-    AddressActivityListView,
+    NFTWalletCollectionList,
+    TokenBalancesList,
+    TokenTransfersList,
+    AddressActivityList,
 } from "@covalenthq/goldrush-kit";
 
-export default function GoldRushExample() {
+const GoldRushExample = () => {
     return (
         <main className="">
             <GoldRushProvider
@@ -101,7 +107,7 @@ export default function GoldRushExample() {
                 mode="dark"
                 color="emerald"
             >
-                <TokenBalancesListView
+                <TokenBalancesList
                     chain_names={[
                         "eth-mainnet",
                         "matic-mainnet",
@@ -112,35 +118,34 @@ export default function GoldRushExample() {
                     hide_small_balances
                     address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
                 />
-                <TokenTransfersListView
+
+                <TokenTransfersList
                     chain_name="eth-mainnet"
                     address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
                     contract_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
                 />
-                <AddressActivityListView address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
-                <NFTWalletTokenListView
+
+                <AddressActivityList address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
+
+                <NFTWalletCollectionList
                     address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-                    chain_names={[
-                        "eth-mainnet",
-                        "matic-mainnet",
-                        "bsc-mainnet",
-                        "avalanche-mainnet",
-                        "optimism-mainnet",
-                    ]}
+                    chain_name="eth-mainnet"
                 />
             </GoldRushProvider>
         </main>
     );
-}
+};
+
+export default GoldRushExample;
 ```
 
 ## GoldRush Templates
 
-| Template                              | Description                                                | Link                                                         |
-| ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
-| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains.       | https://github.com/covalenthq/goldrush-wallet-portfolio-ui   |
-| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.          | https://github.com/covalenthq/goldrush-nft-gallery-ui        |
-| Transaction Receipt View              | A beautifully designed view for blockchain transactions.   | https://github.com/covalenthq/goldrush-tx-receipt-ui         |
+| Template                              | Description                                              | Link                                                       |
+| ------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| Wallet & Portfolio UI                 | Display your tokens and NFTs across multiple chains.     | https://github.com/covalenthq/goldrush-wallet-portfolio-ui |
+| NFT Collection Gallery & Analytics UI | Display NFTs by collection and see their details.        | https://github.com/covalenthq/goldrush-nft-gallery-ui      |
+| Transaction Receipt View              | A beautifully designed view for blockchain transactions. | https://github.com/covalenthq/goldrush-tx-receipt-ui       |
 
 ## HIGHLIGHT: GoldRush Transaction Receipt View
 
@@ -167,7 +172,7 @@ Storybook provides developers with a way to quickly prototype and develop compon
 Create and add a `.env` file to the root directory of your project and the following to the file.
 
 ```
-STORYBOOK_COVALENT_API_KEY = "<YOUR_API_KEY>"
+STORYBOOK_GOLDUSH_API_KEY = "<YOUR_API_KEY>"
 ```
 
 ### Start
@@ -199,4 +204,4 @@ Give a ⭐️ if this project helped you!
 
 ## License
 
-This project is <a href="https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE">Apache 2.0</a> licensed.
+This project is <a href="./LICENSE">Apache 2.0</a> licensed.
