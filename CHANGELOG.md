@@ -1,5 +1,12 @@
 # Changelog for Covalent GoldRush Kit
 
+## 0.7.0
+
+**Features**
+
+-   Rebranding of Covalent's API aspects into GoldRush
+-   Update documentation
+
 ## 0.6.5
 
 **Features**
