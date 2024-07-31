@@ -47,7 +47,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                         }),
                         headers: {
                             "content-type": "application/json",
-                            "x-covalent-api-key": apikey,
+                            "x-goldrush-api-key": apikey,
                         },
                         method: "POST",
                     }
