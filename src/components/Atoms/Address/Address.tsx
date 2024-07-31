@@ -32,38 +32,40 @@ export const Address: React.FC<AddressProps> = ({
     };
 
     return (
-        <p className="flex items-center gap-x-2">
+        <>
             <Toaster />
-            {avatar && <AddressAvatar {...avatar} address={address} />}
+            <p className="flex items-center gap-x-2">
+                {avatar && <AddressAvatar {...avatar} address={address} />}
 
-            {actionableWrapper(
-                actionable_address(address),
-                label?.trim() || truncate(address)
-            )}
+                {actionableWrapper(
+                    actionable_address(address),
+                    label?.trim() || truncate(address)
+                )}
 
-            {show_copy_icon && (
-                <button
-                    className="cursor-pointer"
-                    onClick={() => {
-                        copyToClipboard(address);
-                    }}
-                >
-                    {showCopy ? (
-                        <IconWrapper
-                            icon_class_name="done"
-                            icon_size="text-sm"
-                            class_name="text-foreground-light dark:text-foreground-dark opacity-75"
-                        />
-                    ) : (
-                        <IconWrapper
-                            icon_class_name="content_copy"
-                            icon_size="text-sm"
-                            class_name="text-foreground-light dark:text-foreground-dark opacity-75"
-                            on_click={() => handleCopyClick()}
-                        />
-                    )}
-                </button>
-            )}
-        </p>
+                {show_copy_icon && (
+                    <button
+                        className="cursor-pointer"
+                        onClick={() => {
+                            copyToClipboard(address);
+                        }}
+                    >
+                        {showCopy ? (
+                            <IconWrapper
+                                icon_class_name="done"
+                                icon_size="text-sm"
+                                class_name="text-foreground-light dark:text-foreground-dark opacity-75"
+                            />
+                        ) : (
+                            <IconWrapper
+                                icon_class_name="content_copy"
+                                icon_size="text-sm"
+                                class_name="text-foreground-light dark:text-foreground-dark opacity-75"
+                                on_click={() => handleCopyClick()}
+                            />
+                        )}
+                    </button>
+                )}
+            </p>
+        </>
     );
 };

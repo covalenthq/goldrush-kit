@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://goldrush.dev/products/goldrush/"  target="_blank" rel="noopener noreferrer">
-    <img alt="GoldRush Kit Logo" src="./src/static/grk-kit-banner.png" style="max-width: 100%;"/>
+    <img alt="GoldRush Kit - powered by Covalent" src="./src/static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
 </div>
 
@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
     <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
   </a>
-  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="MIT">
+  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="Apache-2.0">
 </p>
 
 <h1 align="center">
@@ -40,12 +40,6 @@ Install `goldrush-kit` using `npm`:
 npm install @covalenthq/goldrush-kit
 ```
 
-or `yarn`:
-
-```bash
-yarn add @covalenthq/goldrush-kit
-```
-
 ## Implementation
 
 1. Import `GoldRushProvider`
@@ -55,7 +49,8 @@ import { GoldRushProvider } from "@covalenthq/goldrush-kit";
 ```
 
 2. Wrap `GoldRushProvider` around the application.
-3. Configure the provider and add it to the `apikey` props with your GoldRush API key. You can register for a free key on [GoldRush's website](https://goldrush.dev/platform/auth/register/).
+3. Configure the provider and add it to the `apikey` props with your GoldRush API key. You can register for a free key on [GoldRush's website](https://goldrush.dev/platform/apikey).
+
     > **Note:** You should always keep your API key private, never put it directly into your code, especially front end code. Instead, use an environment variable to inject the key into your code.
 
 ```tsx
@@ -220,4 +215,4 @@ Give a ⭐️ if this project helped you!
 
 ## License
 
-This project is <a href="./LICENSE">Apache 2.0</a> licensed.
+This project is [Apache-2.0](./LICENSE) licensed.
