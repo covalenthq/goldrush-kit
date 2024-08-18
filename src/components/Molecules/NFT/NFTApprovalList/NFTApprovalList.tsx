@@ -1,15 +1,17 @@
-import { type Option, None, Some } from "@/utils/option";
-import type { NftApprovalsItem } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
-import { type NFTApprovalListProps } from "@/utils/types/molecules.types";
-import { useGoldRush } from "@/utils/store";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
-import { TableHeaderSorting, TableList } from "@/components/Shared";
-import type { ColumnDef } from "@tanstack/react-table";
 import { Address } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import { type Option, None, Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type NFTApprovalListProps } from "@/utils/types/molecules.types";
+import type {
+    GoldRushResponse,
+    NftApprovalsItem,
+} from "@covalenthq/client-sdk";
+import type { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
 export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     chain_name,
@@ -18,7 +20,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
     actionable_spender,
     actionable_token,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
 
     const [maybeResult, setMaybeResult] =
         useState<Option<NftApprovalsItem[] | null>>(None);
@@ -30,7 +32,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.SecurityService.getNftApprovals(
+                    await goldrushClient.SecurityService.getNftApprovals(
                         chain_name,
                         address.trim()
                     );
@@ -38,7 +40,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

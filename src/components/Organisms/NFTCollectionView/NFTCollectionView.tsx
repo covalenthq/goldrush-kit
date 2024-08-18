@@ -1,9 +1,6 @@
-import { type NFTCollectionViewProps } from "@/utils/types/organisms.types";
 import { AddressCard } from "@/components/Atoms";
-import {
-    NFTCollectionDetails,
-    NFTCollectionTokensList,
-} from "@/components/Molecules";
+import { NFTCollectionTokensList } from "@/components/Molecules";
+import { type NFTCollectionViewProps } from "@/utils/types/organisms.types";
 
 export const NFTCollectionView: React.FC<NFTCollectionViewProps> = ({
     chain_name,
@@ -17,11 +14,6 @@ export const NFTCollectionView: React.FC<NFTCollectionViewProps> = ({
                 avatar={{}}
                 address={collection_address}
                 actionable_address={actionable_address}
-            />
-
-            <NFTCollectionDetails
-                chain_name={chain_name}
-                collection_address={collection_address}
             />
 
             <NFTCollectionTokensList

@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFTApprovalList as NFTApprovalListComponent } from "./NFTApprovalList";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof NFTApprovalListComponent>;
 

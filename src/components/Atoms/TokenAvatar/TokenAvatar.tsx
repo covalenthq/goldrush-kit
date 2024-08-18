@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef } from "react";
-import { type TokenAvatarProps } from "@/utils/types/atoms.types";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import DefaultToken from "@/static/avatar/default-token.svg";
 import { Avatar } from "@/components/ui/avatar";
+import DefaultToken from "@/static/avatar/default-token.svg";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { themedSvg } from "@/utils/functions";
+import { type TokenAvatarProps } from "@/utils/types/atoms.types";
+import { useEffect, useMemo, useRef } from "react";
 
 export const TokenAvatar: React.FC<TokenAvatarProps> = ({
     primary_url,

@@ -1,4 +1,4 @@
-# Changelog for Covalent GoldRush Kit
+# Changelog for GoldRush Kit
 
 ## 0.6.5
 

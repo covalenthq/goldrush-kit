@@ -1,12 +1,3 @@
-import { type Option, None, Some } from "@/utils/option";
-import {
-    type BalanceItem,
-    type ChainItem,
-    calculatePrettyBalance,
-    prettifyCurrency,
-} from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
 import { TokenAvatar } from "@/components/Atoms";
 import {
     BalancePriceDelta,
@@ -17,13 +8,24 @@ import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
+import { actionableWrapper } from "@/utils/functions";
+import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     type CrossChainBalanceItem,
     type TokenBalancesListProps,
 } from "@/utils/types/molecules.types";
-import { actionableWrapper } from "@/utils/functions";
+import type {
+    BalanceItem,
+    GoldRushResponse,
+    ChainItem,
+} from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
+import { type ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
 export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
     chain_names,
@@ -32,7 +34,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
     hide_small_balances,
     actionable_token = () => null,
 }) => {
-    const { covalentClient, chains } = useGoldRush();
+    const { goldrushClient, chains } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<CrossChainBalanceItem[] | null>>(None);
     const [filterResult, setFilterResult] =
@@ -47,7 +49,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                 chain_names.map(async (chain_name) => {
                     try {
                         const { data, ...error } =
-                            await covalentClient.BalanceService.getTokenBalancesForWalletAddress(
+                            await goldrushClient.BalanceService.getTokenBalancesForWalletAddress(
                                 chain_name,
                                 address.trim()
                             );
@@ -58,7 +60,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                             ...balance,
                             chain_name: chain_name,
                         }));
-                    } catch (error: CovalentAPIError | any) {
+                    } catch (error: GoldRushResponse<null> | any) {
                         setErrorMessage(
                             error?.error_message ?? DEFAULT_ERROR_MESSAGE
                         );

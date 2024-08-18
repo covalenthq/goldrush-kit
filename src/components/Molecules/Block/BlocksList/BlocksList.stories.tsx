@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { BlocksList as BlocksListComponent } from "./BlocksList";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof BlocksListComponent>;
 

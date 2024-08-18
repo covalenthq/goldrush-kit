@@ -1,6 +1,6 @@
-import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+import tseslint from "typescript-eslint";
 
 export default [
     pluginReactConfig,

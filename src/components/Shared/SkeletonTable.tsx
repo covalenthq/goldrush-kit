@@ -1,6 +1,6 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Skeleton } from "../ui/skeleton";
 import { TableCell, TableRow } from "../ui/table";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { type SkeletonTableProps } from "@/utils/types/shared.types";
 
 export const SkeletonTable: React.FC<SkeletonTableProps> = ({

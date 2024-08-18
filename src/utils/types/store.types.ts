@@ -1,9 +1,9 @@
-import { type ChainItem, type CovalentClient } from "@covalenthq/client-sdk";
-import { type SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
+import type { SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
+import type { ChainItem, GoldRushClient } from "@covalenthq/client-sdk";
 
 export interface GoldRushContextType {
     apikey: string;
-    covalentClient: CovalentClient;
+    goldrushClient: GoldRushClient;
     chains: ChainItem[] | null;
     selectedChain: ChainItem | null;
     theme: GoldRushThemeType;

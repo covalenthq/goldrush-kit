@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { AddressCard as AddressCardComponent } from "./AddressCard";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof AddressCardComponent>;
 

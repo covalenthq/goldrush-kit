@@ -1,14 +1,14 @@
+import { Address } from "..";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import AvatarFingerprint from "@/static/avatar/avatar-fingerprint.svg";
 import AvatarWallet from "@/static/avatar/avatar-wallet.svg";
-import { stringToColor } from "@/utils/functions";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { type AddressAvatarProps } from "@/utils/types/atoms.types";
-import { useMemo } from "react";
 import {
     ADDRESS_AVATAR_TYPE,
     GRK_SIZES,
 } from "@/utils/constants/shared.constants";
-import { Address } from "..";
+import { stringToColor } from "@/utils/functions";
+import { type AddressAvatarProps } from "@/utils/types/atoms.types";
+import { useMemo } from "react";
 
 export const AddressAvatar: React.FC<AddressAvatarProps> = ({
     address,

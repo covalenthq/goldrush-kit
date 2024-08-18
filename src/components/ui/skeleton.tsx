@@ -1,6 +1,6 @@
-import { useCallback } from "react";
 import { type GRK_SIZES } from "@/utils/constants/shared.constants";
 import { cn } from "@/utils/functions";
+import { useCallback } from "react";
 
 function Skeleton({
     className,

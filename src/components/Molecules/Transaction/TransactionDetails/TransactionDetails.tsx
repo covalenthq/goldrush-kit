@@ -11,13 +11,11 @@ import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionDetailsProps } from "@/utils/types/molecules.types";
-import {
-    type CovalentAPIError,
-    type CardDetailProps,
-} from "@/utils/types/shared.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
+    type GoldRushResponse,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
@@ -29,7 +27,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
     actionable_from,
     actionable_to,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
         useState<Option<Transaction | null>>(None);
@@ -40,7 +38,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.TransactionService.getTransaction(
+                    await goldrushClient.TransactionService.getTransaction(
                         chain_name,
                         tx_hash,
                         {
@@ -56,7 +54,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items[0]));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

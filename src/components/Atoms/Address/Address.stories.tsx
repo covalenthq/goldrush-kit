@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { Address as AddressComponent } from "./Address";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof AddressComponent> = {
     title: "Atoms/Address",

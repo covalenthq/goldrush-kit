@@ -1,3 +1,8 @@
+import {
+    type DECODED_ACTION,
+    type DECODED_EVENT_CATEGORY,
+} from "../constants/shared.constants";
+import { type ActionableType, type TransactionsProps } from "./shared.types";
 import { type Option } from "@/utils/option";
 import type {
     NftApprovalSpender,
@@ -15,11 +20,6 @@ import {
     type Transaction,
     type UniswapLikeEcosystemCharts,
 } from "@covalenthq/client-sdk";
-import {
-    type DECODED_ACTION,
-    type DECODED_EVENT_CATEGORY,
-} from "../constants/shared.constants";
-import { type ActionableType, type TransactionsProps } from "./shared.types";
 
 export interface AddressActivityDetailsProps {
     address: string;

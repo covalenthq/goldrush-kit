@@ -1,5 +1,5 @@
-import { type CardDetailProps } from "@/utils/types/shared.types";
 import { CardContent, CardDescription } from "../ui/card";
+import { type CardDetailProps } from "@/utils/types/shared.types";
 
 export const CardDetail: React.FC<CardDetailProps> = ({
     content = null,

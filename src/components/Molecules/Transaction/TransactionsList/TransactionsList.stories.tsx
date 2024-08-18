@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { TransactionsList as TransactionsListComponent } from "./TransactionsList";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof TransactionsListComponent>;
 

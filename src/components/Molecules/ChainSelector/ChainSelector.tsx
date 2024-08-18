@@ -1,4 +1,5 @@
-import { useGoldRush } from "@/utils/store";
+import { TokenAvatar } from "@/components/Atoms";
+import { Button } from "@/components/ui/button";
 import {
     Command,
     CommandEmpty,
@@ -11,15 +12,14 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { useMemo, useState } from "react";
-import { CheckIcon, DoubleArrowDownIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-import { type ChainSelectorProps } from "@/utils/types/molecules.types";
-import { type ChainItem } from "@covalenthq/client-sdk";
-import { CommandLoading } from "cmdk";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
-import { TokenAvatar } from "@/components/Atoms";
+import { useGoldRush } from "@/utils/store";
+import { type ChainSelectorProps } from "@/utils/types/molecules.types";
+import { type ChainItem } from "@covalenthq/client-sdk";
+import { CheckIcon, DoubleArrowDownIcon } from "@radix-ui/react-icons";
+import { CommandLoading } from "cmdk";
+import { useMemo, useState } from "react";
 
 export const ChainSelector: React.FC<ChainSelectorProps> = ({
     chain_options = [],

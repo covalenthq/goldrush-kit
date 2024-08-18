@@ -1,5 +1,5 @@
-import { type ExchangeTransaction } from "@covalenthq/client-sdk";
 import { prettyToken } from "./pretty-token";
+import { type ExchangeTransaction } from "@covalenthq/client-sdk";
 
 export const handleTokenTransactions = (
     type: string,

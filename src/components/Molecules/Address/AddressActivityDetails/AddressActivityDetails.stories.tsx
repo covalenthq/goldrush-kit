@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { AddressActivityDetails as AddressActivityDetailsComponent } from "./AddressActivityDetails";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof AddressActivityDetailsComponent>;
 
@@ -12,7 +12,7 @@ export default meta;
 
 export const AddressActivityDetails: Story = {
     args: {
-        address: "ganeshswami.eth",
+        address: "demo.eth",
         hide_no_activity: true,
     },
 };

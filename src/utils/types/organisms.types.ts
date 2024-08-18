@@ -1,5 +1,5 @@
-import { type Chain } from "@covalenthq/client-sdk";
 import { type ActionableType } from "./shared.types";
+import { type Chain } from "@covalenthq/client-sdk";
 
 export interface NFTDetailsViewProps {
     chain_name: Chain;

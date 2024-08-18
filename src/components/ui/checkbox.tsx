@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import { cn } from "@/utils/functions";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { cn } from "@/utils/functions";
+import { forwardRef } from "react";
 
 const Checkbox = forwardRef<
     React.ElementRef<typeof CheckboxPrimitive.Root>,

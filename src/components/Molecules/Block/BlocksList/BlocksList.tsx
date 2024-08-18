@@ -6,8 +6,11 @@ import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlocksListProps } from "@/utils/types/molecules.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { type Pagination, type Block } from "@covalenthq/client-sdk";
+import type {
+    Block,
+    Pagination,
+    GoldRushResponse,
+} from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 
@@ -16,7 +19,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
     page_size = 10,
     actionable_block = () => null,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
         useState<Option<Block[] | null>>(None);
@@ -32,7 +35,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
-                    await covalentClient.BaseService.getBlockHeightsByPage(
+                    await goldrushClient.BaseService.getBlockHeightsByPage(
                         chain_name,
                         timestampParser(new Date(), "YYYY MM DD"),
                         "2100-01-01",
@@ -46,7 +49,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

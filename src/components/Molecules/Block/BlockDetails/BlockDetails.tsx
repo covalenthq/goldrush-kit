@@ -10,18 +10,15 @@ import {
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlockDetailsProps } from "@/utils/types/molecules.types";
-import {
-    type CovalentAPIError,
-    type CardDetailProps,
-} from "@/utils/types/shared.types";
-import { type Block } from "@covalenthq/client-sdk";
+import { type CardDetailProps } from "@/utils/types/shared.types";
+import type { GoldRushResponse, Block } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
 export const BlockDetails: React.FC<BlockDetailsProps> = ({
     chain_name,
     height,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] = useState<Option<Block | null>>(None);
 
@@ -31,7 +28,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.BaseService.getBlock(
+                    await goldrushClient.BaseService.getBlock(
                         chain_name,
                         height.toString()
                     );
@@ -39,7 +36,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items[0]));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

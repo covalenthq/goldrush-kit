@@ -1,3 +1,12 @@
+import { SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
+import { primaryShades } from "../functions";
+import {
+    type GoldRushThemeType,
+    type GoldRushContextType,
+    type GoldRushProviderProps,
+} from "../types/store.types";
+import { type ChainItem, GoldRushClient } from "@covalenthq/client-sdk";
+import defaultsDeep from "lodash/defaultsDeep";
 import {
     createContext,
     useCallback,
@@ -6,15 +15,6 @@ import {
     useMemo,
     useState,
 } from "react";
-import {
-    type GoldRushThemeType,
-    type GoldRushContextType,
-    type GoldRushProviderProps,
-} from "../types/store.types";
-import { type ChainItem, CovalentClient } from "@covalenthq/client-sdk";
-import { primaryShades } from "../functions";
-import { SEARCH_RESULTS_TYPE } from "../constants/shared.constants";
-import defaultsDeep from "lodash/defaultsDeep";
 
 const GoldRushContext = createContext<GoldRushContextType>(
     {} as GoldRushContextType
@@ -25,8 +25,11 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     apikey,
     theme: initialTheme,
 }) => {
-    const covalentClient = useMemo<CovalentClient>(
-        () => new CovalentClient(apikey, {}, "GoldRush"),
+    const goldrushClient = useMemo<GoldRushClient>(
+        () =>
+            new GoldRushClient(apikey, {
+                source: "GoldRush Kit",
+            }),
         [apikey]
     );
 
@@ -65,7 +68,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         (async () => {
             try {
                 const allChainsResp =
-                    await covalentClient.BaseService.getAllChains();
+                    await goldrushClient.BaseService.getAllChains();
                 if (allChainsResp?.data?.items) {
                     setChains(allChainsResp.data.items);
                 }
@@ -162,7 +165,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
             value={{
                 apikey,
                 chains,
-                covalentClient,
+                goldrushClient,
                 selectedChain,
                 theme,
                 setSelectedChain,

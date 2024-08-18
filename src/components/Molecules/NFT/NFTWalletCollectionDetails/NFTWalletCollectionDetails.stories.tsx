@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFTWalletCollectionDetails as NFTWalletCollectionDetailsComponent } from "./NFTWalletCollectionDetails";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof NFTWalletCollectionDetailsComponent>;
 

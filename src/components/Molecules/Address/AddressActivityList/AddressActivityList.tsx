@@ -1,25 +1,27 @@
-import { type Option, None, Some } from "@/utils/option";
-import { type ChainActivityEvent } from "@covalenthq/client-sdk";
-import { type ColumnDef } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
 import { TokenAvatar } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { IconWrapper } from "@/components/Shared";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
+import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityListProps } from "@/utils/types/molecules.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms";
+import type {
+    GoldRushResponse,
+    ChainActivityEvent,
+} from "@covalenthq/client-sdk";
+import { type ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
 export const AddressActivityList: React.FC<AddressActivityListProps> = ({
     address,
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<ChainActivityEvent[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
@@ -45,7 +47,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                     setMaybeResult(None);
                     setErrorMessage(null);
                     const { data, ...error } =
-                        await covalentClient.BaseService.getAddressActivity(
+                        await goldrushClient.BaseService.getAddressActivity(
                             address.trim(),
                             {
                                 testnets: true,
@@ -55,7 +57,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                         throw error;
                     }
                     setMaybeResult(new Some(data.items));
-                } catch (error: CovalentAPIError | any) {
+                } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
                         error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );

@@ -8,15 +8,12 @@ import {
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestPriceProps } from "@/utils/types/molecules.types";
-import {
-    type CovalentAPIError,
-    type CardDetailProps,
-} from "@/utils/types/shared.types";
-import { type Price } from "@covalenthq/client-sdk";
+import { type CardDetailProps } from "@/utils/types/shared.types";
+import type { GoldRushResponse, Price } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
 export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] = useState<Option<Price | null>>(None);
 
@@ -26,7 +23,7 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.PricingService.getTokenPrices(
+                    await goldrushClient.PricingService.getTokenPrices(
                         chain_name,
                         "USD",
                         "0x0000000000000000000000000000000000000000"
@@ -35,7 +32,7 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
                     throw error;
                 }
                 setMaybeResult(new Some(data[0].items[0]));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

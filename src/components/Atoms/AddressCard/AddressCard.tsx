@@ -1,14 +1,14 @@
 import { Address, AddressAvatar } from "../../Atoms";
-import { type AddressCardProps } from "@/utils/types/atoms.types";
+import { IconWrapper } from "@/components/Shared";
+import { Card } from "@/components/ui/card";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { type AddressCardProps } from "@/utils/types/atoms.types";
 import QRCode from "react-qr-code";
-import { IconWrapper } from "@/components/Shared";
-import { Card } from "@/components/ui/card";
 
 export const AddressCard: React.FC<AddressCardProps> = ({
     address,

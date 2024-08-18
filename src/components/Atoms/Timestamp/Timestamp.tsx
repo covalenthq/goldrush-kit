@@ -1,7 +1,7 @@
 import { timestampParser } from "@/utils/functions";
 import { type TimestampProps } from "@/utils/types/atoms.types";
-import { useCallback, useEffect, useState } from "react";
 import { ClockIcon } from "@radix-ui/react-icons";
+import { useCallback, useEffect, useState } from "react";
 
 export const Timestamp: React.FC<TimestampProps> = ({
     timestamp,

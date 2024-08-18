@@ -1,4 +1,4 @@
-import { type PaginationFooterProps } from "@/utils/types/shared.types";
+import { Button } from "../ui/button";
 import {
     Pagination,
     PaginationContent,
@@ -8,8 +8,8 @@ import {
     PaginationEllipsis,
     PaginationNext,
 } from "../ui/pagination";
+import { type PaginationFooterProps } from "@/utils/types/shared.types";
 import { useMemo } from "react";
-import { Button } from "../ui/button";
 
 export const PaginationFooter: React.FC<PaginationFooterProps> = ({
     disabled = false,

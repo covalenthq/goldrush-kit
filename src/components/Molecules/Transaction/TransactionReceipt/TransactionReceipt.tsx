@@ -1,20 +1,23 @@
-import { type TransactionReceiptProps } from "@/utils/types/molecules.types";
-import { Heading } from "@/components/Shared";
 import { Address, NFT, TokenAvatar } from "@/components/Atoms";
 import { AddressCard } from "@/components/Atoms";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
-import { type Option, None, Some } from "@/utils/option";
-import { type DecodedTransactionType } from "@/utils/types/molecules.types";
+import { Timestamp } from "@/components/Atoms";
+import { Heading } from "@/components/Shared";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
-import { calculatePrettyBalance, type ChainItem } from "@covalenthq/client-sdk";
-import { useGoldRush } from "@/utils/store";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms";
+import { type Option, None, Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type TransactionReceiptProps } from "@/utils/types/molecules.types";
+import { type DecodedTransactionType } from "@/utils/types/molecules.types";
+import {
+    calculatePrettyBalance,
+    type ChainItem,
+    type GoldRushResponse,
+} from "@covalenthq/client-sdk";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 
 export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,
@@ -57,7 +60,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                     throw { error_message: data.message };
                 }
                 setMaybeResult(new Some(data));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

@@ -1,11 +1,11 @@
-import { useGoldRush } from "@/utils/store";
+import { Heading } from "../Shared";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useGoldRush } from "@/utils/store";
 import {
     type GoldRushThemeColorType,
     type GoldRushThemeType,
 } from "@/utils/types/store.types";
-import { Heading } from "../Shared";
-import { Button } from "../ui/button";
 
 export const ThemeConfig: React.FC = () => {
     const { theme, updateThemeHandler, resetThemeHandler } = useGoldRush();

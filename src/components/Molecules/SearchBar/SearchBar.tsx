@@ -1,14 +1,14 @@
-import { useCallback, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { useDebounce } from "@/utils/hooks/use-debounce";
-import { AddressActivityView } from "@/components/Organisms";
 import { TransactionReceipt } from "../";
-import { ChainSelector } from "../ChainSelector/ChainSelector";
-import { useGoldRush } from "@/utils/store";
 import { BlockDetails } from "../Block/BlockDetails/BlockDetails";
-import { type Chain } from "@covalenthq/client-sdk";
-import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
+import { ChainSelector } from "../ChainSelector/ChainSelector";
+import { AddressActivityView } from "@/components/Organisms";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { type SEARCH_RESULTS_TYPE } from "@/utils/constants/shared.constants";
+import { useDebounce } from "@/utils/hooks/use-debounce";
+import { useGoldRush } from "@/utils/store";
+import { type Chain } from "@covalenthq/client-sdk";
+import { useCallback, useState } from "react";
 
 export const SearchBar: React.FC = () => {
     const { selectedChain, searchHandler } = useGoldRush();

@@ -1,3 +1,5 @@
+import { PaginationFooter } from "./PaginationFooter";
+import { SkeletonTable } from "./SkeletonTable";
 import {
     Table,
     TableBody,
@@ -16,8 +18,6 @@ import {
     type Row,
 } from "@tanstack/react-table";
 import { useCallback, useState } from "react";
-import { SkeletonTable } from "./SkeletonTable";
-import { PaginationFooter } from "./PaginationFooter";
 
 export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
     columns,
