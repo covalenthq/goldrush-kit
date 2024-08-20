@@ -1,20 +1,5 @@
-import { type Chain } from "@covalenthq/client-sdk";
 import { type ActionableType } from "./shared.types";
-
-export interface NFTDetailsViewProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id: string;
-}
-
-export interface XYKPoolViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    pool_address: string;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-    actionable_address?: (address: string) => ActionableType;
-}
+import { type Chain } from "@covalenthq/client-sdk";
 
 export interface NFTWalletCollectionViewProps {
     chain_name: Chain;
@@ -37,12 +22,6 @@ export interface NFTCollectionViewProps {
 export interface AddressActivityViewProps {
     address: string;
     actionable_address?: (address: string) => ActionableType;
-}
-
-export interface XYKTokenViewProps {
-    chain_name: Chain;
-    dex_name: string;
-    token_address: string;
 }
 
 export interface AddressDetailsViewProps {

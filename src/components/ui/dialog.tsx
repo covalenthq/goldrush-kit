@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import { cn } from "@/utils/functions";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { cn } from "@/utils/functions";
+import { forwardRef } from "react";
 
 const Dialog = DialogPrimitive.Root;
 

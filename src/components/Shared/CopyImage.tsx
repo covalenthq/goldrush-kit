@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { IconWrapper } from ".";
-import { type CopyImageProps } from "@/utils/types/shared.types";
 import { copyToClipboard } from "@/utils/functions";
+import { type CopyImageProps } from "@/utils/types/shared.types";
+import { useState } from "react";
 
 export const CopyImage: React.FC<CopyImageProps> = ({ url }) => {
     const [copied, showCopied] = useState<boolean>(false);

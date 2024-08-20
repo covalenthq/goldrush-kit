@@ -1,18 +1,17 @@
-import { type Option, None, Some } from "@/utils/option";
-import { type Transaction } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
-import { type BlockTransactionsProps } from "@/utils/types/molecules.types";
 import { Transactions } from "@/components/Shared";
-import { useGoldRush } from "@/utils/store";
 import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { type Option, None, Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type BlockTransactionsProps } from "@/utils/types/molecules.types";
+import type { GoldRushResponse, Transaction } from "@covalenthq/client-sdk";
+import { useEffect, useState } from "react";
 
 export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
     chain_name,
     block_height,
     actionable_transaction,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
 
     const [maybeResult, setMaybeResult] =
         useState<Option<Transaction[] | null>>(None);
@@ -24,7 +23,7 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.TransactionService.getTransactionsForBlock(
+                    await goldrushClient.TransactionService.getTransactionsForBlock(
                         chain_name,
                         block_height,
                         {
@@ -37,7 +36,7 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

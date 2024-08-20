@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { LatestPrice as LatestPriceComponent } from "./LatestPrice";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof LatestPriceComponent>;
 

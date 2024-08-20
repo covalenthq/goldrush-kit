@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { TokenApprovalList as TokenApprovalListComponent } from "./TokenApprovalList";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof TokenApprovalListComponent>;
 

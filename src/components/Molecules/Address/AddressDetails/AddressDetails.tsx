@@ -1,4 +1,6 @@
 import { Address, TokenAvatar } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
+import { CardDetail } from "@/components/Shared";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -8,13 +10,16 @@ import {
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressDetailsProps } from "@/utils/types/molecules.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
+import type {
+    TransactionsSummary,
+    BalanceItem,
+    GoldRushResponse,
+} from "@covalenthq/client-sdk";
 import {
-    type TransactionsSummary,
-    type BalanceItem,
     calculatePrettyBalance,
     prettifyCurrency,
 } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,19 +28,14 @@ import {
     DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { CardDetail } from "@/components/Shared";
-import {
-    type CovalentAPIError,
-    type CardDetailProps,
-} from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms";
+import { useEffect, useState } from "react";
 
 export const AddressDetails: React.FC<AddressDetailsProps> = ({
     address,
     chain_name,
     actionable_transaction,
 }) => {
-    const { covalentClient, selectedChain } = useGoldRush();
+    const { goldrushClient, selectedChain } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] = useState<
         Option<{
@@ -53,11 +53,11 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                     { data: summaryData, ...summaryError },
                     { data: balancesData, ...balancesError },
                 ] = await Promise.all([
-                    covalentClient.TransactionService.getTransactionSummary(
+                    goldrushClient.TransactionService.getTransactionSummary(
                         chain_name,
                         address.trim()
                     ),
-                    covalentClient.BalanceService.getTokenBalancesForWalletAddress(
+                    goldrushClient.BalanceService.getTokenBalancesForWalletAddress(
                         chain_name,
                         address.trim()
                     ),
@@ -82,7 +82,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                         summary: summaryData.items[0],
                     })
                 );
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

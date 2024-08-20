@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFTWalletCollectionList as NFTWalletCollectionListComponent } from "./NFTWalletCollectionList";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof NFTWalletCollectionListComponent>;
 

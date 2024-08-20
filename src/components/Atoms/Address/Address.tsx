@@ -1,14 +1,14 @@
+import { AddressAvatar } from "../AddressAvatar/AddressAvatar";
+import { IconWrapper } from "@/components/Shared";
+import { Toaster } from "@/components/ui/toaster";
 import {
     actionableWrapper,
     copyToClipboard,
     truncate,
 } from "@/utils/functions";
-import { IconWrapper } from "@/components/Shared";
-import { type AddressProps } from "@/utils/types/atoms.types";
 import { useToast } from "@/utils/hooks";
+import { type AddressProps } from "@/utils/types/atoms.types";
 import { useState } from "react";
-import { AddressAvatar } from "../AddressAvatar/AddressAvatar";
-import { Toaster } from "@/components/ui/toaster";
 
 export const Address: React.FC<AddressProps> = ({
     address,

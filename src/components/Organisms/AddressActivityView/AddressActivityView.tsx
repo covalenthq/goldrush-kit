@@ -1,21 +1,23 @@
-import { type Option, None, Some } from "@/utils/option";
-import { type ChainActivityEvent } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
 import { AddressCard } from "@/components/Atoms";
 import {
     AddressActivityDetails,
     AddressActivityList,
 } from "@/components/Molecules";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityViewProps } from "@/utils/types/organisms.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    type ChainActivityEvent,
+    type GoldRushResponse,
+} from "@covalenthq/client-sdk";
+import { useEffect, useState } from "react";
 
 export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
     address,
     actionable_address,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<ChainActivityEvent[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -26,7 +28,7 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.BaseService.getAddressActivity(
+                    await goldrushClient.BaseService.getAddressActivity(
                         address.trim(),
                         {
                             testnets: true,
@@ -36,7 +38,7 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

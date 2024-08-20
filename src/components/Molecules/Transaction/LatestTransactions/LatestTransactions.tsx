@@ -10,10 +10,10 @@ import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
+    type GoldRushResponse,
 } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
@@ -22,7 +22,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     actionable_address,
     actionable_transaction,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
         useState<Option<Transaction[] | null>>(None);
@@ -33,7 +33,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data: blockData, ...blockError } =
-                    await covalentClient.BaseService.getBlockHeightsByPage(
+                    await goldrushClient.BaseService.getBlockHeightsByPage(
                         chain_name,
                         timestampParser(new Date(), "YYYY MM DD"),
                         "2100-01-01",
@@ -47,7 +47,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 }
                 const latestBlock = blockData.items[0];
                 const { data: txData, ...txError } =
-                    await covalentClient.TransactionService.getTransactionsForBlock(
+                    await goldrushClient.TransactionService.getTransactionsForBlock(
                         chain_name,
                         latestBlock.height - 4,
                         {
@@ -61,7 +61,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                     throw txError;
                 }
                 setMaybeResult(new Some(txData.items.slice(-5)));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

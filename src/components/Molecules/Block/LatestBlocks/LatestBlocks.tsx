@@ -10,15 +10,14 @@ import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestBlocksProps } from "@/utils/types/molecules.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { type Block } from "@covalenthq/client-sdk";
+import type { GoldRushResponse, Block } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
 export const LatestBlocks: React.FC<LatestBlocksProps> = ({
     chain_name,
     actionable_block = () => null,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
         useState<Option<Block[] | null>>(None);
@@ -29,7 +28,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
-                    await covalentClient.BaseService.getBlockHeightsByPage(
+                    await goldrushClient.BaseService.getBlockHeightsByPage(
                         chain_name,
                         timestampParser(new Date(), "YYYY MM DD"),
                         "2100-01-01",
@@ -41,7 +40,7 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

@@ -1,3 +1,8 @@
+import {
+    type DECODED_ACTION,
+    type DECODED_EVENT_CATEGORY,
+} from "../constants/shared.constants";
+import { type ActionableType, type TransactionsProps } from "./shared.types";
 import { type Option } from "@/utils/option";
 import type {
     NftApprovalSpender,
@@ -10,16 +15,8 @@ import {
     type ChainID,
     type ChainItem,
     type NftTokenContractBalanceItem,
-    type PoolWithTimeseries,
-    type TokenV2VolumeWithChartData,
     type Transaction,
-    type UniswapLikeEcosystemCharts,
 } from "@covalenthq/client-sdk";
-import {
-    type DECODED_ACTION,
-    type DECODED_EVENT_CATEGORY,
-} from "../constants/shared.constants";
-import { type ActionableType, type TransactionsProps } from "./shared.types";
 
 export interface AddressActivityDetailsProps {
     address: string;
@@ -105,33 +102,10 @@ export interface ChainSelectorProps {
     onChangeChain?: (chain: ChainItem) => unknown;
 }
 
-export interface NFTCollectionDetailsProps {
-    chain_name: Chain;
-    collection_address: string;
-}
-
 export interface NFTCollectionTokensListProps {
     chain_name: Chain;
     collection_address: string;
     page_size?: number;
-}
-
-export interface NFTDetailsProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id: string;
-}
-
-export interface NFTFloorPriceProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id?: string;
-}
-
-export interface NFTSalesCountProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id?: string;
 }
 
 export interface NFTWalletCollectionDetailsProps {
@@ -159,20 +133,6 @@ export interface BlockTransactionsProps extends Partial<TransactionsProps> {
     block_height: number;
 }
 
-export interface XYKPoolTimeseriesProps {
-    chain_name: Chain;
-    dex_name: string;
-    pool_address: string;
-    maybeResult?: Option<PoolWithTimeseries | null> | null;
-    errorMessage?: string | null;
-}
-
-export interface NFTVolumeProps {
-    chain_name: Chain;
-    collection_address: string;
-    token_id?: string;
-}
-
 export interface TokenBalancesListProps {
     chain_names: Chain[];
     address: string;
@@ -192,117 +152,6 @@ export interface TokenTransfersListProps {
 
 export interface CrossChainBalanceItem extends BalanceItem {
     chain_name: Chain;
-}
-
-export interface XYKPoolDetailsProps {
-    pool_address: string;
-    chain_name: Chain;
-    dex_name: string;
-    maybeResult?: Option<PoolWithTimeseries | null> | null;
-    errorMessage?: string | null;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-    actionable_address?: (address: string) => ActionableType;
-}
-
-export interface XYKPoolListProps {
-    chain_name: Chain;
-    dex_name: string;
-    page_size?: number;
-    actionable_pool?: (address: string) => ActionableType;
-}
-
-export interface XYKPoolTransactionsListProps {
-    chain_name: Chain;
-    dex_name: string;
-    pool_address: string;
-    actionable_transaction?: (address: string) => ActionableType;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-}
-
-export interface XYKTransactionsListProps {
-    chain_name: Chain;
-    dex_name: string;
-    actionable_transaction?: (address: string) => ActionableType;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-}
-
-export interface XYKTokenDetailsProps {
-    token_address: string;
-    chain_name: Chain;
-    dex_name: string;
-    maybeResult?: Option<TokenV2VolumeWithChartData | null> | null;
-    errorMessage?: string | null;
-    actionable_address?: (address: string) => ActionableType;
-}
-
-export interface XYKTokenListProps {
-    chain_name: Chain;
-    dex_name: string;
-    page_size?: number;
-    actionable_address?: (address: string) => ActionableType;
-}
-
-export interface XYKTokenPoolListProps {
-    chain_name: Chain;
-    dex_name: string;
-    token_address: string;
-    actionable_pool?: (address: string) => ActionableType;
-}
-
-export interface XYKTimeseriesProps {
-    chain_name: Chain;
-    dex_name: string;
-    maybeResult?: Option<UniswapLikeEcosystemCharts | null> | null;
-    errorMessage?: string | null;
-}
-
-export interface XYKTokenTimeseriesProps {
-    chain_name: Chain;
-    dex_name: string;
-    token_address: string;
-    maybeResult?: Option<TokenV2VolumeWithChartData | null> | null;
-    errorMessage?: string | null;
-}
-
-export interface XYKTokenTransactionsListProps {
-    chain_name: Chain;
-    dex_name: string;
-    token_address: string;
-    actionable_transaction?: (address: string) => ActionableType;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-}
-
-export interface XYKWalletDetailsProps {
-    wallet_address: string;
-    chain_name: Chain;
-    dex_name: string;
-}
-
-export interface XYKWalletTransactionsListProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    actionable_transaction?: (address: string) => ActionableType;
-    actionable_token_0?: (address: string) => ActionableType;
-    actionable_token_1?: (address: string) => ActionableType;
-}
-
-export interface XYKWalletPoolListProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    actionable_pool?: (address: string) => ActionableType;
-}
-
-export interface XYKWalletPositionsListProps {
-    chain_name: Chain;
-    dex_name: string;
-    wallet_address: string;
-    actionable_pool?: (address: string) => ActionableType;
 }
 
 export interface TransactionDetailsProps {

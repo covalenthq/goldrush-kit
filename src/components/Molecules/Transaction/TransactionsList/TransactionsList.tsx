@@ -5,10 +5,10 @@ import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionsListProps } from "@/utils/types/molecules.types";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
+    type GoldRushResponse,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
     actionable_transaction,
     actionable_address,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [maybeResult, setMaybeResult] =
         useState<Option<Transaction[] | null>>(None);
@@ -30,7 +30,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data: blockData, ...blockError } =
-                    await covalentClient.BaseService.getBlockHeightsByPage(
+                    await goldrushClient.BaseService.getBlockHeightsByPage(
                         chain_name,
                         timestampParser(new Date(), "YYYY MM DD"),
                         "2100-01-01",
@@ -44,7 +44,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
                 }
                 const latestBlock = blockData.items[0];
                 const { data: txData, ...txError } =
-                    await covalentClient.TransactionService.getTransactionsForBlock(
+                    await goldrushClient.TransactionService.getTransactionsForBlock(
                         chain_name,
                         latestBlock.height - 2,
                         {
@@ -58,7 +58,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
                     throw txError;
                 }
                 setMaybeResult(new Some(txData.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

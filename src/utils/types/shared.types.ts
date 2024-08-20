@@ -11,12 +11,6 @@ import {
     type SortingState,
 } from "@tanstack/react-table";
 
-export interface CovalentAPIError {
-    error?: boolean;
-    error_code?: number | string;
-    error_message?: string;
-}
-
 export interface BalancePriceDeltaProps {
     numerator: number;
     denominator: number;

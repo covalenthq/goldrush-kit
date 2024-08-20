@@ -1,5 +1,5 @@
-import { createElement } from "react";
 import { type ActionableType } from "../types/shared.types";
+import { createElement } from "react";
 
 export const actionableWrapper = <
     T extends keyof JSX.IntrinsicElements | React.ComponentType<any>,

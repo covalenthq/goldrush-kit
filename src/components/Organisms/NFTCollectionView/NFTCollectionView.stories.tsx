@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFTCollectionView as NFTCollectionViewComponent } from "./NFTCollectionView";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof NFTCollectionViewComponent>;
 

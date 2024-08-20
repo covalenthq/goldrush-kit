@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { AddressActivityView as AddressActivityViewComponent } from "./AddressActivityView";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof AddressActivityViewComponent>;
 
@@ -13,7 +13,7 @@ export default meta;
 
 export const AddressActivityView: Story = {
     args: {
-        address: "ganeshswami.eth",
+        address: "demo.eth",
         actionable_address: (address: string) => storyAction(address),
     },
 };

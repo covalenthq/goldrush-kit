@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { TransactionReceipt as TransactionReceiptComponent } from "./TransactionReceipt";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof TransactionReceiptComponent>;
 

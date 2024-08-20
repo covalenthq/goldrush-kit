@@ -1,22 +1,20 @@
-import { type Option, Some, None } from "@/utils/option";
-import {
-    prettifyCurrency,
-    type NftTokenContractBalanceItem,
-} from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
 import { CardDetail } from "@/components/Shared";
-import { type NFTWalletCollectionDetailsProps } from "@/utils/types/molecules.types";
-import { useGoldRush } from "@/utils/store";
-import {
-    type CardDetailProps,
-    type CovalentAPIError,
-} from "@/utils/types/shared.types";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { type Option, Some, None } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type NFTWalletCollectionDetailsProps } from "@/utils/types/molecules.types";
+import { type CardDetailProps } from "@/utils/types/shared.types";
+import {
+    prettifyCurrency,
+    type NftTokenContractBalanceItem,
+    type GoldRushResponse,
+} from "@covalenthq/client-sdk";
+import { useEffect, useState } from "react";
 
 export const NFTWalletCollectionDetails: React.FC<
     NFTWalletCollectionDetailsProps
@@ -26,7 +24,7 @@ export const NFTWalletCollectionDetails: React.FC<
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContractBalanceItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
@@ -52,7 +50,7 @@ export const NFTWalletCollectionDetails: React.FC<
                     setMaybeResult(None);
                     setErrorMessage(null);
                     const { data, ...error } =
-                        await covalentClient.NftService.getNftsForAddress(
+                        await goldrushClient.NftService.getNftsForAddress(
                             chain_name,
                             address
                         );
@@ -60,7 +58,7 @@ export const NFTWalletCollectionDetails: React.FC<
                         throw error;
                     }
                     setMaybeResult(new Some(data.items));
-                } catch (error: CovalentAPIError | any) {
+                } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
                         error?.error_message ?? DEFAULT_ERROR_MESSAGE
                     );

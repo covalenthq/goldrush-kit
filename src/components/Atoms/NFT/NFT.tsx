@@ -1,15 +1,15 @@
-import { type NFTProps } from "@/utils/types/atoms.types";
+import { TokenAvatar } from "../TokenAvatar/TokenAvatar";
+import { CardDetail } from "@/components/Shared";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_NFT,
 } from "@/utils/constants/shared.constants";
-import { CardDetail } from "@/components/Shared";
-import { TokenAvatar } from "../TokenAvatar/TokenAvatar";
+import { actionableWrapper } from "@/utils/functions";
 import { useGoldRush } from "@/utils/store";
+import { type NFTProps } from "@/utils/types/atoms.types";
 import { type ChainItem } from "@covalenthq/client-sdk";
 import { useMemo } from "react";
-import { actionableWrapper } from "@/utils/functions";
 
 export const NFT: React.FC<NFTProps> = ({
     collection_name,

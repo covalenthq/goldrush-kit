@@ -1,12 +1,12 @@
 import {
-    type Chain,
-    type NftCollectionAttribute,
-} from "@covalenthq/client-sdk";
-import {
     type ADDRESS_AVATAR_TYPE,
     type GRK_SIZES,
 } from "../constants/shared.constants";
 import { type ActionableType } from "./shared.types";
+import {
+    type Chain,
+    type NftCollectionAttribute,
+} from "@covalenthq/client-sdk";
 
 export interface AddressProps {
     address: string;

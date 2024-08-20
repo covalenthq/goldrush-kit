@@ -1,17 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import { type GasCardProps } from "@/utils/types/molecules.types";
-import { useGoldRush } from "@/utils/store";
-import type { Option } from "@/utils/option";
-import { None, Some } from "@/utils/option";
-import { type GasPricesResponse } from "@covalenthq/client-sdk";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import type { Option } from "@/utils/option";
+import { None, Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type GasCardProps } from "@/utils/types/molecules.types";
+import type {
+    GoldRushResponse,
+    GasPricesResponse,
+} from "@covalenthq/client-sdk";
+import { useEffect, useMemo, useState } from "react";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
     const [isErc20, setIsErc20] = useState<boolean>(true);
@@ -22,7 +24,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
         } | null>
     >(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
 
     useEffect(() => {
         (async () => {
@@ -33,11 +35,11 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                     { data: ercData, ...ercError },
                     { data: nativeData, ...nativeError },
                 ] = await Promise.all([
-                    covalentClient.BaseService.getGasPrices(
+                    goldrushClient.BaseService.getGasPrices(
                         chain_name,
                         "erc20"
                     ),
-                    await covalentClient.BaseService.getGasPrices(
+                    await goldrushClient.BaseService.getGasPrices(
                         chain_name,
                         "nativetokens"
                     ),
@@ -54,7 +56,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                         native: nativeData,
                     })
                 );
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

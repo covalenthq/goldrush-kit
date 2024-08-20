@@ -1,6 +1,6 @@
-import { forwardRef } from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cn } from "@/utils/functions";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { forwardRef } from "react";
 
 const Popover = PopoverPrimitive.Root;
 

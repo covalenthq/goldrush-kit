@@ -1,25 +1,25 @@
-import { type Option, None, Some } from "@/utils/option";
-import {
-    type BlockTransactionWithContractTransfers,
-    type Pagination,
-    calculatePrettyBalance,
-    prettifyCurrency,
-} from "@covalenthq/client-sdk";
+import { Address } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { Badge } from "@/components/ui/badge";
+import { TableCell, TableRow } from "@/components/ui/table";
 import {
     DEFAULT_ERROR_MESSAGE,
     type TIME_SERIES_GROUP,
 } from "@/utils/constants/shared.constants";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { Address } from "@/components/Atoms";
 import { calculateTimeSeriesGroup } from "@/utils/functions";
-import { Badge } from "@/components/ui/badge";
-import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
+import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { Timestamp } from "@/components/Atoms";
+import { type TokenTransfersListProps } from "@/utils/types/molecules.types";
+import {
+    type BlockTransactionWithContractTransfers,
+    type Pagination,
+    type GoldRushResponse,
+    calculatePrettyBalance,
+    prettifyCurrency,
+} from "@covalenthq/client-sdk";
+import { type ColumnDef } from "@tanstack/react-table";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     chain_name,
@@ -29,7 +29,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
     actionable_from,
     actionable_to,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
 
     const [pagination, setPagination] = useState<Pagination | null>(null);
     const [maybeResult, setMaybeResult] =
@@ -51,7 +51,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
-                    await covalentClient.BalanceService.getErc20TransfersForWalletAddressByPage(
+                    await goldrushClient.BalanceService.getErc20TransfersForWalletAddressByPage(
                         chain_name,
                         address.trim(),
                         {
@@ -65,7 +65,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

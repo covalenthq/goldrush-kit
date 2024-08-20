@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFTCollectionTokensList as NFTCollectionTokensListComponent } from "./NFTCollectionTokensList";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof NFTCollectionTokensListComponent>;
 

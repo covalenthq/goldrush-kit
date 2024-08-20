@@ -1,5 +1,5 @@
-import { type Color } from "@tremor/react";
-import { type GoldRushThemeMode } from "../types/store.types";
+import type { Chain } from "@covalenthq/client-sdk";
+import { ChainID, ChainName } from "@covalenthq/client-sdk";
 
 export const DEFAULT_ERROR_MESSAGE: string = "Something went wrong!";
 
@@ -19,15 +19,6 @@ export enum GRK_SIZES {
     EXTRA_SMALL = "xs",
     EXTRA_EXTRA_SMALL = "xxs",
 }
-
-export const CHART_COLORS: Record<GoldRushThemeMode, (string | Color)[]> = {
-    dark: ["primary-dark-100", "primary-dark-900"],
-    light: ["primary-light-100", "primary-light-900"],
-};
-
-export const NFT_COLLECTIONS: { [collection_name: string]: string } = {
-    BAYC: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-};
 
 export enum TIME_SERIES_GROUP {
     LAST_24H = "Last 24 hours",
@@ -50,38 +41,29 @@ export enum PERIOD {
     DAYS_90 = 90,
 }
 
-export const POOL_TRANSACTION_MAP: Record<
-    string,
-    { name: string; color: "default" | "secondary" | "danger" | "outline" }
-> = {
-    SWAP: {
-        name: "SWAP",
-        color: "secondary",
-    },
-    REMOVE_LIQUIDITY: {
-        name: "REMOVE",
-        color: "danger",
-    },
-    ADD_LIQUIDITY: {
-        name: "ADD",
-        color: "default",
-    },
-};
-
 export enum CURRENCY {
     USD,
     NATIVE,
 }
 
-export const ALLOWED_CACHE_CHAINS = [
-    "bsc-mainnet",
-    "eth-mainnet",
-    "bsc-testnet",
-    "eth-sepolia",
-    "gnosis-mainnet",
-    "gnosis-testnet",
-    "matic-mainnet",
-    "matic-mumbai",
+export const ALLOWED_CACHE_CHAINS: Chain[] = [
+    ChainName.BTC_MAINNET,
+    ChainName.ETH_MAINNET,
+    ChainName.BSC_TESTNET,
+    ChainName.ETH_SEPOLIA,
+    ChainName.GNOSIS_MAINNET,
+    ChainName.GNOSIS_TESTNET,
+    ChainName.MATIC_MAINNET,
+    ChainName.MATIC_MUMBAI,
+
+    ChainID.BTC_MAINNET,
+    ChainID.ETH_MAINNET,
+    ChainID.BSC_TESTNET,
+    ChainID.ETH_SEPOLIA,
+    ChainID.GNOSIS_MAINNET,
+    ChainID.GNOSIS_TESTNET,
+    ChainID.MATIC_MAINNET,
+    ChainID.MATIC_MUMBAI,
 ];
 
 export enum DECODED_EVENT_CATEGORY {

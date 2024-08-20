@@ -1,14 +1,14 @@
+import { TableHeaderSorting, TableList } from ".";
+import { Address } from "@/components/Atoms";
+import { Timestamp } from "@/components/Atoms";
+import { actionableWrapper } from "@/utils/functions";
+import { Some } from "@/utils/option";
+import { type TransactionsProps } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
     type Transaction,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
-import { TableHeaderSorting, TableList } from ".";
-import { type TransactionsProps } from "@/utils/types/shared.types";
-import { Address } from "@/components/Atoms";
-import { actionableWrapper } from "@/utils/functions";
-import { Timestamp } from "@/components/Atoms";
-import { Some } from "@/utils/option";
 
 export const Transactions: React.FC<TransactionsProps> = ({
     errorMessage = null,

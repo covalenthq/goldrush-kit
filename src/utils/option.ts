@@ -15,6 +15,7 @@ export class NoSuchElementError extends Error {
     }
 }
 
+// eslint-disable-next-line prettier/prettier
 export interface IOptionMatcher<A, B> {
     Some(value: A): B;
     None(): B;

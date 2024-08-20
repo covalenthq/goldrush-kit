@@ -1,7 +1,7 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { LatestBlocks as LatestBlocksComponent } from "./LatestBlocks";
-import { type Block } from "@covalenthq/client-sdk";
 import { storyAction } from "@/utils/functions";
+import { type Block } from "@covalenthq/client-sdk";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof LatestBlocksComponent>;
 

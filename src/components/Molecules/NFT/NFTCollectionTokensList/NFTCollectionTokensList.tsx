@@ -1,20 +1,23 @@
+import { NFT } from "@/components/Atoms";
+import { PaginationFooter, SkeletonNFT } from "@/components/Shared";
 import {
     ALLOWED_CACHE_CHAINS,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
-import { type NftTokenContract, type Pagination } from "@covalenthq/client-sdk";
-import { useCallback, useEffect, useState } from "react";
 import { useGoldRush } from "@/utils/store";
 import { type NFTCollectionTokensListProps } from "@/utils/types/molecules.types";
-import { PaginationFooter, SkeletonNFT } from "@/components/Shared";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
-import { NFT } from "@/components/Atoms";
+import type {
+    GoldRushResponse,
+    NftTokenContract,
+    Pagination,
+} from "@covalenthq/client-sdk";
+import { useCallback, useEffect, useState } from "react";
 
 export const NFTCollectionTokensList: React.FC<
     NFTCollectionTokensListProps
 > = ({ chain_name, collection_address, page_size = 10 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContract[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,7 +33,7 @@ export const NFTCollectionTokensList: React.FC<
                 setMaybeResult(None);
                 setErrorMessage(null);
                 const { data, ...error } =
-                    await covalentClient.NftService.getTokenIdsForContractWithMetadataByPage(
+                    await goldrushClient.NftService.getTokenIdsForContractWithMetadataByPage(
                         chain_name,
                         collection_address,
                         {
@@ -45,7 +48,7 @@ export const NFTCollectionTokensList: React.FC<
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

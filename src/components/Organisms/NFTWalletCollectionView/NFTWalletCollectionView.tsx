@@ -1,20 +1,22 @@
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
-import { type Option, Some, None } from "@/utils/option";
-import { type NftTokenContractBalanceItem } from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
 import { AddressCard } from "@/components/Atoms";
-import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
-import { useGoldRush } from "@/utils/store";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
 import {
     NFTWalletCollectionDetails,
     NFTWalletCollectionList,
 } from "@/components/Molecules";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import { type Option, Some, None } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
+import {
+    type NftTokenContractBalanceItem,
+    GoldRushResponse,
+} from "@covalenthq/client-sdk";
+import { useEffect, useState } from "react";
 
 export const NFTWalletCollectionView: React.FC<
     NFTWalletCollectionViewProps
 > = ({ chain_name, address, actionable_address }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContractBalanceItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -25,7 +27,7 @@ export const NFTWalletCollectionView: React.FC<
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.NftService.getNftsForAddress(
+                    await goldrushClient.NftService.getNftsForAddress(
                         chain_name,
                         address
                     );
@@ -33,7 +35,7 @@ export const NFTWalletCollectionView: React.FC<
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

@@ -1,8 +1,8 @@
-import React from "react";
-import { type Preview } from "@storybook/react";
 import "../src/tailwind-output.css";
 import { GoldRushProvider } from "../src/utils/store";
 import { defaultTheme } from "./manager";
+import { type Preview } from "@storybook/react";
+import React from "react";
 
 const Story = ({ storyFn }) => storyFn();
 const preview: Preview = {
@@ -29,7 +29,6 @@ const preview: Preview = {
             </GoldRushProvider>
         ),
     ],
-    tags: ["autodocs"],
 };
 
 export default preview;

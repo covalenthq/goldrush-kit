@@ -1,7 +1,7 @@
-export { copyToClipboard } from "./CopyToClipboard";
 export { actionableWrapper } from "./actionable-wrapper";
 export { calculateTimeSeriesGroup } from "./calculate-time-series-group";
 export { cn } from "./cn";
+export { copyToClipboard } from "./copy-to-clipboard";
 export { primaryShades } from "./primary-shades";
 export { storyAction } from "./story-action";
 export { stringToColor } from "./string-to-color";

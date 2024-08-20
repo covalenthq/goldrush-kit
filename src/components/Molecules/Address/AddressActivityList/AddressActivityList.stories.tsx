@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { AddressActivityList as AddressActivityListComponent } from "./AddressActivityList";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof AddressActivityListComponent>;
 
@@ -12,6 +12,6 @@ export default meta;
 
 export const AddressActivityList: Story = {
     args: {
-        address: "ganeshswami.eth",
+        address: "demo.eth",
     },
 };

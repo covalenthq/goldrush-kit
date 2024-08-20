@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { Pool as PoolComponent } from "./Pool";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof PoolComponent> = {
     title: "Atoms/Pool",

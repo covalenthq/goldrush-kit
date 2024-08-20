@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { GasCard as GasCardComponent } from "./GasCard";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof GasCardComponent>;
 

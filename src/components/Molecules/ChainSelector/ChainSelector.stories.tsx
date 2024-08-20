@@ -1,5 +1,5 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { ChainSelector as ChainSelectorComponent } from "./ChainSelector";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof ChainSelectorComponent>;
 

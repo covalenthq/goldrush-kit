@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
 import { NFT as NFTComponent } from "./NFT";
 import { storyAction } from "@/utils/functions";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof NFTComponent> = {
     title: "Atoms/NFT",

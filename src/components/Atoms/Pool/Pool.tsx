@@ -1,7 +1,7 @@
-import { actionableWrapper } from "@/utils/functions";
-import { type PoolProps } from "@/utils/types/atoms.types";
 import { TokenAvatar } from "..";
 import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { actionableWrapper } from "@/utils/functions";
+import { type PoolProps } from "@/utils/types/atoms.types";
 
 export const Pool: React.FC<PoolProps> = ({
     token_0_ticker_symbol,

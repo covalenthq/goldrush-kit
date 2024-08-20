@@ -1,5 +1,5 @@
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { Skeleton } from "../ui/skeleton";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
 
 export const SkeletonNFT: React.FC = () => {
     return (

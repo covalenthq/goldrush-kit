@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from "@storybook/react";
-import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { TokenAvatar as TokenAvatarComponent } from "./TokenAvatar";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
+import { type Meta, type StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof TokenAvatarComponent> = {
     title: "Atoms/Token Avatar",

@@ -1,21 +1,21 @@
-import { type Option, None, Some } from "@/utils/option";
-import {
-    calculatePrettyBalance,
-    type TokensApprovalItem,
-} from "@covalenthq/client-sdk";
-import { useEffect, useState } from "react";
-import { type TokenApprovalListProps } from "@/utils/types/molecules.types";
-import { useGoldRush } from "@/utils/store";
-import { type CovalentAPIError } from "@/utils/types/shared.types";
+import { Address, TokenAvatar } from "@/components/Atoms";
+import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
 } from "@/utils/constants/shared.constants";
-import { TableHeaderSorting, TableList } from "@/components/Shared";
+import { type Option, None, Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
+import { type TokenApprovalListProps } from "@/utils/types/molecules.types";
+import {
+    calculatePrettyBalance,
+    type GoldRushResponse,
+    type TokensApprovalItem,
+} from "@covalenthq/client-sdk";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Address, TokenAvatar } from "@/components/Atoms";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
 
 export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     chain_name,
@@ -24,7 +24,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
     actionable_spender,
     actionable_token,
 }) => {
-    const { covalentClient } = useGoldRush();
+    const { goldrushClient } = useGoldRush();
 
     const [maybeResult, setMaybeResult] =
         useState<Option<TokensApprovalItem[] | null>>(None);
@@ -36,7 +36,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await covalentClient.SecurityService.getApprovals(
+                    await goldrushClient.SecurityService.getApprovals(
                         chain_name,
                         address.trim()
                     );
@@ -44,7 +44,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                     throw error;
                 }
                 setMaybeResult(new Some(data.items));
-            } catch (error: CovalentAPIError | any) {
+            } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
                 console.error(error);

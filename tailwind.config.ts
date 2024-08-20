@@ -2,10 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config = {
     darkMode: ["class"],
-    content: [
-        "./src/**/*.{js,ts,jsx,tsx}",
-        "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
-    ],
+    content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
             colors: {
@@ -58,62 +55,6 @@ const config = {
                 stroke: {
                     DEFAULT: "var(--grk-primary-light)",
                 },
-                tremor: {
-                    background: {
-                        muted: "var(--grk-secondary-light)",
-                        subtle: "var(--grk-secondary-light)",
-                        DEFAULT: "var(--grk-background-light)",
-                        emphasis: "var(--grk-background-light)",
-                    },
-                    border: {
-                        DEFAULT: "var(--grk-secondary-light)",
-                    },
-                    ring: {
-                        DEFAULT: "var(--grk-secondary-light)",
-                    },
-                    content: {
-                        subtle: "var(--grk-secondary-light)",
-                        DEFAULT: "var(--grk-foreground-light)",
-                        emphasis: "var(--grk-primary-light-100)",
-                        strong: "var(--grk-primary-light-500)",
-                        inverted: "var(--grk-foreground-light)",
-                    },
-                },
-                "dark-tremor": {
-                    background: {
-                        muted: "var(--grk-secondary-dark)",
-                        subtle: "var(--grk-secondary-dark)",
-                        DEFAULT: "var(--grk-background-dark)",
-                        emphasis: "var(--grk-background-dark)",
-                    },
-                    border: {
-                        DEFAULT: "var(--grk-secondary-dark)",
-                    },
-                    ring: {
-                        DEFAULT: "var(--grk-secondary-dark)",
-                    },
-                    content: {
-                        subtle: "var(--grk-secondary-dark)",
-                        DEFAULT: "var(--grk-foreground-dark)",
-                        emphasis: "var(--grk-primary-dark-100)",
-                        strong: "var(--grk-primary-dark-500)",
-                        inverted: "var(--grk-foreground-dark)",
-                    },
-                },
-            },
-            boxShadow: {
-                // light
-                "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-                "tremor-card":
-                    "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-                "tremor-dropdown":
-                    "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-                // dark
-                "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-                "dark-tremor-card":
-                    "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-                "dark-tremor-dropdown":
-                    "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
             },
             borderColor: {
                 light: "var(--grk-secondary-light)",
@@ -121,16 +62,8 @@ const config = {
             },
             borderRadius: {
                 DEFAULT: "var(--grk-border-radius)",
-                "tremor-small": "var(--grk-border-radius)",
-                "tremor-default": "var(--grk-border-radius)",
-                "tremor-full": "var(--grk-border-radius)",
             },
-            fontSize: {
-                "tremor-label": ["0.75rem", { lineHeight: "1rem" }],
-                "tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
-                "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
-                "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
-            },
+
             keyframes: {
                 "accordion-down": {
                     from: { height: "0" },
@@ -166,19 +99,10 @@ const config = {
             pattern: RegExp(
                 /^(bg|text|shadow|border|stroke|ring|fill)-(primary)-(light|dark)-(DEFAULT|100|200|300|400|500|600|700|800|900)$/
             ),
-            variants: [
-                "dark",
-                "hover",
-                "ui-selected",
-                "dark:hover",
-                "dark:ui-selected",
-            ],
+            variants: ["dark", "hover", "dark:hover"],
         },
     ],
-    plugins: [
-        require("tailwindcss-animate"),
-        require("@headlessui/tailwindcss"),
-    ],
+    plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config;
