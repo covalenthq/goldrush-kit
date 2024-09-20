@@ -9,7 +9,7 @@ const svgData = async (src: string): Promise<HTMLOrSVGImageElement | null> => {
 
         const svg = new DOMParser().parseFromString(
             data,
-            "image/svg+xml"
+            "image/svg+xml",
         ).documentElement;
 
         const parserError = svg.getElementsByTagName("parsererror");
@@ -35,7 +35,7 @@ const svgData = async (src: string): Promise<HTMLOrSVGImageElement | null> => {
 export const themedSvg = async (
     parentRef: React.RefObject<HTMLSpanElement>,
     src: string | null,
-    fallback: string
+    fallback: string,
 ): Promise<void> => {
     const _src = src || "";
 

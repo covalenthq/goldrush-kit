@@ -1,9 +1,14 @@
 import { TIME_SERIES_GROUP } from "../constants/shared.constants";
 
 export const calculateTimeSeriesGroup = (
-    now: Date,
-    signed_at: Date
+    signed_at: Date | null,
 ): TIME_SERIES_GROUP => {
+    const now = new Date();
+
+    if (!signed_at) {
+        return TIME_SERIES_GROUP.EARLIER;
+    }
+
     const dateObj = signed_at;
     const diffInMilliseconds = now.getTime() - dateObj.getTime();
     const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));

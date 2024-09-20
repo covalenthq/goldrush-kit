@@ -5,7 +5,7 @@ import {
 
 export const primaryShades = (
     inputColor: string,
-    mode: GoldRushThemeType["mode"]
+    mode: GoldRushThemeType["mode"],
 ): GoldRushThemePrimaryShades => {
     function adjustBrightness(color: string, percent: number): string {
         const hex = color.replace(/[^0-9A-F]/gi, "");

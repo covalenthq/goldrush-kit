@@ -5,6 +5,7 @@ import { IconWrapper } from "@/components/Shared";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -25,7 +26,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
     const [maybeResult, setMaybeResult] =
         useState<Option<ChainActivityEvent[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
-        initialErrorMessage
+        initialErrorMessage,
     );
 
     useEffect(() => {
@@ -51,15 +52,18 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                             address.trim(),
                             {
                                 testnets: true,
-                            }
+                            },
                         );
                     if (error.error) {
                         throw error;
                     }
-                    setMaybeResult(new Some(data!.items));
+                    if (!data?.items) {
+                        throw FALLBACK_ERROR;
+                    }
+                    setMaybeResult(new Some(data.items));
                 } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
-                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE,
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);

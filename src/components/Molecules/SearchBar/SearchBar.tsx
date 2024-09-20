@@ -15,7 +15,7 @@ export const SearchBar: React.FC = () => {
 
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchType, setSearchType] = useState<SEARCH_RESULTS_TYPE | null>(
-        null
+        null,
     );
 
     useDebounce(
@@ -25,7 +25,7 @@ export const SearchBar: React.FC = () => {
             }
         },
         500,
-        [searchInput, selectedChain]
+        [searchInput, selectedChain],
     );
 
     const handleResults = useCallback(() => {

@@ -14,7 +14,7 @@ const ToastViewport = React.forwardRef<
         ref={ref}
         className={cn(
             "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse break-all p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-fit",
-            className
+            className,
         )}
         {...props}
     />
@@ -33,7 +33,7 @@ const toastVariants = cva(
         defaultVariants: {
             variant: "default",
         },
-    }
+    },
 );
 
 const Toast = React.forwardRef<
@@ -59,7 +59,7 @@ const ToastAction = React.forwardRef<
         ref={ref}
         className={cn(
             "inline-flex h-8 shrink-0 items-center justify-center rounded border bg-transparent px-3 text-sm font-medium transition-colors hover:bg-secondary-light focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-secondary-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -74,7 +74,7 @@ const ToastClose = React.forwardRef<
         ref={ref}
         className={cn(
             "absolute right-1 top-1 rounded p-1 text-foreground-light opacity-0 transition-opacity focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 dark:text-foreground-dark",
-            className
+            className,
         )}
         toast-close=""
         {...props}

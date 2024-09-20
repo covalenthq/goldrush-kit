@@ -15,6 +15,6 @@ export const NFTWalletCollectionList: Story = {
     args: {
         chain_name: "eth-mainnet",
         address: "0x1ae705a28f1cca0363b5d709159220aa2fe551de",
-        actionable_contract: (address: string) => storyAction(address),
+        actionable_contract: (address) => storyAction(address),
     },
 };

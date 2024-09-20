@@ -3,7 +3,10 @@ import {
     AddressActivityDetails,
     AddressActivityList,
 } from "@/components/Molecules";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressActivityViewProps } from "@/utils/types/organisms.types";
@@ -32,10 +35,13 @@ export const AddressActivityView: React.FC<AddressActivityViewProps> = ({
                         address.trim(),
                         {
                             testnets: true,
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {

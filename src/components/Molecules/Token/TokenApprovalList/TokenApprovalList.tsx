@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -38,10 +39,13 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                 const { data, ...error } =
                     await goldrushClient.SecurityService.getApprovals(
                         chain_name,
-                        address.trim()
+                        address.trim(),
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {
@@ -94,7 +98,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                     <div className="flex flex-col">
                         {calculatePrettyBalance(
                             Number(row.original.balance),
-                            row.original.contract_decimals
+                            Number(row.original.contract_decimals),
                         )}
 
                         <p className="text-xs opacity-75">
@@ -121,7 +125,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                             ? row.original.pretty_value_at_risk_quote
                             : calculatePrettyBalance(
                                   Number(row.original.balance),
-                                  row.original.contract_decimals
+                                  Number(row.original.contract_decimals),
                               )}
                     </p>
                 );
@@ -136,13 +140,14 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                     <div className="flex items-center justify-center">
                         <Badge
                             variant={
-                                row.original.spenders[0].risk_factor ===
+                                row.original.spenders?.[0].risk_factor ===
                                 "LOW RISK"
                                     ? "success"
                                     : "danger"
                             }
                         >
-                            {row.original.spenders[0].risk_factor === "LOW RISK"
+                            {row.original.spenders?.[0].risk_factor ===
+                            "LOW RISK"
                                 ? "Low"
                                 : "High"}
                         </Badge>
@@ -157,7 +162,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col gap-4">
-                        {row.original.spenders.map((spender) => (
+                        {row.original.spenders?.map((spender) => (
                             <div
                                 key={spender.spender_address}
                                 className="grid grid-cols-3 items-center gap-x-8 gap-y-4"
@@ -182,7 +187,7 @@ export const TokenApprovalList: React.FC<TokenApprovalListProps> = ({
                                         onClick={() =>
                                             on_revoke_approval(
                                                 spender,
-                                                row.original.token_address
+                                                row.original.token_address,
                                             )
                                         }
                                         size={"sm"}

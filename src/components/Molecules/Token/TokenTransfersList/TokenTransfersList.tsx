@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { TableCell, TableRow } from "@/components/ui/table";
 import {
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
     type TIME_SERIES_GROUP,
 } from "@/utils/constants/shared.constants";
 import { calculateTimeSeriesGroup } from "@/utils/functions";
@@ -58,10 +59,13 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                             contractAddress: contract_address.trim(),
                             pageNumber: _pagination?.page_number ?? 0,
                             pageSize: _pagination?.page_size ?? page_size,
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
@@ -71,7 +75,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 console.error(error);
             }
         },
-        [chain_name, address]
+        [chain_name, address],
     );
 
     const handleOnChangePagination = (updatedPagination: Pagination) => {
@@ -136,7 +140,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <Badge>{row.original.transfers[0].transfer_type}</Badge>
+                <Badge>{row.original.transfers?.[0].transfer_type}</Badge>
             ),
         },
         {
@@ -150,12 +154,12 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
                 />
             ),
             cell: ({ row }) => {
-                const transfer = row.original.transfers[0];
+                const transfer = row.original.transfers?.[0];
                 return transfer ? (
                     <div className="text-right">
                         {calculatePrettyBalance(
                             transfer?.delta ?? 0,
-                            transfer?.contract_decimals
+                            Number(transfer?.contract_decimals),
                         )}{" "}
                         {transfer?.contract_ticker_symbol}
                     </div>
@@ -177,10 +181,10 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
             cell: ({ row }) => (
                 <div className="text-right">
                     {prettifyCurrency(
-                        row.original.transfers[0].delta_quote,
+                        Number(row.original.transfers?.[0].delta_quote),
                         2,
                         "USD",
-                        true
+                        true,
                     )}
                 </div>
             ),
@@ -214,8 +218,7 @@ export const TokenTransfersList: React.FC<TokenTransfersListProps> = ({
             customRows={(rows, defaultRow) =>
                 rows.map((row) => {
                     const currentTimeSeries = calculateTimeSeriesGroup(
-                        new Date(),
-                        row.original.block_signed_at
+                        row.original.block_signed_at,
                     );
                     return (
                         <Fragment key={row.id}>

@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -55,11 +56,11 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                 ] = await Promise.all([
                     goldrushClient.TransactionService.getTransactionSummary(
                         chain_name,
-                        address.trim()
+                        address.trim(),
                     ),
                     goldrushClient.BalanceService.getTokenBalancesForWalletAddress(
                         chain_name,
-                        address.trim()
+                        address.trim(),
                     ),
                 ]);
                 if (summaryError.error) {
@@ -68,19 +69,22 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                 if (balancesError.error) {
                     throw balancesError;
                 }
+                if (!balancesData?.items || !summaryData?.items) {
+                    throw FALLBACK_ERROR;
+                }
                 const balances = balancesData!.items;
                 const nativeTokenIndex = balances.findIndex(
-                    (token) => token.native_token
+                    (token) => token.native_token,
                 );
                 const nativeToken: BalanceItem = balances.splice(
                     nativeTokenIndex,
-                    1
+                    1,
                 )[0];
                 setMaybeResult(
                     new Some({
                         balances: [nativeToken, ...balances],
                         summary: summaryData.items[0],
-                    })
+                    }),
                 );
             } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
@@ -141,7 +145,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                 native.balance ?? 0,
                                                 native.contract_decimals || 0,
                                                 false,
-                                                native.contract_decimals || 0
+                                                native.contract_decimals || 0,
                                             )}{" "}
                                             {native.contract_ticker_symbol}
                                         </>
@@ -152,12 +156,12 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                     content: prettifyCurrency(
                                         calculatePrettyBalance(
                                             Number(native.balance) *
-                                                native.quote_rate,
-                                            native.contract_decimals
-                                        )
+                                                Number(native.quote_rate),
+                                            Number(native.contract_decimals),
+                                        ),
                                     ),
                                     subtext: `@${prettifyCurrency(
-                                        native.quote_rate || 0
+                                        native.quote_rate || 0,
                                     )}/${native.contract_ticker_symbol}`,
                                 },
                                 {
@@ -221,7 +225,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                                                 balance,
                                                                                 contract_decimals ||
                                                                                     0,
-                                                                                true
+                                                                                true,
                                                                             )}{" "}
                                                                             {
                                                                                 contract_ticker_symbol
@@ -231,7 +235,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                                 }
                                                             />
                                                         </DropdownMenuItem>
-                                                    )
+                                                    ),
                                                 )}
                                                 <DropdownMenuSeparator />
                                             </DropdownMenuContent>

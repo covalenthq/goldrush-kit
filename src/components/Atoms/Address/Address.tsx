@@ -43,7 +43,7 @@ export const Address: React.FC<AddressProps> = ({
 
                 {actionableWrapper(
                     actionable_address(address),
-                    label?.trim() || truncate(address)
+                    label?.trim() || truncate(address),
                 )}
 
                 {show_copy_icon && (

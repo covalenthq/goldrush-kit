@@ -36,7 +36,7 @@ function Skeleton({
             className={cn(
                 "animate-pulse rounded border bg-secondary-light dark:bg-secondary-dark",
                 sizeClass(),
-                className
+                className,
             )}
             {...props}
         />

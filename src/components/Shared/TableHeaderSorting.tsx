@@ -2,7 +2,7 @@ import { IconWrapper } from ".";
 import { type TableHeaderSortingProps } from "@/utils/types/shared.types";
 
 export const TableHeaderSorting: <T>(
-    props: TableHeaderSortingProps<T>
+    props: TableHeaderSortingProps<T>,
 ) => React.ReactNode = ({ header, column, align, icon = true }) => {
     const sortedIcon =
         column.getIsSorted() === "asc"

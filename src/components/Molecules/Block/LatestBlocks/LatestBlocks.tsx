@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
@@ -34,10 +35,13 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                         "2100-01-01",
                         {
                             pageSize: 5,
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {
@@ -86,8 +90,8 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                                     content={actionableWrapper(
                                         actionable_block(block.height),
                                         <p className="text-base">
-                                            {block.height.toLocaleString()}
-                                        </p>
+                                            {block.height?.toLocaleString()}
+                                        </p>,
                                     )}
                                     wrapperClassName="flex flex-col-reverse"
                                 />
@@ -95,10 +99,11 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                                 <CardDetail
                                     heading={"GAS USED"}
                                     content={`${(
-                                        (block.gas_used / block.gas_limit) *
+                                        (Number(block.gas_used) /
+                                            Number(block.gas_limit)) *
                                         100
                                     ).toFixed(2)}%`}
-                                    subtext={`of ${block.gas_limit.toLocaleString()}`}
+                                    subtext={`of ${block.gas_limit?.toLocaleString()}`}
                                 />
                             </div>
                         ))

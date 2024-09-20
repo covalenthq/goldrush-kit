@@ -18,12 +18,12 @@ export const PaginationFooter: React.FC<PaginationFooterProps> = ({
 }) => {
     const prevEnabled = useMemo<boolean>(
         () => !disabled && (pagination?.page_number || 0) > 0,
-        [disabled, pagination]
+        [disabled, pagination],
     );
 
     const nextEnabled = useMemo<boolean>(
         () => !disabled && (pagination?.has_more ?? false),
-        [disabled, pagination]
+        [disabled, pagination],
     );
 
     return pagination ? (

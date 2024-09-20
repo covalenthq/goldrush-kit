@@ -74,7 +74,7 @@ export interface TableListProps<T> extends Partial<PaginationFooterProps> {
     errorMessage: string | null;
     customRows?: (
         row: Row<T>[],
-        defaultRow: (row: Row<T>) => React.ReactNode
+        defaultRow: (row: Row<T>) => React.ReactNode,
     ) => React.ReactNode[];
 }
 

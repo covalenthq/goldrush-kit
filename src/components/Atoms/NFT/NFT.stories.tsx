@@ -52,6 +52,6 @@ export const NFT: Story = {
                 value: "Passion Red",
             },
         ],
-        actionable_contract: (address: string) => storyAction(address),
+        actionable_contract: (address) => storyAction(address),
     },
 };

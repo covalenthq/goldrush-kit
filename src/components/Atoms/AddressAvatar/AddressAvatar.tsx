@@ -51,7 +51,7 @@ export const AddressAvatar: React.FC<AddressAvatarProps> = ({
 
     const BG_COLOR = useMemo<React.CSSProperties["backgroundColor"]>(
         () => stringToColor(address),
-        [address]
+        [address],
     );
 
     return (

@@ -20,6 +20,6 @@ export const Pool: Story = {
             "https://logos.covalenthq.com/tokens/1/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",
         token_1_ticker_symbol: "WETH",
         pool_address: "0x66a0f676479cee1d7373f3dc2e2952778bff5bd6",
-        actionable_pool: (address: string) => storyAction(address),
+        actionable_pool: (address) => storyAction(address),
     },
 };

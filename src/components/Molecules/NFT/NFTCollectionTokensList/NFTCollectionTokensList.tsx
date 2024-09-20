@@ -3,6 +3,7 @@ import { PaginationFooter, SkeletonNFT } from "@/components/Shared";
 import {
     ALLOWED_CACHE_CHAINS,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -41,10 +42,13 @@ export const NFTCollectionTokensList: React.FC<
                             pageSize: _pagination?.page_size ?? page_size,
                             withUncached:
                                 !ALLOWED_CACHE_CHAINS.includes(chain_name),
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.pagination || !data.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
@@ -54,7 +58,7 @@ export const NFTCollectionTokensList: React.FC<
                 console.error(error);
             }
         },
-        [chain_name, collection_address]
+        [chain_name, collection_address],
     );
 
     const handleOnChangePagination = (updatedPagination: Pagination) => {
@@ -83,14 +87,15 @@ export const NFTCollectionTokensList: React.FC<
                     ) : (
                         result.map(({ contract_name, nft_data }) => (
                             <NFT
-                                key={nft_data.token_id}
+                                key={nft_data?.token_id}
                                 src={
-                                    nft_data.external_data?.image_256 ||
-                                    nft_data.external_data?.image_512 ||
-                                    nft_data.external_data?.image_1024
+                                    nft_data?.external_data?.image_256 ||
+                                    nft_data?.external_data?.image_512 ||
+                                    nft_data?.external_data?.image_1024 ||
+                                    null
                                 }
                                 collection_name={contract_name}
-                                token_id={nft_data.token_id}
+                                token_id={nft_data?.token_id}
                             />
                         ))
                     ),

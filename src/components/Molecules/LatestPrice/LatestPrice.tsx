@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -26,10 +27,13 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
                     await goldrushClient.PricingService.getTokenPrices(
                         chain_name,
                         "USD",
-                        "0x0000000000000000000000000000000000000000"
+                        "0x0000000000000000000000000000000000000000",
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.[0]?.items?.[0]) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data[0].items[0]));
             } catch (error: GoldRushResponse<null> | any) {
@@ -61,7 +65,7 @@ export const LatestPrice: React.FC<LatestPriceProps> = ({ chain_name }) => {
                         (
                             [
                                 {
-                                    heading: `${result.contract_metadata.contract_ticker_symbol} PRICE`,
+                                    heading: `${result.contract_metadata?.contract_ticker_symbol} PRICE`,
                                     content: result.pretty_price,
                                 },
                             ] as CardDetailProps[]

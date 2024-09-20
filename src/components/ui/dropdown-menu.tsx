@@ -30,7 +30,7 @@ const DropdownMenuSubTrigger = forwardRef<
         className={cn(
             "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-background-light data-[state=open]:bg-background-light dark:focus:bg-background-dark dark:data-[state=open]:bg-background-dark",
             inset && "pl-8",
-            className
+            className,
         )}
         {...props}
     >
@@ -49,7 +49,7 @@ const DropdownMenuSubContent = forwardRef<
         ref={ref}
         className={cn(
             "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-background-light p-1 text-foreground-light shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-dark dark:text-foreground-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -68,7 +68,7 @@ const DropdownMenuContent = forwardRef<
             className={cn(
                 "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-background-light p-1 text-foreground-light shadow-md dark:bg-background-dark dark:text-foreground-dark",
                 "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-                className
+                className,
             )}
             {...props}
         />
@@ -87,7 +87,7 @@ const DropdownMenuItem = forwardRef<
         className={cn(
             "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-background-light focus:text-foreground-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-background-dark dark:focus:text-foreground-dark",
             inset && "pl-8",
-            className
+            className,
         )}
         {...props}
     />
@@ -102,7 +102,7 @@ const DropdownMenuCheckboxItem = forwardRef<
         ref={ref}
         className={cn(
             "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-background-light focus:text-secondary-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-background-dark dark:focus:text-secondary-dark",
-            className
+            className,
         )}
         checked={checked}
         {...props}
@@ -126,7 +126,7 @@ const DropdownMenuRadioItem = forwardRef<
         ref={ref}
         className={cn(
             "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-background-light focus:text-secondary-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-background-dark dark:focus:text-secondary-dark",
-            className
+            className,
         )}
         {...props}
     >
@@ -151,7 +151,7 @@ const DropdownMenuLabel = forwardRef<
         className={cn(
             "px-2 py-1.5 text-sm font-semibold",
             inset && "pl-8",
-            className
+            className,
         )}
         {...props}
     />
@@ -166,7 +166,7 @@ const DropdownMenuSeparator = forwardRef<
         ref={ref}
         className={cn(
             "-mx-1 my-1 h-px bg-background-light bg-opacity-85 dark:bg-background-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -181,7 +181,7 @@ const DropdownMenuShortcut = ({
         <span
             className={cn(
                 "ml-auto text-xs tracking-widest opacity-60",
-                className
+                className,
             )}
             {...props}
         />

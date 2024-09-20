@@ -4,25 +4,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { type GasCardProps } from "@/utils/types/molecules.types";
-import type {
-    GoldRushResponse,
-    GasPricesResponse,
-} from "@covalenthq/client-sdk";
+import type { GasCardData, GasCardProps } from "@/utils/types/molecules.types";
+import type { GoldRushResponse } from "@covalenthq/client-sdk";
 import { useEffect, useMemo, useState } from "react";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
-    const [isErc20, setIsErc20] = useState<boolean>(true);
-    const [maybeResult, setMaybeResult] = useState<
-        Option<{
-            erc: GasPricesResponse;
-            native: GasPricesResponse;
-        } | null>
-    >(None);
+    const [selectedValue, setSelectedValue] =
+        useState<keyof GasCardData>("erc");
+    const [maybeResult, setMaybeResult] =
+        useState<Option<GasCardData | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { goldrushClient } = useGoldRush();
 
@@ -37,11 +32,11 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                 ] = await Promise.all([
                     goldrushClient.BaseService.getGasPrices(
                         chain_name,
-                        "erc20"
+                        "erc20",
                     ),
                     await goldrushClient.BaseService.getGasPrices(
                         chain_name,
-                        "nativetokens"
+                        "nativetokens",
                     ),
                 ]);
                 if (ercError.error) {
@@ -50,11 +45,19 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                 if (nativeError.error) {
                     throw nativeError;
                 }
+                if (
+                    !ercData ||
+                    !ercData.items ||
+                    !nativeData ||
+                    !nativeData.items
+                ) {
+                    throw FALLBACK_ERROR;
+                }
                 setMaybeResult(
                     new Some({
                         erc: ercData,
                         native: nativeData,
-                    })
+                    }),
                 );
             } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
@@ -114,7 +117,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                 content: "High",
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -160,76 +163,82 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                     <p className="text-lg">
                                         {Math.round(
                                             (Number(
-                                                result?.[
-                                                    isErc20 ? "erc" : "native"
-                                                ].base_fee
-                                            ) ?? 0) / Math.pow(10, 9)
+                                                result?.[selectedValue]
+                                                    .base_fee,
+                                            ) ?? 0) / Math.pow(10, 9),
                                         )}{" "}
                                         Gwei
                                     </p>
                                 </div>
                             </div>
 
-                            {result[isErc20 ? "erc" : "native"].items
-                                .sort(
-                                    (a, b) =>
-                                        parseInt(a.gas_price) -
-                                        parseInt(b.gas_price)
-                                )
-                                .map(
-                                    (
-                                        {
-                                            interval,
-                                            gas_price,
-                                            pretty_total_gas_quote,
-                                        },
-                                        i
-                                    ) => (
-                                        <div
-                                            key={Math.random()}
-                                            className="flex items-center gap-4"
-                                        >
-                                            <p className="text-4xl">
-                                                {copy[i].logo}
-                                            </p>
-
-                                            <div>
-                                                {copy[i].content}
-
-                                                <p>
-                                                    {Math.round(
-                                                        parseInt(gas_price) /
-                                                            Math.pow(10, 9)
-                                                    ).toFixed(0)}{" "}
-                                                    Gwei
-                                                    <span className="ml-1 text-sm text-secondary-light dark:text-secondary-dark">
-                                                        (
-                                                        {pretty_total_gas_quote}
-                                                        )
-                                                    </span>
-                                                </p>
-
-                                                <p className="text-sm text-secondary-light dark:text-secondary-dark">
-                                                    {interval}
-                                                </p>
-                                            </div>
-                                        </div>
+                            {result?.[selectedValue]?.items &&
+                                result[selectedValue].items
+                                    .sort(
+                                        (a, b) =>
+                                            Number(a.gas_price) -
+                                            Number(b.gas_price),
                                     )
-                                )}
+                                    .map(
+                                        (
+                                            {
+                                                interval,
+                                                gas_price,
+                                                pretty_total_gas_quote,
+                                            },
+                                            i,
+                                        ) => (
+                                            <div
+                                                key={Math.random()}
+                                                className="flex items-center gap-4"
+                                            >
+                                                <p className="text-4xl">
+                                                    {copy[i].logo}
+                                                </p>
+
+                                                <div>
+                                                    {copy[i].content}
+
+                                                    <p>
+                                                        {Math.round(
+                                                            Number(gas_price) /
+                                                                Math.pow(10, 9),
+                                                        ).toFixed(0)}{" "}
+                                                        Gwei
+                                                        <span className="ml-1 text-sm text-secondary-light dark:text-secondary-dark">
+                                                            (
+                                                            {
+                                                                pretty_total_gas_quote
+                                                            }
+                                                            )
+                                                        </span>
+                                                    </p>
+
+                                                    <p className="text-sm text-secondary-light dark:text-secondary-dark">
+                                                        {interval}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ),
+                                    )}
 
                             <div className="flex flex-col gap-2">
                                 <Button
                                     disabled={!maybeResult.isDefined}
-                                    variant={isErc20 ? "primary" : "outline"}
-                                    onClick={() => setIsErc20(true)}
+                                    variant={
+                                        selectedValue ? "primary" : "outline"
+                                    }
+                                    onClick={() => setSelectedValue("erc")}
                                     size={"sm"}
                                 >
                                     ERC20
                                 </Button>
                                 <Button
                                     disabled={!maybeResult.isDefined}
-                                    variant={!isErc20 ? "primary" : "outline"}
-                                    onClick={() => setIsErc20(false)}
+                                    variant={
+                                        !selectedValue ? "primary" : "outline"
+                                    }
+                                    onClick={() => setSelectedValue("native")}
                                     size={"sm"}
                                 >
                                     Native Tokens

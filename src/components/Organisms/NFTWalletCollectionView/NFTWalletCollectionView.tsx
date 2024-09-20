@@ -3,7 +3,10 @@ import {
     NFTWalletCollectionDetails,
     NFTWalletCollectionList,
 } from "@/components/Molecules";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type NFTWalletCollectionViewProps } from "@/utils/types/organisms.types";
@@ -29,10 +32,13 @@ export const NFTWalletCollectionView: React.FC<
                 const { data, ...error } =
                     await goldrushClient.NftService.getNftsForAddress(
                         chain_name,
-                        address
+                        address,
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {

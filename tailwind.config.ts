@@ -85,7 +85,7 @@ const config = {
     safelist: [
         {
             pattern: RegExp(
-                /^(bg|text|shadow|border|stroke|ring|fill)-(background|foreground|primary|secondary)-(light|dark)$/
+                /^(bg|text|shadow|border|stroke|ring|fill)-(background|foreground|primary|secondary)-(light|dark)$/,
             ),
             variants: [
                 "dark",
@@ -97,7 +97,7 @@ const config = {
         },
         {
             pattern: RegExp(
-                /^(bg|text|shadow|border|stroke|ring|fill)-(primary)-(light|dark)-(DEFAULT|100|200|300|400|500|600|700|800|900)$/
+                /^(bg|text|shadow|border|stroke|ring|fill)-(primary)-(light|dark)-(DEFAULT|100|200|300|400|500|600|700|800|900)$/,
             ),
             variants: ["dark", "hover", "dark:hover"],
         },

@@ -16,8 +16,8 @@ export const TransactionDetails: Story = {
         chain_name: "eth-mainnet",
         tx_hash:
             "0x7a038d2f5be4d196a3ff389497f8d61a639e4a32d353758b4f062cafbc5d475c",
-        actionable_block: (block: number) => storyAction(block),
-        actionable_transaction: (address: string) => storyAction(address),
+        actionable_block: (block) => storyAction(block),
+        actionable_transaction: (address) => storyAction(address),
         actionable_from: (address) => storyAction(address),
         actionable_to: (address) => storyAction(address),
     },

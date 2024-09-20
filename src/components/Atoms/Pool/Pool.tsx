@@ -28,7 +28,7 @@ export const Pool: React.FC<PoolProps> = ({
 
             {actionableWrapper(
                 actionable_pool(pool_address),
-                `${token_0_ticker_symbol}-${token_1_ticker_symbol}`
+                `${token_0_ticker_symbol}-${token_1_ticker_symbol}`,
             )}
         </div>
     );

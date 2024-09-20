@@ -13,10 +13,10 @@ export const Timestamp: React.FC<TimestampProps> = ({
     }
 
     const [relativeTime, setRelativeTime] = useState<boolean>(
-        defaultType === "relative"
+        defaultType === "relative",
     );
     const [parsedTime, setParsedTime] = useState<string>(
-        timestampParser(timestamp, relativeTime ? "relative" : "descriptive")
+        timestampParser(timestamp, relativeTime ? "relative" : "descriptive"),
     );
 
     useEffect(() => {
@@ -27,8 +27,8 @@ export const Timestamp: React.FC<TimestampProps> = ({
                 setParsedTime(
                     timestampParser(
                         timestamp,
-                        relativeTime ? "relative" : "descriptive"
-                    )
+                        relativeTime ? "relative" : "descriptive",
+                    ),
                 );
             }, 1000);
         }
@@ -43,7 +43,10 @@ export const Timestamp: React.FC<TimestampProps> = ({
     const handleToggle = useCallback((isRelative: boolean) => {
         setRelativeTime(!isRelative);
         setParsedTime(
-            timestampParser(timestamp, !isRelative ? "relative" : "descriptive")
+            timestampParser(
+                timestamp,
+                !isRelative ? "relative" : "descriptive",
+            ),
         );
     }, []);
 

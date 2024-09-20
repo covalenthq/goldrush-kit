@@ -42,7 +42,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                 chains.find(
                     ({ name, chain_id }) =>
                         name === nameOrId ||
-                        chain_id.toString() === nameOrId.toString()
+                        chain_id?.toString() === nameOrId.toString(),
                 ) ?? null;
             if (foundChain) {
                 acc.push(foundChain);
@@ -67,7 +67,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                             <TokenAvatar
                                 only_primary
                                 size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                chain_color={selectedChain.color_theme.hex}
+                                chain_color={selectedChain.color_theme?.hex}
                                 primary_url={selectedChain.logo_url}
                             />
                             {selectedChain.label}
@@ -94,7 +94,7 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                             {dropdownChains.map((chain) => (
                                 <CommandItem
                                     key={chain.name}
-                                    value={chain.name}
+                                    value={chain.name as string}
                                     className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
                                     onSelect={() => {
                                         setSelectedChain(chain);

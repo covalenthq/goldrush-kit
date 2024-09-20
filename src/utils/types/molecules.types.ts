@@ -5,6 +5,7 @@ import {
 import { type ActionableType, type TransactionsProps } from "./shared.types";
 import { type Option } from "@/utils/option";
 import type {
+    GasPricesResponse,
     NftApprovalSpender,
     TokenSpenderItem,
 } from "@covalenthq/client-sdk";
@@ -35,8 +36,8 @@ export interface NFTApprovalListProps {
     chain_name: Chain;
     address: string;
     on_revoke_approval?: (
-        spender: NftApprovalSpender,
-        contract_address: string
+        spender: NftApprovalSpender | null,
+        contract_address: string | null,
     ) => void;
     actionable_spender?: (address: string | null) => ActionableType;
     actionable_token?: (address: string | null) => ActionableType;
@@ -46,8 +47,8 @@ export interface TokenApprovalListProps {
     chain_name: Chain;
     address: string;
     on_revoke_approval?: (
-        spender: TokenSpenderItem,
-        token_address: string
+        spender: TokenSpenderItem | null,
+        token_address: string | null,
     ) => void;
     actionable_spender?: (address: string | null) => ActionableType;
     actionable_token?: (address: string | null) => ActionableType;
@@ -90,6 +91,11 @@ export interface LatestPriceProps {
 export interface GasCardProps {
     chain_name: Chain;
 }
+
+export type GasCardData = {
+    erc: GasPricesResponse;
+    native: GasPricesResponse;
+};
 
 export interface AddressDetailsProps {
     address: string;

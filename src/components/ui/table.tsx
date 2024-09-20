@@ -43,7 +43,7 @@ const TableFooter = forwardRef<
         ref={ref}
         className={cn(
             "border-t bg-primary-light bg-opacity-55 font-medium dark:bg-primary-dark [&>tr]:last:border-b-0",
-            className
+            className,
         )}
         {...props}
     />
@@ -58,7 +58,7 @@ const TableRow = forwardRef<
         ref={ref}
         className={cn(
             "border-b border-secondary-light transition-colors hover:bg-secondary-light data-[state=selected]:bg-primary-light dark:border-secondary-dark dark:hover:bg-secondary-dark dark:data-[state=selected]:bg-primary-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -73,7 +73,7 @@ const TableHead = forwardRef<
         ref={ref}
         className={cn(
             "h-10 px-2 text-left align-middle font-medium text-foreground-light opacity-75 dark:text-foreground-dark [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-            className
+            className,
         )}
         {...props}
     />
@@ -88,7 +88,7 @@ const TableCell = forwardRef<
         ref={ref}
         className={cn(
             "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-            className
+            className,
         )}
         {...props}
     />
@@ -103,7 +103,7 @@ const TableCaption = forwardRef<
         ref={ref}
         className={cn(
             "mt-4 text-sm text-foreground-light dark:text-foreground-dark",
-            className
+            className,
         )}
         {...props}
     />
