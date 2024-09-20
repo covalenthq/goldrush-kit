@@ -5,7 +5,7 @@ import { useToast } from "@/utils/hooks";
 import { type CopyDataProps } from "@/utils/types/shared.types";
 import { useState } from "react";
 
-export const CopyData: React.FC<CopyDataProps> = ({ children, data }) => {
+export const CopyData: React.FC<CopyDataProps> = ({ data }) => {
     const [copied, showCopied] = useState<boolean>(false);
 
     const { toast } = useToast();
@@ -26,13 +26,11 @@ export const CopyData: React.FC<CopyDataProps> = ({ children, data }) => {
             <Toaster />
 
             <button
-                className="cursor-pointer flex items-center gap-x-2"
+                className="cursor-pointer"
                 onClick={() => {
                     handleCopyClick();
                 }}
             >
-                {children}
-
                 {copied ? (
                     <IconWrapper
                         icon_class_name="done"
