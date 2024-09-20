@@ -11,7 +11,6 @@ import {
 export interface AddressProps {
     address: string | null;
     label?: string | null;
-    show_copy_icon?: boolean;
     avatar?: Omit<AddressAvatarProps, "address">;
     actionable_address?: (address: string | null) => ActionableType;
 }
@@ -20,7 +19,6 @@ export interface AddressCardProps {
     label?: string | null;
     address: string;
     avatar: Omit<AddressAvatarProps, "address">;
-    show_copy_icon?: boolean;
     show_qr_code?: boolean;
     actionable_address?: (address: string | null) => ActionableType;
 }

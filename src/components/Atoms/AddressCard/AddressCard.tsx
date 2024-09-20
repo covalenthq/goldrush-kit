@@ -14,7 +14,6 @@ export const AddressCard: React.FC<AddressCardProps> = ({
     address,
     avatar,
     label = "Unnamed Wallet",
-    show_copy_icon = true,
     show_qr_code = true,
     actionable_address,
 }) => {
@@ -29,7 +28,6 @@ export const AddressCard: React.FC<AddressCardProps> = ({
                     <Address
                         address={address}
                         label={null}
-                        show_copy_icon={show_copy_icon}
                         actionable_address={actionable_address}
                     />
                     {show_qr_code && (

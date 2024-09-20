@@ -1,6 +1,6 @@
 export { BalancePriceDelta } from "./BalancePriceDelta";
 export { CardDetail } from "./CardDetail";
-export { CopyImage } from "./CopyImage";
+export { CopyData } from "./CopyData";
 export { Heading } from "./Heading";
 export { IconWrapper } from "./IconWrapper";
 export { PaginationFooter } from "./PaginationFooter";
