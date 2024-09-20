@@ -226,7 +226,9 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                 <Button
                                     disabled={!maybeResult.isDefined}
                                     variant={
-                                        selectedValue ? "primary" : "outline"
+                                        selectedValue === "erc"
+                                            ? "primary"
+                                            : "outline"
                                     }
                                     onClick={() => setSelectedValue("erc")}
                                     size={"sm"}
@@ -236,7 +238,9 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                 <Button
                                     disabled={!maybeResult.isDefined}
                                     variant={
-                                        !selectedValue ? "primary" : "outline"
+                                        selectedValue === "native"
+                                            ? "primary"
+                                            : "outline"
                                     }
                                     onClick={() => setSelectedValue("native")}
                                     size={"sm"}
