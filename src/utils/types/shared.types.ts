@@ -25,7 +25,6 @@ export interface CardDetailProps {
 
 export interface CopyDataProps {
     data: string;
-    children: React.ReactNode;
 }
 
 export interface IconWrapperProps {

@@ -14,17 +14,15 @@ export const Address: React.FC<AddressProps> = ({
     }
 
     return (
-        <>
-            <p className="flex items-center gap-x-2">
-                {avatar && <AddressAvatar {...avatar} address={address} />}
+        <p className="flex items-center gap-x-1">
+            {avatar && <AddressAvatar {...avatar} address={address} />}
 
-                <CopyData data={address}>
-                    {actionableWrapper(
-                        actionable_address(address),
-                        label?.trim() || truncate(address),
-                    )}
-                </CopyData>
-            </p>
-        </>
+            {actionableWrapper(
+                actionable_address(address),
+                label?.trim() || truncate(address),
+            )}
+
+            <CopyData data={address} />
+        </p>
     );
 };
