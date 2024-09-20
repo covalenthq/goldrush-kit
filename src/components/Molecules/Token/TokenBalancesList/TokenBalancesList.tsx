@@ -7,6 +7,7 @@ import {
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { actionableWrapper } from "@/utils/functions";
 import { type Option, None, Some } from "@/utils/option";
@@ -51,10 +52,13 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                         const { data, ...error } =
                             await goldrushClient.BalanceService.getTokenBalancesForWalletAddress(
                                 chain_name,
-                                address.trim()
+                                address.trim(),
                             );
                         if (error.error) {
                             throw error;
+                        }
+                        if (!data?.items) {
+                            throw FALLBACK_ERROR;
                         }
                         return data.items.map((balance) => ({
                             ...balance,
@@ -62,13 +66,13 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                         }));
                     } catch (error: GoldRushResponse<null> | any) {
                         setErrorMessage(
-                            error?.error_message ?? DEFAULT_ERROR_MESSAGE
+                            error?.error_message ?? DEFAULT_ERROR_MESSAGE,
                         );
                         setMaybeResult(new Some(null));
                         console.error(error);
                         return [];
                     }
-                })
+                }),
             );
             setMaybeResult(new Some(results.flat()));
         })();
@@ -85,9 +89,9 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                                 ({ quote, type }) =>
                                     quote !== null &&
                                     quote > 0 &&
-                                    type !== "dust"
-                            )
-                        )
+                                    type !== "dust",
+                            ),
+                        ),
                     );
                     return result;
                 }
@@ -111,7 +115,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                 const chain: ChainItem | null =
                     chains?.find((o) => o.name === row.original.chain_name) ??
                     null;
-                const chainColor = chain?.color_theme.hex;
+                const chainColor = chain?.color_theme?.hex;
 
                 return (
                     <div className="flex items-center gap-3">
@@ -119,19 +123,23 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                             size={GRK_SIZES.EXTRA_SMALL}
                             chain_color={chainColor}
                             secondary_url={
-                                row.original.logo_urls.chain_logo_url
+                                row.original.logo_urls?.chain_logo_url
                             }
-                            primary_url={row.original.logo_urls.token_logo_url}
+                            primary_url={row.original.logo_urls?.token_logo_url}
                         />
                         <div className="flex flex-col">
-                            <p style={{ color: chainColor }}>
-                                {chain?.label.replace(" Mainnet", "")}
+                            <p
+                                style={{
+                                    color: chainColor as string,
+                                }}
+                            >
+                                {chain?.label?.replace(" Mainnet", "")}
                             </p>
                             {actionableWrapper(
                                 actionable_token(row.original.contract_address),
                                 <p className="w-fit text-base">
                                     {row.original.contract_display_name}
-                                </p>
+                                </p>,
                             )}
                         </div>
                     </div>
@@ -154,7 +162,7 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                         row.getValue("quote_rate"),
                         2,
                         "USD",
-                        true
+                        true,
                     )}
                 </div>
             ),
@@ -173,9 +181,9 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
                 const original = row.original as BalanceItem;
                 const valueFormatted = calculatePrettyBalance(
                     original.balance ?? 0,
-                    row.original.contract_decimals,
+                    Number(row.original.contract_decimals),
                     true,
-                    4
+                    4,
                 );
                 return (
                     <div className="text-right">
@@ -216,8 +224,8 @@ export const TokenBalancesList: React.FC<TokenBalancesListProps> = ({
             cell: ({ row }) => (
                 <div className="text-right">
                     <BalancePriceDelta
-                        numerator={row.original.quote_24h}
-                        denominator={row.original.quote}
+                        numerator={Number(row.original.quote_24h)}
+                        denominator={Number(row.original.quote)}
                     />
                 </div>
             ),

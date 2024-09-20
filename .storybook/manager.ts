@@ -5,7 +5,8 @@ export const defaultTheme: ThemeVars = {
     ...themes.dark,
     appBg: "black",
     colorSecondary: "#FF4C8B",
-    brandImage: "../src/static/goldrush-powered-by-covalent.svg",
+    brandImage:
+        "https://github.com/covalenthq/goldrush-kit/blob/main/src/static/goldrush-powered-by-covalent.svg",
     base: "light",
     brandTitle: "GoldRush Kit - powered by Covalent",
     brandUrl: "https://github.com/covalenthq/goldrush-kit/",

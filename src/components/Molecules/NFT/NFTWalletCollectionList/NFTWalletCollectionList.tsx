@@ -1,6 +1,9 @@
 import { NFT } from "@/components/Atoms";
 import { CardDetail, SkeletonNFT } from "@/components/Shared";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type NFTWalletCollectionListProps } from "@/utils/types/molecules.types";
@@ -23,7 +26,7 @@ export const NFTWalletCollectionList: React.FC<
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContractBalanceItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
-        initialErrorMessage
+        initialErrorMessage,
     );
 
     useEffect(() => {
@@ -47,15 +50,18 @@ export const NFTWalletCollectionList: React.FC<
                     const { data, ...error } =
                         await goldrushClient.NftService.getNftsForAddress(
                             chain_name,
-                            address
+                            address,
                         );
                     if (error.error) {
                         throw error;
                     }
+                    if (!data?.items) {
+                        throw FALLBACK_ERROR;
+                    }
                     setMaybeResult(new Some(data.items));
                 } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
-                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE,
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);
@@ -87,13 +93,14 @@ export const NFTWalletCollectionList: React.FC<
                                 contract_name,
                                 pretty_floor_price_quote,
                             }) =>
-                                nft_data.map(({ token_id, external_data }) => (
+                                nft_data?.map(({ token_id, external_data }) => (
                                     <NFT
                                         key={token_id}
                                         src={
                                             external_data?.image_256 ||
                                             external_data?.image_512 ||
-                                            external_data?.image_1024
+                                            external_data?.image_1024 ||
+                                            null
                                         }
                                         token_id={token_id}
                                         collection_name={contract_name}
@@ -109,7 +116,7 @@ export const NFTWalletCollectionList: React.FC<
                                             wrapperClassName="p-2"
                                         />
                                     </NFT>
-                                ))
+                                )),
                         )
                     ) : (
                         <></>

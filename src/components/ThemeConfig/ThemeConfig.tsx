@@ -123,7 +123,7 @@ export const ThemeConfig: React.FC = () => {
                                             {mode} {shade}
                                         </p>
                                     </div>
-                                )
+                                ),
                             )}
                         </div>
                     </div>

@@ -17,7 +17,7 @@ import {
 } from "react";
 
 const GoldRushContext = createContext<GoldRushContextType>(
-    {} as GoldRushContextType
+    {} as GoldRushContextType,
 );
 
 export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
@@ -30,7 +30,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
             new GoldRushClient(apikey, {
                 source: "GoldRush Kit",
             }),
-        [apikey]
+        [apikey],
     );
 
     const defaultTheme = useMemo<GoldRushThemeType>(
@@ -52,7 +52,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
             },
             mode: "light",
         }),
-        []
+        [],
     );
 
     const [chains, setChains] = useState<ChainItem[] | null>(null);
@@ -60,8 +60,8 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
     const [theme, setTheme] = useState<GoldRushThemeType>(
         defaultsDeep(
             JSON.parse(localStorage.getItem("goldrush_theme") || "null") ?? {},
-            defaultsDeep(initialTheme, defaultTheme)
-        )
+            defaultsDeep(initialTheme, defaultTheme),
+        ),
     );
 
     useEffect(() => {
@@ -105,12 +105,12 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 if (_type === "primary") {
                     const shades = primaryShades(
                         value,
-                        _mode as GoldRushThemeType["mode"]
+                        _mode as GoldRushThemeType["mode"],
                     );
                     Object.entries(shades).forEach(([shade, color]) => {
                         root.style.setProperty(
                             `--grk-${_type}-${_mode}-${shade}`,
-                            color
+                            color,
                         );
                     });
                 } else {
@@ -124,11 +124,11 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
         (updateTheme: Partial<GoldRushThemeType>) => {
             const updatedTheme: GoldRushThemeType = defaultsDeep(
                 updateTheme,
-                theme
+                theme,
             );
             setTheme(updatedTheme);
         },
-        [theme]
+        [theme],
     );
 
     const resetThemeHandler = useCallback(() => {
@@ -157,7 +157,7 @@ export const GoldRushProvider: React.FC<GoldRushProviderProps> = ({
                 return SEARCH_RESULTS_TYPE.NOT_FOUND;
             }
         },
-        []
+        [],
     );
 
     return (

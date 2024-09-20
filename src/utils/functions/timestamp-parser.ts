@@ -15,7 +15,7 @@ const months: string[] = [
 
 export const timestampParser = (
     timestamp: string | Date,
-    type: "descriptive" | "DD MMM YY" | "relative" | "YYYY MM DD"
+    type: "descriptive" | "DD MMM YY" | "relative" | "YYYY MM DD",
 ): string => {
     const _unix: Date = new Date(timestamp);
 

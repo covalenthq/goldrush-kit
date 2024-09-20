@@ -1,7 +1,7 @@
 export const truncate = (
     text: string | null,
     start: number = 6,
-    end: number = 4
+    end: number = 4,
 ): string => {
     const _text: string = (text || "")?.trim();
     if (_text.length > 15) {

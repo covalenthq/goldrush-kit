@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
@@ -39,26 +40,32 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                         "2100-01-01",
                         {
                             pageSize: 1,
-                        }
+                        },
                     );
                 if (blockError.error) {
                     setErrorMessage(blockError.error_message);
                     throw blockError;
                 }
+                if (!blockData?.items || !blockData.items?.[0]) {
+                    throw FALLBACK_ERROR;
+                }
                 const latestBlock = blockData.items[0];
                 const { data: txData, ...txError } =
                     await goldrushClient.TransactionService.getTransactionsForBlock(
                         chain_name,
-                        latestBlock.height - 4,
+                        Number(latestBlock.height) - 4,
                         {
                             noLogs: true,
                             quoteCurrency: "USD",
                             withSafe: false,
-                        }
+                        },
                     );
                 if (txError.error) {
                     setErrorMessage(txError.error_message);
                     throw txError;
+                }
+                if (!txData?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(txData.items.slice(-5)));
             } catch (error: GoldRushResponse<null> | any) {
@@ -160,13 +167,13 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                                     <CardDetail
                                         content={`${calculatePrettyBalance(
                                             Number(value),
-                                            gas_metadata.contract_decimals
-                                        )} ${gas_metadata.contract_ticker_symbol}`}
+                                            gas_metadata?.contract_decimals,
+                                        )} ${gas_metadata?.contract_ticker_symbol}`}
                                         heading={pretty_value_quote}
                                         wrapperClassName="flex flex-col-reverse hidden sm:block"
                                     />
                                 </div>
-                            )
+                            ),
                         )
                     ) : (
                         <></>

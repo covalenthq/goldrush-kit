@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
@@ -44,14 +45,14 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                         {
                             noLogs: true,
                             quoteCurrency: "USD",
-                            withDex: false,
-                            withLending: false,
-                            withNftSales: false,
                             withSafe: false,
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items?.[0]) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items[0]));
             } catch (error: GoldRushResponse<null> | any) {
@@ -97,7 +98,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                     heading: "BLOCK",
                                     content: actionableWrapper(
                                         actionable_block(result.block_height),
-                                        result.block_height.toLocaleString()
+                                        result.block_height?.toLocaleString(),
                                     ),
                                 },
                                 {
@@ -138,28 +139,28 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                     heading: "VALUE",
                                     content: `${calculatePrettyBalance(
                                         Number(result.value),
-                                        result.gas_metadata.contract_decimals
-                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
+                                        result.gas_metadata?.contract_decimals,
+                                    )} ${result.gas_metadata?.contract_ticker_symbol}`,
                                     subtext: result.pretty_value_quote,
                                 },
                                 {
                                     heading: "TX FEE",
                                     content: `${calculatePrettyBalance(
                                         BigInt(result.fees_paid || 0)!,
-                                        result.gas_metadata.contract_decimals,
+                                        result.gas_metadata?.contract_decimals,
                                         true,
-                                        4
-                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
+                                        4,
+                                    )} ${result.gas_metadata?.contract_ticker_symbol}`,
                                     subtext: result.pretty_gas_quote,
                                 },
                                 {
                                     heading: "GAS PRICE",
                                     content: `${calculatePrettyBalance(
-                                        BigInt(result.gas_price),
-                                        result.gas_metadata.contract_decimals,
+                                        BigInt(result.gas_price || 0),
+                                        result.gas_metadata?.contract_decimals,
                                         true,
-                                        10
-                                    )} ${result.gas_metadata.contract_ticker_symbol}`,
+                                        10,
+                                    )} ${result.gas_metadata?.contract_ticker_symbol}`,
                                 },
                             ] as CardDetailProps[]
                         ).map((props) => (

@@ -16,7 +16,7 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
         textArea.select();
         try {
             console.warn(
-                "document.execCommand is deprecated and might not work in future versions."
+                "document.execCommand is deprecated and might not work in future versions.",
             );
             document.execCommand("copy");
             return true;

@@ -38,9 +38,9 @@ export interface IconWrapperProps {
 export interface TransactionsProps {
     maybeResult: Option<Transaction[] | null>;
     errorMessage: string | null;
-    actionable_transaction?: (tx_hash: string) => ActionableType;
-    actionable_block?: (block_height: number) => ActionableType;
-    actionable_address?: (address: string) => ActionableType;
+    actionable_transaction?: (tx_hash: string | null) => ActionableType;
+    actionable_block?: (block_height: number | null) => ActionableType;
+    actionable_address?: (address: string | null) => ActionableType;
 }
 
 export interface TokenApprovalsTableProps {
@@ -74,7 +74,7 @@ export interface TableListProps<T> extends Partial<PaginationFooterProps> {
     errorMessage: string | null;
     customRows?: (
         row: Row<T>[],
-        defaultRow: (row: Row<T>) => React.ReactNode
+        defaultRow: (row: Row<T>) => React.ReactNode,
     ) => React.ReactNode[];
 }
 

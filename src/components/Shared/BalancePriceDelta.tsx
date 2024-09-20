@@ -7,7 +7,7 @@ export const BalancePriceDelta: React.FC<BalancePriceDeltaProps> = ({
 }) => {
     const DELTA = useMemo<number>(
         () => (1.0 - numerator / denominator) * 100,
-        [numerator, denominator]
+        [numerator, denominator],
     );
 
     if (DELTA > 0) {

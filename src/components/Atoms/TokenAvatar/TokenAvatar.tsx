@@ -51,7 +51,7 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
             await themedSvg(
                 primaryRef,
                 primary_url || "",
-                DefaultToken.toString()
+                DefaultToken.toString(),
             );
         })();
     }, [primary_url, primaryRef]);
@@ -62,7 +62,7 @@ export const TokenAvatar: React.FC<TokenAvatarProps> = ({
                 await themedSvg(
                     secondaryRef,
                     secondary_url || "",
-                    DefaultToken.toString()
+                    DefaultToken.toString(),
                 );
             }
         })();

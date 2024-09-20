@@ -25,7 +25,7 @@ export const NFT: React.FC<NFTProps> = ({
 
     const chain = useMemo<ChainItem | null>(
         () => chains?.find((o) => o.name === chain_name) ?? null,
-        [chains, chain_name]
+        [chains, chain_name],
     );
 
     return (
@@ -44,7 +44,7 @@ export const NFT: React.FC<NFTProps> = ({
                         <TokenAvatar
                             only_primary
                             size={GRK_SIZES.EXTRA_SMALL}
-                            chain_color={chain.color_theme.hex}
+                            chain_color={chain.color_theme?.hex}
                             primary_url={chain?.logo_url}
                         />
                     </div>
@@ -56,7 +56,7 @@ export const NFT: React.FC<NFTProps> = ({
             <CardDetail
                 heading={actionableWrapper(
                     actionable_contract(collection_address || ""),
-                    collection_name?.toUpperCase() ?? null
+                    collection_name?.toUpperCase() ?? null,
                 )}
                 content={token_id ? `#${token_id}` : null}
                 wrapperClassName="p-2 !text-left"

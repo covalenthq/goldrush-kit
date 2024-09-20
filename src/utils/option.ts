@@ -29,7 +29,6 @@ export const Option = <T>(value: T): Option<T> => {
     }
 };
 
-// eslint-disable-next-line no-redeclare
 export interface Option<A> {
     isDefined: boolean;
     isEmpty: boolean;

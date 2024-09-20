@@ -1,10 +1,17 @@
-import type { Chain } from "@covalenthq/client-sdk";
+import type { Chain, GoldRushResponse } from "@covalenthq/client-sdk";
 import { ChainID, ChainName } from "@covalenthq/client-sdk";
 
 export const DEFAULT_ERROR_MESSAGE: string = "Something went wrong!";
 
 export const DEFAULT_ERROR_NFT: string =
     "https://www.datocms-assets.com/86369/1685489960-nft.svg";
+
+export const FALLBACK_ERROR: GoldRushResponse<null> = {
+    data: null,
+    error: true,
+    error_code: 500,
+    error_message: DEFAULT_ERROR_MESSAGE,
+};
 
 export enum ADDRESS_AVATAR_TYPE {
     FINGERPRINT = "fingerprint",

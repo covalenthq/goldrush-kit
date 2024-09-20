@@ -13,7 +13,7 @@ const Command = forwardRef<
         ref={ref}
         className={cn(
             "flex h-full w-full flex-col overflow-hidden rounded-md bg-background-light text-foreground-light dark:bg-background-dark dark:text-foreground-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -44,7 +44,7 @@ const CommandInput = forwardRef<
             ref={ref}
             className={cn(
                 "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-secondary-light disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-secondary-dark",
-                className
+                className,
             )}
             {...props}
         />
@@ -61,7 +61,7 @@ const CommandList = forwardRef<
         ref={ref}
         className={cn(
             "max-h-[300px] overflow-y-auto overflow-x-hidden",
-            className
+            className,
         )}
         {...props}
     />
@@ -90,7 +90,7 @@ const CommandGroup = forwardRef<
         ref={ref}
         className={cn(
             "overflow-hidden p-1 text-foreground-light dark:text-foreground-dark [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-primary-light dark:[&_[cmdk-group-heading]]:text-primary-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -106,7 +106,7 @@ const CommandSeparator = forwardRef<
         ref={ref}
         className={cn(
             "-mx-1 h-px bg-background-light dark:bg-background-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -121,7 +121,7 @@ const CommandItem = forwardRef<
         ref={ref}
         className={cn(
             "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-primary-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-primary-dark",
-            className
+            className,
         )}
         {...props}
     />
@@ -137,7 +137,7 @@ const CommandShortcut = ({
         <span
             className={cn(
                 "ml-auto text-xs tracking-widest text-primary-light dark:text-primary-dark",
-                className
+                className,
             )}
             {...props}
         />

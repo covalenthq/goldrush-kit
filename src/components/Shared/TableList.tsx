@@ -58,13 +58,13 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                     <TableCell key={cell.id}>
                         {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext()
+                            cell.getContext(),
                         )}
                     </TableCell>
                 ))}
             </TableRow>
         ),
-        []
+        [],
     );
 
     return (
@@ -80,7 +80,7 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                                         onClick={() =>
                                             header.column.toggleSorting(
                                                 header.column.getIsSorted() ===
-                                                    "asc"
+                                                    "asc",
                                             )
                                         }
                                     >
@@ -89,7 +89,7 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                                             : flexRender(
                                                   header.column.columnDef
                                                       .header,
-                                                  header.getContext()
+                                                  header.getContext(),
                                               )}
                                     </TableHead>
                                 );
@@ -114,7 +114,7 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                                 customRows ? (
                                     customRows(
                                         table.getRowModel().rows,
-                                        defaultRow
+                                        defaultRow,
                                     )
                                 ) : (
                                     table

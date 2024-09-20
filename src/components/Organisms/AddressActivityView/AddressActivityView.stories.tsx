@@ -14,6 +14,6 @@ export default meta;
 export const AddressActivityView: Story = {
     args: {
         address: "demo.eth",
-        actionable_address: (address: string) => storyAction(address),
+        actionable_address: (address) => storyAction(address),
     },
 };

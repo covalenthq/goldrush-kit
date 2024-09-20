@@ -5,7 +5,7 @@ export const actionableWrapper = <
     T extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
 >(
     actionable: ActionableType<T> | null,
-    children: React.ReactNode
+    children: React.ReactNode,
 ): React.ReactNode => {
     if (!actionable) {
         return children;

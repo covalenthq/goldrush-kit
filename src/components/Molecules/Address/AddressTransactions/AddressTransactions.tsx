@@ -1,5 +1,8 @@
 import { Transactions } from "@/components/Shared";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type AddressTransactionsProps } from "@/utils/types/molecules.types";
@@ -30,10 +33,13 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
                             noLogs: true,
                             withSafe: false,
                             quoteCurrency: "USD",
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {

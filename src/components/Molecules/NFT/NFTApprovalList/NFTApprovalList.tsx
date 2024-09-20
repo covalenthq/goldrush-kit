@@ -2,7 +2,10 @@ import { Address } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type NFTApprovalListProps } from "@/utils/types/molecules.types";
@@ -34,10 +37,13 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                 const { data, ...error } =
                     await goldrushClient.SecurityService.getNftApprovals(
                         chain_name,
-                        address.trim()
+                        address.trim(),
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items));
             } catch (error: GoldRushResponse<null> | any) {
@@ -79,18 +85,20 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => row.original.token_balances.length,
+            cell: ({ row }) => row.original.token_balances?.length,
         },
         {
             id: "token_id",
             accessorKey: "token_id",
             header: () => "Token ID",
             cell: ({ row }) => {
-                const token_ids = row.original.token_balances.map(
-                    (balance) => balance.token_id
+                const token_ids = row.original.token_balances?.map(
+                    (balance) => balance.token_id,
                 );
                 return (
-                    <p className="max-w-40 break-all">{token_ids.join(", ")}</p>
+                    <p className="max-w-40 break-all">
+                        {token_ids?.join(", ")}
+                    </p>
                 );
             },
         },
@@ -103,13 +111,13 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                     <div className="flex items-center justify-center">
                         <Badge
                             variant={
-                                row.original.spenders[0].allowance ===
+                                row.original.spenders?.[0].allowance ===
                                 "CONSIDER REVOKING"
                                     ? "danger"
                                     : "success"
                             }
                         >
-                            {row.original.spenders[0].allowance ===
+                            {row.original.spenders?.[0].allowance ===
                             "CONSIDER REVOKING"
                                 ? "High"
                                 : "Low"}
@@ -125,7 +133,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
             cell: ({ row }) => {
                 return (
                     <div className="flex flex-col gap-4">
-                        {row.original.spenders.map((spender) => (
+                        {row.original.spenders?.map((spender) => (
                             <div
                                 key={spender.spender_address}
                                 className="grid grid-cols-3 items-center gap-x-8 gap-y-4"
@@ -150,7 +158,7 @@ export const NFTApprovalList: React.FC<NFTApprovalListProps> = ({
                                         onClick={() =>
                                             on_revoke_approval(
                                                 spender,
-                                                row.original.contract_address
+                                                row.original.contract_address,
                                             )
                                         }
                                         size={"sm"}

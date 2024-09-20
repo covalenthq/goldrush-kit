@@ -7,11 +7,11 @@ const Card = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
             ref={ref}
             className={cn(
                 "rounded border border-secondary-light bg-background-light text-sm text-foreground-light dark:border-secondary-dark dark:bg-background-dark dark:text-foreground-dark",
-                className
+                className,
             )}
             {...props}
         />
-    )
+    ),
 );
 Card.displayName = "Card";
 
@@ -47,7 +47,7 @@ const CardDescription = forwardRef<
         ref={ref}
         className={cn(
             "text-sm text-secondary-light dark:text-secondary-dark",
-            className
+            className,
         )}
         {...props}
     />

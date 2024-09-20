@@ -50,7 +50,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     <p>
                         {actionableWrapper(
                             actionable_block(row.original.block_height),
-                            row.original.block_height.toLocaleString()
+                            row.original.block_height?.toLocaleString(),
                         )}
                     </p>
                 );
@@ -128,9 +128,9 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     <p className="text-right">
                         {calculatePrettyBalance(
                             row.original.value,
-                            row.original.gas_metadata.contract_decimals
+                            row.original.gas_metadata?.contract_decimals,
                         )}{" "}
-                        {row.original.gas_metadata.contract_ticker_symbol}
+                        {row.original.gas_metadata?.contract_ticker_symbol}
                     </p>
                 ) : (
                     <p className="text-center">-</p>
@@ -152,7 +152,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     <p className="text-right">
                         {calculatePrettyBalance(
                             row.original.fees_paid,
-                            row.original.gas_metadata.contract_decimals
+                            row.original.gas_metadata?.contract_decimals,
                         )}
                     </p>
                 ) : (

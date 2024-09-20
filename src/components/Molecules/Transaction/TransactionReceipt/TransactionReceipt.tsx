@@ -45,15 +45,15 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                     "https://goldrush-decoder.vercel.app/api/v1/tx/decode",
                     {
                         body: JSON.stringify({
-                            chain_name: chain_name,
-                            tx_hash: tx_hash,
+                            chain_name,
+                            tx_hash,
                         }),
                         headers: {
                             "content-type": "application/json",
                             "x-goldrush-api-key": apikey,
                         },
                         method: "POST",
-                    }
+                    },
                 );
                 const data = (await response.json()) as DecodedTransactionType;
                 if (!data.success) {
@@ -81,7 +81,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                         )}
                     </Fragment>
                 )),
-        []
+        [],
     );
 
     return (
@@ -179,7 +179,8 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                         </CardDescription>
                                         <AddressCard
                                             address={
-                                                result.tx_metadata.from_address
+                                                result.tx_metadata
+                                                    .from_address || ""
                                             }
                                             label={
                                                 result.tx_metadata
@@ -196,7 +197,8 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                         </CardDescription>
                                         <AddressCard
                                             address={
-                                                result.tx_metadata.to_address
+                                                result.tx_metadata.to_address ||
+                                                ""
                                             }
                                             label={
                                                 result.tx_metadata
@@ -217,7 +219,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                             protocol,
                                             tokens,
                                         },
-                                        i
+                                        i,
                                     ) => (
                                         <article
                                             key={name + i}
@@ -263,7 +265,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                                 <div className="flex flex-col gap-y-2 truncate text-ellipsis py-2 text-sm text-secondary-light dark:text-secondary-dark">
                                                                     <div className="flex whitespace-break-spaces font-medium">
                                                                         {handleHashInString(
-                                                                            heading
+                                                                            heading,
                                                                         )}
                                                                     </div>
 
@@ -300,7 +302,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        )
+                                                        ),
                                                     )}
                                                 </div>
                                             ) : (
@@ -317,81 +319,68 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                             ticker_symbol,
                                                             decimals,
                                                             value,
-                                                        }) => {
-                                                            const extension =
-                                                                ticker_logo
-                                                                    ? ticker_logo
-                                                                          ?.split(
-                                                                              "."
-                                                                          )
-                                                                          ?.pop()
-                                                                          ?.toLowerCase()
-                                                                    : "";
-                                                            return (
+                                                        }) => (
+                                                            <div
+                                                                key={
+                                                                    ticker_symbol +
+                                                                    heading
+                                                                }
+                                                                className="text-sm"
+                                                                title={heading}
+                                                            >
                                                                 <div
-                                                                    key={
-                                                                        ticker_symbol +
-                                                                        heading
-                                                                    }
-                                                                    className="text-sm"
+                                                                    className="text-sm text-secondary-light dark:text-secondary-dark"
                                                                     title={
                                                                         heading
                                                                     }
                                                                 >
-                                                                    <div
-                                                                        className="text-sm text-secondary-light dark:text-secondary-dark"
-                                                                        title={
-                                                                            heading
-                                                                        }
-                                                                    >
-                                                                        <div className="flex whitespace-break-spaces font-medium">
-                                                                            {handleHashInString(
-                                                                                heading ||
-                                                                                    "Token Amount"
-                                                                            )}
-                                                                        </div>
+                                                                    <div className="flex whitespace-break-spaces font-medium">
+                                                                        {handleHashInString(
+                                                                            heading ||
+                                                                                "Token Amount",
+                                                                        )}
                                                                     </div>
-
-                                                                    <CardContent className="flex items-center truncate text-sm">
-                                                                        <span className="text-base">
-                                                                            {calculatePrettyBalance(
-                                                                                BigInt(
-                                                                                    value
-                                                                                ),
-                                                                                decimals
-                                                                            )}{" "}
-                                                                            {
-                                                                                ticker_symbol
-                                                                            }
-                                                                        </span>
-
-                                                                        <figure className="ml-2">
-                                                                            <TokenAvatar
-                                                                                size={
-                                                                                    GRK_SIZES.EXTRA_EXTRA_SMALL
-                                                                                }
-                                                                                chain_color={
-                                                                                    CHAIN
-                                                                                        ?.color_theme
-                                                                                        .hex
-                                                                                }
-                                                                                primary_url={
-                                                                                    ticker_logo ||
-                                                                                    CHAIN?.logo_url
-                                                                                }
-                                                                                only_primary
-                                                                            />
-                                                                        </figure>
-                                                                    </CardContent>
-
-                                                                    <p className="text-sm text-secondary-light dark:text-secondary-dark">
-                                                                        {
-                                                                            pretty_quote
-                                                                        }
-                                                                    </p>
                                                                 </div>
-                                                            );
-                                                        }
+
+                                                                <CardContent className="flex items-center truncate text-sm">
+                                                                    <span className="text-base">
+                                                                        {calculatePrettyBalance(
+                                                                            BigInt(
+                                                                                value,
+                                                                            ),
+                                                                            decimals,
+                                                                        )}{" "}
+                                                                        {
+                                                                            ticker_symbol
+                                                                        }
+                                                                    </span>
+
+                                                                    <figure className="ml-2">
+                                                                        <TokenAvatar
+                                                                            size={
+                                                                                GRK_SIZES.EXTRA_EXTRA_SMALL
+                                                                            }
+                                                                            chain_color={
+                                                                                CHAIN
+                                                                                    ?.color_theme
+                                                                                    ?.hex
+                                                                            }
+                                                                            primary_url={
+                                                                                ticker_logo ||
+                                                                                CHAIN?.logo_url
+                                                                            }
+                                                                            only_primary
+                                                                        />
+                                                                    </figure>
+                                                                </CardContent>
+
+                                                                <p className="text-sm text-secondary-light dark:text-secondary-dark">
+                                                                    {
+                                                                        pretty_quote
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        ),
                                                     )}
                                                 </div>
                                             ) : (
@@ -450,14 +439,14 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        )
+                                                        ),
                                                     )}
                                                 </div>
                                             ) : (
                                                 <></>
                                             )}
                                         </article>
-                                    )
+                                    ),
                                 )}
 
                                 <div className="flex flex-col gap-y-2 border-t pt-4">
@@ -471,28 +460,28 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 title={calculatePrettyBalance(
                                                     BigInt(
                                                         result.tx_metadata
-                                                            .fees_paid || 0
+                                                            .fees_paid || 0,
                                                     )!,
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_decimals
+                                                        ?.contract_decimals,
                                                 )}
                                             >
                                                 {calculatePrettyBalance(
                                                     BigInt(
                                                         result.tx_metadata
-                                                            .fees_paid || 0
+                                                            .fees_paid || 0,
                                                     )!,
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_decimals,
+                                                        ?.contract_decimals,
                                                     true,
-                                                    4
+                                                    4,
                                                 )}{" "}
                                                 {
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_ticker_symbol
+                                                        ?.contract_ticker_symbol
                                                 }{" "}
                                             </span>
                                             {
@@ -516,7 +505,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 {
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_ticker_symbol
+                                                        ?.contract_ticker_symbol
                                                 }
                                             </span>
                                         </CardDescription>
@@ -531,18 +520,18 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 {calculatePrettyBalance(
                                                     BigInt(
                                                         result.tx_metadata
-                                                            .gas_price
+                                                            ?.gas_price ?? 0,
                                                     ),
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_decimals,
+                                                        ?.contract_decimals,
                                                     true,
-                                                    10
+                                                    10,
                                                 )}{" "}
                                                 {
                                                     result.tx_metadata
                                                         .gas_metadata
-                                                        .contract_ticker_symbol
+                                                        ?.contract_ticker_symbol
                                                 }
                                             </span>
                                         </CardDescription>
@@ -550,13 +539,13 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                 </div>
 
                                 <a
-                                    href={result.tx_metadata.explorers[0].url}
+                                    href={result.tx_metadata.explorers?.[0].url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-sm font-semibold hover:underline"
                                 >
                                     View on{" "}
-                                    {result.tx_metadata.explorers[0].label ??
+                                    {result.tx_metadata.explorers?.[0].label ??
                                         "Explorer"}
                                 </a>
                             </>

@@ -32,7 +32,7 @@ PaginationContent.displayName = "PaginationContent";
 const PaginationItem = forwardRef<HTMLLIElement, React.ComponentProps<"li">>(
     ({ className, ...props }, ref) => (
         <li ref={ref} className={cn("", className)} {...props} />
-    )
+    ),
 );
 PaginationItem.displayName = "PaginationItem";
 
@@ -54,7 +54,7 @@ const PaginationLink = ({
                 variant: isActive ? "outline" : "ghost",
                 size,
             }),
-            className
+            className,
         )}
         {...props}
     />

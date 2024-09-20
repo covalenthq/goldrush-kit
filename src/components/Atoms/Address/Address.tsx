@@ -17,6 +17,10 @@ export const Address: React.FC<AddressProps> = ({
     avatar = null,
     actionable_address = () => null,
 }) => {
+    if (!address) {
+        return <></>;
+    }
+
     const [showCopy, setShowCopy] = useState<boolean>(false);
     const { toast } = useToast();
 
@@ -39,7 +43,7 @@ export const Address: React.FC<AddressProps> = ({
 
                 {actionableWrapper(
                     actionable_address(address),
-                    label?.trim() || truncate(address)
+                    label?.trim() || truncate(address),
                 )}
 
                 {show_copy_icon && (

@@ -52,10 +52,5 @@ export interface GoldRushThemeType {
 export interface GoldRushProviderProps {
     children: React.ReactNode;
     apikey: string;
-    /**
-     * @deprecated Please use `theme` going forward!
-     * This prop will be removed after Aug 30, 2024.
-     */
-    newTheme?: Partial<GoldRushThemeType>;
     theme?: Partial<GoldRushThemeType>;
 }

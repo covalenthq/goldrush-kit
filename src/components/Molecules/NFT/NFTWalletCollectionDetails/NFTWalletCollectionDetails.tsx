@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -28,7 +29,7 @@ export const NFTWalletCollectionDetails: React.FC<
     const [maybeResult, setMaybeResult] =
         useState<Option<NftTokenContractBalanceItem[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
-        initialErrorMessage
+        initialErrorMessage,
     );
 
     useEffect(() => {
@@ -52,15 +53,18 @@ export const NFTWalletCollectionDetails: React.FC<
                     const { data, ...error } =
                         await goldrushClient.NftService.getNftsForAddress(
                             chain_name,
-                            address
+                            address,
                         );
                     if (error.error) {
                         throw error;
                     }
+                    if (!data?.items) {
+                        throw FALLBACK_ERROR;
+                    }
                     setMaybeResult(new Some(data.items));
                 } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
-                        error?.error_message ?? DEFAULT_ERROR_MESSAGE
+                        error?.error_message ?? DEFAULT_ERROR_MESSAGE,
                     );
                     setMaybeResult(new Some(null));
                     console.error(error);
@@ -96,13 +100,13 @@ export const NFTWalletCollectionDetails: React.FC<
                                         result.forEach(
                                             ({ floor_price_quote }) =>
                                                 (totalFloorPriceQuote +=
-                                                    floor_price_quote)
+                                                    floor_price_quote || 0),
                                         );
                                         return prettifyCurrency(
                                             totalFloorPriceQuote,
                                             2,
                                             "USD",
-                                            true
+                                            true,
                                         );
                                     })(),
                                 },

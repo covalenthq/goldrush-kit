@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
     GRK_SIZES,
     DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -30,10 +31,13 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                 const { data, ...error } =
                     await goldrushClient.BaseService.getBlock(
                         chain_name,
-                        height.toString()
+                        height.toString(),
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items?.[0]) {
+                    throw FALLBACK_ERROR;
                 }
                 setMaybeResult(new Some(data.items[0]));
             } catch (error: GoldRushResponse<null> | any) {
@@ -66,7 +70,7 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                             [
                                 {
                                     heading: "HEIGHT",
-                                    content: block.height.toLocaleString(),
+                                    content: block.height?.toLocaleString(),
                                 },
                                 {
                                     heading: "SIGNED AT",
@@ -86,13 +90,14 @@ export const BlockDetails: React.FC<BlockDetailsProps> = ({
                                     heading: "GAS USED",
                                     content: block.gas_used,
                                     subtext: `${(
-                                        (block.gas_used / block.gas_limit) *
+                                        (Number(block.gas_used) /
+                                            Number(block.gas_limit)) *
                                         100
                                     ).toFixed(2)}%`,
                                 },
                                 {
                                     heading: "GAS LIMIT",
-                                    content: block.gas_limit.toLocaleString(),
+                                    content: block.gas_limit?.toLocaleString(),
                                 },
                                 {
                                     heading: "MINER ADDRESS",

@@ -1,7 +1,10 @@
 import { Address } from "@/components/Atoms";
 import { Timestamp } from "@/components/Atoms";
 import { TableHeaderSorting, TableList } from "@/components/Shared";
-import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants/shared.constants";
+import {
+    DEFAULT_ERROR_MESSAGE,
+    FALLBACK_ERROR,
+} from "@/utils/constants/shared.constants";
 import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
@@ -42,10 +45,13 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                         {
                             pageNumber: _pagination?.page_number ?? 0,
                             pageSize: _pagination?.page_size ?? page_size,
-                        }
+                        },
                     );
                 if (error.error) {
                     throw error;
+                }
+                if (!data?.items) {
+                    throw FALLBACK_ERROR;
                 }
                 setPagination(data.pagination);
                 setMaybeResult(new Some(data.items));
@@ -55,7 +61,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                 console.error(error);
             }
         },
-        [chain_name]
+        [chain_name],
     );
 
     const handleOnChangePagination = (updatedPagination: Pagination) => {
@@ -77,7 +83,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
             cell: ({ row }) =>
                 actionableWrapper(
                     actionable_block(row.original.height),
-                    row.original.height.toLocaleString()
+                    row.original.height?.toLocaleString(),
                 ),
         },
         {
@@ -120,7 +126,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                 />
             ),
             cell: ({ row }) =>
-                `${((row.original.gas_used / row.original.gas_limit) * 100).toFixed(2)}%`,
+                `${((Number(row.original.gas_used) / Number(row.original.gas_limit)) * 100).toFixed(2)}%`,
         },
         {
             accessorKey: "gas_limit",
@@ -132,7 +138,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => row.original.gas_limit.toLocaleString(),
+            cell: ({ row }) => row.original.gas_limit?.toLocaleString(),
         },
     ];
 
