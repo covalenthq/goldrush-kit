@@ -23,8 +23,9 @@ export interface CardDetailProps {
     wrapperClassName?: string;
 }
 
-export interface CopyImageProps {
-    url: string;
+export interface CopyDataProps {
+    data: string;
+    children: React.ReactNode;
 }
 
 export interface IconWrapperProps {
