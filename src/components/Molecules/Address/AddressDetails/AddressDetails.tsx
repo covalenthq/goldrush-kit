@@ -68,7 +68,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                 if (balancesError.error) {
                     throw balancesError;
                 }
-                const balances = balancesData.items;
+                const balances = balancesData!.items;
                 const nativeTokenIndex = balances.findIndex(
                     (token) => token.native_token
                 );
@@ -129,19 +129,19 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                 }
                                                 primary_url={
                                                     native.logo_urls
-                                                        .chain_logo_url
+                                                        ?.chain_logo_url
                                                 }
                                                 chain_color={
                                                     selectedChain?.color_theme
-                                                        .hex
+                                                        ?.hex
                                                 }
                                                 only_primary
                                             />
                                             {calculatePrettyBalance(
                                                 native.balance ?? 0,
-                                                native.contract_decimals,
+                                                native.contract_decimals || 0,
                                                 false,
-                                                native.contract_decimals
+                                                native.contract_decimals || 0
                                             )}{" "}
                                             {native.contract_ticker_symbol}
                                         </>
@@ -157,7 +157,7 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                         )
                                     ),
                                     subtext: `@${prettifyCurrency(
-                                        native.quote_rate
+                                        native.quote_rate || 0
                                     )}/${native.contract_ticker_symbol}`,
                                 },
                                 {
@@ -199,12 +199,12 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                                         GRK_SIZES.EXTRA_EXTRA_SMALL
                                                                     }
                                                                     primary_url={
-                                                                        logo_urls.token_logo_url
+                                                                        logo_urls?.token_logo_url
                                                                     }
                                                                     chain_color={
                                                                         selectedChain
                                                                             ?.color_theme
-                                                                            .hex
+                                                                            ?.hex
                                                                     }
                                                                 />
                                                             </div>
@@ -219,7 +219,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                                                         <>
                                                                             {calculatePrettyBalance(
                                                                                 balance,
-                                                                                contract_decimals,
+                                                                                contract_decimals ||
+                                                                                    0,
                                                                                 true
                                                                             )}{" "}
                                                                             {
@@ -241,7 +242,10 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                     heading: "LATEST TRANSACTION",
                                     content: (
                                         <Address
-                                            address={latest_transaction.tx_hash}
+                                            address={
+                                                latest_transaction?.tx_hash ||
+                                                null
+                                            }
                                             actionable_address={
                                                 actionable_transaction
                                             }
@@ -250,7 +254,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                     subtext: (
                                         <Timestamp
                                             timestamp={
-                                                latest_transaction.block_signed_at
+                                                latest_transaction?.block_signed_at ||
+                                                null
                                             }
                                         />
                                     ),
@@ -260,7 +265,8 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                     content: (
                                         <Address
                                             address={
-                                                earliest_transaction.tx_hash
+                                                earliest_transaction?.tx_hash ||
+                                                null
                                             }
                                             actionable_address={
                                                 actionable_transaction
@@ -270,14 +276,15 @@ export const AddressDetails: React.FC<AddressDetailsProps> = ({
                                     subtext: (
                                         <Timestamp
                                             timestamp={
-                                                earliest_transaction.block_signed_at
+                                                earliest_transaction?.block_signed_at ||
+                                                null
                                             }
                                         />
                                     ),
                                 },
                                 {
                                     heading: "TOTAL COUNT",
-                                    content: `${total_count.toLocaleString()} transactions`,
+                                    content: `${total_count?.toLocaleString()} transactions`,
                                 },
                             ] as CardDetailProps[]
                         ).map((props) => (

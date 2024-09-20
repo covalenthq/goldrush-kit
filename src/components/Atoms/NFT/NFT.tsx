@@ -44,7 +44,7 @@ export const NFT: React.FC<NFTProps> = ({
                         <TokenAvatar
                             only_primary
                             size={GRK_SIZES.EXTRA_SMALL}
-                            chain_color={chain.color_theme.hex}
+                            chain_color={chain.color_theme?.hex}
                             primary_url={chain?.logo_url}
                         />
                     </div>

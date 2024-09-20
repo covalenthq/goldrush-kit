@@ -8,6 +8,10 @@ export const Timestamp: React.FC<TimestampProps> = ({
     defaultType = "relative",
     dynamic = true,
 }) => {
+    if (!timestamp) {
+        return <></>;
+    }
+
     const [relativeTime, setRelativeTime] = useState<boolean>(
         defaultType === "relative"
     );

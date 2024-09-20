@@ -17,6 +17,10 @@ export const Address: React.FC<AddressProps> = ({
     avatar = null,
     actionable_address = () => null,
 }) => {
+    if (!address) {
+        return <></>;
+    }
+
     const [showCopy, setShowCopy] = useState<boolean>(false);
     const { toast } = useToast();
 

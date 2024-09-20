@@ -56,7 +56,7 @@ export const AddressActivityDetails: React.FC<AddressActivityDetailsProps> = ({
                     if (error.error) {
                         throw error;
                     }
-                    setMaybeResult(new Some(data.items));
+                    setMaybeResult(new Some(data!.items));
                 } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
                         error?.error_message ?? DEFAULT_ERROR_MESSAGE

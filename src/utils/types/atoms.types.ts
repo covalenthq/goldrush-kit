@@ -9,11 +9,11 @@ import {
 } from "@covalenthq/client-sdk";
 
 export interface AddressProps {
-    address: string;
+    address: string | null;
     label?: string | null;
     show_copy_icon?: boolean;
     avatar?: Omit<AddressAvatarProps, "address">;
-    actionable_address?: (address: string) => ActionableType;
+    actionable_address?: (address: string | null) => ActionableType;
 }
 
 export interface AddressCardProps {
@@ -22,7 +22,7 @@ export interface AddressCardProps {
     avatar: Omit<AddressAvatarProps, "address">;
     show_copy_icon?: boolean;
     show_qr_code?: boolean;
-    actionable_address?: (address: string) => ActionableType;
+    actionable_address?: (address: string | null) => ActionableType;
 }
 
 export interface NFTProps {
@@ -33,11 +33,11 @@ export interface NFTProps {
     attributes?: NftCollectionAttribute[];
     children?: React.ReactNode;
     chain_name?: Chain;
-    actionable_contract?: (contract_address: string) => ActionableType;
+    actionable_contract?: (contract_address: string | null) => ActionableType;
 }
 
 export interface TimestampProps {
-    timestamp: string | Date;
+    timestamp: string | Date | null;
     defaultType?: "relative" | "descriptive";
     dynamic?: boolean;
 }
@@ -57,7 +57,7 @@ export interface PoolProps {
     token_1_ticker_symbol: string;
     token_0_logo_url: string;
     token_1_logo_url: string;
-    actionable_pool?: (address: string) => ActionableType;
+    actionable_pool?: (address: string | null) => ActionableType;
 }
 
 export interface TokenAvatarProps {

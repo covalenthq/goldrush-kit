@@ -56,7 +56,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                     if (error.error) {
                         throw error;
                     }
-                    setMaybeResult(new Some(data.items));
+                    setMaybeResult(new Some(data!.items));
                 } catch (error: GoldRushResponse<null> | any) {
                     setErrorMessage(
                         error?.error_message ?? DEFAULT_ERROR_MESSAGE
@@ -85,7 +85,7 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                         only_primary={true}
                         primary_url={row.original.logo_url}
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                        chain_color={row.original.color_theme.hex}
+                        chain_color={row.original.color_theme?.hex}
                     />
                     {row.getValue("label")}
                 </div>
