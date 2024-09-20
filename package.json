@@ -1,6 +1,6 @@
 {
     "name": "@covalenthq/goldrush-kit",
-    "version": "0.6.5",
+    "version": "1.0.0",
     "description": "Beautifully designed React components for web3 dApp frontend. Easily fetch data from 200+ blockchains. Open-source. Customizable.",
     "exports": {
         ".": {
@@ -31,6 +31,18 @@
     },
     "homepage": "https://github.com/covalenthq/goldrush-kit#readme",
     "license": "Apache-2.0",
+    "keywords": [
+        "frontend",
+        "blockchain",
+        "cryptocurrency",
+        "web3",
+        "blockexplorer",
+        "dapps-development",
+        "blockchain-data",
+        "blockchain-transactions",
+        "nft-gallery",
+        "blockchain-data-access"
+    ],
     "scripts": {
         "build:library": "vite build && npm run build:library-css",
         "build:library-css": "tailwindcss -m -i ./src/tailwind-input.css -o ./dist/styles.css --minify",

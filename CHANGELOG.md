@@ -1,5 +1,15 @@
 # Changelog for GoldRush Kit
 
+## 1.0.0
+
+**Features**
+
+-   Rebranded to GoldRush APIs
+-   Updated `README.md`, `LICENSE`, and more documents
+-   Upgraded to latest changes from the GoldRush TS SDK
+-   Pruned dead theme code
+-   Pruned deprecated endpoints
+
 ## 0.6.5
 
 **Features**
