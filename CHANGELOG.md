@@ -1,5 +1,11 @@
 # Changelog for GoldRush Kit
 
+## 1.0.2
+
+**Fixes**
+
+-   Build issues caused by `cva`
+
 ## 1.0.1
 
 **Fixes**
