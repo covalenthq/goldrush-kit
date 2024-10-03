@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://goldrush.dev/products/goldrush/"  target="_blank" rel="noopener noreferrer">
-    <img alt="GoldRush Kit - powered by Covalent" src="./src/static/grk-kit-banner.png" style="max-width: 100%;"/>
+    <img alt="GoldRush Kit - powered by Covalent" src="./repo-static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
 </div>
 
@@ -149,6 +149,7 @@ export default GoldRushExample;
 | Name                                                                             | Description                                                                     |
 | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | [TypeScript SDK](https://github.com/covalenthq/covalent-api-sdk-ts)              | The fastest way to integrate the GoldRush API for working with blockchain data. |
+| [GoldRush Kit](https://github.com/covalenthq/goldrush-kit)                       | Beautifully designed React components for your dApp frontend.                   |
 | [GoldRush Block Explorer](https://github.com/covalenthq/goldrush-block-explorer) | A cross chain block explorer kit that can be customized.                        |
 | [GoldRush Decoder](https://github.com/covalenthq/goldrush-decoder)               | Decode unstructured, raw event logs into structured data with a simple API.     |
 | [GoldRush RevokeHub](https://github.com/covalenthq/goldrush-revokehub)           | One-stop platform for managing your digital assets securely and efficiently.    |

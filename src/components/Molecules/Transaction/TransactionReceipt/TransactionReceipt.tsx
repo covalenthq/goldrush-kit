@@ -537,17 +537,6 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                         </CardDescription>
                                     </div>
                                 </div>
-
-                                <a
-                                    href={result.tx_metadata.explorers?.[0].url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm font-semibold hover:underline"
-                                >
-                                    View on{" "}
-                                    {result.tx_metadata.explorers?.[0].label ??
-                                        "Explorer"}
-                                </a>
                             </>
                         ) : (
                             <></>
