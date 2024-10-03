@@ -1,5 +1,12 @@
 # Changelog for GoldRush Kit
 
+## 1.0.1
+
+**Fixes**
+
+-   Gas Card active state
+-   Build issues caused by `cva`
+
 ## 1.0.0
 
 **Features**
