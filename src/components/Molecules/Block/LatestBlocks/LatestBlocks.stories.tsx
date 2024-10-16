@@ -1,6 +1,5 @@
 import { LatestBlocks as LatestBlocksComponent } from "./LatestBlocks";
 import { storyAction } from "@/utils/functions";
-import { type Block } from "@covalenthq/client-sdk";
 import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof LatestBlocksComponent>;
@@ -16,5 +15,12 @@ export const LatestBlocks: Story = {
     args: {
         chain_name: "eth-mainnet",
         actionable_block: (block_height) => storyAction(block_height),
+        actionable_redirect: () => ({
+            parent: "a",
+            parentProps: {
+                href: "/?path=/story/molecules-block-blocks-list--blocks-list",
+                className: "hover:underline w-fit mx-auto",
+            },
+        }),
     },
 };

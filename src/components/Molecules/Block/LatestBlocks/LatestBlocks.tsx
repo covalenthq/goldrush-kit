@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 export const LatestBlocks: React.FC<LatestBlocksProps> = ({
     chain_name,
     actionable_block = () => null,
+    actionable_redirect,
 }) => {
     const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -111,6 +112,14 @@ export const LatestBlocks: React.FC<LatestBlocksProps> = ({
                         <></>
                     ),
             })}
+
+            {actionable_redirect &&
+                actionableWrapper(
+                    actionable_redirect(),
+                    <span className="text-center py-4 flex">
+                        View all blocks
+                    </span>,
+                )}
         </Card>
     );
 };
