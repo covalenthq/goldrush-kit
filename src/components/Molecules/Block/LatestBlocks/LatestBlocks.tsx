@@ -7,11 +7,15 @@ import {
     DEFAULT_ERROR_MESSAGE,
     FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
-import { actionableWrapper, timestampParser } from "@/utils/functions";
+import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestBlocksProps } from "@/utils/types/molecules.types";
-import type { GoldRushResponse, Block } from "@covalenthq/client-sdk";
+import {
+    type GoldRushResponse,
+    type Block,
+    timestampParser,
+} from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
 export const LatestBlocks: React.FC<LatestBlocksProps> = ({
