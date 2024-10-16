@@ -21,8 +21,9 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
     address,
     maybeResult: initialMaybeResult = null,
     errorMessage: initialErrorMessage = null,
+    changeSelectedChain = false,
 }) => {
-    const { goldrushClient } = useGoldRush();
+    const { goldrushClient, setSelectedChain } = useGoldRush();
     const [maybeResult, setMaybeResult] =
         useState<Option<ChainActivityEvent[] | null>>(None);
     const [errorMessage, setErrorMessage] = useState<string | null>(
@@ -91,7 +92,14 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                         size={GRK_SIZES.EXTRA_EXTRA_SMALL}
                         chain_color={row.original.color_theme?.hex}
                     />
-                    {row.getValue("label")}
+                    <button
+                        disabled={!changeSelectedChain}
+                        onClick={() => {
+                            setSelectedChain(row.original);
+                        }}
+                    >
+                        {row.getValue("label")}
+                    </button>
                 </div>
             ),
         },

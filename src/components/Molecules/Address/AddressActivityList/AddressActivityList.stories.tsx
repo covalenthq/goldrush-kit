@@ -13,5 +13,6 @@ export default meta;
 export const AddressActivityList: Story = {
     args: {
         address: "demo.eth",
+        changeSelectedChain: false,
     },
 };

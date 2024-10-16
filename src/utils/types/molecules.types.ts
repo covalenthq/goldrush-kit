@@ -30,6 +30,7 @@ export interface AddressActivityListProps {
     address: string;
     maybeResult?: Option<ChainActivityEvent[] | null> | null;
     errorMessage?: string | null;
+    changeSelectedChain?: boolean;
 }
 
 export interface NFTApprovalListProps {
