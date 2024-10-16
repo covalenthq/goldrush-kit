@@ -10,7 +10,7 @@ import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import type { GasCardData, GasCardProps } from "@/utils/types/molecules.types";
-import type { GoldRushResponse } from "@covalenthq/client-sdk";
+import { type GoldRushResponse } from "@covalenthq/client-sdk";
 import { useEffect, useMemo, useState } from "react";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
@@ -166,7 +166,7 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                                 result?.[selectedValue]
                                                     .base_fee,
                                             ) ?? 0) / Math.pow(10, 9),
-                                        )}{" "}
+                                        ).toFixed(2)}{" "}
                                         Gwei
                                     </p>
                                 </div>
@@ -203,15 +203,17 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                                         {Math.round(
                                                             Number(gas_price) /
                                                                 Math.pow(10, 9),
-                                                        ).toFixed(0)}{" "}
+                                                        ).toFixed(2)}{" "}
                                                         Gwei
-                                                        <span className="ml-1 text-sm text-secondary-light dark:text-secondary-dark">
-                                                            (
-                                                            {
-                                                                pretty_total_gas_quote
-                                                            }
-                                                            )
-                                                        </span>
+                                                        {pretty_total_gas_quote && (
+                                                            <span className="ml-1 text-sm text-secondary-light dark:text-secondary-dark">
+                                                                (
+                                                                {
+                                                                    pretty_total_gas_quote
+                                                                }
+                                                                )
+                                                            </span>
+                                                        )}
                                                     </p>
 
                                                     <p className="text-sm text-secondary-light dark:text-secondary-dark">

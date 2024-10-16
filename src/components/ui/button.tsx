@@ -16,9 +16,9 @@ const buttonVariants = ({
         default:
             "bg-primary-light dark:bg-primary-dark text-foreground-light dark:text-foreground-dark shadow hover:bg-opacity-90",
         primary:
-            "bg-primary-light dark:bg-primary-dark text-foreground-light dark:text-foreground-dark shadow hover:bg-opacity-90",
+            "bg-primary-light dark:bg-primary-dark text-foreground-light dark:text-foreground-dark shadow hover:bg-opacity-90 border-primary-light dark:border-primary-dark",
         outline:
-            "text-foreground-light dark:text-foreground-dark border bg-background-light dark:bg-background-dark hover:bg-primary-light dark:hover:bg-primary-dark border-secondary-light dark:border-secondary-dark shadow-sm",
+            "text-foreground-light dark:text-foreground-dark border bg-background-light dark:bg-background-dark hover:border-primary-light dark:hover:border-primary-dark border-secondary-light dark:border-secondary-dark shadow-sm transition-all",
         ghost: "hover:bg-primary-light hover:text-foreground-light dark:hover:bg-primary-dark dark:hover:text-foreground-dark",
         link: "text-primary-light dark:text-primary-dark underline-offset-4 hover:underline",
     };
