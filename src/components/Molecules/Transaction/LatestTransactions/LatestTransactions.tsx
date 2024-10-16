@@ -7,7 +7,7 @@ import {
     DEFAULT_ERROR_MESSAGE,
     FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
-import { actionableWrapper, timestampParser } from "@/utils/functions";
+import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
@@ -34,41 +34,24 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
             try {
                 setMaybeResult(None);
                 setErrorMessage(null);
-                const { data: blockData, ...blockError } =
-                    await goldrushClient.BaseService.getBlockHeightsByPage(
-                        chain_name,
-                        timestampParser(new Date(), "YYYY MM DD"),
-                        "2100-01-01",
-                        {
-                            pageSize: 1,
-                        },
-                    );
-                if (blockError.error) {
-                    setErrorMessage(blockError.error_message);
-                    throw blockError;
-                }
-                if (!blockData?.items || !blockData.items?.[0]) {
-                    throw FALLBACK_ERROR;
-                }
-                const latestBlock = blockData.items[0];
-                const { data: txData, ...txError } =
+                const { data, ...error } =
                     await goldrushClient.TransactionService.getTransactionsForBlock(
                         chain_name,
-                        Number(latestBlock.height) - 4,
+                        "latest",
                         {
                             noLogs: true,
                             quoteCurrency: "USD",
                             withSafe: false,
                         },
                     );
-                if (txError.error) {
-                    setErrorMessage(txError.error_message);
-                    throw txError;
+                if (error.error) {
+                    setErrorMessage(error.error_message);
+                    throw error;
                 }
-                if (!txData?.items) {
+                if (!data?.items) {
                     throw FALLBACK_ERROR;
                 }
-                setMaybeResult(new Some(txData.items.slice(-5)));
+                setMaybeResult(new Some(data.items.slice(-5)));
             } catch (error: GoldRushResponse<null> | any) {
                 setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
                 setMaybeResult(new Some(null));
