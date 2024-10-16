@@ -7,7 +7,7 @@ import {
     DEFAULT_ERROR_MESSAGE,
     FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
-import { timestampParser } from "@/utils/functions";
+import { actionableWrapper, timestampParser } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type LatestTransactionsProps } from "@/utils/types/molecules.types";
@@ -22,6 +22,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
     chain_name,
     actionable_address,
     actionable_transaction,
+    actionable_redirect,
 }) => {
     const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -179,6 +180,14 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                         <></>
                     ),
             })}
+
+            {actionable_redirect &&
+                actionableWrapper(
+                    actionable_redirect(),
+                    <span className="text-center py-4 flex">
+                        View all blocks
+                    </span>,
+                )}
         </Card>
     );
 };

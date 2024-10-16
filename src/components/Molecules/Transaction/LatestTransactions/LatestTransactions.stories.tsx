@@ -16,5 +16,12 @@ export const LatestTransactions: Story = {
         chain_name: "eth-mainnet",
         actionable_transaction: (address) => storyAction(address),
         actionable_address: (address) => storyAction(address),
+        actionable_redirect: () => ({
+            parent: "a",
+            parentProps: {
+                href: "/?path=/story/molecules-transaction-transactions-list--transactions-list",
+                className: "hover:underline w-fit mx-auto",
+            },
+        }),
     },
 };

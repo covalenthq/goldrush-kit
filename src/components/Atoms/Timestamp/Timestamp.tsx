@@ -57,7 +57,7 @@ export const Timestamp: React.FC<TimestampProps> = ({
         >
             {parsedTime}
 
-            <span className="text-foreground-light opacity-75 dark:text-foreground-dark">
+            <span className="text-foreground-light opacity-75 dark:text-foreground-dark mt-0.5">
                 <ClockIcon />
             </span>
         </button>
