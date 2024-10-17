@@ -168,7 +168,7 @@ export const LatestTransactions: React.FC<LatestTransactionsProps> = ({
                 actionableWrapper(
                     actionable_redirect(),
                     <span className="text-center py-4 flex">
-                        View all blocks
+                        View all transactions
                     </span>,
                 )}
         </Card>
