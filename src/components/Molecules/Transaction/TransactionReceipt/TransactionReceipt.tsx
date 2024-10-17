@@ -533,7 +533,18 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                         .gas_metadata
                                                         ?.contract_ticker_symbol
                                                 }
-                                            </span>
+                                            </span>{" "}
+                                            (
+                                            {calculatePrettyBalance(
+                                                BigInt(
+                                                    result.tx_metadata
+                                                        ?.gas_price ?? 0,
+                                                ),
+                                                9,
+                                                true,
+                                                4,
+                                            )}{" "}
+                                            GWEI)
                                         </CardDescription>
                                     </div>
                                 </div>
