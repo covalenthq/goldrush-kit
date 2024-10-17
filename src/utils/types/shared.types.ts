@@ -36,6 +36,7 @@ export interface IconWrapperProps {
 }
 
 export interface TransactionsProps {
+    address?: string | null;
     maybeResult: Option<Transaction[] | null>;
     errorMessage: string | null;
     actionable_transaction?: (tx_hash: string | null) => ActionableType;

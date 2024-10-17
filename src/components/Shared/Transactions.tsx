@@ -1,4 +1,5 @@
-import { TableHeaderSorting, TableList } from ".";
+import { IconWrapper, TableHeaderSorting, TableList } from ".";
+import { Badge } from "../ui/badge";
 import { Address } from "@/components/Atoms";
 import { Timestamp } from "@/components/Atoms";
 import { actionableWrapper } from "@/utils/functions";
@@ -11,6 +12,7 @@ import {
 import { type ColumnDef } from "@tanstack/react-table";
 
 export const Transactions: React.FC<TransactionsProps> = ({
+    address = null,
     errorMessage = null,
     maybeResult = new Some(null),
     actionable_address,
@@ -95,6 +97,43 @@ export const Transactions: React.FC<TransactionsProps> = ({
             ),
         },
         {
+            id: "in_out",
+            accessorKey: "in_out",
+            header: () => null,
+            cell: ({ row }) => (
+                <div className="w-10 flex justify-center">
+                    <Badge
+                        variant={
+                            (address
+                                ? address?.toLowerCase() ===
+                                  row.original.from_address?.toLowerCase()
+                                    ? "danger"
+                                    : address?.toLowerCase() ===
+                                        row.original.to_address?.toLowerCase()
+                                      ? "success"
+                                      : null
+                                : null) || "ghost"
+                        }
+                    >
+                        {(address
+                            ? address.toLowerCase() ===
+                              row.original.from_address?.toLowerCase()
+                                ? "OUT"
+                                : address.toLowerCase() ===
+                                    row.original.to_address?.toLowerCase()
+                                  ? "IN"
+                                  : null
+                            : null) || (
+                            <IconWrapper
+                                icon_class_name="arrow_right_alt"
+                                class_name="opacity-60 text-foreground-light dark:text-foreground-dark"
+                            />
+                        )}
+                    </Badge>
+                </div>
+            ),
+        },
+        {
             id: "to_address",
             accessorKey: "to_address",
             header: ({ column }) => (
@@ -123,19 +162,19 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return row.original.value ? (
-                    <p className="text-right">
-                        {calculatePrettyBalance(
-                            row.original.value,
-                            row.original.gas_metadata?.contract_decimals,
-                        )}{" "}
-                        {row.original.gas_metadata?.contract_ticker_symbol}
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {`${calculatePrettyBalance(
+                        row.original.value ?? 0,
+                        row.original.gas_metadata?.contract_decimals,
+                        true,
+                        4,
+                    )} ${row.original.gas_metadata?.contract_ticker_symbol}`}
+                    <p className="text-xs opacity-80">
+                        {row.original.pretty_value_quote}
                     </p>
-                ) : (
-                    <p className="text-center">-</p>
-                );
-            },
+                </div>
+            ),
         },
         {
             id: "fees_paid",

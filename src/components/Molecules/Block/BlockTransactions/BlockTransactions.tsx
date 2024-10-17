@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
     chain_name,
     block_height,
+    actionable_address,
+    actionable_block,
     actionable_transaction,
 }) => {
     const { goldrushClient } = useGoldRush();
@@ -54,6 +56,8 @@ export const BlockTransactions: React.FC<BlockTransactionsProps> = ({
         <Transactions
             errorMessage={errorMessage}
             maybeResult={maybeResult}
+            actionable_address={actionable_address}
+            actionable_block={actionable_block}
             actionable_transaction={actionable_transaction}
         />
     );
