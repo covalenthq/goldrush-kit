@@ -128,7 +128,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
                             : null) || (
                             <IconWrapper
                                 icon_class_name="arrow_right_alt"
-                                class_name="text-secondary-light dark:text-secondary-dark"
+                                class_name="opacity-60 text-foreground-light dark:text-foreground-dark"
                             />
                         )}
                     </Badge>
@@ -167,14 +167,17 @@ export const Transactions: React.FC<TransactionsProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <p className="text-right">
-                    {row.original.value
-                        ? `${calculatePrettyBalance(
-                              row.original.value,
-                              row.original.gas_metadata?.contract_decimals,
-                          )} ${row.original.gas_metadata?.contract_ticker_symbol}`
-                        : "-"}
-                </p>
+                <div className="text-right">
+                    {`${calculatePrettyBalance(
+                        row.original.value ?? 0,
+                        row.original.gas_metadata?.contract_decimals,
+                        true,
+                        4,
+                    )} ${row.original.gas_metadata?.contract_ticker_symbol}`}
+                    <p className="text-xs opacity-80">
+                        {row.original.pretty_value_quote}
+                    </p>
+                </div>
             ),
         },
         {

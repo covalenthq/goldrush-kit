@@ -73,11 +73,8 @@ export interface LatestBlocksProps {
     actionable_redirect?: () => ActionableType;
 }
 
-export interface TransactionsListProps {
+export interface TransactionsListProps extends Partial<TransactionsProps> {
     chain_name: Chain;
-    actionable_block?: (block_height: number | null) => ActionableType;
-    actionable_transaction?: (tx_hash: string | null) => ActionableType;
-    actionable_address?: (address: string | null) => ActionableType;
 }
 
 export interface LatestTransactionsProps {
