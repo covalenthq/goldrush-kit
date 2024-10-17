@@ -1,5 +1,5 @@
-import { timestampParser } from "@/utils/functions";
 import { type TimestampProps } from "@/utils/types/atoms.types";
+import { timestampParser } from "@covalenthq/client-sdk";
 import { ClockIcon } from "@radix-ui/react-icons";
 import { useCallback, useEffect, useState } from "react";
 

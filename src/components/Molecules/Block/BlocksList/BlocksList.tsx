@@ -5,14 +5,15 @@ import {
     DEFAULT_ERROR_MESSAGE,
     FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
-import { actionableWrapper, timestampParser } from "@/utils/functions";
+import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type BlocksListProps } from "@/utils/types/molecules.types";
-import type {
-    Block,
-    Pagination,
-    GoldRushResponse,
+import {
+    type Block,
+    type Pagination,
+    type GoldRushResponse,
+    timestampParser,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";

@@ -6,5 +6,4 @@ export { primaryShades } from "./primary-shades";
 export { storyAction } from "./story-action";
 export { stringToColor } from "./string-to-color";
 export { themedSvg } from "./themed-svg";
-export { timestampParser } from "./timestamp-parser";
 export { truncate } from "./truncate";

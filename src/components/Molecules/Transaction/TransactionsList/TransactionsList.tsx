@@ -4,7 +4,7 @@ import {
     DEFAULT_ERROR_MESSAGE,
     FALLBACK_ERROR,
 } from "@/utils/constants/shared.constants";
-import { actionableWrapper, timestampParser } from "@/utils/functions";
+import { actionableWrapper } from "@/utils/functions";
 import { None, Some, type Option } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import { type TransactionsListProps } from "@/utils/types/molecules.types";
@@ -12,6 +12,7 @@ import {
     calculatePrettyBalance,
     type Transaction,
     type GoldRushResponse,
+    timestampParser,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
