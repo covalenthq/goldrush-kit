@@ -17,7 +17,7 @@ import {
     flexRender,
     type Row,
 } from "@tanstack/react-table";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 
 export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
     columns,
@@ -119,7 +119,13 @@ export const TableList: <T>(props: TableListProps<T>) => React.ReactNode = ({
                                 ) : (
                                     table
                                         .getRowModel()
-                                        .rows.map((row) => defaultRow(row))
+                                        .rows.map((row) => (
+                                            <Fragment
+                                                key={Math.random().toString()}
+                                            >
+                                                {defaultRow(row)}
+                                            </Fragment>
+                                        ))
                                 )
                             ) : (
                                 <TableRow>
