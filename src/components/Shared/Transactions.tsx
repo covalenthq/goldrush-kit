@@ -88,14 +88,12 @@ export const Transactions: React.FC<TransactionsProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <div className="w-20">
-                    <Address
-                        label={row.original.from_address_label}
-                        avatar={{}}
-                        address={row.original.from_address}
-                        actionable_address={actionable_address}
-                    />
-                </div>
+                <Address
+                    label={row.original.from_address_label}
+                    avatar={{}}
+                    address={row.original.from_address}
+                    actionable_address={actionable_address}
+                />
             ),
         },
         {
@@ -146,14 +144,12 @@ export const Transactions: React.FC<TransactionsProps> = ({
                 />
             ),
             cell: ({ row }) => (
-                <div className="w-20">
-                    <Address
-                        label={row.original.to_address_label}
-                        avatar={{}}
-                        address={row.original.to_address}
-                        actionable_address={actionable_address}
-                    />
-                </div>
+                <Address
+                    label={row.original.to_address_label}
+                    avatar={{}}
+                    address={row.original.to_address}
+                    actionable_address={actionable_address}
+                />
             ),
         },
         {
