@@ -14,7 +14,7 @@ export const Address: React.FC<AddressProps> = ({
     }
 
     return (
-        <p className="flex items-center gap-x-1">
+        <span className="flex items-center gap-x-1">
             {avatar && <AddressAvatar {...avatar} address={address} />}
 
             {actionableWrapper(
@@ -23,6 +23,6 @@ export const Address: React.FC<AddressProps> = ({
             )}
 
             <CopyData data={address} />
-        </p>
+        </span>
     );
 };
