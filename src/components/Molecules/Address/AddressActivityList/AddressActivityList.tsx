@@ -97,6 +97,11 @@ export const AddressActivityList: React.FC<AddressActivityListProps> = ({
                         onClick={() => {
                             setSelectedChain(row.original);
                         }}
+                        className={
+                            changeSelectedChain
+                                ? "hover:underline transition-all"
+                                : ""
+                        }
                     >
                         {row.getValue("label")}
                     </button>
