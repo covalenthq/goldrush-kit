@@ -157,10 +157,10 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                     heading: "GAS PRICE",
                                     content: `${calculatePrettyBalance(
                                         BigInt(result.gas_price || 0),
-                                        result.gas_metadata?.contract_decimals,
+                                        9,
                                         true,
                                         10,
-                                    )} ${result.gas_metadata?.contract_ticker_symbol}`,
+                                    )} GWEI`,
                                 },
                             ] as CardDetailProps[]
                         ).map((props) => (
