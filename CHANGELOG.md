@@ -1,5 +1,19 @@
 # Changelog for GoldRush Kit
 
+## 1.0.3
+
+**Fixes**
+
+-   Timestamp icon placement
+-   `latest` block height in `LatestTransactions`
+-   Gwei decimal and minor UI in `GasCard`
+-   `Timestamp` edge case - it is now being parsed via a unified function from the SDK
+
+**Features**
+
+-   Added `actionable_redirect`s for `LatestBlocks` and `LatestTransactions`
+-   Added a `changeSelectedChain` prop to the `AddressActivityList` component for optionally changing the selected chain globally when clicked on a chain name
+
 ## 1.0.2
 
 **Fixes**
