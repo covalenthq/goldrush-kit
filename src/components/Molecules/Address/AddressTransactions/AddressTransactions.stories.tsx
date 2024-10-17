@@ -14,7 +14,7 @@ export default meta;
 export const AddressTransactions: Story = {
     args: {
         chain_name: "eth-mainnet",
-        address: "0x972B8FAD70de6e430D8b368198AbFF1E42eFf022",
+        address: "0x49b5eae7e881c22001c0daf6f211db1473310b7b",
         actionable_address: (address) => storyAction(address),
         actionable_block: (block_height) => storyAction(block_height),
         actionable_transaction: (tx_hash) => storyAction(tx_hash),

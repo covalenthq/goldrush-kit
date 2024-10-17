@@ -52,6 +52,7 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
 
     return (
         <Transactions
+            address={address}
             errorMessage={errorMessage}
             maybeResult={maybeResult}
             actionable_transaction={actionable_transaction}
