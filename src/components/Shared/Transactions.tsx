@@ -186,18 +186,20 @@ export const Transactions: React.FC<TransactionsProps> = ({
                     column={column}
                 />
             ),
-            cell: ({ row }) => {
-                return row.original.fees_paid ? (
-                    <p className="text-right">
-                        {calculatePrettyBalance(
-                            row.original.fees_paid,
-                            row.original.gas_metadata?.contract_decimals,
-                        )}
+            cell: ({ row }) => (
+                <div className="text-right">
+                    {calculatePrettyBalance(
+                        row.original.fees_paid ?? 0,
+                        row.original.gas_metadata?.contract_decimals,
+                        true,
+                        4,
+                    )}{" "}
+                    {row.original.gas_metadata?.contract_ticker_symbol}
+                    <p className="text-xs opacity-80">
+                        {row.original.pretty_gas_quote}
                     </p>
-                ) : (
-                    <p className="text-center">-</p>
-                );
-            },
+                </div>
+            ),
         },
     ];
 
