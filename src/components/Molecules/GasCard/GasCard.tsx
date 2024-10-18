@@ -10,7 +10,10 @@ import type { Option } from "@/utils/option";
 import { None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
 import type { GasCardData, GasCardProps } from "@/utils/types/molecules.types";
-import { type GoldRushResponse } from "@covalenthq/client-sdk";
+import {
+    calculatePrettyBalance,
+    type GoldRushResponse,
+} from "@covalenthq/client-sdk";
 import { useEffect, useMemo, useState } from "react";
 
 export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
@@ -161,12 +164,15 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                     </p>
 
                                     <p className="text-lg">
-                                        {Math.round(
-                                            (Number(
+                                        {calculatePrettyBalance(
+                                            Number(
                                                 result?.[selectedValue]
                                                     .base_fee,
-                                            ) ?? 0) / Math.pow(10, 9),
-                                        ).toFixed(2)}{" "}
+                                            ),
+                                            9,
+                                            true,
+                                            4,
+                                        )}{" "}
                                         Gwei
                                     </p>
                                 </div>
@@ -200,10 +206,14 @@ export const GasCard: React.FC<GasCardProps> = ({ chain_name }) => {
                                                     {copy[i].content}
 
                                                     <p>
-                                                        {Math.round(
-                                                            Number(gas_price) /
-                                                                Math.pow(10, 9),
-                                                        ).toFixed(2)}{" "}
+                                                        {calculatePrettyBalance(
+                                                            Number(
+                                                                gas_price ?? 0,
+                                                            ),
+                                                            9,
+                                                            true,
+                                                            4,
+                                                        )}{" "}
                                                         Gwei
                                                         {pretty_total_gas_quote && (
                                                             <span className="ml-1 text-sm text-secondary-light dark:text-secondary-dark">
