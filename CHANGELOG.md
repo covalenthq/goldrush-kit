@@ -4,15 +4,16 @@
 
 **Fixes**
 
--   Timestamp icon placement
--   `latest` block height in `LatestTransactions`
--   Gwei decimal and minor UI in `GasCard`
--   `Timestamp` edge case - it is now being parsed via a unified function from the SDK
+-   Button UI in `AddressActivityList`
+-   Remove different UIs for lists of transactions
+-   `actionables` in list of transactions
+-   Misc console errors
+-   Gas prices in Gwei throughout
+-   A typo in `LatestTransactions`
 
 **Features**
 
--   Added `actionable_redirect`s for `LatestBlocks` and `LatestTransactions`
--   Added a `changeSelectedChain` prop to the `AddressActivityList` component for optionally changing the selected chain globally when clicked on a chain name
+-   Added `in/out`s for all list of transactions
 
 ## 1.0.2
 
