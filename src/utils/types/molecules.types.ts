@@ -232,3 +232,9 @@ export interface TransactionReceiptProps {
     actionable_transaction?: (address: string | null) => ActionableType;
     actionable_address?: (address: string | null) => ActionableType;
 }
+
+export interface TransactionRawLogsProps {
+    chain_name: Chain;
+    tx_hash: string;
+    actionable_address?: (address: string | null) => ActionableType;
+}
