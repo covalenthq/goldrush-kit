@@ -1,22 +1,21 @@
-import { TransactionReceipt as TransactionReceiptComponent } from "./TransactionReceipt";
+import { TransactionRawLogs as TransactionReceiptComponent } from "./TransactionRawLogs";
 import { storyAction } from "@/utils/functions";
 import { type Meta, type StoryObj } from "@storybook/react";
 
 type Story = StoryObj<typeof TransactionReceiptComponent>;
 
 const meta: Meta<typeof TransactionReceiptComponent> = {
-    title: "Molecules/Transaction/Transaction Receipt",
+    title: "Molecules/Transaction/Transaction Raw Logs",
     component: TransactionReceiptComponent,
 };
 
 export default meta;
 
-export const TransactionReceipt: Story = {
+export const TransactionRawLogs: Story = {
     args: {
         chain_name: "eth-mainnet",
         tx_hash:
-            "0x7a038d2f5be4d196a3ff389497f8d61a639e4a32d353758b4f062cafbc5d475c",
-        actionable_transaction: (address) => storyAction(address),
+            "0x59ae86b6f07e922bd41dcc40fb22a13baee3457eafad22d7d279bfcc72addf09",
         actionable_address: (address) => storyAction(address),
     },
 };
