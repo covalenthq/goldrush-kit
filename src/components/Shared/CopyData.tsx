@@ -13,7 +13,6 @@ export const CopyData: React.FC<CopyDataProps> = ({ data }) => {
     const handleCopyClick = () => {
         toast({
             title: "Copied to clipboard!",
-            description: data,
         });
         showCopied(true);
         setTimeout(() => {

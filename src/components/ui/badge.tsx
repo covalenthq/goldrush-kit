@@ -23,7 +23,8 @@ const badgeVariants = ({
         danger: "border border-transparent bg-danger text-white shadow hover:bg-opacity-80",
         success:
             "border border-transparent bg-success text-white shadow hover:bg-opacity-80",
-        outline: "border text-foreground-light dark:text-foreground-dark",
+        outline:
+            "border border-secondary-light dark: border-secondary-dark text-foreground-light dark:text-foreground-dark",
         ghost: "text-foreground-light dark:text-foreground-dark",
     };
 
