@@ -230,6 +230,5 @@ export interface TransactionReceiptProps {
     chain_name: Chain;
     tx_hash: string;
     actionable_transaction?: (address: string | null) => ActionableType;
-    actionable_from?: (address: string | null) => ActionableType;
-    actionable_to?: (address: string | null) => ActionableType;
+    actionable_address?: (address: string | null) => ActionableType;
 }

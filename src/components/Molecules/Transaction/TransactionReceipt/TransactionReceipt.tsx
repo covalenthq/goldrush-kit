@@ -23,8 +23,7 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
     chain_name,
     tx_hash,
     actionable_transaction,
-    actionable_from,
-    actionable_to,
+    actionable_address,
 }) => {
     const { apikey, chains } = useGoldRush();
 
@@ -186,7 +185,9 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 result.tx_metadata
                                                     .from_address_label
                                             }
-                                            actionable_address={actionable_from}
+                                            actionable_address={
+                                                actionable_address
+                                            }
                                             avatar={{}}
                                         />
                                     </div>
@@ -204,7 +205,9 @@ export const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
                                                 result.tx_metadata
                                                     .to_address_label
                                             }
-                                            actionable_address={actionable_to}
+                                            actionable_address={
+                                                actionable_address
+                                            }
                                             avatar={{}}
                                         />
                                     </div>
