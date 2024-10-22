@@ -2,7 +2,11 @@ import {
     type DECODED_ACTION,
     type DECODED_EVENT_CATEGORY,
 } from "../constants/shared.constants";
-import { type ActionableType, type TransactionsProps } from "./shared.types";
+import type {
+    ActionableType,
+    PaginationProps,
+    TransactionsProps,
+} from "./shared.types";
 import { type Option } from "@/utils/option";
 import type {
     GasPricesResponse,
@@ -60,9 +64,8 @@ export interface BlockDetailsProps {
     height: number;
 }
 
-export interface BlocksListProps {
+export interface BlocksListProps extends PaginationProps {
     chain_name: Chain;
-    page_size?: number;
     actionable_block?: (block_height: number | null) => ActionableType;
 }
 
