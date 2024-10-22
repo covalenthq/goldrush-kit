@@ -16,12 +16,14 @@ import {
     timestampParser,
 } from "@covalenthq/client-sdk";
 import { type ColumnDef } from "@tanstack/react-table";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const BlocksList: React.FC<BlocksListProps> = ({
     chain_name,
+    page_number = 0,
     page_size = 10,
     actionable_block = () => null,
+    on_page_change = () => null,
 }) => {
     const { goldrushClient } = useGoldRush();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -33,41 +35,34 @@ export const BlocksList: React.FC<BlocksListProps> = ({
         updateResult(null);
     }, [chain_name, page_size]);
 
-    const updateResult = useCallback(
-        async (_pagination: Pagination | null) => {
-            try {
-                setMaybeResult(None);
-                setErrorMessage(null);
-                const { data, ...error } =
-                    await goldrushClient.BaseService.getBlockHeightsByPage(
-                        chain_name,
-                        timestampParser(new Date(), "YYYY MM DD"),
-                        "2100-01-01",
-                        {
-                            pageNumber: _pagination?.page_number ?? 0,
-                            pageSize: _pagination?.page_size ?? page_size,
-                        },
-                    );
-                if (error.error) {
-                    throw error;
-                }
-                if (!data?.items) {
-                    throw FALLBACK_ERROR;
-                }
-                setPagination(data.pagination);
-                setMaybeResult(new Some(data.items));
-            } catch (error: GoldRushResponse<null> | any) {
-                setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
-                setMaybeResult(new Some(null));
-                console.error(error);
+    const updateResult = async (_pagination: Pagination | null) => {
+        try {
+            setMaybeResult(None);
+            setErrorMessage(null);
+            const { data, ...error } =
+                await goldrushClient.BaseService.getBlockHeightsByPage(
+                    chain_name,
+                    timestampParser(new Date(), "YYYY MM DD"),
+                    "2100-01-01",
+                    {
+                        pageNumber: _pagination?.page_number ?? page_number,
+                        pageSize: _pagination?.page_size ?? page_size,
+                    },
+                );
+            if (error.error) {
+                throw error;
             }
-        },
-        [chain_name],
-    );
-
-    const handleOnChangePagination = (updatedPagination: Pagination) => {
-        setPagination(updatedPagination);
-        updateResult(updatedPagination);
+            if (!data?.items || !data?.pagination) {
+                throw FALLBACK_ERROR;
+            }
+            on_page_change(data.pagination);
+            setPagination(data.pagination);
+            setMaybeResult(new Some(data.items));
+        } catch (error: GoldRushResponse<null> | any) {
+            setErrorMessage(error?.error_message ?? DEFAULT_ERROR_MESSAGE);
+            setMaybeResult(new Some(null));
+            console.error(error);
+        }
     };
 
     const columns: ColumnDef<Block>[] = [
@@ -149,7 +144,7 @@ export const BlocksList: React.FC<BlocksListProps> = ({
             errorMessage={errorMessage}
             maybeData={maybeResult}
             pagination={pagination}
-            onChangePaginationHandler={handleOnChangePagination}
+            onChangePaginationHandler={updateResult}
         />
     );
 };

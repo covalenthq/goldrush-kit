@@ -85,6 +85,12 @@ export interface PaginationFooterProps {
     onChangePaginationHandler: (updatedPagination: Pagination) => void;
 }
 
+export interface PaginationProps {
+    page_size?: number;
+    page_number?: number;
+    on_page_change?: (updated_pagination: Pagination) => void;
+}
+
 export interface HeadingProps
     extends React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLHeadingElement>,
