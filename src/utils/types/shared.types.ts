@@ -1,15 +1,17 @@
 import { type Option } from "@/utils/option";
 import type {
     NftApprovalsItem,
+    Pagination,
     TokensApprovalItem,
+    Transaction,
 } from "@covalenthq/client-sdk";
-import { type Pagination, type Transaction } from "@covalenthq/client-sdk";
-import {
-    type Column,
-    type ColumnDef,
-    type Row,
-    type SortingState,
+import type {
+    Column,
+    ColumnDef,
+    Row,
+    SortingState,
 } from "@tanstack/react-table";
+import type { ComponentType } from "react";
 
 export interface BalancePriceDeltaProps {
     numerator: number;
@@ -99,12 +101,13 @@ export interface HeadingProps
     size: 1 | 2 | 3 | 4;
 }
 
-export type ActionableType<
-    T extends
-        | keyof JSX.IntrinsicElements
-        | React.ComponentType<any> = keyof JSX.IntrinsicElements,
-> =
-    | (T extends keyof JSX.IntrinsicElements
-          ? { parent: T; parentProps: JSX.IntrinsicElements[T] }
-          : { parent: T; parentProps: React.ComponentProps<T> })
-    | null;
+export type ElementType = keyof JSX.IntrinsicElements | ComponentType<any>;
+
+export type ActionableType<T extends ElementType = ElementType> = {
+    parent: T;
+    parentProps: T extends keyof JSX.IntrinsicElements
+        ? JSX.IntrinsicElements[T]
+        : T extends ComponentType<infer P>
+          ? P
+          : never;
+} | null;
