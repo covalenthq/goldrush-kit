@@ -94,7 +94,7 @@
         "vite-plugin-dts": "^3.8.2"
     },
     "dependencies": {
-        "@covalenthq/client-sdk": "^2.1.2",
+        "@covalenthq/client-sdk": "^2.2.0",
         "@radix-ui/react-avatar": "^1.0.4",
         "@radix-ui/react-checkbox": "^1.0.4",
         "@radix-ui/react-dialog": "^1.0.5",

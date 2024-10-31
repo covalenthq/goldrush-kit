@@ -6,6 +6,8 @@ import {
     CommandGroup,
     CommandInput,
     CommandItem,
+    CommandList,
+    CommandSeparator,
 } from "@/components/ui/command";
 import {
     Popover,
@@ -28,16 +30,42 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
     const { chains, selectedChain, setSelectedChain } = useGoldRush();
     const [open, setOpen] = useState<boolean>(false);
 
-    const dropdownChains = useMemo<ChainItem[] | null>(() => {
+    const dropdownChains = useMemo<{
+        foundational: ChainItem[];
+        frontier: ChainItem[];
+        community: ChainItem[];
+    }>(() => {
         if (!chains) {
-            return null;
+            return {
+                foundational: [],
+                frontier: [],
+                community: [],
+            };
         }
+
+        const foundational: ChainItem[] = [];
+        const frontier: ChainItem[] = [];
+        const community: ChainItem[] = [];
 
         if (!chain_options.length) {
-            return chains;
+            chains.forEach((chain: ChainItem) => {
+                if (chain.name && chain.priority_label === "Foundational") {
+                    foundational.push(chain);
+                } else if (chain.name && chain.priority_label === "Frontier") {
+                    frontier.push(chain);
+                } else {
+                    community.push(chain);
+                }
+            });
+            return {
+                foundational,
+                frontier,
+                community,
+            };
         }
 
-        return chain_options.reduce((acc: ChainItem[], nameOrId) => {
+        const selectedChains: ChainItem[] = [];
+        chain_options.forEach((nameOrId) => {
             const foundChain: ChainItem | null =
                 chains.find(
                     ({ name, chain_id }) =>
@@ -45,10 +73,22 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                         chain_id?.toString() === nameOrId.toString(),
                 ) ?? null;
             if (foundChain) {
-                acc.push(foundChain);
+                selectedChains.push(foundChain);
             }
-            return acc;
-        }, []);
+        });
+        return {
+            foundational: selectedChains.filter(
+                (chain) => chain.priority_label === "Foundational",
+            ),
+            frontier: selectedChains.filter(
+                (chain) => chain.priority_label === "Frontier",
+            ),
+            community: selectedChains.filter(
+                (chain) =>
+                    chain.priority_label !== "Foundational" &&
+                    chain.priority_label !== "Frontier",
+            ),
+        };
     }, [chains, chain_options]);
 
     return (
@@ -90,37 +130,106 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
                             </div>
                         </CommandLoading>
                     ) : (
-                        <CommandGroup>
-                            {dropdownChains.map((chain) => (
-                                <CommandItem
-                                    key={chain.name}
-                                    value={chain.name as string}
-                                    className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
-                                    onSelect={() => {
-                                        setSelectedChain(chain);
-                                        setOpen(false);
-                                        if (onChangeChain) {
-                                            onChangeChain(chain);
-                                        }
-                                    }}
-                                >
-                                    <TokenAvatar
-                                        only_primary
-                                        size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        chain_color={chain.color_theme?.hex}
-                                        primary_url={chain.logo_url}
-                                    />
-                                    {chain.label}
-                                    <CheckIcon
-                                        className={`w-4" ml-auto h-4 ${
-                                            chain.name === selectedChain?.name
-                                                ? "opacity-100"
-                                                : "opacity-0"
-                                        }`}
-                                    />
-                                </CommandItem>
-                            ))}
-                        </CommandGroup>
+                        <CommandList>
+                            <CommandGroup heading="Foundational Chains">
+                                {dropdownChains.foundational.map((chain) => (
+                                    <CommandItem
+                                        key={chain.name}
+                                        value={chain.name as string}
+                                        className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
+                                        onSelect={() => {
+                                            setSelectedChain(chain);
+                                            setOpen(false);
+                                            if (onChangeChain) {
+                                                onChangeChain(chain);
+                                            }
+                                        }}
+                                    >
+                                        <TokenAvatar
+                                            only_primary
+                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                            chain_color={chain.color_theme?.hex}
+                                            primary_url={chain.logo_url}
+                                        />
+                                        {chain.label}
+                                        <CheckIcon
+                                            className={`w-4" ml-auto h-4 ${
+                                                chain.name ===
+                                                selectedChain?.name
+                                                    ? "opacity-100"
+                                                    : "opacity-0"
+                                            }`}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                            <CommandSeparator />
+                            <CommandGroup heading="Frontier Chains">
+                                {dropdownChains.frontier.map((chain) => (
+                                    <CommandItem
+                                        key={chain.name}
+                                        value={chain.name as string}
+                                        className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
+                                        onSelect={() => {
+                                            setSelectedChain(chain);
+                                            setOpen(false);
+                                            if (onChangeChain) {
+                                                onChangeChain(chain);
+                                            }
+                                        }}
+                                    >
+                                        <TokenAvatar
+                                            only_primary
+                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                            chain_color={chain.color_theme?.hex}
+                                            primary_url={chain.logo_url}
+                                        />
+                                        {chain.label}
+                                        <CheckIcon
+                                            className={`w-4" ml-auto h-4 ${
+                                                chain.name ===
+                                                selectedChain?.name
+                                                    ? "opacity-100"
+                                                    : "opacity-0"
+                                            }`}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                            <CommandSeparator />
+                            <CommandGroup heading="Community Chains">
+                                {dropdownChains.community.map((chain) => (
+                                    <CommandItem
+                                        key={chain.name}
+                                        value={chain.name as string}
+                                        className="flex cursor-pointer gap-1 bg-background-light dark:bg-background-dark"
+                                        onSelect={() => {
+                                            setSelectedChain(chain);
+                                            setOpen(false);
+                                            if (onChangeChain) {
+                                                onChangeChain(chain);
+                                            }
+                                        }}
+                                    >
+                                        <TokenAvatar
+                                            only_primary
+                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
+                                            chain_color={chain.color_theme?.hex}
+                                            primary_url={chain.logo_url}
+                                        />
+                                        {chain.label}
+                                        <CheckIcon
+                                            className={`w-4" ml-auto h-4 ${
+                                                chain.name ===
+                                                selectedChain?.name
+                                                    ? "opacity-100"
+                                                    : "opacity-0"
+                                            }`}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
                     )}
                 </Command>
             </PopoverContent>
