@@ -49,10 +49,8 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
 
         if (!chain_options.length) {
             chains.forEach((chain: ChainItem) => {
-                // @ts-expect-error Priority Label yet to be added to the ChainItem type
                 if (chain.name && chain.priority_label === "Foundational") {
                     foundational.push(chain);
-                    // @ts-expect-error Priority Label yet to be added to the ChainItem type
                 } else if (chain.name && chain.priority_label === "Frontier") {
                     frontier.push(chain);
                 } else {
@@ -80,18 +78,14 @@ export const ChainSelector: React.FC<ChainSelectorProps> = ({
         });
         return {
             foundational: selectedChains.filter(
-                // @ts-expect-error Priority Label yet to be added to the ChainItem type
                 (chain) => chain.priority_label === "Foundational",
             ),
             frontier: selectedChains.filter(
-                // @ts-expect-error Priority Label yet to be added to the ChainItem type
                 (chain) => chain.priority_label === "Frontier",
             ),
             community: selectedChains.filter(
                 (chain) =>
-                    // @ts-expect-error Priority Label yet to be added to the ChainItem type
                     chain.priority_label !== "Foundational" &&
-                    // @ts-expect-error Priority Label yet to be added to the ChainItem type
                     chain.priority_label !== "Frontier",
             ),
         };
