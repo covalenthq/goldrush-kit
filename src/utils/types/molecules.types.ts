@@ -137,6 +137,13 @@ export interface AddressTransactionsProps extends Partial<TransactionsProps> {
     address: string;
 }
 
+export interface MultiChainMultiAddressTransactionsProps
+    extends Partial<TransactionsProps> {
+    chain_names: Chain[];
+    addresses: string[];
+    page_size?: number | null;
+}
+
 export interface BlockTransactionsProps extends Partial<TransactionsProps> {
     chain_name: Chain;
     block_height: number;

@@ -1,9 +1,11 @@
 import { IconWrapper, TableHeaderSorting, TableList } from ".";
 import { Badge } from "../ui/badge";
-import { Address } from "@/components/Atoms";
+import { Address, TokenAvatar } from "@/components/Atoms";
 import { Timestamp } from "@/components/Atoms";
+import { GRK_SIZES } from "@/utils/constants/shared.constants";
 import { actionableWrapper } from "@/utils/functions";
 import { Some } from "@/utils/option";
+import { useGoldRush } from "@/utils/store";
 import { type TransactionsProps } from "@/utils/types/shared.types";
 import {
     calculatePrettyBalance,
@@ -12,14 +14,52 @@ import {
 import { type ColumnDef } from "@tanstack/react-table";
 
 export const Transactions: React.FC<TransactionsProps> = ({
-    address = null,
+    addresses = null,
+    showChain = false,
     errorMessage = null,
     maybeResult = new Some(null),
     actionable_address,
     actionable_block = () => null,
     actionable_transaction,
 }) => {
+    const { chains } = useGoldRush();
+
     const columns: ColumnDef<Transaction>[] = [
+        ...(showChain
+            ? [
+                  {
+                      id: "chain",
+                      accessorKey: "chain",
+                      header: ({ column }) => (
+                          <TableHeaderSorting<Transaction>
+                              align="left"
+                              header={"Chain"}
+                              column={column}
+                          />
+                      ),
+                      cell: ({ row }) => {
+                          const chain =
+                              chains?.find(
+                                  ({ name }) =>
+                                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                      // @ts-expect-error
+                                      name === row.original.chain_name,
+                              ) || null;
+
+                          if (!chain) return <></>;
+
+                          return (
+                              <TokenAvatar
+                                  only_primary
+                                  size={GRK_SIZES.EXTRA_SMALL}
+                                  primary_url={chain.logo_url}
+                                  chain_color={chain.color_theme?.hex}
+                              />
+                          );
+                      },
+                  } as ColumnDef<Transaction>,
+              ]
+            : []),
         {
             id: "tx_hash",
             accessorKey: "tx_hash",
@@ -100,38 +140,49 @@ export const Transactions: React.FC<TransactionsProps> = ({
             id: "in_out",
             accessorKey: "in_out",
             header: () => null,
-            cell: ({ row }) => (
-                <div className="w-10 flex justify-center">
-                    <Badge
-                        variant={
-                            (address
-                                ? address?.toLowerCase() ===
-                                  row.original.from_address?.toLowerCase()
+            cell: ({ row }) => {
+                const matchAddress = (
+                    addr: string | null,
+                ): "OUT" | "IN" | null => {
+                    const formattedAddr = addr?.toLowerCase();
+                    const fromAddr = row.original.from_address?.toLowerCase();
+                    const toAddr = row.original.to_address?.toLowerCase();
+
+                    return formattedAddr === fromAddr
+                        ? "OUT"
+                        : formattedAddr === toAddr
+                          ? "IN"
+                          : null;
+                };
+
+                const match: "OUT" | "IN" | null = Array.isArray(addresses)
+                    ? (addresses
+                          .map((addr) => addr?.toLowerCase())
+                          .map(matchAddress)
+                          .find((result) => result !== null) ?? null)
+                    : null;
+
+                return (
+                    <div className="w-10 flex justify-center">
+                        <Badge
+                            variant={
+                                match === "OUT"
                                     ? "danger"
-                                    : address?.toLowerCase() ===
-                                        row.original.to_address?.toLowerCase()
+                                    : match === "IN"
                                       ? "success"
-                                      : null
-                                : null) || "ghost"
-                        }
-                    >
-                        {(address
-                            ? address.toLowerCase() ===
-                              row.original.from_address?.toLowerCase()
-                                ? "OUT"
-                                : address.toLowerCase() ===
-                                    row.original.to_address?.toLowerCase()
-                                  ? "IN"
-                                  : null
-                            : null) || (
-                            <IconWrapper
-                                icon_class_name="arrow_right_alt"
-                                class_name="opacity-60 text-foreground-light dark:text-foreground-dark"
-                            />
-                        )}
-                    </Badge>
-                </div>
-            ),
+                                      : "ghost"
+                            }
+                        >
+                            {match || (
+                                <IconWrapper
+                                    icon_class_name="arrow_right_alt"
+                                    class_name="opacity-60 text-foreground-light dark:text-foreground-dark"
+                                />
+                            )}
+                        </Badge>
+                    </div>
+                );
+            },
         },
         {
             id: "to_address",

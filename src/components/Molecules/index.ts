@@ -2,6 +2,7 @@ export { AddressActivityDetails } from "./Address/AddressActivityDetails/Address
 export { AddressActivityList } from "./Address/AddressActivityList/AddressActivityList";
 export { AddressDetails } from "./Address/AddressDetails/AddressDetails";
 export { AddressTransactions } from "./Address/AddressTransactions/AddressTransactions";
+export { MultiChainMultiAddressTransactions } from "./Address/MultiChainMultiAddressTransactions/MultiChainMultiAddressTransactions";
 export { BlockDetails } from "./Block/BlockDetails/BlockDetails";
 export { BlocksList } from "./Block/BlocksList/BlocksList";
 export { BlockTransactions } from "./Block/BlockTransactions/BlockTransactions";

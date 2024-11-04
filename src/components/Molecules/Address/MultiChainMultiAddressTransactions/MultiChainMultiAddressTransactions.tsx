@@ -5,13 +5,15 @@ import {
 } from "@/utils/constants/shared.constants";
 import { type Option, None, Some } from "@/utils/option";
 import { useGoldRush } from "@/utils/store";
-import { type AddressTransactionsProps } from "@/utils/types/molecules.types";
+import { type MultiChainMultiAddressTransactionsProps } from "@/utils/types/molecules.types";
 import type { GoldRushResponse, Transaction } from "@covalenthq/client-sdk";
 import { useEffect, useState } from "react";
 
-export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
-    chain_name,
-    address,
+export const MultiChainMultiAddressTransactions: React.FC<
+    MultiChainMultiAddressTransactionsProps
+> = ({
+    chain_names,
+    addresses,
     actionable_address,
     actionable_block,
     actionable_transaction,
@@ -28,13 +30,10 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
             setErrorMessage(null);
             try {
                 const { data, ...error } =
-                    await goldrushClient.TransactionService.getAllTransactionsForAddressByPage(
-                        chain_name,
-                        address.trim(),
+                    await goldrushClient.AllChainsService.getMultiChainAndMultiAddressTransactions(
                         {
-                            noLogs: true,
-                            withSafe: false,
-                            quoteCurrency: "USD",
+                            addresses,
+                            chains: chain_names,
                         },
                     );
                 if (error.error) {
@@ -50,11 +49,12 @@ export const AddressTransactions: React.FC<AddressTransactionsProps> = ({
                 console.error(error);
             }
         })();
-    }, [chain_name, address]);
+    }, [chain_names, addresses]);
 
     return (
         <Transactions
-            addresses={[address]}
+            addresses={addresses}
+            showChain
             errorMessage={errorMessage}
             maybeResult={maybeResult}
             actionable_address={actionable_address}
