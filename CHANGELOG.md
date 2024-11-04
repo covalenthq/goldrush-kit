@@ -1,6 +1,20 @@
 # Changelog for GoldRush Kit
 
-## 1.0.3
+## 1.0.5
+
+**Fixes**
+
+-   `GasCard` units precision
+-   Actionables types
+-   Use `latest` for `LatestBlocks`
+
+**Features**
+
+-   Added `TransactionRawLogs` component
+-   Added `on_page_change` function to `BlocksList`
+-   `ChainSelector` now bifurcates between the chains priority
+
+## 1.0.4
 
 **Fixes**
 
@@ -14,6 +28,18 @@
 **Features**
 
 -   Added `in/out`s for all list of transactions
+
+## 1.0.3
+
+**Fixes**
+
+-   Use `latest` for `LatestTransactions`
+-   `timestampParser` now comes from the SDK
+
+**Features**
+
+-   Added actionables for `LatestBlocks` and `LatestTransactions`
+-   Added prop `changeSelectedChain` in `AddressActivityList` to optionally change the selected chain on clicking
 
 ## 1.0.2
 

@@ -18,5 +18,6 @@ export { TokenBalancesList } from "./Token/TokenBalancesList/TokenBalancesList";
 export { TokenTransfersList } from "./Token/TokenTransfersList/TokenTransfersList";
 export { LatestTransactions } from "./Transaction/LatestTransactions/LatestTransactions";
 export { TransactionDetails } from "./Transaction/TransactionDetails/TransactionDetails";
+export { TransactionRawLogs } from "./Transaction/TransactionRawLogs/TransactionRawLogs";
 export { TransactionReceipt } from "./Transaction/TransactionReceipt/TransactionReceipt";
 export { TransactionsList } from "./Transaction/TransactionsList/TransactionsList";
