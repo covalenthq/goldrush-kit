@@ -42,8 +42,8 @@ export const BlocksList: React.FC<BlocksListProps> = ({
             const { data, ...error } =
                 await goldrushClient.BaseService.getBlockHeightsByPage(
                     chain_name,
-                    timestampParser(new Date(), "YYYY MM DD"),
-                    "2100-01-01",
+                    timestampParser(new Date(), "YYYY-MM-DD"),
+                    "latest",
                     {
                         pageNumber: _pagination?.page_number ?? page_number,
                         pageSize: _pagination?.page_size ?? page_size,
