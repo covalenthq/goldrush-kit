@@ -2,24 +2,25 @@
   <a href="https://goldrush.dev/products/goldrush/"  target="_blank" rel="noopener noreferrer">
     <img alt="GoldRush Kit - powered by Covalent" src="./repo-static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
-</div>
 
 <br/>
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
-    <img src="https://img.shields.io/npm/v/@covalenthq/goldrush-kit" alt="NPM">
-  </a>
-  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
-    <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
-  </a>
-  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="Apache-2.0">
-</p>
+[![NPM Version](https://img.shields.io/npm/v/@covalenthq/goldrush-kit)](https://www.npmjs.com/package/@covalenthq/client-sdk)
+[![GitHub license](https://img.shields.io/github/license/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/commits/master)
+[![GitHub contributors](https://img.shields.io/github/contributors/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/graphs/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/network/members)
 
-# GoldRush Kit
+</div>
 
-Beautifully designed React components for your dApp frontend.
-200+ Chains. Open-source. Customizable.
+<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
+
+<div align="center">
+Powered by <a href="https://www.npmjs.com/package/@covalenthq/client-sdk">GoldRush TS Client SDK</a>. 100+ Chains. Open-source. Customizable. 
+</div>
 
 <p align="center">
     <br />
@@ -28,6 +29,10 @@ Beautifully designed React components for your dApp frontend.
     </a>
     <br />
 </p>
+
+## Ready-to-use customizable template
+
+<a href="https://goldrush-kit.vercel.app">View live examples</a>
 
 ## Setup
 
@@ -144,17 +149,6 @@ const GoldRushExample = () => {
 export default GoldRushExample;
 ```
 
-## GoldRush Repositories
-
-| Name                                                                             | Description                                                                     |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [TypeScript SDK](https://github.com/covalenthq/covalent-api-sdk-ts)              | The fastest way to integrate the GoldRush API for working with blockchain data. |
-| [GoldRush Kit](https://github.com/covalenthq/goldrush-kit)                       | Beautifully designed React components for your dApp frontend.                   |
-| [GoldRush Block Explorer](https://github.com/covalenthq/goldrush-block-explorer) | A cross chain block explorer kit that can be customized.                        |
-| [GoldRush Decoder](https://github.com/covalenthq/goldrush-decoder)               | Decode unstructured, raw event logs into structured data with a simple API.     |
-| [GoldRush RevokeHub](https://github.com/covalenthq/goldrush-revokehub)           | One-stop platform for managing your digital assets securely and efficiently.    |
-| [GoldRush Airdrop Assist](https://github.com/covalenthq/goldrush-airdrop-assist) | Effortlessly filter and find all valid addresses for your next airdrop.         |
-
 ## Build and customize with Storybook
 
 The components used above are built with `ReactJS` and `TailwindCSS`, using `TypeScript`. You can preview and customize the components using [Storybook](https://storybook.js.org/).
@@ -194,4 +188,4 @@ Give a ⭐️ if this project helped you!
 
 ## License
 
-This project is [Apache-2.0](./LICENSE) licensed.
+This project is [MIT](./LICENSE) licensed.
