@@ -149,6 +149,13 @@ const GoldRushExample = () => {
 export default GoldRushExample;
 ```
 
+## GoldRush Repositories
+
+| Name                                                                                   | Description                                                                 |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [GoldRush Block Explorer UI](https://github.com/covalenthq/goldrush-block-explorer-ui) | A cross chain block explorer kit that can be customized.                    |
+| [GoldRush Decoder](https://github.com/covalenthq/goldrush-decoder)                     | Decode unstructured, raw event logs into structured data with a simple API. |
+
 ## Build and customize with Storybook
 
 The components used above are built with `ReactJS` and `TailwindCSS`, using `TypeScript`. You can preview and customize the components using [Storybook](https://storybook.js.org/).
