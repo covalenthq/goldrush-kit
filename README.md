@@ -2,24 +2,25 @@
   <a href="https://goldrush.dev/products/goldrush/"  target="_blank" rel="noopener noreferrer">
     <img alt="GoldRush Kit - powered by Covalent" src="./repo-static/grk-kit-banner.png" style="max-width: 100%;"/>
   </a>
-</div>
 
 <br/>
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
-    <img src="https://img.shields.io/npm/v/@covalenthq/goldrush-kit" alt="NPM">
-  </a>
-  <a href="https://www.npmjs.com/package/@covalenthq/goldrush-kit">
-    <img src="https://img.shields.io/npm/dm/@covalenthq/goldrush-kit" alt="npm downloads">
-  </a>
-  <img src="https://img.shields.io/github/license/covalenthq/goldrush-kit" alt="Apache-2.0">
-</p>
+[![NPM Version](https://img.shields.io/npm/v/@covalenthq/goldrush-kit)](https://www.npmjs.com/package/@covalenthq/client-sdk)
+[![GitHub license](https://img.shields.io/github/license/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/blob/main/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/commits/master)
+[![GitHub contributors](https://img.shields.io/github/contributors/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/graphs/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/covalenthq/goldrush-kit)](https://github.com/covalenthq/goldrush-kit/network/members)
 
-# GoldRush Kit
+</div>
 
-Beautifully designed React components for your dApp frontend.
-200+ Chains. Open-source. Customizable.
+<h1 align="center">Beautifully designed React components for your dApp frontend.</h1>
+
+<div align="center">
+Powered by the <a href="https://www.npmjs.com/package/@covalenthq/client-sdk">GoldRush TypeScript SDK</a>. Supports 100+ Chains. Open-source. Customizable. 
+</div>
 
 <p align="center">
     <br />
@@ -29,13 +30,21 @@ Beautifully designed React components for your dApp frontend.
     <br />
 </p>
 
+## Explore live with Storybook 
+Explore the GoldRush UI Kit with our [live hosted Storybook](https://goldrush-kit.vercel.app/?path=/story/organisms-nft-collection-view--nft-collection-view).
+
 ## Setup
+1. [Sign up](https://goldrush.dev/platform/auth/register) for a free GoldRush API key to get started with the GoldRush UI Kit.
 
-Install `goldrush-kit` using `npm`:
+2. Install `goldrush-kit` using `npm` or `yarn`:
 
-```bash
-npm install @covalenthq/goldrush-kit
-```
+    ```bash
+    npm install @covalenthq/goldrush-kit
+    ```
+    or
+    ```bash
+    yarn add @covalenthq/goldrush-kit
+    ```
 
 ## Implementation
 
@@ -45,117 +54,121 @@ npm install @covalenthq/goldrush-kit
     import { GoldRushProvider } from "@covalenthq/goldrush-kit";
     ```
 
-2. Wrap `GoldRushProvider` around the application.
-3. Configure the provider and add it to the `apikey` props with your GoldRush API key. You can register for a free key on [GoldRush's website](https://goldrush.dev/platform/apikey).
+2. Wrap `GoldRushProvider` around the application and set the GoldRush API key prop.
 
-    > **Note:** You should always keep your API key private, never put it directly into your code, especially front end code. Instead, use an environment variable to inject the key into your code.
+    > **Note:** You should always keep your API key private, never put it directly into your code, especially frontend code. Instead, use an environment variable to inject the key into your code.
 
     ```tsx
-    <GoldRushProvider apikey="<YOUR_API_KEY>">{children}</GoldRushProvider>
+    import { GoldRushProvider } from "@covalenthq/goldrush-kit";
+
+    const GoldRushExample = () => {
+        return (
+            <GoldRushProvider
+                apikey={process.env.NEXT_PUBLIC_API_KEY}
+            >
+            </GoldRushProvider>
+        );
+    };
+    
+    export default GoldRushExample;
     ```
 
-4. Add the stylesheet to your application.
+4. Add the stylesheet and custom theme.
 
     ```tsx
+    import { GoldRushProvider } from "@covalenthq/goldrush-kit";
     import "@covalenthq/goldrush-kit/styles.css";
+    
+    const GoldRushExample = () => {
+        return (
+            <GoldRushProvider
+                apikey={process.env.NEXT_PUBLIC_API_KEY}
+                theme={{
+                    borderRadius: 6,
+                    colors: {
+                        dark: {
+                            primary: "#FF4C8B",
+                            background: "#000426",
+                            foreground: "#FFFFFF",
+                            secondary: "#868E96",
+                        },
+                        light: {
+                            primary: "#00D8D5",
+                            background: "#FFFFFF",
+                            foreground: "#1C2024",
+                            secondary: "#868E96",
+                        },
+                    },
+                    mode: "dark",
+                }}
+            >
+            </GoldRushProvider>
+        );
+    };
+    
+    export default GoldRushExample;
     ```
 
-5. Add desired components.
+5. Import and configure the desired components.
 
-    > **Note:** If you're using `next.js` versions `^13.0` with the `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules. Visit GoldRush's [component documentation](https://goldrush.dev/docs/unified-api/goldrush/kit/gold-rush-provider/) for more information.
+    > **Note:** If you're using `next.js` versions `^13.0` with the `app` router, make sure you have `use client;` at the top of the file to disable Next's server component modules.
 
     ```tsx
-    import {
-        GoldRushProvider,
-        NFTWalletCollectionList,
-        TokenBalancesList,
-        TokenTransfersList,
-        AddressActivityList,
-    } from "@covalenthq/goldrush-kit";
+    import { GoldRushProvider, TokenBalancesList } from "@covalenthq/goldrush-kit"
+    import "@covalenthq/goldrush-kit/styles.css";
+    
+    const GoldRushExample = () => {
+        return (
+            <GoldRushProvider
+                apikey={process.env.NEXT_PUBLIC_API_KEY}
+                theme={{
+                    borderRadius: 6,
+                    colors: {
+                        dark: {
+                            primary: "#FF4C8B",
+                            background: "#000426",
+                            foreground: "#FFFFFF",
+                            secondary: "#868E96",
+                        },
+                        light: {
+                            primary: "#00D8D5",
+                            background: "#FFFFFF",
+                            foreground: "#1C2024",
+                            secondary: "#868E96",
+                        },
+                    },
+                    mode: "dark",
+                }}
+            >
+              <TokenBalancesList
+                  chain_names={[
+                      "eth-mainnet",
+                      "matic-mainnet",
+                      "bsc-mainnet",
+                      "avalanche-mainnet",
+                      "optimism-mainnet",
+                  ]}
+                  hide_small_balances
+                  address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
+              />
+            </GoldRushProvider>
+        );
+    };
+    
+    export default GoldRushExample;
     ```
+Using the example above should render a component similar to [this](https://goldrush-kit.vercel.app/iframe.html?args=chain_names[2]:!undefined;address:0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de;hide_small_balances:!true&globals=&id=molecules-token-token-balances-list--token-balances-list&viewMode=story). 
 
-## Ready-to-go React Component example
+## GoldRush UI Templates
 
-Here's a full example to get you started.
+| Name                                                                                   | Description                                                                                        |                                                                        |                                                                                                                                                                                     |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Block Explorer UI](https://github.com/covalenthq/goldrush-block-explorer-ui) | A cross chain block explorer kit that can be customized.                                           | [View live template](https://goldrush-block-explorer-ui.vercel.app/)   | [![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-block-explorer-ui)](https://github.com/covalenthq/goldrush-block-explorer-ui/commits/main)     |
+| [Wallet & Portfolio UI](https://github.com/covalenthq/goldrush-wallet-portfolio-ui)    | Helps web3 developers easily display tokens and NFTs held by a wallet across multiple blockchains. | [View live template](https://goldrush-wallet-portfolio-ui.vercel.app/) | [![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-wallet-portfolio-ui)](https://github.com/covalenthq/goldrush-wallet-portfolio-ui/commits/main) |
+| [NFT Gallery UI](https://github.com/covalenthq/goldrush-nft-gallery-ui)                | Display NFTs along with metadata. Build web3 NFT galleries using React components.                 | [View live template](https://goldrush-nft-gallery-ui.vercel.app/)      | [![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-nft-gallery-ui)](https://github.com/covalenthq/goldrush-nft-gallery-ui/commits/main)           |
+| [Transaction Receipt UI](https://github.com/covalenthq/goldrush-tx-receipt-ui)         | Get a beautifully rendered and detailed view of blockchain transactions.                           | [View live template](https://goldrush-tx-receipt-ui.vercel.app/)       | [![GitHub last commit](https://img.shields.io/github/last-commit/covalenthq/goldrush-tx-receipt-ui)](https://github.com/covalenthq/goldrush-tx-receipt-ui/commits/main)             |
 
-Be sure to secure your apikey to prevent unauthorized use in the GoldRush platform by restricting usage to specific URLs.
-
-```tsx
-import {
-    GoldRushProvider,
-    NFTWalletCollectionList,
-    TokenBalancesList,
-    TokenTransfersList,
-    AddressActivityList,
-} from "@covalenthq/goldrush-kit";
-import "@covalenthq/goldrush-kit/styles.css";
-
-const GoldRushExample = () => {
-    return (
-        <GoldRushProvider
-            apikey={process.env.NEXT_PUBLIC_API_KEY}
-            theme={{
-                borderRadius: 6,
-                colors: {
-                    dark: {
-                        primary: "#FF4C8B",
-                        background: "#000426",
-                        foreground: "#FFFFFF",
-                        secondary: "#868E96",
-                    },
-                    light: {
-                        primary: "#00D8D5",
-                        background: "#FFFFFF",
-                        foreground: "#1C2024",
-                        secondary: "#868E96",
-                    },
-                },
-                mode: "dark",
-            }}
-        >
-            <TokenBalancesList
-                chain_names={[
-                    "eth-mainnet",
-                    "matic-mainnet",
-                    "bsc-mainnet",
-                    "avalanche-mainnet",
-                    "optimism-mainnet",
-                ]}
-                hide_small_balances
-                address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-            />
-
-            <TokenTransfersList
-                chain_name="eth-mainnet"
-                address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-                contract_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-            />
-
-            <AddressActivityList address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de" />
-
-            <NFTWalletCollectionList
-                address="0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-                chain_name="eth-mainnet"
-            />
-        </GoldRushProvider>
-    );
-};
-
-export default GoldRushExample;
-```
-
-## GoldRush Repositories
-
-| Name                                                                             | Description                                                                     |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [TypeScript SDK](https://github.com/covalenthq/covalent-api-sdk-ts)              | The fastest way to integrate the GoldRush API for working with blockchain data. |
-| [GoldRush Kit](https://github.com/covalenthq/goldrush-kit)                       | Beautifully designed React components for your dApp frontend.                   |
-| [GoldRush Block Explorer](https://github.com/covalenthq/goldrush-block-explorer) | A cross chain block explorer kit that can be customized.                        |
-| [GoldRush Decoder](https://github.com/covalenthq/goldrush-decoder)               | Decode unstructured, raw event logs into structured data with a simple API.     |
-| [GoldRush RevokeHub](https://github.com/covalenthq/goldrush-revokehub)           | One-stop platform for managing your digital assets securely and efficiently.    |
-| [GoldRush Airdrop Assist](https://github.com/covalenthq/goldrush-airdrop-assist) | Effortlessly filter and find all valid addresses for your next airdrop.         |
-
-## Build and customize with Storybook
+## Build and customize with Storybook locally
 
 The components used above are built with `ReactJS` and `TailwindCSS`, using `TypeScript`. You can preview and customize the components using [Storybook](https://storybook.js.org/).
 
@@ -194,4 +207,4 @@ Give a ⭐️ if this project helped you!
 
 ## License
 
-This project is [Apache-2.0](./LICENSE) licensed.
+This project is [MIT](./LICENSE) licensed.
